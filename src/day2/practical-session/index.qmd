@@ -1,0 +1,33 @@
+---
+title: "Day 2: Practical Session - Building Advanced LLM Applications"
+author: "Your Name"
+date: "2025-05-08"
+format:
+  revealjs:
+    theme: solarized
+    slide-number: true
+    preview-links: auto
+    css: styles.css
+---
+
+# Building Advanced LLM Applications for Finance
+
+## Overview of Today's Practical Session
+
+- Training and fine-tuning LLMs for financial use cases
+- Diving deep into model architecture and optimization
+- Implementing memory structures and function calling
+- Building more sophisticated financial assistants
+
+{{< include 01-train-your-own-llm.qmd >}}
+
+{{< include 02-llms-under-the-hood.qmd >}}
+
+{{< include 03-memory-buffer-cache-automatic-calls.qmd >}}
+
+## Key Takeaways
+
+- Practical experience with model fine-tuning
+- Understanding of LLM internals and performance optimization
+- Implementation strategies for stateful financial applications
+- Skills for developing production-ready financial AI systems

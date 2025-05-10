@@ -1,0 +1,56 @@
+# Tokenizers
+
+## What are Tokenizers?
+
+- Tools that convert text into tokens (basic units for LLMs)
+- Critical preprocessing step for all NLP tasks
+- Bridge between human language and machine processing
+
+## Types of Tokenization
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Word-level**: Split by spaces/punctuation
+- **Character-level**: Individual characters
+- **Subword**: Parts of words (BPE, WordPiece, SentencePiece)
+- **Lemmatization**: Map to base forms
+:::
+
+::: {.column width="40%"}
+```{python}
+#| eval: false
+from transformers import AutoTokenizer
+
+# Load a tokenizer
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+# Tokenize a financial sentence
+text = "The Federal Reserve increased interest rates by 25 basis points."
+tokens = tokenizer.tokenize(text)
+print(tokens)
+```
+:::
+
+::::
+
+## Why Subword Tokenization?
+
+- Handles out-of-vocabulary words
+- Balances vocabulary size and sequence length
+- Captures morphological patterns
+- Example: "refinancing" → ["re", "##financ", "##ing"]
+
+## Financial Text Tokenization Challenges
+
+- Technical jargon and acronyms
+- Numerical representations
+- Special characters (currencies, percentages)
+- Ticker symbols and notation
+  
+## Impact on Model Performance
+
+- Tokenization affects model understanding
+- Domain-specific tokenizers improve financial NLP
+- Trade-offs: granularity vs. sequence length
+- Context window implications

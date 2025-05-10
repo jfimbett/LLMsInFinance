@@ -1,0 +1,46 @@
+---
+title: "Day 1 Practical Session: Getting Started with LLMs"
+author: "Your Name"
+date: "2025-05-07"
+format:
+  html:
+    toc: true
+    code-fold: show
+    code-tools: true
+    highlight-style: github
+---
+
+# Introduction to the Practical Session
+
+Welcome to the hands-on component of Day 1! In this session, we'll set up our working environment and start interacting with Large Language Models.
+
+## Learning Objectives
+
+- Set up a Python environment suitable for LLM applications
+- Learn basic version control practices with Git
+- Explore the HuggingFace ecosystem
+- Access and interact with LLMs through APIs
+
+## Prerequisites
+
+- Basic Python knowledge
+- A GitHub account (for version control)
+- An internet connection
+
+{{< include 01-python-environment.qmd >}}
+
+{{< include 02-version-control.qmd >}}
+
+{{< include 03-huggingface-intro.qmd >}}
+
+{{< include 04-llm-apis.qmd >}}
+
+## Wrap Up
+
+By completing this practical session, you've laid the foundation for working with LLMs in finance. In Day 2, we'll build on these skills to develop more advanced applications.
+
+## Additional Resources
+
+- [HuggingFace Documentation](https://huggingface.co/docs)
+- [OpenAI API Documentation](https://platform.openai.com/docs/api-reference)
+- [Python Environment Management Best Practices](https://realpython.com/python-virtual-environments-a-primer/)

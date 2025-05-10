@@ -1,0 +1,52 @@
+# Classification and Scalability of LLMs
+
+## Types of LLMs
+
+- **By Architecture**:
+  - Encoder-only (BERT, RoBERTa)
+  - Decoder-only (GPT, LLaMA)
+  - Encoder-decoder (T5, BART)
+
+- **By Size**:
+  - Small (< 1B parameters)
+  - Medium (1B-10B parameters)
+  - Large (10B-100B parameters)
+  - Frontier (>100B parameters)
+
+## Parameter Scaling Laws
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Performance generally scales with model size
+- Logarithmic relationship between parameters and accuracy
+- Diminishing returns beyond certain thresholds
+- Implications for compute requirements
+:::
+
+::: {.column width="40%"}
+![Scaling Laws](images/scaling_laws_placeholder.png)
+:::
+
+::::
+
+## Specialized vs. General Purpose Models
+
+- **General purpose**: Broad knowledge, flexible applications
+- **Domain-specific**: Financial expertise, but less versatile
+- **Trade-offs**: Performance vs. adaptability
+
+## Financial LLM Considerations
+
+- ROI on model size for specific financial tasks
+- Latency requirements for real-time applications
+- Privacy and data sensitivity
+- Regulatory compliance needs
+- Explainability requirements
+
+## Deployment Strategies
+
+- Cloud vs. on-premise considerations
+- Parameter-efficient fine-tuning (LoRA, adapters)
+- Quantization and optimization techniques
+- Domain adaptation approaches

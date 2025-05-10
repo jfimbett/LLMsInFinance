@@ -1,0 +1,34 @@
+---
+title: "Day 2: Advanced LLM Concepts & Techniques"
+author: "Your Name"
+date: "2025-05-08"
+format:
+  revealjs:
+    theme: solarized
+    slide-number: true
+    preview-links: auto
+    css: styles.css
+---
+
+# Advanced LLM Concepts & Techniques
+
+## Overview of Today's Lecture
+
+- How LLMs are trained and optimized
+- Effective prompt engineering strategies
+- Understanding and tracing thought processes
+- Emergent behaviors and interpretability challenges
+
+{{< include 01-how-are-llms-trained.qmd >}}
+
+{{< include 02-zero-one-multiple-shot-prompts.qmd >}}
+
+{{< include 03-tracing-thoughts.qmd >}}
+
+{{< include 04-ghost-in-the-machine.qmd >}}
+
+## What's Next?
+
+- Practical session: Training your own LLM and exploring model internals
+- Hands-on experience with advanced memory architectures and function calling
+- Building more sophisticated financial applications

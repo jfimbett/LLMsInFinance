@@ -1,0 +1,84 @@
+# Version Control with Git
+
+## Why Version Control for LLM Projects?
+
+- Track changes in code and model configurations
+- Collaborate with team members
+- Reproduce experiments and results
+- Maintain history of model iterations
+
+## Essential Git Commands
+
+```bash
+# Initialize a new repository
+git init
+
+# Clone an existing repository
+git clone https://github.com/username/repo-name.git
+
+# Check status of your changes
+git status
+
+# Add files to staging
+git add filename.py
+git add .  # Add all files
+
+# Commit changes
+git commit -m "Meaningful commit message"
+
+# Push changes to remote repository
+git push origin main
+```
+
+## Best Practices for LLM Projects
+
+- Use `.gitignore` for large files and API keys
+- Commit frequently with descriptive messages
+- Use branches for experimental features
+- Document model versions and parameters
+
+## Sample .gitignore for LLM Projects
+
+```txt
+# Virtual environment
+venv/
+env/
+.env
+
+# Large model files
+*.pt
+*.bin
+*.ckpt
+models/
+
+# API keys and credentials
+.env
+secrets.json
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Cached data
+__pycache__/
+*.py[cod]
+*$py.class
+```
+
+## Exercise: Initialize Your Project
+
+```bash
+# Create a project directory
+mkdir llm-finance-project
+cd llm-finance-project
+
+# Initialize git repository
+git init
+
+# Create basic structure
+mkdir data models notebooks src
+
+# Create and add README
+echo "# LLM Finance Project" > README.md
+git add README.md
+git commit -m "Initial commit with project structure"
+```

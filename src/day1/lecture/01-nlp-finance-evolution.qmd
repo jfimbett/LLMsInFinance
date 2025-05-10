@@ -1,0 +1,41 @@
+# Evolution of NLP Applications in Finance
+
+## Historical Development
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Traditional rule-based approaches (1960s-1990s)
+- Statistical methods (1990s-2010s)
+- Machine learning approaches (2010s)
+- Deep learning revolution (2015+)
+- Large language models (2018+)
+:::
+
+::: {.column width="40%"}
+![Evolution of NLP](images/nlp_evolution_placeholder.png)
+:::
+
+::::
+
+## NLP in Finance: Key Applications
+
+- Sentiment analysis of financial news and social media
+- Document processing (reports, filings, contracts)
+- Trading signals generation
+- Risk assessment and compliance
+- Customer service and chatbots
+
+## Recent Advancements
+
+- BERT (2018) and its financial adaptations (FinBERT)
+- GPT series impact on financial text analysis
+- Multimodal models incorporating market data and text
+
+## Challenges Specific to Finance
+
+- Domain-specific vocabulary
+- Regulatory constraints
+- High stakes decision-making
+- Need for explainability and transparency
+- Real-time processing requirements

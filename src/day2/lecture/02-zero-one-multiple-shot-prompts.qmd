@@ -1,0 +1,51 @@
+# Zero, One, and Multiple-Shot Prompts
+
+## Understanding Prompt Engineering
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Prompts: instructions that guide LLM outputs
+- Art and science of communicating with LLMs
+- Critical skill for effective LLM utilization
+- Influences the quality, relevance, and accuracy of responses
+- Key to unlocking LLM capabilities in finance
+:::
+
+::: {.column width="40%"}
+![Prompt Types](images/prompt_types_placeholder.png)
+:::
+
+::::
+
+## Zero-Shot Prompting
+
+- Model responds without examples
+- Example: "Explain the Efficient Market Hypothesis"
+- Benefits: Simplicity and directness
+- Limitations: Less control over output format and style
+- Financial applications: Quick market insights, basic definitions
+
+## One-Shot Prompting
+
+- Providing a single example before the query
+- Example: "Q: What is CAPM? A: Capital Asset Pricing Model is... Now, what is Arbitrage Pricing Theory?"
+- Improved response structure and consistency
+- Particularly useful for standardized financial analyses
+- Applications: Financial report generation, consistent risk assessments
+
+## Few-Shot Prompting
+
+- Multiple examples establish clear patterns
+- Helps LLMs understand specific formats and requirements
+- Extremely effective for specialized financial tasks
+- Example: Multiple financial ratio calculations before asking for a new one
+- Applications: Complex financial modeling, specialized report generation
+
+## Advanced Prompting Techniques for Finance
+
+- Chain-of-thought prompting for financial reasoning
+- Role-based prompts ("As a financial analyst...")
+- System prompts for consistent financial advisory services
+- Retrieval-augmented generation for factual accuracy
+- Template-based approaches for regulatory compliance

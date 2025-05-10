@@ -1,0 +1,36 @@
+---
+title: "Day 1: Introduction to Large Language Models"
+author: "Your Name"
+date: "2025-05-07"
+format:
+  revealjs:
+    theme: solarized
+    slide-number: true
+    preview-links: auto
+    css: styles.css
+---
+
+# Introduction to Large Language Models in Finance
+
+## Overview of Today's Lecture
+
+- Evolution of NLP applications in Finance
+- Word Embeddings
+- Tokenizers
+- The Transformers Architecture
+- Classification and Scalability of LLMs
+
+{{< include 01-nlp-finance-evolution.qmd >}}
+
+{{< include 02-word-embeddings.qmd >}}
+
+{{< include 03-tokenizers.qmd >}}
+
+{{< include 04-transformers-architecture.qmd >}}
+
+{{< include 05-llm-classification.qmd >}}
+
+## What's Next?
+
+- Practical session: Setting up your environment and exploring HuggingFace
+- Hands-on experience with LLM APIs

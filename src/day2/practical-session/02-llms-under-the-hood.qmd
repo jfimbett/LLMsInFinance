@@ -1,0 +1,51 @@
+# LLMs Under the Hood
+
+## Exploring Model Architecture
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Decoder-only vs. encoder-decoder architectures
+- Attention mechanisms up close
+- Tokenization and embedding spaces
+- Model parallelism strategies
+- Forward and backward passes
+:::
+
+::: {.column width="40%"}
+![Model Architecture](images/llm_architecture_placeholder.png)
+:::
+
+::::
+
+## Practical Lab: Model Inspection
+
+- Loading pre-trained models in Python
+- Visualizing attention patterns
+- Examining token embeddings
+- Analyzing model activations for financial text
+- Understanding context window limitations
+
+## Performance Optimization Techniques
+
+- Knowledge distillation for smaller models
+- Quantization methods (INT8, INT4)
+- Pruning techniques for model efficiency
+- Flash attention and other computational optimizations
+- Memory-efficient inference strategies
+
+## Custom Inference Strategies
+
+- Greedy decoding vs. beam search
+- Temperature and top-k/top-p sampling
+- Prompt engineering for efficient inference
+- Advanced decoding strategies for financial text
+- Measuring latency-quality tradeoffs
+
+## Building a Financial LLM Pipeline
+
+- Preprocessing financial inputs
+- Constructing effective prompts
+- Managing inference parameters
+- Post-processing model outputs
+- Implementing feedback loops

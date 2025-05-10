@@ -1,0 +1,79 @@
+# Setting Up Your Python Environment
+
+## Introduction to Virtual Environments
+
+Virtual environments allow you to create isolated Python environments for your projects, avoiding dependency conflicts between projects.
+
+## Setting Up with Conda
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```bash
+# Create a new conda environment
+conda create -n llm-finance python=3.10
+
+# Activate the environment
+conda activate llm-finance
+
+# Install essential packages for LLM work
+conda install -c conda-forge jupyter pandas numpy matplotlib scikit-learn
+```
+:::
+
+::: {.column width="40%"}
+**Benefits of Conda**:
+- Cross-platform support
+- Handles non-Python dependencies
+- Environment exports
+- Integration with Jupyter
+:::
+
+::::
+
+## Using pip and requirements.txt
+
+Create a `requirements.txt` file with the following content:
+
+```txt
+torch>=2.0.0
+transformers>=4.30.0
+datasets>=2.12.0
+accelerate>=0.20.0
+sentencepiece>=0.1.99
+evaluate>=0.4.0
+python-dotenv>=1.0.0
+openai>=1.0.0
+gradio>=3.36.0
+matplotlib>=3.7.1
+pandas>=2.0.0
+scikit-learn>=1.2.2
+```
+
+Then install using:
+
+```bash
+# With conda environment activated
+pip install -r requirements.txt
+```
+
+## Setting Up Your IDE
+
+For this course, we recommend using:
+
+- VS Code with Python and Jupyter extensions
+- JupyterLab
+
+## Exercise: Verify Your Setup
+
+```{python}
+#| eval: false
+import torch
+import transformers
+import pandas as pd
+import matplotlib.pyplot as plt
+
+print(f"PyTorch version: {torch.__version__}")
+print(f"Transformers version: {transformers.__version__}")
+print(f"CUDA available: {torch.cuda.is_available()}")
+```

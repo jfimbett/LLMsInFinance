@@ -1,0 +1,59 @@
+# Word Embeddings
+
+## From Words to Vectors
+
+- Word embeddings: Dense vector representations of words
+- Capture semantic relationships between words
+- Enable mathematical operations on language
+- Foundation for modern NLP applications
+
+## Key Word Embedding Techniques
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Word2Vec (CBOW and Skip-gram)
+- GloVe (Global Vectors)
+- FastText
+- Contextual embeddings (ELMo, BERT)
+:::
+
+::: {.column width="40%"}
+```{python}
+#| eval: false
+import gensim.downloader as api
+
+# Load pre-trained Word2Vec embeddings
+word_vectors = api.load("word2vec-google-news-300")
+
+# Find words most similar to 'stock'
+similar_words = word_vectors.most_similar("stock")
+print(similar_words)
+```
+:::
+
+::::
+
+## Word Embeddings in Finance
+
+- Financial domain-specific embeddings
+- Applications:
+  - Asset price prediction
+  - Portfolio optimization
+  - Risk assessment
+  - Financial sentiment analysis
+
+## Vector Space Properties
+
+- Words with similar meanings cluster together
+- Vector arithmetic: "king" - "man" + "woman" ≈ "queen"
+- Financial examples:
+  - "Bull" - "Market" + "Housing" ≈ "Bubble"
+  - "Fed" + "Increase" ≈ "Rates"
+
+## Limitations of Static Embeddings
+
+- No context awareness (polysemy problem)
+- Need for domain adaptation
+- Challenge with rare financial terms
+- Inability to understand new terminology

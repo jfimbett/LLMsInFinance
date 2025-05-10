@@ -1,0 +1,51 @@
+# Training Your Own LLM
+
+## Introduction to Model Fine-tuning
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Why fine-tune pre-trained models for finance?
+- Available base models for fine-tuning
+- Hardware requirements and cloud options
+- Cost-benefit analysis of custom models
+- Defining your fine-tuning objectives
+:::
+
+::: {.column width="40%"}
+![Fine-tuning Process](images/finetuning_placeholder.png)
+:::
+
+::::
+
+## Preparing Financial Datasets
+
+- Sources of financial data for fine-tuning
+- Data cleaning and preprocessing
+- Creating instruction-following datasets
+- Handling sensitive financial information
+- Balancing different financial domains and tasks
+
+## Fine-tuning Techniques
+
+- Full fine-tuning vs. parameter-efficient methods
+- LoRA (Low-Rank Adaptation) for resource efficiency
+- QLoRA for even more efficient fine-tuning
+- Hyperparameter selection for financial models
+- Evaluating model performance improvements
+
+## Hands-on Lab: Fine-tuning with Financial Text
+
+- Setting up a fine-tuning environment
+- Using Hugging Face's Trainer API
+- Fine-tuning for financial sentiment analysis
+- Monitoring training progress and avoiding overfitting
+- Evaluating the fine-tuned model
+
+## Deploying Your Fine-tuned Model
+
+- Model quantization for efficiency
+- Deployment options (local, cloud, API services)
+- Model versioning and updating strategies
+- Monitoring model performance in production
+- Integrating with financial applications

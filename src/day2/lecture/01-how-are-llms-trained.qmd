@@ -1,0 +1,51 @@
+# How Are LLMs Trained?
+
+## Pre-training: The Foundation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Self-supervised learning on massive text corpora
+- Objective: predict next token or masked tokens
+- Training infrastructure: thousands of GPUs/TPUs
+- Computational costs: millions of dollars
+- Examples: Common Crawl, Books, Wikipedia, Code repositories
+:::
+
+::: {.column width="40%"}
+![LLM Training Process](images/llm_training_placeholder.png)
+:::
+
+::::
+
+## Fine-tuning: Specialization
+
+- Supervised fine-tuning (SFT) on specific tasks
+- Reinforcement Learning from Human Feedback (RLHF)
+- Constitutional AI approaches
+- Domain adaptation for finance (SEC filings, financial news)
+- Distillation techniques for smaller, efficient models
+
+## Key Training Innovations
+
+- Mixed precision training
+- Efficient attention mechanisms
+- Parallelization strategies (data, model, pipeline)
+- Optimizers designed for large models (AdamW, Lion)
+- Checkpoint and training resumption techniques
+
+## Training Challenges in Financial Domain
+
+- Data quality and curation for financial texts
+- Regulatory compliance during training
+- Addressing biases in financial data
+- Maintaining privacy of sensitive information
+- Environmental and computational sustainability concerns
+
+## Latest Advances in Training Methods
+
+- Direct Preference Optimization (DPO)
+- Mixture-of-Experts (MoE) architectures
+- Continuous pre-training on recent data
+- Multimodal training incorporating market data
+- Parameter-efficient fine-tuning methods (LoRA, P-tuning)

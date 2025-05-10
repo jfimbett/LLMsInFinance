@@ -1,0 +1,51 @@
+# Tracing Thoughts in LLMs
+
+## Understanding LLM Reasoning Processes
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- LLMs don't "think" linearly like humans
+- Attention mechanisms connect distant tokens
+- Hidden reasoning in complex tasks
+- Importance of making reasoning explicit
+- Impact on reliability in financial applications
+:::
+
+::: {.column width="40%"}
+![Thought Tracing](images/thought_tracing_placeholder.png)
+:::
+
+::::
+
+## Chain-of-Thought Prompting
+
+- Explicitly asking models to "think step by step"
+- Dramatic improvement in complex financial calculations
+- Example: "Walk through the calculation of a company's free cash flow"
+- Enables verification of intermediary steps
+- Reduces mathematical errors in financial analyses
+
+## Tree of Thoughts
+
+- Exploring multiple reasoning paths simultaneously
+- Evaluating different analytical approaches
+- Critical for risk assessment and scenario analysis
+- Applications: Portfolio optimization, investment strategy evaluation
+- Enhanced decision-making in uncertain market conditions
+
+## Self-Consistency & Verification
+
+- Generating multiple solutions to the same problem
+- Identifying inconsistencies in financial reasoning
+- Cross-checking numerical results and conclusions
+- Improved accuracy for high-stakes financial decisions
+- Essential for regulatory compliance and audit trails
+
+## Practical Applications in Finance
+
+- Financial statement analysis with visible reasoning
+- M&A valuation with transparent methodology
+- Credit risk assessment with clear decision rationale
+- Trading strategy development with explicit assumptions
+- Regulatory reporting with traceable conclusions

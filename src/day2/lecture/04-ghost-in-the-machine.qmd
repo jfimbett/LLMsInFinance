@@ -1,0 +1,51 @@
+# Ghost in the Machine
+
+## Understanding LLM Emergent Behaviors
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Emergent capabilities beyond explicit training
+- Scale-dependent phenomena in large models
+- Unexpected reasoning and generalization abilities
+- "Sparks of AGI" debate
+- Implications for financial applications
+:::
+
+::: {.column width="40%"}
+![Emergent Behaviors](images/emergent_behaviors_placeholder.png)
+:::
+
+::::
+
+## Hallucinations and Financial Risk
+
+- Confident generation of false information
+- Potential impacts on financial decision-making
+- Detection strategies in financial contexts
+- Risk mitigation approaches
+- Case studies of hallucination-related financial errors
+
+## Interpretability Challenges
+
+- Black box nature of large language models
+- Difficulty tracing specific outputs to training data
+- Regulatory concerns in financial services
+- Methods for improving transparency
+- The tension between performance and explainability
+
+## Alignment with Financial Values
+
+- Ensuring LLMs optimize for beneficial financial outcomes
+- Safety measures for automated financial systems
+- Ethics of financial advice from LLMs
+- Preventing market manipulation
+- Balancing innovation with responsible deployment
+
+## Future Directions
+
+- Progress in interpretable financial AI
+- Regulatory frameworks for LLM use in finance
+- Technical solutions for alignment and safety
+- Human-AI collaboration models in financial institutions
+- Preparing for more capable financial AI systems

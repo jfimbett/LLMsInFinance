@@ -1,0 +1,51 @@
+# Memory, Buffer, Cache & Automatic Calls
+
+## Building Stateful LLM Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Beyond single prompts: maintaining conversation history
+- Short-term memory vs. long-term knowledge
+- Memory architectures for financial applications
+- Persistent user context in financial advisory systems
+- Session management and security considerations
+:::
+
+::: {.column width="40%"}
+![Memory Architecture](images/memory_architecture_placeholder.png)
+:::
+
+::::
+
+## Memory Types for Financial Applications
+
+- Conversation buffer memory for client interactions
+- Summary memory for long financial discussions
+- Vector stores for retrieving relevant financial knowledge
+- Entity memory for tracking financial instruments/companies
+- Episodic memory for recurring client interactions
+
+## Caching Strategies
+
+- Token-level caching for efficiency
+- Semantic caching for similar financial queries
+- Cache invalidation strategies for time-sensitive data
+- Balancing freshness and performance
+- Compliance considerations for cached financial data
+
+## Automatic Function Calling
+
+- Tool use in modern LLMs
+- Connecting models to financial APIs
+- Parameter extraction from natural language
+- Function calling for market data retrieval
+- Structured output for financial systems integration
+
+## Practical Lab: Building a Financial Assistant
+
+- Implementing a conversational financial advisor
+- Adding memory for client preferences
+- Integrating market data retrieval functions
+- Implementing regulatory compliance checks
+- Testing and evaluating system performance

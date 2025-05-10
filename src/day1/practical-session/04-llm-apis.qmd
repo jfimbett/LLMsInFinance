@@ -1,0 +1,113 @@
+# Accessing LLMs through APIs
+
+## Introduction to LLM APIs
+
+LLM APIs provide access to powerful language models without:
+- Managing infrastructure
+- Training models from scratch
+- Dealing with GPU requirements
+
+## Popular LLM APIs for Finance
+
+- OpenAI API (GPT models)
+- Anthropic Claude API
+- Cohere API
+- HuggingFace Inference API
+- Azure OpenAI Service
+
+## Setting Up API Access
+
+:::: {.columns}
+
+::: {.column width="60%"}
+```python
+# Store API keys in a .env file
+# .env
+OPENAI_API_KEY=your_openai_api_key
+HUGGINGFACE_API_KEY=your_huggingface_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+```
+
+```python
+# Load API keys
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
+
+# Access keys
+openai_api_key = os.getenv("OPENAI_API_KEY")
+```
+:::
+
+::: {.column width="40%"}
+**Security Best Practices**:
+- Never hardcode API keys
+- Don't commit keys to version control
+- Use environment variables
+- Set appropriate usage limits
+:::
+
+::::
+
+## Using the OpenAI API
+
+```{python}
+#| eval: false
+from openai import OpenAI
+import os
+
+# Initialize client
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# Financial prompt example
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are a financial analyst assistant."},
+        {"role": "user", "content": "Analyze the impact of rising interest rates on the banking sector."}
+    ],
+    temperature=0.3,
+    max_tokens=500
+)
+
+print(response.choices[0].message.content)
+```
+
+## Using the HuggingFace Inference API
+
+```{python}
+#| eval: false
+import requests
+import json
+
+API_URL = "https://api-inference.huggingface.co/models/ProsusAI/finbert"
+headers = {"Authorization": f"Bearer {os.getenv('HUGGINGFACE_API_KEY')}"}
+
+def query(payload):
+    response = requests.post(API_URL, headers=headers, json=payload)
+    return response.json()
+
+# Test with financial statement
+output = query({
+    "inputs": "The company's quarterly revenue exceeded analyst expectations."
+})
+
+print(json.dumps(output, indent=2))
+```
+
+## Exercise: Financial Sentiment Analysis
+
+```{python}
+#| eval: false
+# Financial news headlines
+headlines = [
+    "XYZ Corp announces better-than-expected earnings for Q2",
+    "Central Bank raises interest rates by 50 basis points",
+    "Market plunges amid recession fears",
+    "Tech company lays off 10% of workforce to reduce costs"
+]
+
+# Use the API of your choice to analyze sentiment
+# Compare results between different APIs
+```

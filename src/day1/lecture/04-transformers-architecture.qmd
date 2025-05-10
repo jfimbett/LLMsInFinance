@@ -1,0 +1,45 @@
+# The Transformers Architecture
+
+## Evolution of Sequence Models
+
+- From RNNs and LSTMs to Transformers
+- Key innovation: Attention mechanism
+- "Attention Is All You Need" (Vaswani et al., 2017)
+- Parallel processing advantage
+
+## Core Components
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- **Self-attention**: Relationship between all tokens
+- **Multi-head attention**: Multiple attention patterns
+- **Positional encodings**: Sequential information
+- **Feed-forward networks**: Non-linear transformations
+:::
+
+::: {.column width="50%"}
+![Transformer Architecture](images/transformer_architecture_placeholder.png)
+:::
+
+::::
+
+## Encoder-Decoder Structure
+
+- **Encoder**: Processes input text (BERT-like models)
+- **Decoder**: Generates output text (GPT-like models)
+- **Encoder-Decoder**: Translation and summarization (T5, BART)
+
+## Self-Attention Mechanism
+
+- Calculates importance of each token to all other tokens
+- Query-Key-Value (QKV) concept
+- Mathematical formulation:
+  $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+
+## Financial Applications
+
+- Learning relationships between financial entities
+- Capturing long-range dependencies in financial text
+- Understanding market sentiment across documents
+- Processing regulatory documentation

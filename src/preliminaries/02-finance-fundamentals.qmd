@@ -1,0 +1,268 @@
+---
+title: "Finance Fundamentals: Valuations Demystified"
+format: html
+---
+
+# Finance Fundamentals: Valuations Demystified
+
+## Introduction
+
+Welcome to "Finance Fundamentals: Valuations Demystified" - your friendly guide to understanding the core concepts of business valuation. Whether you're new to finance or looking for a refresher, this guide will equip you with the essential knowledge needed for our LLMs in Finance course.
+
+## 1. The Foundations: Financial Statements
+
+Before diving into valuation methods, let's establish a solid understanding of the three primary financial statements:
+
+### Income Statement: The Profit Journey
+
+The income statement shows a company's revenues, expenses, and profits over a specific period:
+
+```
+Revenue (or Sales)
+- Cost of Goods Sold (COGS)
+= Gross Profit
+- Operating Expenses (SG&A, R&D, etc.)
+= Operating Income (EBIT)
+- Interest Expense
+= Pre-tax Income
+- Taxes
+= Net Income
+```
+
+**Key metrics:**
+- **Gross Margin** = Gross Profit / Revenue
+- **Operating Margin** = Operating Income / Revenue
+- **Net Profit Margin** = Net Income / Revenue
+
+### Balance Sheet: The Financial Snapshot
+
+The balance sheet provides a snapshot of what a company owns (assets), what it owes (liabilities), and shareholder equity at a specific point in time:
+
+```
+Assets = Liabilities + Shareholders' Equity
+```
+
+**Key components:**
+- **Assets**: Cash, Accounts Receivable, Inventory, Property & Equipment, Intangible Assets
+- **Liabilities**: Accounts Payable, Debt (Short-term and Long-term)
+- **Shareholders' Equity**: Common Stock, Retained Earnings
+
+### Cash Flow Statement: Following the Money
+
+The cash flow statement tracks the inflows and outflows of cash across three categories:
+
+1. **Operating Activities**: Cash generated from core business operations
+2. **Investing Activities**: Cash used for long-term asset investments
+3. **Financing Activities**: Cash from investors and creditors, and payments to shareholders
+
+**Key insight**: A company can be profitable on paper (income statement) but still face cash flow problems!
+
+## 2. Discounted Cash Flow (DCF) Analysis
+
+DCF is the gold standard of valuation methods, based on the principle that a business's value is the sum of all its future cash flows, discounted to present value.
+
+### The DCF Formula
+
+The formula for calculating the present value of future cash flows is:
+
+$$PV = \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} + \frac{TV}{(1+r)^n}$$
+
+Where:
+- $PV$ = Present Value
+- $CF_t$ = Cash Flow in period t
+- $r$ = Discount Rate (often WACC)
+- $TV$ = Terminal Value
+- $n$ = Forecast Period
+
+### Step 1: Forecast Free Cash Flows (FCF)
+
+Free Cash Flow represents the cash a company generates after accounting for capital expenditures:
+
+$$FCF = EBIT \times (1 - \text{Tax Rate}) + \text{Depreciation} - \text{Capital Expenditures} - \Delta \text{Working Capital}$$
+
+Typically, we forecast detailed cash flows for 5-10 years.
+
+### Step 2: Calculate Terminal Value
+
+Terminal value represents all cash flows beyond the forecast period, calculated using either:
+
+**Perpetuity Growth Method:**
+$$TV = \frac{FCF_{n+1}}{r - g}$$
+
+Where $g$ is the perpetual growth rate (often 2-3%)
+
+**Exit Multiple Method:**
+$$TV = FCF_n \times \text{Terminal Multiple}$$
+
+Where the Terminal Multiple is often based on EV/EBITDA.
+
+### Step 3: Discount to Present Value
+
+Calculate the present value of projected cash flows using an appropriate discount rate, typically the Weighted Average Cost of Capital (WACC):
+
+$$WACC = E/(D+E) \times R_e + D/(D+E) \times R_d \times (1 - T)$$
+
+Where:
+- $E$ = Market value of equity
+- $D$ = Market value of debt
+- $R_e$ = Cost of equity (often calculated using CAPM)
+- $R_d$ = Cost of debt
+- $T$ = Tax rate
+
+### Step 4: Calculate Enterprise Value and Equity Value
+
+$$\text{Enterprise Value (EV)} = \sum \text{PV of FCFs} + \text{PV of Terminal Value}$$
+
+$$\text{Equity Value} = \text{Enterprise Value} - \text{Net Debt} + \text{Non-operating Assets}$$
+
+$$\text{Share Price} = \text{Equity Value} / \text{Shares Outstanding}$$
+
+### Example: Simple DCF Calculation
+
+Let's walk through a simplified example:
+
+Assumptions:
+- Year 1 FCF: $100 million
+- Growth rate: 5% for years 2-5, then 2% terminal growth
+- Discount rate (WACC): 10%
+- Shares outstanding: 50 million
+
+FCF Projections:
+- Year 1: $100 million
+- Year 2: $105 million
+- Year 3: $110.25 million
+- Year 4: $115.76 million
+- Year 5: $121.55 million
+
+Terminal value:
+$$TV = \frac{121.55 \times (1 + 0.02)}{0.10 - 0.02} = \frac{124}{0.08} = $1,550 \text{ million}$$
+
+Present values (in $millions):
+- Year 1: $100 / 1.1 = $90.91$
+- Year 2: $105 / 1.1^2 = $86.78$
+- Year 3: $110.25 / 1.1^3 = $82.82$
+- Year 4: $115.76 / 1.1^4 = $79.02$
+- Year 5: $121.55 / 1.1^5 = $75.47$
+- Terminal value: $1,550 / 1.1^5 = $962.14$
+
+Enterprise Value: $90.91 + $86.78 + $82.82 + $79.02 + $75.47 + $962.14 = $1,377.14 million
+
+If net debt is $177.14 million, then:
+Equity Value = $1,377.14 - $177.14 = $1,200 million
+
+Share price = $1,200 million / 50 million shares = $24 per share
+
+## 3. Multiple Valuation Methods
+
+Multiple-based valuation compares a company to similar companies using standardized valuation ratios.
+
+### Common Valuation Multiples
+
+#### Enterprise Value (EV) Multiples
+- **EV/EBITDA**: Enterprise Value / Earnings Before Interest, Taxes, Depreciation & Amortization
+  - Typical ranges: 5-8x (mature), 8-12x (growing), 12x+ (high growth)
+- **EV/Revenue**: Enterprise Value / Revenue
+  - Useful for pre-profit companies
+  - Typical ranges: 1-3x (mature), 3-6x (growing), 6x+ (high growth)
+- **EV/EBIT**: Enterprise Value / Earnings Before Interest & Taxes
+
+#### Equity Multiples
+- **P/E Ratio**: Price per Share / Earnings per Share
+  - Typical ranges: 10-15x (value), 15-25x (growth), 25x+ (high growth)
+- **P/B Ratio**: Price per Share / Book Value per Share
+  - Useful for financial institutions
+- **P/S Ratio**: Price per Share / Sales per Share
+
+### Example: Valuing a Company Using Multiples
+
+For a company with:
+- EBITDA of $50 million
+- Net income of $25 million
+- 10 million shares outstanding
+
+If comparable companies trade at:
+- EV/EBITDA of 8x
+- P/E of 15x
+
+Then:
+- EV = $50 million × 8 = $400 million
+- If net debt is $100 million, Equity Value = $400 million - $100 million = $300 million
+- Share price = $300 million / 10 million shares = $30 per share
+
+OR:
+- Share price = $25 million × 15 / 10 million shares = $37.5 per share
+
+The difference between the two methods indicates potential mispricing or different growth expectations.
+
+## 4. Key Accounting Concepts for Valuation
+
+### Accrual vs. Cash Accounting
+
+- **Accrual Accounting**: Recognizes revenue when earned and expenses when incurred
+- **Cash Accounting**: Recognizes revenue and expenses only when cash changes hands
+
+Financial statements use accrual accounting, but cash flow is what matters for valuation!
+
+### EBITDA vs. Net Income
+
+- **EBITDA**: Operating performance before capital structure, tax strategies, and capex decisions
+- **Net Income**: Bottom-line profit after all expenses, taxes, and accounting adjustments
+
+EBITDA is often preferred for valuation as it's more comparable across companies with different capital structures.
+
+### Working Capital
+
+Working capital represents the operational liquidity of a business:
+
+$$\text{Working Capital} = \text{Current Assets} - \text{Current Liabilities}$$
+
+Changes in working capital impact free cash flow:
+- Increasing working capital requirements = Cash outflow
+- Decreasing working capital requirements = Cash inflow
+
+## 5. Advanced Concepts
+
+### Adjusting for Non-Recurring Items
+
+When valuing a company, it's important to adjust for one-time or unusual items:
+- Restructuring charges
+- Litigation settlements
+- Asset impairments
+- Gains/losses from asset sales
+
+These should be excluded when forecasting future performance.
+
+### Growth vs. Value
+
+Two fundamental approaches to valuation:
+- **Growth investing**: Focuses on future potential, often using revenue multiples or DCF with aggressive growth assumptions
+- **Value investing**: Focuses on current fundamentals and looks for discrepancies between market price and intrinsic value
+
+### The Role of Industry-Specific Metrics
+
+Different industries may have unique valuation metrics:
+- **SaaS**: Annual Recurring Revenue (ARR), Customer Acquisition Cost (CAC), Lifetime Value (LTV)
+- **Retail**: Same-store sales, sales per square foot
+- **Banking**: Net Interest Margin, Loan-to-Deposit Ratio
+- **Insurance**: Combined Ratio, Loss Ratio
+
+## 6. How LLMs Are Changing Valuation
+
+As we transition into the main course material, consider these ways LLMs are impacting financial analysis:
+
+1. **Sentiment Analysis**: Extracting market sentiment from news, social media, and earnings calls
+2. **Financial Statement Analysis**: Automating the extraction and analysis of financial data
+3. **Comparable Company Selection**: Identifying truly comparable companies based on business models
+4. **Forecast Generation**: Creating and stress-testing financial projections
+5. **Valuation Report Writing**: Generating comprehensive valuation reports with key insights
+
+## Conclusion
+
+This guide has covered the fundamental concepts of business valuation that will serve as a foundation for our exploration of LLMs in finance. Remember that valuation is both an art and a science—financial models provide a framework, but judgment and context remain critically important.
+
+## Further Resources
+
+- [Damodaran Online](http://pages.stern.nyu.edu/~adamodar/) - Professor Aswath Damodaran's extensive resources on valuation
+- [Financial Modeling Prep](https://financialmodelingprep.com/) - Financial statements and data
+- [CFA Institute](https://www.cfainstitute.org/) - Educational resources on equity valuation
+- [Investopedia](https://www.investopedia.com/) - Explanations of financial concepts

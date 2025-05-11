@@ -1,0 +1,27 @@
+---
+title: "LLMs in Finance: Preliminary Materials"
+format: html
+---
+
+# Course Preliminaries
+
+Welcome to the preliminary materials for the "LLMs in Finance" course. These materials are designed to help you get up to speed with the essential prerequisites needed to fully benefit from the main course content.
+
+## What You'll Find Here
+
+This section includes two key resources:
+
+1. [**"Python in a Nutshell: The Bare Minimum for AI Adventures"**](01-python-crash-course.html) - A beginner-friendly introduction to Python programming focused specifically on the skills you'll need for working with LLMs and AI in finance.
+
+2. [**"Finance Fundamentals: Valuations Demystified"**](02-finance-fundamentals.html) - An overview of essential business valuation concepts, including DCF analysis, accounting basics, and multiple valuations.
+
+## Who Should Use These Materials?
+
+- **Python Preliminaries**: If you have limited or no experience with Python programming
+- **Finance Fundamentals**: If you need a refresher on business valuation methods or lack background in financial analysis
+
+These materials are completely optional but highly recommended for those who want to ensure they have the foundational knowledge to get the most out of the course.
+
+## How to Use These Materials
+
+We recommend reviewing these materials before the start of the course. Each document includes practical examples and key concepts that will be referenced throughout the main course sessions. You don't need to memorize everything - these resources will remain available for reference throughout the course.

@@ -1,0 +1,270 @@
+---
+title: "Python in a Nutshell: The Bare Minimum for AI Adventures"
+format: html
+---
+
+# Python in a Nutshell: The Bare Minimum for AI Adventures
+
+## Introduction
+
+Welcome to your express ticket to Python proficiency for AI applications in finance! This guide is designed for those who need to quickly grasp the essentials of Python specifically for working with Large Language Models (LLMs) and other AI technologies in financial contexts.
+
+Don't worry if you've never written a line of code before - by the end of this guide, you'll have the necessary foundation to follow along with our LLMs in Finance course.
+
+## 1. Python Basics: The Building Blocks
+
+### Variables and Data Types
+
+Python is like a versatile container system - you can store different kinds of information in different types of containers (variables):
+
+```python
+# Storing a number
+account_balance = 10000.50
+
+# Storing text
+customer_name = "Jane Investor"
+
+# Storing a true/false value
+is_premium_client = True
+
+# Print values to see them
+print(account_balance)  # 10000.5
+print(customer_name)    # Jane Investor
+print(is_premium_client)  # True
+```
+
+### Lists: Collections of Items
+
+Lists are ordered collections that can store multiple items:
+
+```python
+# A list of stock tickers
+tech_stocks = ["AAPL", "MSFT", "GOOGL", "AMZN"]
+
+# Access items by position (positions start at 0)
+print(tech_stocks[0])  # AAPL
+
+# Add a new stock to the list
+tech_stocks.append("NVDA")
+print(tech_stocks)  # ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA']
+```
+
+### Dictionaries: Key-Value Pairs
+
+Dictionaries store data as key-value pairs, perfect for financial data:
+
+```python
+# Stock prices dictionary
+stock_prices = {
+    "AAPL": 182.52,
+    "MSFT": 410.34,
+    "GOOGL": 174.58,
+    "AMZN": 180.75
+}
+
+# Access price by ticker
+print(stock_prices["AAPL"])  # 182.52
+
+# Add a new stock
+stock_prices["NVDA"] = 950.02
+```
+
+## 2. Control Flow: Making Decisions
+
+### Conditionals (if/else)
+
+Make decisions in your code based on conditions:
+
+```python
+portfolio_value = 150000
+
+if portfolio_value > 100000:
+    risk_profile = "moderate"
+    eligible_for_premium = True
+else:
+    risk_profile = "conservative"
+    eligible_for_premium = False
+
+print(f"Risk profile: {risk_profile}")
+print(f"Premium eligible: {eligible_for_premium}")
+```
+
+### Loops: Doing Things Repeatedly
+
+Process multiple items efficiently:
+
+```python
+# For loop to calculate total portfolio value
+positions = [
+    {"ticker": "AAPL", "shares": 10, "price": 182.52},
+    {"ticker": "MSFT", "shares": 5, "price": 410.34},
+    {"ticker": "GOOGL", "shares": 8, "price": 174.58}
+]
+
+total_value = 0
+for position in positions:
+    position_value = position["shares"] * position["price"]
+    total_value += position_value
+    print(f"{position['ticker']}: ${position_value:.2f}")
+
+print(f"Total portfolio value: ${total_value:.2f}")
+```
+
+## 3. Functions: Reusable Code Blocks
+
+Functions let you organize and reuse code:
+
+```python
+def calculate_roi(initial_investment, final_value):
+    """Calculate return on investment as a percentage"""
+    return ((final_value - initial_investment) / initial_investment) * 100
+
+# Use the function
+investment = 10000
+final = 12500
+roi = calculate_roi(investment, final)
+print(f"ROI: {roi:.2f}%")  # ROI: 25.00%
+```
+
+## 4. Working with Libraries: The Power of Python
+
+Python's true power comes from its libraries. Here are the ones we'll use most in this course:
+
+### NumPy: Numerical Operations
+
+```python
+import numpy as np
+
+# Create an array of returns
+monthly_returns = np.array([0.02, -0.01, 0.03, 0.02, -0.02, 0.01])
+
+# Calculate statistics
+average_return = np.mean(monthly_returns)
+volatility = np.std(monthly_returns)
+
+print(f"Average monthly return: {average_return:.2%}")
+print(f"Monthly volatility: {volatility:.2%}")
+```
+
+### Pandas: Data Analysis
+
+```python
+import pandas as pd
+
+# Create a simple DataFrame (think of it as a spreadsheet)
+data = {
+    'Date': ['2025-01-01', '2025-02-01', '2025-03-01'],
+    'AAPL': [182.52, 185.30, 189.45],
+    'MSFT': [410.34, 415.20, 420.75],
+    'GOOGL': [174.58, 180.22, 178.50]
+}
+
+df = pd.DataFrame(data)
+df['Date'] = pd.to_datetime(df['Date'])
+df.set_index('Date', inplace=True)
+
+print(df)
+```
+
+## 5. Working with AI and LLMs
+
+### Using APIs for LLMs
+
+```python
+import requests
+import json
+
+def query_llm_api(prompt, api_key):
+    """Simple function to query an LLM API"""
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+    
+    data = {
+        "model": "gpt-4",
+        "messages": [{"role": "user", "content": prompt}]
+    }
+    
+    response = requests.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers=headers,
+        data=json.dumps(data)
+    )
+    
+    return response.json()
+
+# We'll learn how to use this in the course
+# Example: result = query_llm_api("Analyze market sentiment for AAPL", "your_api_key")
+```
+
+### Using Hugging Face Transformers
+
+```python
+# Simple example of loading and using a pre-trained model
+from transformers import pipeline
+
+# This creates a text classification pipeline
+sentiment_analyzer = pipeline("sentiment-analysis")
+
+# Analyze some financial news
+news = "The company reported earnings well above analyst expectations."
+result = sentiment_analyzer(news)
+
+print(f"Sentiment: {result[0]['label']}, Score: {result[0]['score']:.4f}")
+```
+
+## 6. Putting It All Together: A Simple Financial Analysis
+
+Let's combine what we've learned to create a simple stock data analyzer:
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Function to calculate key metrics
+def analyze_stock(ticker_data):
+    """Calculate key financial metrics for a stock"""
+    # Calculate daily returns
+    ticker_data['Returns'] = ticker_data['Close'].pct_change()
+    
+    # Calculate metrics
+    avg_return = ticker_data['Returns'].mean()
+    volatility = ticker_data['Returns'].std()
+    sharpe = avg_return / volatility * np.sqrt(252)  # Annualized Sharpe ratio
+    
+    # Calculate drawdowns
+    ticker_data['Cumulative Returns'] = (1 + ticker_data['Returns']).cumprod()
+    ticker_data['Running Max'] = ticker_data['Cumulative Returns'].cummax()
+    ticker_data['Drawdown'] = (ticker_data['Cumulative Returns'] / 
+                               ticker_data['Running Max']) - 1
+    max_drawdown = ticker_data['Drawdown'].min()
+    
+    return {
+        'Average Daily Return': avg_return,
+        'Volatility': volatility,
+        'Sharpe Ratio': sharpe,
+        'Max Drawdown': max_drawdown
+    }
+
+# Using these functions would be like:
+# data = pd.read_csv('AAPL_stock_data.csv')
+# metrics = analyze_stock(data)
+# print(metrics)
+```
+
+## Conclusion: You're Ready to Begin!
+
+This crash course has equipped you with the fundamental Python skills needed to start working with LLMs and AI in finance. Don't worry if some concepts still feel a bit unfamiliar—you'll gain more confidence as we apply these skills throughout the main course.
+
+## Resources for Further Learning
+
+If you want to deepen your Python knowledge, here are some excellent resources:
+
+- [Python Official Documentation](https://docs.python.org/3/)
+- [Python for Finance on Investopedia](https://www.investopedia.com/articles/investing/073115/python-tutorials-financial-analysis.asp)
+- [Pandas Documentation](https://pandas.pydata.org/docs/)
+- [Hugging Face Transformers Documentation](https://huggingface.co/docs/transformers/)
+
+Remember, the best way to learn programming is by doing. Try modifying the examples provided here to see how they work!

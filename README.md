@@ -24,6 +24,21 @@ The course is organized into 5 days, each with lecture materials and hands-on pr
 - **Lecture**: Instructor introduction, course overview, learning outcomes
 - **Practical**: Environment setup, course materials access, first LLM interaction
 
+#### Pre-Course Checklist
+
+Before Day 1, please ensure you have completed:
+
+- [ ] **Environment Setup**: Python 3.10+, virtual environment created
+- [ ] **Course Materials**: Repository cloned and accessible
+- [ ] **API Accounts**: OpenAI and Hugging Face accounts created
+- [ ] **Dependencies**: All required packages installed
+- [ ] **Test Run**: Completed the introductory exercises
+
+#### Hardware Requirements
+- **Laptop** with 8GB+ RAM
+- **Stable internet** connection
+- **Power adapter** for all-day sessions
+
 ### 📌 Day 1: Getting Started with LLMs
 - **Lecture**: Introduction to LLMs, architectures, capabilities, and limitations
 - **Practical**: 
@@ -31,6 +46,35 @@ The course is organized into 5 days, each with lecture materials and hands-on pr
   - Git and version control
   - HuggingFace model usage
   - OpenAI and DeepSeek API integration
+
+#### Day 1 Practical Notebooks
+
+1. **Environment Setup**
+   - Python environment setup
+   - Installing required packages
+   - Testing the environment
+
+2. **Git and Version Control**
+   - Git repository setup
+   - Best practices for version control
+   - API key security with `.gitignore`
+
+3. **HuggingFace Setup**
+   - Local model usage with HuggingFace
+   - Model loading and optimization
+   - Financial sentiment analysis example
+
+4. **LLM APIs**
+   - OpenAI API integration
+   - DeepSeek API integration
+   - Environment variable management
+   - Financial news sentiment analyzer project
+
+#### Automated Setup Options
+
+For Day 1 practical session, you can use:
+- Windows: Run `setup.bat` in the day1/practical-session directory
+- macOS/Linux: Run `bash setup.sh` in the day1/practical-session directory
 
 ### 📌 Day 2: LLMs for Financial Analysis
 - **Lecture**: LLMs for financial texts, sentiment analysis, information extraction
@@ -100,15 +144,33 @@ The course is organized into 5 days, each with lecture materials and hands-on pr
      ```
      OPENAI_API_KEY=your_openai_key_here
      DEEPSEEK_API_KEY=your_deepseek_key_here
+     HUGGINGFACE_API_KEY=your_huggingface_key_here
      ```
+
+5. Launch Jupyter for the practical sessions:
+   ```bash
+   jupyter notebook
+   ```
+
+6. Each day's practical session has its own additional setup requirements. See the respective Jupyter notebooks for details.
 
 ## 📘 Preliminaries
 
-If you're new to Python or need a refresher on the fundamentals, check out the [Preliminaries](src/preliminaries/README.md) section, which includes:
+If you're new to Python or need a refresher on the fundamentals, check out the Preliminaries section in `src/preliminaries/`, which includes:
 
 - A comprehensive [Python Crash Course](src/preliminaries/01-python-crash-course.ipynb) with NumPy and PyTorch
 - Introduction to vectors and tensors for neural networks
 - Basic neural network concepts for understanding LLMs
+
+### Preliminaries Learning Objectives
+
+After going through the Python crash course, you should be able to:
+
+1. Understand basic Python syntax and data structures
+2. Use NumPy for numerical computing with arrays
+3. Create and manipulate tensors with PyTorch
+4. Understand the tensor operations used in neural networks
+5. Build simple neural network models with PyTorch
 
 This material will help you get up to speed before diving into the main course content.
 
@@ -139,60 +201,5 @@ Each day folder contains:
 Contributions to improve the course materials are welcome. Please feel free to submit a pull request or open an issue.
 
 ## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-Repository for the course "Large Language Models in Finance" - Barcelona School of Economics (BSE) Summer School 2025. This repository contains all the materials for both the lectures and practical sessions.
-
-## Course Structure
-
-This course is organized by days, with each day consisting of:
-- Lecture materials
-- Practical sessions
-
-### Days Overview
-
-- **Day 0**: Course Introduction
-- **Day 1**: Getting Started with LLMs
-  - Environment setup
-  - Version control
-  - HuggingFace
-  - LLM APIs (OpenAI and DeepSeek)
-- **Day 2**: LLMs for Financial Analysis
-- **Day 3**: Prompt Engineering for Finance
-- **Day 4**: Fine-tuning and Specialized Models
-- **Day 5**: Advanced Applications and Future Directions
-
-## Getting Started
-
-For the practical sessions, you'll need:
-1. Python 3.10+
-2. Git
-3. A Jupyter notebook environment
-4. API keys for LLM services (OpenAI/DeepSeek)
-
-See each practical session's README for specific setup instructions.
-
-## Preliminaries
-
-If you're new to Python or need a refresher on the fundamentals needed for this course, check out the [Preliminaries](src/preliminaries/README.md) section, which includes:
-
-- A comprehensive [Python Crash Course](src/preliminaries/01-python-crash-course.ipynb) with NumPy and PyTorch
-- Introduction to vectors and tensors for neural networks
-- Basic neural network concepts for understanding LLMs
-
-This material will help you get up to speed before diving into the main course content.
-
-## Day 1 Practical Session
-
-The Day 1 practical session now includes comprehensive Jupyter notebooks covering:
-- Python environment setup
-- Git and version control
-- Local model usage with HuggingFace
-- API integration with OpenAI and DeepSeek
-
-See the [Day 1 Practical Session](src/day1/practical-session/README.md) for more details.
-
-## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 

@@ -27,13 +27,14 @@ Welcome to the hands-on component of Day 1! In this session, we'll set up our wo
 - A GitHub account (for version control)
 - An internet connection
 
-{{< include 01-python-environment.qmd >}}
+## Jupyter Notebooks
 
-{{< include 02-version-control.qmd >}}
+For this practical session, we'll be working with Jupyter notebooks. You can find the notebooks in the `practical-session` folder:
 
-{{< include 03-huggingface-intro.qmd >}}
-
-{{< include 04-llm-apis.qmd >}}
+1. [Environment Setup](01-environment-setup.ipynb) - Setting up your Python environment for LLM development
+2. [Git and Version Control](02-git-version-control.ipynb) - Basic version control practices for LLM projects
+3. [HuggingFace Setup](03-huggingface-setup.ipynb) - Using models locally with HuggingFace
+4. [LLM APIs](04-llm-apis.ipynb) - Accessing LLMs through OpenAI and DeepSeek APIs
 
 ## Wrap Up
 
@@ -43,4 +44,7 @@ By completing this practical session, you've laid the foundation for working wit
 
 - [HuggingFace Documentation](https://huggingface.co/docs)
 - [OpenAI API Documentation](https://platform.openai.com/docs/api-reference)
+- [DeepSeek API Documentation](https://platform.deepseek.com/)
 - [Python Environment Management Best Practices](https://realpython.com/python-virtual-environments-a-primer/)
+- [Git Handbook](https://guides.github.com/introduction/git-handbook/)
+- [dotenv Documentation](https://github.com/theskumar/python-dotenv)

@@ -28,7 +28,7 @@ jupyter: python3
 
 {{< include 03-limitations.qmd >}}
 
-{{< include 04-transformers-architecture.qmd >}}
+{{< include 04-transformers.qmd >}}
 
 {{< include 05-tokenizers.qmd >}}
 

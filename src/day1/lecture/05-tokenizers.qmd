@@ -1,56 +1,56 @@
-# Tokenizers
+# Tokenizers: Theory, Algorithms, and Practical Considerations
 
-## What are Tokenizers?
+## 1. Motivation
+Natural-language text is a sequence of Unicode code points that is **too sparse and high-entropy** for efficient statistical modeling.  A *tokenizer* transforms this raw character stream into a shorter sequence of discrete symbols drawn from a bounded *vocabulary* $V$, enabling language models to learn meaningful patterns.
 
-- Tools that convert text into tokens (basic units for LLMs)
-- Critical preprocessing step for all NLP tasks
-- Bridge between human language and machine processing
+- Unicode code points are just a way to represent characters in a computer. Each character is assigned a unique number, which allows computers to handle text in different languages and scripts. E.g. `A` is represented by the code point `U+0041`, and `€` by `U+20AC`.
 
-## Types of Tokenization
+- The complete set of Unicode code points is denoted $\Sigma$, and the set of all finite-length strings over $\Sigma$ is $\Sigma^{*}$.  A tokenizer maps these strings to a sequence of tokens from a finite vocabulary $V$.
 
-:::: {.columns}
+**Definition.**  A tokenizer is a deterministic (or stochastic) mapping  
+$\mathcal T : \Sigma^{*} \;\longrightarrow\; V^{*},$  
+where $\Sigma$ is the character alphabet and $V$ is a finite set of tokens.
 
-::: {.column width="60%"}
-- **Word-level**: Split by spaces/punctuation
-- **Character-level**: Individual characters
-- **Subword**: Parts of words (BPE, WordPiece, SentencePiece)
-- **Lemmatization**: Map to base forms
-:::
+- $V^*$ is the set of all finite-length sequences of tokens, including the empty sequence.
 
-::: {.column width="40%"}
-```{python}
-#| eval: false
-from transformers import AutoTokenizer
+## Example 
 
-# Load a tokenizer
-tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+- Imagine you are an alien from a civilization with only 3 symbols (letters): `A`, `B`, and `C`. 
 
-# Tokenize a financial sentence
-text = "The Federal Reserve increased interest rates by 25 basis points."
-tokens = tokenizer.tokenize(text)
-print(tokens)
-```
-:::
+- $\Sigma = \{A, B, C\}$ and $\Sigma^{*} = \{\epsilon, A, B, C, AA, AB, AC, BA, BB, BC, CA, CB, CC, AAA, AAB, \ldots\}$. where $\epsilon$ is the empty string.
+- You are creating your own LLM and you define a vocabulary $V = \{A, B, C, AB, AC, BA, BB, BC\}$. Recall that $|\Sigma^*| = \infty$.
+- Your tokenizer is a function $\mathcal T : \Sigma^{*} \longrightarrow V^{*}$ that maps strings from $\Sigma^{*}$ to sequences of tokens in $V^{*}$. For example
+$$
+\mathcal T(AA) = (A, A), \quad \mathcal T(AB) = (AB), \quad \mathcal T(ACB) = (AC, B), \quad \mathcal T(ABC) = (AB, C).
+$$
 
-::::
 
-## Why Subword Tokenization?
+## 2. What would you like from a tokenizer?
+1. **Coverage** — every input string should be tokenisable without `UNK` (unknown) tokens. This means that the tokenizer should be able to handle any input string without producing tokens that are not in the vocabulary.
 
-- Handles out-of-vocabulary words
-- Balances vocabulary size and sequence length
-- Captures morphological patterns
-- Example: "refinancing" → ["re", "##financ", "##ing"]
+2. **Compression** — minimise the expected token sequence length $\mathbb E[|\mathcal T(x)|] \forall x\in\Sigma^{*}$. 
+3. **Consistency** — identical substrings map to identical token sequences.  
+4. **Latency** — $\mathcal T$ should run in $O(|x|)$ time (linear time).
+5. **Reversibility** — decoding $\mathcal T^{-1}$ must recover the original text (modulo normalisation). E.g. $T^{-1}(AB,A,C)=ABAC$
 
-## Financial Text Tokenization Challenges
+Balancing these criteria leads to different tokenization families.
 
-- Technical jargon and acronyms
-- Numerical representations
-- Special characters (currencies, percentages)
-- Ticker symbols and notation
-  
-## Impact on Model Performance
+## 3. Taxonomy of Tokenizers
+| Family | Vocabulary Size $|V|$ | Sequence Length | OOV Risk | Typical Use |
+|--------|----------------------|-----------------|----------|-------------|
+| **Character** | $|\Sigma|\approx 10^{3}$ | High | None | OCR, robust systems |
+| **Word**      | $\sim 10^{5}$          | Low  | High | Early NLP, controlled domains |
+| **Sub-word**  | $2\times10^{4}$–$8\times10^{4}$ | Medium | Very low | Modern LLMs |
 
-- Tokenization affects model understanding
-- Domain-specific tokenizers improve financial NLP
-- Trade-offs: granularity vs. sequence length
-- Context window implications
+## 4. Training a Tokenizer
+- Tokenizers can be trained on a corpus of text to learn the most effective way to split the text into tokens.
+- The training process involves analyzing the frequency of character sequences in the corpus and selecting the most common sequences as tokens.
+- The goal is to create a vocabulary that balances coverage, compression, and consistency.
+- The most common algorithms for training tokenizers are:
+  - Byte-Pair Encoding (BPE): 
+    - Iteratively merges the most frequent pairs of characters or tokens until a desired vocabulary size is reached.
+  - Unigram Language Model: 
+    - Treats the tokenization problem as a probabilistic model, selecting tokens based on their likelihood of occurrence in the corpus.
+  - WordPiece:
+    - Similar to BPE, but uses a probabilistic approach to select the most likely tokens based on their frequency and context.
+- Most LLM providers do not train their own tokenizers, but rather use pre-trained tokenizers.

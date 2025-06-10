@@ -1,52 +1,182 @@
 # Classification and Scalability of LLMs
 
-## Types of LLMs
-
-- **By Architecture**:
-  - Encoder-only (BERT, RoBERTa)
-  - Decoder-only (GPT, LLaMA)
-  - Encoder-decoder (T5, BART)
-
-- **By Size**:
-  - Small (< 1B parameters)
-  - Medium (1B-10B parameters)
-  - Large (10B-100B parameters)
-  - Frontier (>100B parameters)
-
-## Parameter Scaling Laws
+## LLM Classification Framework
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- Performance generally scales with model size
-- Logarithmic relationship between parameters and accuracy
-- Diminishing returns beyond certain thresholds
-- Implications for compute requirements
+**By Architecture:**
+- **Autoregressive (Decoder-only)**: GPT family, Claude, Llama
+- **Autoencoding (Encoder-only)**: BERT, RoBERTa, DistilBERT
+- **Encoder-Decoder**: T5, BART, FLAN-T5
+
+**By Training Approach:**
+- **Pre-training**: Self-supervised learning on massive corpora
+- **Fine-tuning**: Task-specific supervised learning
+- **Instruction-following**: Trained to follow human instructions
+- **Reinforcement Learning from Human Feedback (RLHF)**
 :::
 
 ::: {.column width="40%"}
-![Scaling Laws](images/scaling_laws_placeholder.png)
+![LLM Classification](../../images/llm_classification_placeholder.png)
 :::
 
 ::::
 
-## Specialized vs. General Purpose Models
+---
 
-- **General purpose**: Broad knowledge, flexible applications
-- **Domain-specific**: Financial expertise, but less versatile
-- **Trade-offs**: Performance vs. adaptability
+## Model Architecture Types
 
-## Financial LLM Considerations
+### Autoregressive Models (Decoder-only)
+- **Examples**: GPT-3/4, Claude, Llama, Mistral
+- **Training**: Next-token prediction
+- **Use cases**: Text generation, completion, conversation
+- **Advantages**: Excellent for generative tasks
+- **Disadvantages**: Less efficient for understanding tasks
 
-- ROI on model size for specific financial tasks
-- Latency requirements for real-time applications
-- Privacy and data sensitivity
-- Regulatory compliance needs
-- Explainability requirements
+### Autoencoding Models (Encoder-only)
+- **Examples**: BERT, RoBERTa, DistilBERT
+- **Training**: Masked language modeling
+- **Use cases**: Classification, sentiment analysis, NER
+- **Advantages**: Bidirectional context, efficient for understanding
+- **Disadvantages**: Cannot generate text naturally
 
-## Deployment Strategies
+### Encoder-Decoder Models
+- **Examples**: T5, BART, FLAN-T5
+- **Training**: Various objectives (span corruption, denoising)
+- **Use cases**: Translation, summarization, question answering
+- **Advantages**: Flexible for both understanding and generation
+- **Disadvantages**: More complex architecture
 
-- Cloud vs. on-premise considerations
-- Parameter-efficient fine-tuning (LoRA, adapters)
-- Quantization and optimization techniques
-- Domain adaptation approaches
+---
+
+## Training Paradigms
+
+### Pre-training Objectives
+
+**Autoregressive (AR):**
+$$P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})$$
+
+**Masked Language Modeling (MLM):**
+- Randomly mask tokens and predict them
+- Bidirectional context understanding
+
+**Span Corruption (T5-style):**
+- Mask contiguous spans of text
+- Predict the masked spans
+
+---
+
+## Model Scale Categories
+
+| Category | Parameters | Examples | Characteristics |
+|----------|-----------|----------|----------------|
+| **Small** | <1B | DistilBERT, ALBERT | Fast inference, limited capabilities |
+| **Base** | 1B-10B | BERT-Large, GPT-2 | Good balance of performance/efficiency |
+| **Large** | 10B-100B | GPT-3, T5-XXL | Strong performance, higher compute |
+| **Extra Large** | 100B+ | GPT-4, PaLM, Claude | State-of-the-art, very high compute |
+
+---
+
+## Specialized LLM Categories
+
+### Code Models
+- **GitHub Copilot** (based on Codex)
+- **CodeT5**, **InCoder**, **CodeGen**
+- **StarCoder**, **WizardCoder**
+
+### Financial Domain Models
+- **BloombergGPT**: 50B parameters, trained on financial data
+- **FinBERT**: BERT fine-tuned for financial sentiment
+- **PaLM-Finance**: Specialized for financial reasoning
+
+### Multimodal Models
+- **GPT-4V**: Vision capabilities
+- **Claude 3**: Image understanding
+- **DALL-E 3**: Text-to-image generation
+
+---
+
+# LLM Providers
+
+## Frontier Labs (Global Leaders)
+
+| Company | Flagship or Latest LLM(s) (2024 – 25) | Brief description |
+|---------|---------------------------------------|-------------------|
+| **OpenAI** | GPT-4o, GPT-4.1 mini | Original ChatGPT maker; continues to set benchmark accuracy and multimodality |
+| **Anthropic** | Claude 4 (Opus & Sonnet) | Safety-first research lab spun out of OpenAI; emphasises "constitutional AI" |
+| **Google DeepMind** | Gemini 2.5 Pro | Multimodal model powering Google Search, Workspace & the Gemini app |
+| **Microsoft (Azure AI)** | Phi-3 / Phi-4 SLM family | Compact open-source "small language models"; also resells OpenAI models via Azure |
+| **Meta** | Llama 4 (Scout & Maverick) | Open-weight, natively-multimodal successor to Llama 2/3 |
+
+---
+
+## Big Tech & Hardware Companies
+
+| Company | Flagship or Latest LLM(s) (2024 – 25) | Brief description |
+|---------|---------------------------------------|-------------------|
+| **Amazon AWS** | Titan Text G1 (Premier / Express) | Proprietary Bedrock-hosted models for enterprise workloads |
+| **Apple** | 3 B "Apple Intelligence" model | First fully on-device LLM for iPhone, iPad & Mac |
+| **xAI** | Grok 3 (Think / Fast) | Elon Musk-backed lab focused on real-time reasoning and openness |
+| **NVIDIA** | Nemotron-4 340B | Open models optimised for synthetic-data generation and self-training |
+
+---
+
+## Enterprise & Specialized Players (Part 1)
+
+| Company | Flagship or Latest LLM(s) (2024 – 25) | Brief description |
+|---------|---------------------------------------|-------------------|
+| **Mistral AI** | Mistral Medium 3 | High-performance, permissively licensed models at low latency & cost |
+| **Cohere** | Command R & Command A | Retrieval-augmented, long-context LLMs built for private data |
+| **AI21 Labs** | Jurassic-3, Jamba | Early entrant offering controllable text generation APIs |
+| **Databricks** | DBRX | Open-weight Mixture-of-Experts tuned for data-engineering use cases |
+| **Snowflake** | Arctic | 128 k-context Apache-licensed model for cost-efficient enterprise AI |
+| **IBM** | Granite 4.0 family | Trustworthy, business-oriented models aligned with EU AI Act |
+
+---
+
+## Enterprise & Specialized Players (Part 2)
+
+| Company | Flagship or Latest LLM(s) (2024 – 25) | Brief description |
+|---------|---------------------------------------|-------------------|
+| **Salesforce AI** | xGen (small / code) | Long-context, domain-tuned models powering Einstein Copilot |
+| **Stability AI** | Stable LM 2 (1.6 B → 12 B) | Lightweight multilingual open-source models for consumer GPUs |
+| **Adept AI** | Fuyu-Heavy & Fuyu-8B | Multimodal transformers designed for agentic tasks and UI control |
+| **Reka AI** | Reka Flash 21 B | Efficient multilingual reasoning model for real-time & edge |
+| **Aleph Alpha** | Luminous / Pharia | European sovereign stack with explainability APIs |
+| **Together AI** | RedPajama-v2 & training-as-a-service | Open datasets + cloud for fine-tuning and hosting OSS models |
+
+---
+
+## China Ecosystem 
+
+What makes China's LLM ecosystem unique is its rapid development, large-scale models, and focus on domestic applications. The Chinese government has also been supportive of AI initiatives, leading to a vibrant ecosystem.
+
+The US has banned the export of advanced chips to China, which has led to a focus on developing indigenous AI capabilities. Chinese companies are also focusing on building large-scale models that can handle the Chinese language and cultural context effectively.
+
+
+
+
+| Company | Flagship or Latest LLM(s) (2024 – 25) | Brief description |
+|---------|---------------------------------------|-------------------|
+| **Baidu** | Ernie 4.0 Turbo | Search-integrated LLM; 300 M+ users |
+| **Alibaba Cloud** | Qwen 3 family | Hybrid-reasoning models matching frontier benchmarks |
+| **Tencent** | Hunyuan Turbo S | Fast Transformer-Mamba MoE model for Chinese & maths tasks |
+| **Huawei Cloud** | PanGu 5 / Ultra MoE | Large-scale models optimised for Ascend NPUs & on-prem deployment |
+| **SenseTime** | SenseNova 5.5 | China's first real-time multimodal model series |
+| **Zhipu AI** | GLM-4 (Air / Flash) | Open-source bilingual models with free API tier |
+| **DeepSeek** | DeepSeek-V3 (671 B MoE) | Open-weight MoE excelling at maths & code |
+| **01.AI** | Yi-1.5 (6 B → 34 B) | Apache-licensed zh-en models for community fine-tuning |
+
+---
+
+## Open-Source & Community
+
+| Company | Flagship or Latest LLM(s) (2024 – 25) | Brief description |
+|---------|---------------------------------------|-------------------|
+| **BigScience + Hugging Face** | BLOOM 176 B | First 100 B+ multilingual model released with full weights |
+| **Eleuther AI** | GPT-NeoX-20B | Volunteer collective behind "The Pile"; open 20 B model |
+| **Cerebras Systems** | Cerebras-GPT family | 111 M → 13 B models trained on wafer-scale CS-2 hardware |
+| **Ollama** | Ollama LLMs | Open-source models with a focus on simplicity and ease of use |
+
+- [A Survey of LLM Surveys](https://github.com/NiuTrans/ABigSurveyOfLLMs)

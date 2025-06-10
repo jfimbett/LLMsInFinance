@@ -486,90 +486,300 @@ Your Name
 </ul>
 </section></section>
 <section>
-<section id="the-transformers-paper" class="title-slide slide level1 center">
-<h1>The Transformers’ paper</h1>
+<section id="understanding-transformers-step-by-step" class="title-slide slide level1 center">
+<h1>Understanding Transformers: Step by Step</h1>
 
 </section>
-<section id="googles-transformer-paper" class="slide level2">
-<h2>Google’s Transformer Paper</h2>
+<section id="what-is-a-transformer" class="slide level2">
+<h2>What is a Transformer?</h2>
 <ul>
-<li>The seminal paper “Attention is All You Need” by Vaswani et al.&nbsp;(2017) introduced the Transformer architecture, revolutionizing NLP.</li>
-<li>The paper proposed a novel architecture that relies entirely on attention mechanisms, eliminating the need for recurrence in processing sequences.</li>
-<li>This architecture allows for parallelization, making it more efficient for training on large datasets.</li>
+<li>Revolutionary neural network architecture introduced in “Attention Is All You Need” (2017)</li>
+<li><strong>Key innovation</strong>: Replaces recurrence and convolutions entirely with attention mechanisms</li>
+<li>Enables <strong>parallel processing</strong> of sequences (unlike RNNs)</li>
+<li>Foundation for modern LLMs including GPT-2, GPT-3/4, BERT</li>
+</ul>
+
+<img data-src="../../images/attention_paper.png" class="r-stretch quarto-figure-center"><p class="caption">Attention Paper</p></section>
+<section id="contribution" class="slide level2">
+<h2>Contribution</h2>
+
+<img data-src="../../images/attention_abstract.png" class="r-stretch quarto-figure-center"><p class="caption">Attention Mechanism</p></section>
+<section id="a-toy-representation" class="slide level2">
+<h2>A toy representation</h2>
+
+<img data-src="../../images/transformer_baby.png" class="r-stretch quarto-figure-center"><p class="caption">Transformer Baby</p></section>
+<section id="the-big-picture-transformer-architecture" class="slide level2">
+<h2>The Big Picture: Transformer Architecture</h2>
+
+<img data-src="../../images/transformers_model.png" class="r-stretch quarto-figure-center"><p class="caption">Transformer Architecture</p><ul>
+<li><strong>Encoder-Decoder Structure</strong>: Input → Encoder → Decoder → Output</li>
+<li><strong>Self-Attention</strong>: Each position can attend to all positions in previous layer</li>
+<li><strong>Parallelizable</strong>: No sequential dependencies like RNNs</li>
 </ul>
 </section>
-<section id="section" class="slide level2">
-<h2></h2>
-
-<img data-src="../../images/attention_paper.png" class="r-stretch quarto-figure-center"><p class="caption">Attention is All You Need</p></section>
-<section id="key-contribution-not-relying-on-rnns-nor-cnns" class="slide level2">
-<h2>Key Contribution, not relying on RNNs nor CNNs</h2>
-
-<img data-src="../../images/attention_abstract.png" class="r-stretch quarto-figure-center"><p class="caption">Attention is All You Need</p></section>
-<section id="key-elements" class="slide level2">
-<h2>Key elements</h2>
+<section id="the-recipe" class="slide level2">
+<h2>The recipe</h2>
 <ul>
-<li>This architecture relies entirely on a special form of attention called <strong>self-attention</strong>.</li>
-<li>Self-attention allows the model to weigh the importance of different words in a sentence relative to each other, enabling it to capture long-range dependencies effectively.</li>
-<li>Both the encoder and decoder consist of multiple layers of self-attention and feed-forward neural networks (FF NNs), allowing for deep representations of the input data.</li>
+<li><p><strong>Tokenise</strong> the <em>source</em> sentence and add start/end markers.<br>
+</p></li>
+<li><p><strong>Embed</strong> each token <strong>+</strong> add positional encodings.</p></li>
+<li><p><strong>Encoder (× N layers)</strong></p>
+<ul>
+<li>Multi-head <strong>self-attention</strong>.<br>
+</li>
+<li>Position-wise <strong>feed-forward network</strong>.<br>
+</li>
+<li><strong>Residual connection + LayerNorm</strong> after each sub-layer.</li>
+</ul></li>
+<li><p>Cache the resulting <strong>encoder hidden states</strong> (the “memory”).</p></li>
+<li><p><strong>Decoder (run autoregressively)</strong></p>
+<ol type="1">
+<li>Embed the generated prefix tokens <strong>+</strong> positional encodings.<br>
+</li>
+<li><strong>Masked self-attention</strong> (each token sees only ≤ current position).<br>
+</li>
+<li><strong>Cross-attention</strong> over the encoder memory (lets the decoder “look back” at the source).<br>
+</li>
+<li>Feed-forward → Residual → LayerNorm.<br>
+</li>
+<li><strong>Linear projection</strong> (tied to embeddings) → <strong>softmax</strong> → probability distribution.<br>
+</li>
+<li><strong>Select</strong> the next token (greedy, top-k, nucleus, beam, …), append it, and repeat until ⟨end of sentence EOS⟩ or a maximum length.</li>
+</ol></li>
 </ul>
 </section>
-<section id="toy-representation-of-the-transformer-architecture" class="slide level2">
-<h2>Toy representation of the Transformer architecture</h2>
-
-<img data-src="../../images/transformer_baby.png" class="r-stretch quarto-figure-center"><p class="caption">Simplistic Transformer Architecture</p></section></section>
+<section id="new-vocabulary" class="slide level2">
+<h2>New vocabulary?</h2>
+<ul>
+<li><strong>Self-Attention</strong>: Mechanism allowing each token to attend to all other tokens in the sequence, capturing dependencies regardless of distance.</li>
+<li><strong>Multi-Head Attention</strong>: Multiple self-attention mechanisms running in parallel, allowing the model to capture different types of relationships.</li>
+<li><strong>Feed-Forward Network (FFN)</strong>: A fully connected neural network applied to each position independently, typically with a ReLU (Rectified Linear Unit) activation.</li>
+<li><strong>Positional Encoding</strong>: Adds information about the position of each token in the sequence, since transformers do not have a built-in notion of order.</li>
+<li><strong>Residual Connection</strong>: A shortcut connection that adds the input of a layer to its output, helping to prevent vanishing gradients in deep networks.</li>
+<li><strong>Layer Normalization</strong>: A technique to stabilize and accelerate training by normalizing the inputs to each layer, applied after residual connections.</li>
+</ul>
+</section>
+<section id="step-1-input-embeddings-positional-encoding" class="slide level2">
+<h2>Step 1: Input Embeddings + Positional Encoding</h2>
+<h3 id="token-embeddings">Token Embeddings</h3>
+<ul>
+<li><p>When you feed a sequence of tokens into a transformer‐based LLM, the first thing that happens is that each discrete token (an integer index) is turned into a dense vector of much lower dimensionality than the size of the vocabulary.</p></li>
+<li><p>Let <span class="math inline">\(V\)</span> be the vocabulary size, and <span class="math inline">\(N\)</span> the sequence length.</p></li>
+<li><p>A token <span class="math inline">\(j\)</span> is an integer in the set <span class="math inline">\(\{0, 1, \ldots, V-1\}\)</span>.</p></li>
+<li><p>A brute force one-hot vector encoding <span class="math inline">\(x \in \{0,1\}^V\)</span> <span class="math display">\[
+x_j = \begin{cases}
+1 &amp; \text{if } j = i \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p></li>
+<li><p>This is inefficient, especially for large vocabularies, as it results in high-dimensional sparse vectors. Instead, we use a <strong>learnable embedding matrix</strong> <span class="math inline">\(\mathbf{E} \in \mathbb{R}^{V \times d_{\text{model}}}\)</span>, where <span class="math inline">\(d_{\text{model}}\)</span> is the embedding dimension. Where <span class="math inline">\(d_{\text{model}}\)</span> is typically much smaller than <span class="math inline">\(V\)</span>.</p></li>
+<li><p>If token <span class="math inline">\(t\)</span> is represented by index <span class="math inline">\(j\)</span>, its embedding is given by the <span class="math inline">\(j\)</span>-th row of <span class="math display">\[
+\mathbf{e}_j = \mathbf{x}_j^T \mathbf{E} = \mathbf{E}_j
+\]</span></p></li>
+</ul>
+<h3 id="positional-encoding">Positional Encoding</h3>
+<p>Since transformers have no inherent notion of position, we add positional information:</p>
+<p><span class="math display">\[PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)\]</span></p>
+<p><span class="math display">\[PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)\]</span></p>
+<p><strong>Final input</strong>: <span class="math inline">\(\text{input}_i = \text{embedding}_i + PE_i\)</span></p>
+</section>
+<section id="step-2-self-attention-mechanism---the-core" class="slide level2">
+<h2>Step 2: Self-Attention Mechanism - The Core</h2>
+<h3 id="queries-keys-and-values">Queries, Keys, and Values</h3>
+<p>For each token embedding <span class="math inline">\(\mathbf{x}_i\)</span>, we create three vectors:</p>
+<p><span class="math display">\[\mathbf{q}_i = \mathbf{x}_i \mathbf{W}^Q \quad \text{(Query)}\]</span> <span class="math display">\[\mathbf{k}_i = \mathbf{x}_i \mathbf{W}^K \quad \text{(Key)}\]</span><br>
+<span class="math display">\[\mathbf{v}_i = \mathbf{x}_i \mathbf{W}^V \quad \text{(Value)}\]</span></p>
+<p>Where <span class="math inline">\(\mathbf{W}^Q, \mathbf{W}^K, \mathbf{W}^V \in \mathbb{R}^{d_{\text{model}} \times d_k}\)</span> are learned parameter matrices.</p>
+</section>
+<section id="step-3-computing-attention-scores" class="slide level2">
+<h2>Step 3: Computing Attention Scores</h2>
+<h3 id="attention-formula">Attention Formula</h3>
+<p><span class="math display">\[\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}\]</span></p>
+<h3 id="step-by-step-breakdown">Step-by-step breakdown:</h3>
+<ol type="1">
+<li><strong>Dot product</strong>: <span class="math inline">\(\mathbf{Q}\mathbf{K}^T\)</span> gives similarity scores between all pairs</li>
+<li><strong>Scale</strong>: Divide by <span class="math inline">\(\sqrt{d_k}\)</span> to prevent softmax saturation</li>
+<li><strong>Normalize</strong>: Apply softmax to get attention weights</li>
+<li><strong>Weighted sum</strong>: Multiply by values <span class="math inline">\(\mathbf{V}\)</span></li>
+</ol>
+</section>
+<section id="step-4-multi-head-attention" class="slide level2">
+<h2>Step 4: Multi-Head Attention</h2>
+<p>Instead of single attention, we use <strong>multiple attention heads</strong>:</p>
+<p><span class="math display">\[\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)\mathbf{W}^O\]</span></p>
+<p>Where each head is: <span class="math display">\[\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)\]</span></p>
+<p><strong>Why multiple heads?</strong> - Each head can focus on different types of relationships - Increases model’s representational capacity - Typical: 8-16 heads in practice</p>
+</section>
+<section id="step-5-feed-forward-networks" class="slide level2">
+<h2>Step 5: Feed-Forward Networks</h2>
+<p>After attention, each position goes through a feed-forward network:</p>
+<p><span class="math display">\[\text{FFN}(\mathbf{x}) = \text{max}(0, \mathbf{x}\mathbf{W}_1 + \mathbf{b}_1)\mathbf{W}_2 + \mathbf{b}_2\]</span></p>
+<p><strong>Architecture details:</strong> - Input dimension: <span class="math inline">\(d_{\text{model}}\)</span> (e.g., 512)<br>
+- Hidden dimension: <span class="math inline">\(d_{ff}\)</span> (typically <span class="math inline">\(4 \times d_{\text{model}} = 2048\)</span>) - Output dimension: <span class="math inline">\(d_{\text{model}}\)</span> (back to 512) - Applied <strong>identically</strong> to each position</p>
+</section>
+<section id="step-6-residual-connections-layer-normalization" class="slide level2">
+<h2>Step 6: Residual Connections &amp; Layer Normalization</h2>
+<p>Each sub-layer (attention or FFN) is wrapped with:</p>
+<p><span class="math display">\[\text{LayerNorm}(\mathbf{x} + \text{Sublayer}(\mathbf{x}))\]</span></p>
+<p><strong>Why this matters:</strong> - <strong>Residual connections</strong>: Prevent vanishing gradients in deep networks - <strong>Layer normalization</strong>: Stabilizes training by normalizing across features - <strong>Order</strong>: In original paper, LayerNorm comes after; in practice, often before</p>
+</section>
+<section id="gpt-2-decoder-only-architecture" class="slide level2">
+<h2>GPT-2: Decoder-Only Architecture</h2>
+<p><strong>Key differences from original Transformer:</strong> - <strong>No encoder</strong>: Only decoder blocks - <strong>Masked self-attention</strong>: Can only attend to previous tokens - <strong>Autoregressive generation</strong>: Predicts next token given previous tokens</p>
+<h3 id="masked-attention">Masked Attention</h3>
+<p><span class="math display">\[\text{score}_{i,j} = \begin{cases}
+\mathbf{q}_i \cdot \mathbf{k}_j &amp; \text{if } j \leq i \\
+-\infty &amp; \text{if } j &gt; i
+\end{cases}\]</span></p>
+</section>
+<section id="step-7-text-generation-with-gpt-2" class="slide level2">
+<h2>Step 7: Text Generation with GPT-2</h2>
+<h3 id="the-generation-process">The Generation Process</h3>
+<ol type="1">
+<li><strong>Input</strong>: Prompt tokens <span class="math inline">\([x_1, x_2, \ldots, x_n]\)</span></li>
+<li><strong>Forward pass</strong>: Compute probability distribution over vocabulary</li>
+<li><strong>Sampling</strong>: Select next token <span class="math inline">\(x_{n+1}\)</span> from distribution<br>
+</li>
+<li><strong>Repeat</strong>: Append <span class="math inline">\(x_{n+1}\)</span> and generate <span class="math inline">\(x_{n+2}\)</span>, etc.</li>
+</ol>
+<h3 id="next-token-prediction">Next-Token Prediction</h3>
+<p><span class="math display">\[P(x_{t+1} | x_1, \ldots, x_t) = \text{softmax}(\mathbf{W}_{\text{vocab}} \mathbf{h}_t + \mathbf{b})\]</span></p>
+<p>Where <span class="math inline">\(\mathbf{h}_t\)</span> is the final hidden state for position <span class="math inline">\(t\)</span>.</p>
+</section>
+<section id="sampling-strategies" class="slide level2">
+<h2>Sampling Strategies</h2>
+<h3 id="greedy-decoding">Greedy Decoding</h3>
+<p><span class="math display">\[x_{t+1} = \arg\max_{x} P(x | x_1, \ldots, x_t)\]</span></p>
+<h3 id="top-k-sampling">Top-k Sampling</h3>
+<p>Sample from the <span class="math inline">\(k\)</span> most likely tokens</p>
+<h3 id="nucleus-top-p-sampling">Nucleus (Top-p) Sampling</h3>
+<p>Sample from smallest set of tokens whose cumulative probability ≥ <span class="math inline">\(p\)</span></p>
+<h3 id="temperature-scaling">Temperature Scaling</h3>
+<p><span class="math display">\[P'(x_i) = \frac{\exp(z_i / \tau)}{\sum_j \exp(z_j / \tau)}\]</span> - <span class="math inline">\(\tau &lt; 1\)</span>: More focused (conservative) - <span class="math inline">\(\tau &gt; 1\)</span>: More random (creative)</p>
+</section>
+<section id="why-transformers-work-so-well" class="slide level2">
+<h2>Why Transformers Work So Well</h2>
+<h3 id="advantages-over-rnns">Advantages over RNNs</h3>
+<ul>
+<li><strong>Parallelization</strong>: All positions processed simultaneously</li>
+<li><strong>Long-range dependencies</strong>: Direct connections between any two positions</li>
+<li><strong>Gradient flow</strong>: Shorter paths for gradient propagation</li>
+</ul>
+<h3 id="computational-complexity">Computational Complexity</h3>
+<ul>
+<li><strong>Self-attention</strong>: <span class="math inline">\(O(n^2 \cdot d)\)</span> where <span class="math inline">\(n\)</span> is sequence length</li>
+<li><strong>RNN</strong>: <span class="math inline">\(O(n \cdot d^2)\)</span> but sequential</li>
+<li><strong>Trade-off</strong>: Memory vs.&nbsp;parallelization</li>
+</ul>
+</section></section>
 <section>
-<section id="tokenizers" class="title-slide slide level1 center">
-<h1>Tokenizers</h1>
+<section id="tokenizers-theory-algorithms-and-practical-considerations" class="title-slide slide level1 center">
+<h1>Tokenizers: Theory, Algorithms, and Practical Considerations</h1>
 
 </section>
-<section id="what-are-tokenizers" class="slide level2">
-<h2>What are Tokenizers?</h2>
+<section id="motivation" class="slide level2">
+<h2>1. Motivation</h2>
+<p>Natural-language text is a sequence of Unicode code points that is <strong>too sparse and high-entropy</strong> for efficient statistical modeling. A <em>tokenizer</em> transforms this raw character stream into a shorter sequence of discrete symbols drawn from a bounded <em>vocabulary</em> <span class="math inline">\(V\)</span>, enabling language models to learn meaningful patterns.</p>
 <ul>
-<li>Tools that convert text into tokens (basic units for LLMs)</li>
-<li>Critical preprocessing step for all NLP tasks</li>
-<li>Bridge between human language and machine processing</li>
+<li><p>Unicode code points are just a way to represent characters in a computer. Each character is assigned a unique number, which allows computers to handle text in different languages and scripts. E.g. <code>A</code> is represented by the code point <code>U+0041</code>, and <code>€</code> by <code>U+20AC</code>.</p></li>
+<li><p>The complete set of Unicode code points is denoted <span class="math inline">\(\Sigma\)</span>, and the set of all finite-length strings over <span class="math inline">\(\Sigma\)</span> is <span class="math inline">\(\Sigma^{*}\)</span>. A tokenizer maps these strings to a sequence of tokens from a finite vocabulary <span class="math inline">\(V\)</span>.</p></li>
+</ul>
+<p><strong>Definition.</strong> A tokenizer is a deterministic (or stochastic) mapping<br>
+<span class="math inline">\(\mathcal T : \Sigma^{*} \;\longrightarrow\; V^{*},\)</span><br>
+where <span class="math inline">\(\Sigma\)</span> is the character alphabet and <span class="math inline">\(V\)</span> is a finite set of tokens.</p>
+<ul>
+<li><span class="math inline">\(V^*\)</span> is the set of all finite-length sequences of tokens, including the empty sequence.</li>
 </ul>
 </section>
-<section id="types-of-tokenization" class="slide level2">
-<h2>Types of Tokenization</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
+<section id="example" class="slide level2">
+<h2>Example</h2>
 <ul>
-<li><strong>Word-level</strong>: Split by spaces/punctuation</li>
-<li><strong>Character-level</strong>: Individual characters</li>
-<li><strong>Subword</strong>: Parts of words (BPE, WordPiece, SentencePiece)</li>
-<li><strong>Lemmatization</strong>: Map to base forms</li>
-</ul>
-</div><div class="column" style="width:40%;">
-
-</div></div>
-</section>
-<section id="why-subword-tokenization" class="slide level2">
-<h2>Why Subword Tokenization?</h2>
-<ul>
-<li>Handles out-of-vocabulary words</li>
-<li>Balances vocabulary size and sequence length</li>
-<li>Captures morphological patterns</li>
-<li>Example: “refinancing” → [“re”, “##financ”, “##ing”]</li>
+<li><p>Imagine you are an alien from a civilization with only 3 symbols (letters): <code>A</code>, <code>B</code>, and <code>C</code>.</p></li>
+<li><p><span class="math inline">\(\Sigma = \{A, B, C\}\)</span> and <span class="math inline">\(\Sigma^{*} = \{\epsilon, A, B, C, AA, AB, AC, BA, BB, BC, CA, CB, CC, AAA, AAB, \ldots\}\)</span>. where <span class="math inline">\(\epsilon\)</span> is the empty string.</p></li>
+<li><p>You are creating your own LLM and you define a vocabulary <span class="math inline">\(V = \{A, B, C, AB, AC, BA, BB, BC\}\)</span>. Recall that <span class="math inline">\(|\Sigma^*| = \infty\)</span>.</p></li>
+<li><p>Your tokenizer is a function <span class="math inline">\(\mathcal T : \Sigma^{*} \longrightarrow V^{*}\)</span> that maps strings from <span class="math inline">\(\Sigma^{*}\)</span> to sequences of tokens in <span class="math inline">\(V^{*}\)</span>. For example <span class="math display">\[
+\mathcal T(AA) = (A, A), \quad \mathcal T(AB) = (AB), \quad \mathcal T(ACB) = (AC, B), \quad \mathcal T(ABC) = (AB, C).
+\]</span></p></li>
 </ul>
 </section>
-<section id="financial-text-tokenization-challenges" class="slide level2">
-<h2>Financial Text Tokenization Challenges</h2>
-<ul>
-<li>Technical jargon and acronyms</li>
-<li>Numerical representations</li>
-<li>Special characters (currencies, percentages)</li>
-<li>Ticker symbols and notation</li>
-</ul>
+<section id="what-would-you-like-from-a-tokenizer" class="slide level2">
+<h2>2. What would you like from a tokenizer?</h2>
+<ol type="1">
+<li><p><strong>Coverage</strong> — every input string should be tokenisable without <code>UNK</code> (unknown) tokens. This means that the tokenizer should be able to handle any input string without producing tokens that are not in the vocabulary.</p></li>
+<li><p><strong>Compression</strong> — minimise the expected token sequence length <span class="math inline">\(\mathbb E[|\mathcal T(x)|] \forall x\in\Sigma^{*}\)</span>.</p></li>
+<li><p><strong>Consistency</strong> — identical substrings map to identical token sequences.<br>
+</p></li>
+<li><p><strong>Latency</strong> — <span class="math inline">\(\mathcal T\)</span> should run in <span class="math inline">\(O(|x|)\)</span> time (linear time).</p></li>
+<li><p><strong>Reversibility</strong> — decoding <span class="math inline">\(\mathcal T^{-1}\)</span> must recover the original text (modulo normalisation). E.g. <span class="math inline">\(T^{-1}(AB,A,C)=ABAC\)</span></p></li>
+</ol>
+<p>Balancing these criteria leads to different tokenization families.</p>
 </section>
-<section id="impact-on-model-performance" class="slide level2">
-<h2>Impact on Model Performance</h2>
+<section id="taxonomy-of-tokenizers" class="slide level2">
+<h2>3. Taxonomy of Tokenizers</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 31%">
+<col style="width: 24%">
+<col style="width: 14%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Family</th>
+<th>Vocabulary Size <span class="math inline">\(|V|\)</span></th>
+<th>Sequence Length</th>
+<th>OOV Risk</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Character</strong></td>
+<td><span class="math inline">\(|\Sigma|\approx 10^{3}\)</span></td>
+<td>High</td>
+<td>None</td>
+<td>OCR, robust systems</td>
+</tr>
+<tr class="even">
+<td><strong>Word</strong></td>
+<td><span class="math inline">\(\sim 10^{5}\)</span></td>
+<td>Low</td>
+<td>High</td>
+<td>Early NLP, controlled domains</td>
+</tr>
+<tr class="odd">
+<td><strong>Sub-word</strong></td>
+<td><span class="math inline">\(2\times10^{4}\)</span>–<span class="math inline">\(8\times10^{4}\)</span></td>
+<td>Medium</td>
+<td>Very low</td>
+<td>Modern LLMs</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="training-a-tokenizer" class="slide level2">
+<h2>4. Training a Tokenizer</h2>
 <ul>
-<li>Tokenization affects model understanding</li>
-<li>Domain-specific tokenizers improve financial NLP</li>
-<li>Trade-offs: granularity vs.&nbsp;sequence length</li>
-<li>Context window implications</li>
+<li>Tokenizers can be trained on a corpus of text to learn the most effective way to split the text into tokens.</li>
+<li>The training process involves analyzing the frequency of character sequences in the corpus and selecting the most common sequences as tokens.</li>
+<li>The goal is to create a vocabulary that balances coverage, compression, and consistency.</li>
+<li>The most common algorithms for training tokenizers are:
+<ul>
+<li>Byte-Pair Encoding (BPE):
+<ul>
+<li>Iteratively merges the most frequent pairs of characters or tokens until a desired vocabulary size is reached.</li>
+</ul></li>
+<li>Unigram Language Model:
+<ul>
+<li>Treats the tokenization problem as a probabilistic model, selecting tokens based on their likelihood of occurrence in the corpus.</li>
+</ul></li>
+<li>WordPiece:
+<ul>
+<li>Similar to BPE, but uses a probabilistic approach to select the most likely tokens based on their frequency and context.</li>
+</ul></li>
+</ul></li>
+<li>Most LLM providers do not train their own tokenizers, but rather use pre-trained tokenizers.</li>
 </ul>
 </section></section>
 <section>
@@ -577,68 +787,416 @@ Your Name
 <h1>Classification and Scalability of LLMs</h1>
 
 </section>
-<section id="types-of-llms" class="slide level2">
-<h2>Types of LLMs</h2>
-<ul>
-<li><strong>By Architecture</strong>:
-<ul>
-<li>Encoder-only (BERT, RoBERTa)</li>
-<li>Decoder-only (GPT, LLaMA)</li>
-<li>Encoder-decoder (T5, BART)</li>
-</ul></li>
-<li><strong>By Size</strong>:
-<ul>
-<li>Small (&lt; 1B parameters)</li>
-<li>Medium (1B-10B parameters)</li>
-<li>Large (10B-100B parameters)</li>
-<li>Frontier (&gt;100B parameters)</li>
-</ul></li>
-</ul>
-</section>
-<section id="parameter-scaling-laws" class="slide level2">
-<h2>Parameter Scaling Laws</h2>
+<section id="llm-classification-framework" class="slide level2">
+<h2>LLM Classification Framework</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
-<ul>
-<li>Performance generally scales with model size</li>
-<li>Logarithmic relationship between parameters and accuracy</li>
-<li>Diminishing returns beyond certain thresholds</li>
-<li>Implications for compute requirements</li>
-</ul>
+<p><strong>By Architecture:</strong> - <strong>Autoregressive (Decoder-only)</strong>: GPT family, Claude, Llama - <strong>Autoencoding (Encoder-only)</strong>: BERT, RoBERTa, DistilBERT - <strong>Encoder-Decoder</strong>: T5, BART, FLAN-T5</p>
+<p><strong>By Training Approach:</strong> - <strong>Pre-training</strong>: Self-supervised learning on massive corpora - <strong>Fine-tuning</strong>: Task-specific supervised learning - <strong>Instruction-following</strong>: Trained to follow human instructions - <strong>Reinforcement Learning from Human Feedback (RLHF)</strong></p>
 </div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/scaling_laws_placeholder.png"></p>
-<figcaption>Scaling Laws</figcaption>
+<p><img data-src="../../images/llm_classification_placeholder.png"></p>
+<figcaption>LLM Classification</figcaption>
 </figure>
 </div>
 </div></div>
 </section>
-<section id="specialized-vs.-general-purpose-models" class="slide level2">
-<h2>Specialized vs.&nbsp;General Purpose Models</h2>
+<section id="model-architecture-types" class="slide level2">
+<h2>Model Architecture Types</h2>
+<h3 id="autoregressive-models-decoder-only">Autoregressive Models (Decoder-only)</h3>
 <ul>
-<li><strong>General purpose</strong>: Broad knowledge, flexible applications</li>
-<li><strong>Domain-specific</strong>: Financial expertise, but less versatile</li>
-<li><strong>Trade-offs</strong>: Performance vs.&nbsp;adaptability</li>
+<li><strong>Examples</strong>: GPT-3/4, Claude, Llama, Mistral</li>
+<li><strong>Training</strong>: Next-token prediction</li>
+<li><strong>Use cases</strong>: Text generation, completion, conversation</li>
+<li><strong>Advantages</strong>: Excellent for generative tasks</li>
+<li><strong>Disadvantages</strong>: Less efficient for understanding tasks</li>
+</ul>
+<h3 id="autoencoding-models-encoder-only">Autoencoding Models (Encoder-only)</h3>
+<ul>
+<li><strong>Examples</strong>: BERT, RoBERTa, DistilBERT</li>
+<li><strong>Training</strong>: Masked language modeling</li>
+<li><strong>Use cases</strong>: Classification, sentiment analysis, NER</li>
+<li><strong>Advantages</strong>: Bidirectional context, efficient for understanding</li>
+<li><strong>Disadvantages</strong>: Cannot generate text naturally</li>
+</ul>
+<h3 id="encoder-decoder-models">Encoder-Decoder Models</h3>
+<ul>
+<li><strong>Examples</strong>: T5, BART, FLAN-T5</li>
+<li><strong>Training</strong>: Various objectives (span corruption, denoising)</li>
+<li><strong>Use cases</strong>: Translation, summarization, question answering</li>
+<li><strong>Advantages</strong>: Flexible for both understanding and generation</li>
+<li><strong>Disadvantages</strong>: More complex architecture</li>
 </ul>
 </section>
-<section id="financial-llm-considerations" class="slide level2">
-<h2>Financial LLM Considerations</h2>
+<section id="training-paradigms" class="slide level2">
+<h2>Training Paradigms</h2>
+<h3 id="pre-training-objectives">Pre-training Objectives</h3>
+<p><strong>Autoregressive (AR):</strong> <span class="math display">\[P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})\]</span></p>
+<p><strong>Masked Language Modeling (MLM):</strong> - Randomly mask tokens and predict them - Bidirectional context understanding</p>
+<p><strong>Span Corruption (T5-style):</strong> - Mask contiguous spans of text - Predict the masked spans</p>
+</section>
+<section id="model-scale-categories" class="slide level2">
+<h2>Model Scale Categories</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 23%">
+<col style="width: 21%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Parameters</th>
+<th>Examples</th>
+<th>Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Small</strong></td>
+<td>&lt;1B</td>
+<td>DistilBERT, ALBERT</td>
+<td>Fast inference, limited capabilities</td>
+</tr>
+<tr class="even">
+<td><strong>Base</strong></td>
+<td>1B-10B</td>
+<td>BERT-Large, GPT-2</td>
+<td>Good balance of performance/efficiency</td>
+</tr>
+<tr class="odd">
+<td><strong>Large</strong></td>
+<td>10B-100B</td>
+<td>GPT-3, T5-XXL</td>
+<td>Strong performance, higher compute</td>
+</tr>
+<tr class="even">
+<td><strong>Extra Large</strong></td>
+<td>100B+</td>
+<td>GPT-4, PaLM, Claude</td>
+<td>State-of-the-art, very high compute</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="specialized-llm-categories" class="slide level2">
+<h2>Specialized LLM Categories</h2>
+<h3 id="code-models">Code Models</h3>
 <ul>
-<li>ROI on model size for specific financial tasks</li>
-<li>Latency requirements for real-time applications</li>
-<li>Privacy and data sensitivity</li>
-<li>Regulatory compliance needs</li>
-<li>Explainability requirements</li>
+<li><strong>GitHub Copilot</strong> (based on Codex)</li>
+<li><strong>CodeT5</strong>, <strong>InCoder</strong>, <strong>CodeGen</strong></li>
+<li><strong>StarCoder</strong>, <strong>WizardCoder</strong></li>
+</ul>
+<h3 id="financial-domain-models">Financial Domain Models</h3>
+<ul>
+<li><strong>BloombergGPT</strong>: 50B parameters, trained on financial data</li>
+<li><strong>FinBERT</strong>: BERT fine-tuned for financial sentiment</li>
+<li><strong>PaLM-Finance</strong>: Specialized for financial reasoning</li>
+</ul>
+<h3 id="multimodal-models">Multimodal Models</h3>
+<ul>
+<li><strong>GPT-4V</strong>: Vision capabilities</li>
+<li><strong>Claude 3</strong>: Image understanding</li>
+<li><strong>DALL-E 3</strong>: Text-to-image generation</li>
 </ul>
 </section>
-<section id="deployment-strategies" class="slide level2">
-<h2>Deployment Strategies</h2>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="llm-providers" class="title-slide slide level1 center">
+<h1>LLM Providers</h1>
+
+</section>
+<section id="frontier-labs-global-leaders" class="slide level2">
+<h2>Frontier Labs (Global Leaders)</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 58%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Company</th>
+<th>Flagship or Latest LLM(s) (2024 – 25)</th>
+<th>Brief description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>OpenAI</strong></td>
+<td>GPT-4o, GPT-4.1 mini</td>
+<td>Original ChatGPT maker; continues to set benchmark accuracy and multimodality</td>
+</tr>
+<tr class="even">
+<td><strong>Anthropic</strong></td>
+<td>Claude 4 (Opus &amp; Sonnet)</td>
+<td>Safety-first research lab spun out of OpenAI; emphasises “constitutional AI”</td>
+</tr>
+<tr class="odd">
+<td><strong>Google DeepMind</strong></td>
+<td>Gemini 2.5 Pro</td>
+<td>Multimodal model powering Google Search, Workspace &amp; the Gemini app</td>
+</tr>
+<tr class="even">
+<td><strong>Microsoft (Azure AI)</strong></td>
+<td>Phi-3 / Phi-4 SLM family</td>
+<td>Compact open-source “small language models”; also resells OpenAI models via Azure</td>
+</tr>
+<tr class="odd">
+<td><strong>Meta</strong></td>
+<td>Llama 4 (Scout &amp; Maverick)</td>
+<td>Open-weight, natively-multimodal successor to Llama 2/3</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="big-tech-hardware-companies" class="slide level2">
+<h2>Big Tech &amp; Hardware Companies</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 58%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Company</th>
+<th>Flagship or Latest LLM(s) (2024 – 25)</th>
+<th>Brief description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Amazon AWS</strong></td>
+<td>Titan Text G1 (Premier / Express)</td>
+<td>Proprietary Bedrock-hosted models for enterprise workloads</td>
+</tr>
+<tr class="even">
+<td><strong>Apple</strong></td>
+<td>3 B “Apple Intelligence” model</td>
+<td>First fully on-device LLM for iPhone, iPad &amp; Mac</td>
+</tr>
+<tr class="odd">
+<td><strong>xAI</strong></td>
+<td>Grok 3 (Think / Fast)</td>
+<td>Elon Musk-backed lab focused on real-time reasoning and openness</td>
+</tr>
+<tr class="even">
+<td><strong>NVIDIA</strong></td>
+<td>Nemotron-4 340B</td>
+<td>Open models optimised for synthetic-data generation and self-training</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="enterprise-specialized-players-part-1" class="slide level2">
+<h2>Enterprise &amp; Specialized Players (Part 1)</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 58%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Company</th>
+<th>Flagship or Latest LLM(s) (2024 – 25)</th>
+<th>Brief description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Mistral AI</strong></td>
+<td>Mistral Medium 3</td>
+<td>High-performance, permissively licensed models at low latency &amp; cost</td>
+</tr>
+<tr class="even">
+<td><strong>Cohere</strong></td>
+<td>Command R &amp; Command A</td>
+<td>Retrieval-augmented, long-context LLMs built for private data</td>
+</tr>
+<tr class="odd">
+<td><strong>AI21 Labs</strong></td>
+<td>Jurassic-3, Jamba</td>
+<td>Early entrant offering controllable text generation APIs</td>
+</tr>
+<tr class="even">
+<td><strong>Databricks</strong></td>
+<td>DBRX</td>
+<td>Open-weight Mixture-of-Experts tuned for data-engineering use cases</td>
+</tr>
+<tr class="odd">
+<td><strong>Snowflake</strong></td>
+<td>Arctic</td>
+<td>128 k-context Apache-licensed model for cost-efficient enterprise AI</td>
+</tr>
+<tr class="even">
+<td><strong>IBM</strong></td>
+<td>Granite 4.0 family</td>
+<td>Trustworthy, business-oriented models aligned with EU AI Act</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="enterprise-specialized-players-part-2" class="slide level2">
+<h2>Enterprise &amp; Specialized Players (Part 2)</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 58%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Company</th>
+<th>Flagship or Latest LLM(s) (2024 – 25)</th>
+<th>Brief description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Salesforce AI</strong></td>
+<td>xGen (small / code)</td>
+<td>Long-context, domain-tuned models powering Einstein Copilot</td>
+</tr>
+<tr class="even">
+<td><strong>Stability AI</strong></td>
+<td>Stable LM 2 (1.6 B → 12 B)</td>
+<td>Lightweight multilingual open-source models for consumer GPUs</td>
+</tr>
+<tr class="odd">
+<td><strong>Adept AI</strong></td>
+<td>Fuyu-Heavy &amp; Fuyu-8B</td>
+<td>Multimodal transformers designed for agentic tasks and UI control</td>
+</tr>
+<tr class="even">
+<td><strong>Reka AI</strong></td>
+<td>Reka Flash 21 B</td>
+<td>Efficient multilingual reasoning model for real-time &amp; edge</td>
+</tr>
+<tr class="odd">
+<td><strong>Aleph Alpha</strong></td>
+<td>Luminous / Pharia</td>
+<td>European sovereign stack with explainability APIs</td>
+</tr>
+<tr class="even">
+<td><strong>Together AI</strong></td>
+<td>RedPajama-v2 &amp; training-as-a-service</td>
+<td>Open datasets + cloud for fine-tuning and hosting OSS models</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="china-ecosystem-part-1" class="slide level2">
+<h2>China Ecosystem (Part 1)</h2>
+<p>What makes China’s LLM ecosystem unique is its rapid development, large-scale models, and focus on domestic applications. The Chinese government has also been supportive of AI initiatives, leading to a vibrant ecosystem.</p>
+<p>The US has banned the export of advanced chips to China, which has led to a focus on developing indigenous AI capabilities. Chinese companies are also focusing on building large-scale models that can handle the Chinese language and cultural context effectively.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 58%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Company</th>
+<th>Flagship or Latest LLM(s) (2024 – 25)</th>
+<th>Brief description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Baidu</strong></td>
+<td>Ernie 4.0 Turbo</td>
+<td>Search-integrated LLM; 300 M+ users</td>
+</tr>
+<tr class="even">
+<td><strong>Alibaba Cloud</strong></td>
+<td>Qwen 3 family</td>
+<td>Hybrid-reasoning models matching frontier benchmarks</td>
+</tr>
+<tr class="odd">
+<td><strong>Tencent</strong></td>
+<td>Hunyuan Turbo S</td>
+<td>Fast Transformer-Mamba MoE model for Chinese &amp; maths tasks</td>
+</tr>
+<tr class="even">
+<td><strong>Huawei Cloud</strong></td>
+<td>PanGu 5 / Ultra MoE</td>
+<td>Large-scale models optimised for Ascend NPUs &amp; on-prem deployment</td>
+</tr>
+<tr class="odd">
+<td><strong>SenseTime</strong></td>
+<td>SenseNova 5.5</td>
+<td>China’s first real-time multimodal model series</td>
+</tr>
+<tr class="even">
+<td>———</td>
+<td>—————————————</td>
+<td>——————-</td>
+</tr>
+<tr class="odd">
+<td><strong>Zhipu AI</strong></td>
+<td>GLM-4 (Air / Flash)</td>
+<td>Open-source bilingual models with free API tier</td>
+</tr>
+<tr class="even">
+<td><strong>DeepSeek</strong></td>
+<td>DeepSeek-V3 (671 B MoE)</td>
+<td>Open-weight MoE excelling at maths &amp; code</td>
+</tr>
+<tr class="odd">
+<td><strong>01.AI</strong></td>
+<td>Yi-1.5 (6 B → 34 B)</td>
+<td>Apache-licensed zh-en models for community fine-tuning</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="open-source-community" class="slide level2">
+<h2>Open-Source &amp; Community</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 58%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Company</th>
+<th>Flagship or Latest LLM(s) (2024 – 25)</th>
+<th>Brief description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>BigScience + Hugging Face</strong></td>
+<td>BLOOM 176 B</td>
+<td>First 100 B+ multilingual model released with full weights</td>
+</tr>
+<tr class="even">
+<td><strong>Eleuther AI</strong></td>
+<td>GPT-NeoX-20B</td>
+<td>Volunteer collective behind “The Pile”; open 20 B model</td>
+</tr>
+<tr class="odd">
+<td><strong>Cerebras Systems</strong></td>
+<td>Cerebras-GPT family</td>
+<td>111 M → 13 B models trained on wafer-scale CS-2 hardware</td>
+</tr>
+<tr class="even">
+<td><strong>Ollama</strong></td>
+<td>Ollama LLMs</td>
+<td>Open-source models with a focus on simplicity and ease of use</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li>Cloud vs.&nbsp;on-premise considerations</li>
-<li>Parameter-efficient fine-tuning (LoRA, adapters)</li>
-<li>Quantization and optimization techniques</li>
-<li>Domain adaptation approaches</li>
+<li><a href="https://github.com/NiuTrans/ABigSurveyOfLLMs">A Survey of LLM Surveys</a></li>
 </ul>
 </section>
 <section id="whats-next" class="slide level2">

@@ -83,6 +83,26 @@ For Day 1 practical session, you can use:
   - Named entity recognition in financial documents
   - Report summarization and information extraction
 
+#### Day 2 Practical Notebooks
+
+1. **Train Your Own LLM**
+   - Build and train a character-level language model using PyTorch
+   - Understand the fundamentals of neural language models
+   - Experience training optimization for CPU/GPU
+   - Generate text from your trained model
+
+2. **LLMs Under the Hood**
+   - Explore key LLM hyperparameters (temperature, top-k, top-p)
+   - Visualize the effects of different sampling strategies
+   - Understand embeddings and their role in LLMs
+   - Learn how context length affects model performance
+
+3. **Memory, Buffer, Cache, and Automatic Calls**
+   - Implement different memory systems (simple, summary, vector-based)
+   - Create caching mechanisms for efficient LLM usage
+   - Develop automatic function calling for financial applications
+   - Build a financial assistant with memory and tool use capabilities
+
 ### 📌 Day 3: Prompt Engineering for Finance
 - **Lecture**: Prompt engineering principles, techniques, and best practices
 - **Practical**: 
@@ -98,6 +118,24 @@ For Day 1 practical session, you can use:
   - Domain-specific adaptations
   - Financial data preprocessing
   - Evaluation metrics and validation approaches
+
+#### Day 4 Practical Notebooks
+
+1. **Fine-tuning for Default Probability**
+   - Learn how to fine-tune a BERT model for predicting loan default probabilities
+   - Data preparation, training, evaluation, and calibration of output probabilities
+   - Create specialized financial risk models
+
+2. **Simulating Household Decisions**
+   - Use LLMs to simulate complex household financial decision-making processes
+   - Analyze how different types of households respond to changing economic conditions
+   - Model diverse financial behaviors with agent-based approaches
+
+3. **Building a Mortgage Rate Estimator**
+   - Develop a practical web application using Flask
+   - Leverage both traditional machine learning and LLMs
+   - Estimate personalized mortgage rates based on client profiles
+   - Create interactive financial tools
 
 ### 📌 Day 5: Advanced Applications and Future Directions
 - **Lecture**: Forecasting returns with LLMs, AI in asset management, reinforcement learning
@@ -146,6 +184,8 @@ For Day 1 practical session, you can use:
      DEEPSEEK_API_KEY=your_deepseek_key_here
      HUGGINGFACE_API_KEY=your_huggingface_key_here
      ```
+
+   > **Note on API Usage**: Some notebooks use the OpenAI API and other commercial services. Please be aware of potential usage costs when running certain cells. Free tier limits may be sufficient for educational purposes, but monitor your usage.
 
 5. Launch Jupyter for the practical sessions:
    ```bash
@@ -199,6 +239,32 @@ Each day folder contains:
 ## 🤝 Contributing
 
 Contributions to improve the course materials are welcome. Please feel free to submit a pull request or open an issue.
+
+## ❓ Troubleshooting
+
+If you encounter issues while setting up or running the course materials:
+
+- **Environment Setup**:
+  - Ensure you have the correct Python version (3.10+)
+  - Try creating a fresh virtual environment
+  - Check that all dependencies are installed correctly
+
+- **API Connectivity**:
+  - Verify your API keys are correctly set in the `.env` file
+  - Check your internet connection
+  - Ensure you have sufficient quota/credits for the API services
+
+- **GPU Acceleration**:
+  - Verify your CUDA installation if using GPU acceleration
+  - Check PyTorch/TensorFlow is installed with GPU support
+  - Run the test scripts in the root directory to verify
+
+- **Jupyter Notebooks**:
+  - If cells are slow to execute, consider reducing model sizes or batch sizes
+  - For memory errors, restart the kernel and run only essential cells
+  - Use `%debug` magic command to troubleshoot errors in code cells
+
+For additional help, please open an issue on the GitHub repository.
 
 ## 📄 License
 

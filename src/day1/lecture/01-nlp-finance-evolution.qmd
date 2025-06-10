@@ -5,37 +5,70 @@
 :::: {.columns}
 
 ::: {.column width="60%"}
-- Traditional rule-based approaches (1960s-1990s)
-- Statistical methods (1990s-2010s)
-- Machine learning approaches (2010s)
-- Deep learning revolution (2015+)
-- Large language models (2018+)
-:::
-
-::: {.column width="40%"}
-![Evolution of NLP](images/nlp_evolution_placeholder.png)
+- **Traditional rule-based approaches (1960s – 1990s)** – keyword spotting and hand-written grammars for parsing bank statements and wire stories.  
+- **Statistical methods (1990s – 2010s)** – TF-IDF, n-grams, naïve Bayes sentiment (e.g. [Antweiler & Frank 2004](https://doi.org/10.1111/j.1540-6261.2004.00662.x))  
+- **Machine-learning era (2010s)** – supervised classifiers & finance-specific dictionaries (e.g. [Loughran & McDonald 2011](https://doi.org/10.1111/j.1540-6261.2010.01625.x))  
+- **Deep-learning revolution (≈2015 +)** – word-embeddings, CNN/RNN sentiment on earnings calls, transformer topic models (e.g. [Manela & Moreira 2017](https://doi.org/10.1016/j.jfineco.2016.08.013))  
+- **Large Language Models (2018 +)** – GPT-style chatbots & summarizers now embedded in research and advisory workflows (see Morgan Stanley GPT-4 Assistant 2023).
 :::
 
 ::::
 
-## NLP in Finance: Key Applications
+---
 
-- Sentiment analysis of financial news and social media
-- Document processing (reports, filings, contracts)
-- Trading signals generation
-- Risk assessment and compliance
-- Customer service and chatbots
+## Academic Milestones (2004 – 2024)
 
-## Recent Advancements
+:::: {.columns}
 
-- BERT (2018) and its financial adaptations (FinBERT)
-- GPT series impact on financial text analysis
-- Multimodal models incorporating market data and text
+::: {.column width="60%"}
+- **Antweiler & Frank 2004, *JF*** – Internet-forum sentiment & volatility ([link](https://doi.org/10.1111/j.1540-6261.2004.00662.x))  
+- **Tetlock 2007, *JF*** – WSJ pessimism predicts next-day returns ([link](https://doi.org/10.1111/j.1540-6261.2007.01232.x))  
+- **Dougal *et al.* 2012, *RFS*** – Columnist-specific tone moves the market ([link](https://academic.oup.com/rfs/article-abstract/25/3/639/1617372))  
+- **Loughran & McDonald 2011, *JF*** – Finance-specific tone dictionaries for 10-Ks ([link](https://doi.org/10.1111/j.1540-6261.2010.01625.x))  
+- **Jegadeesh & Wu 2013, *JFE*** – Market-reaction-weighted tone metric ([link](https://www.sciencedirect.com/science/article/pii/S0304405X13002328))  
+- **Chen *et al.* 2014, *RFS*** – Seeking Alpha opinions predict returns & EPS surprises ([link](https://academic.oup.com/rfs/article/27/5/1367/1581938))  
+- **Manela & Moreira 2017, *JFE*** – NVIX text-based disaster-risk index ([link](https://doi.org/10.1016/j.jfineco.2016.08.013))  
+- **Buehlmaier & Whited 2018, *RFS*** – Text-identified financial-constraints premium ([link](https://academic.oup.com/rfs/article-abstract/31/7/2693/4824924))  
+- **Hassan *et al.* 2019, *QJE*** – Firm-level political-risk from earnings-call text ([link](https://academic.oup.com/qje/article/134/4/2135/5531768))  
+- **Bybee *et al.* 2024, *JF*** – Topic-model news-attention indices improve macro forecasts ([link](https://doi.org/10.1111/jofi.13377))  
+:::
 
-## Challenges Specific to Finance
+::: {.column width="40%"}
+**Why it matters**
 
-- Domain-specific vocabulary
-- Regulatory constraints
-- High stakes decision-making
-- Need for explainability and transparency
-- Real-time processing requirements
+- Predict **returns**, **volatility**, and **risk premia**  
+- Reveal intangible firm traits (constraints, political risk)  
+- Enhance macro forecasting with text-derived factors  
+- Methodology shifted: word-counts → ML classification → embeddings & topic models
+:::
+
+::::
+
+---
+
+## Real-World Industry Applications of NLP
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Thomson Reuters / Bloomberg News Analytics** – Real-time machine-readable sentiment feeds power quant desks and HFT strategies ([Forbes](https://www.forbes.com/sites/tomgroenfeldt/2011/11/28/trading-on-sentiment-analysis-a-public-relations-tool-goes-to-wall-street/))  
+- **RavenPack** – >70 % of top quant funds ingest its news-sentiment data for alpha & risk ([RavenPack](https://www.ravenpack.com/products/edge/data/news-analytics))  
+- **MarketPsych Capital (2008-10)** – Hedge fund trading on media sentiment, +28 % during the 2008 crisis ([MarketPsych](https://www.marketpsych.com/))  
+- **Derwent Capital "Twitter Fund" 2011** – $40 m portfolio guided by Twitter mood ([Atlantic](https://www.theatlantic.com/business/archive/2011/05/the-worlds-first-twitter-based-hedge-fund-is-finally-open-for-business/239097/))  
+- **J.P. Morgan COIN 2017** – NLP reviews loan contracts in seconds, saving 360 k lawyer-hours ([ABA Journal](https://www.abajournal.com/news/article/jpmorgan_chase_uses_tech_to_save_360000_hours_of_annual_work_by_lawyers_and))  
+- **Morgan Stanley GPT-4 Assistant 2023-24** – Chatbot for 16 k advisors, instant Q&A on 100 k research docs ([Press release](https://www.morganstanley.com/press-releases/morgan-stanley-research-announces-askresearchgpt))  
+- **Kensho (acq. S&P Global 2018)** – NLP Q&A platform "Warren" enhances S&P analytics ([S&P Global](https://investor.spglobal.com/news-releases/news-details/2018/SP-Global-to-Acquire-Kensho-Bolsters-Core-Capabilities-in-Artificial-Intelligence-Natural-Language-Processing-and-Data-Analytics-2018-3-6/default.aspx))  
+- **SEC "RoboCop" 2013** – Accounting Quality Model flags anomalous filings for enforcement ([Harvard Law Blog](https://corpgov.law.harvard.edu/2014/01/27/the-secs-refocus-on-accounting-irregularities/))  
+- **Lloyd's / FRISS Fraud Detection** – Text-mining claims boosts fraud-catch rate ≈30 % ([Lloyd's Lab report](https://assets.lloyds.com/media/dc22cd29-1c4e-441c-a872-e1bf5ce9142a/Lloyds%20Lab_impact%20report_FINAL.pdf))  
+:::
+
+::: {.column width="40%"}
+**Key take-aways**
+
+- **Alpha & Risk** – sentiment + event extraction  
+- **Efficiency** – contract analysis, research Q&A  
+- **Governance** – regulators spot fraud & anomalies  
+- **Generative AI** – LLM-powered advisory tools
+:::
+
+::::

@@ -1,59 +1,118 @@
-# Word Embeddings
+# Word Embeddings in Finance
 
-## From Words to Vectors
+## What Are Word Embeddings?
 
-- Word embeddings: Dense vector representations of words
-- Capture semantic relationships between words
-- Enable mathematical operations on language
-- Foundation for modern NLP applications
+### Technical Definition
+- **Word embeddings**: Dense vector representations of words in a continuous vector space
+- Words are mapped to real-valued vectors in an n-dimensional space (typically 100-300 dimensions)
+- Semantically similar words are positioned closer together in this vector space
+- The relative positions and distances between word vectors encode meaningful relationships
 
-## Key Word Embedding Techniques
+### Intuition
+- Think of embeddings as "translating" words into a language that computers understand (numbers)
+- Each dimension represents a latent feature of the word's meaning
+- Instead of treating words as isolated symbols, embeddings capture their context and relationships
+- Example: In a 2D simplification, "profit" and "earnings" would be close together, while "loss" would be farther away
 
-:::: {.columns}
+## Why Embeddings Matter in Finance
 
-::: {.column width="60%"}
-- Word2Vec (CBOW and Skip-gram)
-- GloVe (Global Vectors)
-- FastText
-- Contextual embeddings (ELMo, BERT)
-:::
+- Transform unstructured textual data (news, reports, filings) into structured numerical data
+- Enable quantitative analysis of qualitative information
+- Allow algorithms to understand semantic relationships between financial concepts
+- Support tasks like sentiment analysis, document classification, and information retrieval
+- Bridge the gap between natural language and mathematical models
 
-::: {.column width="40%"}
-```{python}
-#| eval: false
-import gensim.downloader as api
+## Traditional Word Embedding Methods
 
-# Load pre-trained Word2Vec embeddings
-word_vectors = api.load("word2vec-google-news-300")
+### Count-Based Methods
 
-# Find words most similar to 'stock'
-similar_words = word_vectors.most_similar("stock")
-print(similar_words)
-```
-:::
+#### Bag of Words (BoW)
+- Represents text as occurrence counts of words
+- Simple but loses word order and context
+- Financial application: Basic frequency analysis of terms in earnings reports
 
-::::
+#### TF-IDF (Term Frequency-Inverse Document Frequency)
+- Weights word importance by frequency in document and rarity across corpus
+- Helps identify distinctive terms in financial documents
+- Financial application: Identifying unusual language in disclosures
 
-## Word Embeddings in Finance
+#### Co-occurrence Matrices
+- Counts how often words appear together in context windows
+- Can capture some semantic relationships
+- Financial application: Analyzing relationships between economic terms
 
-- Financial domain-specific embeddings
-- Applications:
-  - Asset price prediction
-  - Portfolio optimization
-  - Risk assessment
-  - Financial sentiment analysis
+### Prediction-Based Methods
 
-## Vector Space Properties
+#### Word2Vec
+- **CBOW (Continuous Bag of Words)**: Predicts target word from surrounding context
+- **Skip-gram**: Predicts surrounding context from target word
+- Captures semantic and syntactic word relationships
+- Financial application: Analyzing relationships between market terms
 
+#### GloVe (Global Vectors)
+- Combines count-based and prediction-based approaches
+- Factorizes global word co-occurrence matrix
+- Preserves linear substructures of word vector space
+- Financial application: Identifying related financial concepts
+
+#### FastText
+- Extension of Word2Vec that uses character n-grams
+- Better handles rare words and morphologically rich languages
+- Can represent out-of-vocabulary words
+- Financial application: Processing specialized financial terminology
+
+## Properties of Word Vector Spaces
+
+### Semantic Clustering
 - Words with similar meanings cluster together
-- Vector arithmetic: "king" - "man" + "woman" ≈ "queen"
+- Example: "equity," "stock," "share" form a cluster
+
+### Vector Arithmetic
+- Word vectors can be added and subtracted with meaningful results
+- Classical example: "king" - "man" + "woman" ≈ "queen"
 - Financial examples:
   - "Bull" - "Market" + "Housing" ≈ "Bubble"
   - "Fed" + "Increase" ≈ "Rates"
+  - "Bond" - "Price" + "Increase" ≈ "Yield"
 
-## Limitations of Static Embeddings
+### Analogical Reasoning
+- Vector relationships encode semantic relationships
+- Enables solving analogies: A:B :: C:D
+- Financial example: "Stock:Equity :: Bond:Debt"
 
-- No context awareness (polysemy problem)
-- Need for domain adaptation
-- Challenge with rare financial terms
-- Inability to understand new terminology
+## Finance-Specific Word Embeddings
+
+### Domain Adaptation
+- Generic embeddings often miss nuances in financial language
+- Domain-specific embeddings are trained on financial corpora:
+  - Earnings call transcripts
+  - Financial news
+  - SEC filings
+  - Analyst reports
+
+### Benefits in Financial Applications
+- More accurate representation of financial terminology
+- Better capture of relationships between market concepts
+- Improved performance in financial NLP tasks:
+  - Sentiment analysis of market news
+  - Classification of financial documents
+  - Information extraction from reports
+
+## Limitations of Traditional Embeddings
+
+### Context Insensitivity
+- Each word has only one vector regardless of context
+- Polysemy problem: "bank" (financial institution vs. river edge)
+- "Interest" (monetary vs. attentional) has different meanings in finance
+
+### Static Nature
+- Cannot adapt to evolving language and new terminology
+- Market-specific terms change meaning during different economic cycles
+
+### Rare Terms Challenge
+- Financial jargon and specialized terminology often lack quality embeddings
+- Numerical values and symbols are not well represented
+
+### Phrase Handling
+- Important financial phrases ("interest rate," "balance sheet") need special treatment
+- Individual word embeddings may not capture phrase meanings

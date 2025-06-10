@@ -1,0 +1,226 @@
+# Understanding Transformers: Step by Step
+
+## What is a Transformer?
+
+- Revolutionary neural network architecture introduced in "Attention Is All You Need" (2017)
+- **Key innovation**: Replaces recurrence and convolutions entirely with attention mechanisms
+- Enables **parallel processing** of sequences (unlike RNNs)
+- Foundation for modern LLMs including GPT-2, GPT-3/4, BERT
+
+![Attention Paper](../../images/attention_paper.png)
+
+## Contribution
+
+![Attention Mechanism](../../images/attention_abstract.png)
+
+## A toy representation
+
+![Transformer Baby](../../images/transformer_baby.png)
+
+
+## The Big Picture: Transformer Architecture
+
+![Transformer Architecture](../../images/transformers_model.png)
+
+- **Encoder-Decoder Structure**: Input → Encoder → Decoder → Output
+- **Self-Attention**: Each position can attend to all positions in previous layer
+- **Parallelizable**: No sequential dependencies like RNNs
+
+
+
+## The recipe
+
+
+- **Tokenise** the *source* sentence and add start/end markers.  
+- **Embed** each token **+** add positional encodings.
+
+- **Encoder (× N layers)**  
+  - Multi-head **self-attention**.  
+  - Position-wise **feed-forward network**.  
+  - **Residual connection + LayerNorm** after each sub-layer.  
+
+- Cache the resulting **encoder hidden states** (the “memory”).
+
+
+
+- **Decoder (run autoregressively)**  
+  1. Embed the generated prefix tokens **+** positional encodings.  
+  2. **Masked self-attention** (each token sees only ≤ current position).  
+  3. **Cross-attention** over the encoder memory (lets the decoder “look back” at the source).  
+  4. Feed-forward → Residual → LayerNorm.  
+  5. **Linear projection** (tied to embeddings) → **softmax** → probability distribution.  
+  6. **Select** the next token (greedy, top-k, nucleus, beam, …), append it, and repeat until ⟨end of sentence EOS⟩ or a maximum length.
+
+
+## New vocabulary?
+
+- **Self-Attention**: Mechanism allowing each token to attend to all other tokens in the sequence, capturing dependencies regardless of distance.
+- **Multi-Head Attention**: Multiple self-attention mechanisms running in parallel, allowing the model to capture different types of relationships.
+- **Feed-Forward Network (FFN)**: A fully connected neural network applied to each position independently, typically with a ReLU (Rectified Linear Unit) activation.
+- **Positional Encoding**: Adds information about the position of each token in the sequence, since transformers do not have a built-in notion of order.
+- **Residual Connection**: A shortcut connection that adds the input of a layer to its output, helping to prevent vanishing gradients in deep networks.
+- **Layer Normalization**: A technique to stabilize and accelerate training by normalizing the inputs to each layer, applied after residual connections.
+
+
+## Step 1: Input Embeddings + Positional Encoding
+
+### Token Embeddings
+- When you feed a sequence of tokens into a transformer‐based LLM, the first thing that happens is that each discrete token (an integer index) is turned into a dense vector of much lower dimensionality than the size of the vocabulary.
+
+- Let $V$ be the vocabulary size, and $N$ the sequence length. 
+- A token $j$ is an integer in the set $\{0, 1, \ldots, V-1\}$.
+- A brute force one-hot vector encoding $x \in \{0,1\}^V$
+$$
+x_j = \begin{cases}
+1 & \text{if } j = i \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+- This is inefficient, especially for large vocabularies, as it results in high-dimensional sparse vectors. Instead, we use a **learnable embedding matrix** $\mathbf{E} \in \mathbb{R}^{V \times d_{\text{model}}}$, where $d_{\text{model}}$ is the embedding dimension. Where $d_{\text{model}}$ is typically much smaller than $V$.
+
+- If token $t$ is represented by index $j$, its embedding is given by the $j$-th row of 
+$$
+\mathbf{e}_j = \mathbf{x}_j^T \mathbf{E} = \mathbf{E}_j
+$$
+
+
+### Positional Encoding
+Since transformers have no inherent notion of position, we add positional information:
+
+$$PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)$$
+
+$$PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)$$
+
+**Final input**: $\text{input}_i = \text{embedding}_i + PE_i$
+
+
+
+## Step 2: Self-Attention Mechanism - The Core
+
+### Queries, Keys, and Values
+For each token embedding $\mathbf{x}_i$, we create three vectors:
+
+$$\mathbf{q}_i = \mathbf{x}_i \mathbf{W}^Q \quad \text{(Query)}$$
+$$\mathbf{k}_i = \mathbf{x}_i \mathbf{W}^K \quad \text{(Key)}$$  
+$$\mathbf{v}_i = \mathbf{x}_i \mathbf{W}^V \quad \text{(Value)}$$
+
+Where $\mathbf{W}^Q, \mathbf{W}^K, \mathbf{W}^V \in \mathbb{R}^{d_{\text{model}} \times d_k}$ are learned parameter matrices.
+
+
+
+## Step 3: Computing Attention Scores
+
+### Attention Formula
+$$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}$$
+
+### Step-by-step breakdown:
+
+1. **Dot product**: $\mathbf{Q}\mathbf{K}^T$ gives similarity scores between all pairs
+2. **Scale**: Divide by $\sqrt{d_k}$ to prevent softmax saturation
+3. **Normalize**: Apply softmax to get attention weights
+4. **Weighted sum**: Multiply by values $\mathbf{V}$
+
+
+
+## Step 4: Multi-Head Attention
+
+Instead of single attention, we use **multiple attention heads**:
+
+$$\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)\mathbf{W}^O$$
+
+Where each head is:
+$$\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)$$
+
+**Why multiple heads?**
+- Each head can focus on different types of relationships
+- Increases model's representational capacity
+- Typical: 8-16 heads in practice
+
+
+## Step 5: Feed-Forward Networks
+
+After attention, each position goes through a feed-forward network:
+
+$$\text{FFN}(\mathbf{x}) = \text{max}(0, \mathbf{x}\mathbf{W}_1 + \mathbf{b}_1)\mathbf{W}_2 + \mathbf{b}_2$$
+
+**Architecture details:**
+- Input dimension: $d_{\text{model}}$ (e.g., 512)  
+- Hidden dimension: $d_{ff}$ (typically $4 \times d_{\text{model}} = 2048$)
+- Output dimension: $d_{\text{model}}$ (back to 512)
+- Applied **identically** to each position
+
+
+## Step 6: Residual Connections & Layer Normalization
+
+Each sub-layer (attention or FFN) is wrapped with:
+
+$$\text{LayerNorm}(\mathbf{x} + \text{Sublayer}(\mathbf{x}))$$
+
+**Why this matters:**
+- **Residual connections**: Prevent vanishing gradients in deep networks
+- **Layer normalization**: Stabilizes training by normalizing across features
+- **Order**: In original paper, LayerNorm comes after; in practice, often before
+
+
+## GPT-2: Decoder-Only Architecture
+
+
+
+**Key differences from original Transformer:**
+- **No encoder**: Only decoder blocks
+- **Masked self-attention**: Can only attend to previous tokens
+- **Autoregressive generation**: Predicts next token given previous tokens
+
+### Masked Attention
+$$\text{score}_{i,j} = \begin{cases} 
+\mathbf{q}_i \cdot \mathbf{k}_j & \text{if } j \leq i \\
+-\infty & \text{if } j > i 
+\end{cases}$$
+
+
+
+## Step 7: Text Generation with GPT-2
+
+### The Generation Process
+1. **Input**: Prompt tokens $[x_1, x_2, \ldots, x_n]$
+2. **Forward pass**: Compute probability distribution over vocabulary
+3. **Sampling**: Select next token $x_{n+1}$ from distribution  
+4. **Repeat**: Append $x_{n+1}$ and generate $x_{n+2}$, etc.
+
+### Next-Token Prediction
+$$P(x_{t+1} | x_1, \ldots, x_t) = \text{softmax}(\mathbf{W}_{\text{vocab}} \mathbf{h}_t + \mathbf{b})$$
+
+Where $\mathbf{h}_t$ is the final hidden state for position $t$.
+
+
+## Sampling Strategies
+
+### Greedy Decoding
+$$x_{t+1} = \arg\max_{x} P(x | x_1, \ldots, x_t)$$
+
+### Top-k Sampling  
+Sample from the $k$ most likely tokens
+
+### Nucleus (Top-p) Sampling
+Sample from smallest set of tokens whose cumulative probability ≥ $p$
+
+### Temperature Scaling
+$$P'(x_i) = \frac{\exp(z_i / \tau)}{\sum_j \exp(z_j / \tau)}$$
+- $\tau < 1$: More focused (conservative)
+- $\tau > 1$: More random (creative)
+
+
+## Why Transformers Work So Well
+
+### Advantages over RNNs
+- **Parallelization**: All positions processed simultaneously
+- **Long-range dependencies**: Direct connections between any two positions
+- **Gradient flow**: Shorter paths for gradient propagation
+
+### Computational Complexity
+- **Self-attention**: $O(n^2 \cdot d)$ where $n$ is sequence length
+- **RNN**: $O(n \cdot d^2)$ but sequential
+- **Trade-off**: Memory vs. parallelization
+
+

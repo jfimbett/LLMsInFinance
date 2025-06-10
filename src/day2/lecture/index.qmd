@@ -4,10 +4,11 @@ author: "Your Name"
 date: "2025-05-08"
 format:
   revealjs:
-    theme: solarized
+    theme: default
     slide-number: true
     preview-links: auto
-    css: styles.css
+    css: ../../styles.css
+    logo: ../../images/logo_header.svg
 ---
 
 # Advanced LLM Concepts & Techniques

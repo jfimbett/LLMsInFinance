@@ -1,0 +1,36 @@
+## Expectations and Background Survey
+
+### Quick Survey
+Please share with the group (or submit privately):
+
+### 1. Background Assessment
+- **Programming Experience**: 
+  - Beginner / Intermediate / Advanced Python
+  - Other languages you're comfortable with
+- **Finance Background**:
+  - Academic / Professional / Personal interest
+  - Specific areas (trading, risk, research, etc.)
+- **AI/ML Experience**:
+  - None / Some coursework / Professional experience
+
+### 2. Course Expectations
+- What specific LLM applications in finance interest you most?
+- What's your biggest challenge in this space?
+- Do you have a particular project in mind?
+
+### 3. Learning Style Preferences
+- Prefer theory first, then practice? Or hands-on first?
+- Work individually or in groups?
+- Questions as we go, or save for end?
+
+### 4. Technical Considerations
+- Laptop specs (RAM, OS)?
+- Internet connection reliable?
+- Any accessibility needs?
+
+### 5. Post-Course Goals
+- How do you plan to apply this knowledge?
+- Any immediate projects or deadlines?
+- Interest in continued collaboration?
+
+**This helps me tailor the pace and focus to your needs!**

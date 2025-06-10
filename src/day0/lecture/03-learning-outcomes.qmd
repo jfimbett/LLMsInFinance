@@ -1,0 +1,27 @@
+## Learning Outcomes
+
+By the end of this course, you will be able to:
+
+### Technical Skills
+- **Implement and fine-tune** LLMs for financial applications
+- **Process and analyze** financial text data using modern NLP techniques
+- **Build API integrations** with major LLM providers (OpenAI, Anthropic, etc.)
+- **Create automated workflows** for financial document processing
+- **Evaluate model performance** in financial prediction tasks
+- **Design prompt engineering strategies** specific to finance
+
+### Domain Knowledge
+- **Understand different LLM architectures** and their comparative advantages
+- **Apply LLMs to specific finance use cases**:
+  - Sentiment analysis of financial news and earnings calls
+  - Automated financial report generation and summarization
+  - Risk assessment and regulatory compliance
+  - Customer service automation and personalized advising
+  - Market trend analysis and prediction
+- **Navigate regulatory considerations** (GDPR, SEC guidelines, etc.)
+
+### Project Experience
+- **Complete hands-on projects** throughout the course
+- **Build a portfolio** of LLM applications in finance
+- **Collaborate on real-world scenarios** and case studies
+- **Develop critical thinking skills** about AI limitations and potential biases

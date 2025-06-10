@@ -1,0 +1,39 @@
+---
+title: "Day 3: Prompt Engineering for Financial Applications"
+author: "Your Name"
+date: "2025-05-09"
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    preview-links: auto
+    css: ../../styles.css
+    logo: ../../images/logo_header.svg
+---
+
+# Prompt Engineering for Financial Applications
+
+## Overview of Today's Lecture
+
+- Fundamentals of prompt engineering
+- Financial domain-specific prompting techniques
+- Designing prompts for financial analysis
+- Chain-of-thought and multi-step reasoning
+- Ethical considerations in financial applications
+
+{{< include 01-prompt-engineering-fundamentals.qmd >}}
+
+{{< include 02-financial-domain-prompting.qmd >}}
+
+{{< include 03-financial-analysis-prompts.qmd >}}
+
+{{< include 04-chain-of-thought-reasoning.qmd >}}
+
+{{< include 05-ethical-considerations.qmd >}}
+
+## What's Next?
+
+- Practical session: Crafting effective prompts for financial tasks
+- Hands-on experience with prompt templates and evaluation
+- Building prompt libraries for financial applications
+- Preview of Day 4: RAG and LLM Infrastructure

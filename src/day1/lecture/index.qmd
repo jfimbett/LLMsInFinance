@@ -4,10 +4,12 @@ author: "Your Name"
 date: "2025-05-07"
 format:
   revealjs:
-    theme: solarized
+    theme: default
     slide-number: true
     preview-links: auto
-    css: styles.css
+    css: ../../styles.css
+    logo: ../../images/logo_header.svg
+jupyter: python3
 ---
 
 # Introduction to Large Language Models in Finance
@@ -24,11 +26,13 @@ format:
 
 {{< include 02-word-embeddings.qmd >}}
 
-{{< include 03-tokenizers.qmd >}}
+{{< include 03-limitations.qmd >}}
 
 {{< include 04-transformers-architecture.qmd >}}
 
-{{< include 05-llm-classification.qmd >}}
+{{< include 05-tokenizers.qmd >}}
+
+{{< include 06-llm-classification.qmd >}}
 
 ## What's Next?
 

@@ -1,0 +1,23 @@
+# Prompt Engineering Fundamentals
+
+## What is Prompt Engineering?
+
+- The practice of designing and optimizing inputs to LLMs
+- Systematically crafting prompts to achieve desired outputs
+- A core skill for effective LLM application development
+
+## Key Components of Effective Prompts
+
+- **Clarity**: Explicit instructions and well-defined tasks
+- **Context**: Relevant background information
+- **Format**: Structured input with clear expectations
+- **Examples**: Demonstrations of desired outputs (few-shot learning)
+- **Constraints**: Boundaries and limitations for the model
+
+## Prompt Types and Strategies
+
+- **Zero-shot**: Direct instructions without examples
+- **Few-shot**: Including examples of desired inputs and outputs
+- **Chain-of-thought**: Guiding the model through reasoning steps
+- **Self-consistency**: Multiple paths to validate outputs
+- **System prompts**: Setting the model's persona and behavior

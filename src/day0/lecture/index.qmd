@@ -1,0 +1,27 @@
+---
+title: "Large Language Models in Finance"
+subtitle: "Course Introduction"
+author: "Juan F. Imbet"
+date: "July 7, 2025"
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    preview-links: auto
+    css: ../../styles.css
+    logo: ../../images/logo_header.svg
+---
+
+{{< include 01-instructor-introduction.qmd >}}
+
+{{< include 02-course-overview.qmd >}}
+
+{{< include 03-learning-outcomes.qmd >}}
+
+{{< include 04-course-structure.qmd >}}
+
+{{< include 05-logistics.qmd >}}
+
+{{< include 06-getting-started.qmd >}}
+
+

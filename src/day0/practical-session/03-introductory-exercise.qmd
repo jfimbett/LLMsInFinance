@@ -1,0 +1,55 @@
+## Introductory Exercise: Your First LLM Call
+
+### Objective
+Test your environment and make your first API call to understand what we'll be working with.
+
+### Exercise 1: Simple API Test
+Create a new Jupyter notebook `day0_intro.ipynb`:
+
+```python
+import os
+from dotenv import load_dotenv
+import openai
+
+# Load environment variables
+load_dotenv()
+
+# Initialize OpenAI client
+client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+
+# Simple completion
+response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "user", "content": "Explain what a stock is in simple terms."}
+    ],
+    max_tokens=100
+)
+
+print(response.choices[0].message.content)
+```
+
+### Exercise 2: Finance-Specific Prompt
+Try this financial analysis prompt:
+
+```python
+financial_prompt = """
+Analyze the following financial statement excerpt:
+'Revenue increased 15% year-over-year to $2.3B, while operating expenses grew 8% to $1.8B.'
+
+Provide a brief analysis of the company's performance.
+"""
+
+response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": financial_prompt}],
+    max_tokens=150
+)
+
+print(response.choices[0].message.content)
+```
+
+### Exercise 3: Reflect
+- What surprised you about the LLM's responses?
+- How might this be useful in finance?
+- What concerns do you have?

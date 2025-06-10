@@ -1,0 +1,380 @@
+/* Centralized styles for LLMs in Finance course slides */
+
+/* Import Merriweather font */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap');
+
+/* Main theme adjustments - White background with Merriweather font */
+.reveal {
+    font-family: "Merriweather", serif;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 0.95em; /* Adjusted from 0.9em to be slightly larger */
+}
+
+.reveal .slides {
+    background-color: #ffffff;
+}
+
+.reveal .slides section {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Titles styling with your blue color #2596be */
+.reveal h1, .reveal h2, .reveal h3 {
+    color: #2596be;
+    font-weight: 700;
+    font-family: "Merriweather", serif;
+}
+
+.reveal h1 {
+    font-size: 2.0em; /* Adjusted between 2.2em and 1.9em */
+    font-weight: 900;
+    text-shadow: 1px 1px 2px rgba(37, 150, 190, 0.1);
+}
+
+.reveal h2 {
+    font-size: 1.6em; /* Adjusted between 1.8em and 1.5em */
+    font-weight: 700;
+}
+
+.reveal h3 {
+    font-size: 1.3em; /* Adjusted between 1.4em and 1.2em */
+    font-weight: 700;
+}
+
+/* Logo in bottom left corner - Using centralized logo path */
+.reveal .slide-logo {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 240px; 
+    height: 180px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1000;
+    opacity: 0.9; /* Slightly increased opacity for better visibility */
+}
+
+/* Code blocks - Updated for white background theme */
+.reveal pre {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.9em; /* Adjusted between 1em and 0.8em */
+    font-size: 0.72em; /* Adjusted between 0.75em and 0.7em */
+    line-height: 1.35; /* Adjusted between 1.4 and 1.3 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: #000000;
+}
+
+.reveal code {
+    background: #f1f3f4;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    color: #2596be;
+    font-family: "Consolas", "Monaco", "Courier New", monospace;
+}
+
+/* Tables - Updated for white background */
+.reveal table {
+    margin: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: #ffffff;
+    font-size: 0.9em; /* Adjusted from 0.85em */
+}
+
+.reveal table th {
+    background: #2596be;
+    color: white;
+    padding: 0.75em; /* Adjusted between 0.8em and 0.7em */
+    border: 1px solid #1f7a9a;
+    font-weight: 700;
+}
+
+.reveal table td {
+    padding: 0.55em; /* Adjusted between 0.6em and 0.5em */
+    border: 1px solid #dee2e6;
+    color: #000000;
+}
+
+.reveal table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.reveal table tr:hover {
+    background: #e3f2fd;
+}
+
+/* Lists - Updated colors */
+.reveal ul, .reveal ol {
+    margin-left: 1em;
+    color: #000000;
+}
+
+.reveal li {
+    margin-bottom: 0.45em; /* Adjusted between 0.5em and 0.4em */
+    line-height: 1.35; /* Adjusted between 1.4 and 1.3 */
+}
+
+/* Enhanced bullet points with blue color */
+.reveal ul li::marker {
+    color: #2596be;
+    font-weight: bold;
+}
+
+/* Blockquotes - Updated for white theme */
+.reveal blockquote {
+    background: #f8f9fa;
+    border-left: 5px solid #2596be;
+    margin: 1em 0;
+    padding: 1em;
+    font-style: italic;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: #000000;
+}
+
+/* Alerts/Callouts - Updated for white theme */
+.alert {
+    padding: 1em;
+    margin: 1em 0;
+    border-radius: 6px;
+    border-left: 4px solid;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: #ffffff;
+}
+
+.alert-info {
+    background: #e3f2fd;
+    border-color: #2596be;
+    color: #1f7a9a;
+}
+
+.alert-warning {
+    background: #fff3cd;
+    border-color: #ffc107;
+    color: #856404;
+}
+
+.alert-success {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+/* Custom classes for finance content - Updated with new theme */
+.financial-concept {
+    background: linear-gradient(135deg, #2596be 0%, #1f7a9a 100%);
+    color: white;
+    padding: 1.5em;
+    border-radius: 10px;
+    margin: 1em 0;
+    box-shadow: 0 4px 8px rgba(37, 150, 190, 0.3);
+}
+
+.code-exercise {
+    background: #ffffff;
+    border: 2px dashed #2596be;
+    padding: 1.5em;
+    border-radius: 8px;
+    margin: 1em 0;
+    position: relative;
+    color: #000000;
+}
+
+.code-exercise::before {
+    content: "💻 Exercise";
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    background: #fff;
+    padding: 0 10px;
+    font-weight: bold;
+    color: #2596be;
+    font-size: 0.9em;
+}
+
+.instructor-note {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    padding: 0.8em;
+    border-radius: 6px;
+    font-size: 0.9em;
+    margin: 1em 0;
+    position: relative;
+    color: #856404;
+}
+
+.instructor-note::before {
+    content: "👨‍🏫 Note";
+    font-weight: bold;
+    color: #856404;
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+/* Key concepts highlighting - Updated with new blue */
+.key-concept {
+    background: #e3f2fd;
+    border: 1px solid #2596be;
+    padding: 1em;
+    border-radius: 8px;
+    margin: 1em 0;
+    box-shadow: 0 2px 4px rgba(37, 150, 190, 0.1);
+    color: #000000;
+}
+
+/* Two-column layout utility */
+.two-columns {
+    display: flex;
+    gap: 2em;
+    align-items: flex-start;
+}
+
+.two-columns > div {
+    flex: 1;
+}
+
+/* Slide transitions and animations */
+.reveal .slides section {
+    transition: all 0.3s ease;
+}
+
+/* Title slide special styling - Updated with new blue */
+.reveal .title-slide h1, 
+.reveal #title-slide h1,
+.reveal section.quarto-title-block h1 {
+    color: #2596be;
+    font-size: 3.0em; /* 1.5 times the current size of 2em */
+    font-weight: 900;
+    margin-bottom: 0.5em;
+}
+
+/* Title slide subtitle styling */
+.reveal #title-slide .subtitle,
+.reveal section.quarto-title-block .subtitle {
+    color: #2596be;
+    font-size: 1.8em;
+    margin-bottom: 1em;
+}
+
+/* Same with h2*/
+.reveal .title-slide h2,
+.reveal #title-slide h2,
+.reveal section.quarto-title-block h2 {
+    color: #2596be;
+    font-size: 2.0em; /* 1.5 times the current size of 1.3em */
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+/* Author and date styling for title slide */
+.reveal #title-slide .author,
+.reveal section.quarto-title-block .author,
+.reveal #title-slide .date,
+.reveal section.quarto-title-block .date,
+.reveal #title-slide .quarto-title-author-name,
+.reveal section.quarto-title-block .quarto-title-author-name {
+    color: #000000;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
+/* Progress bar customization - Updated with new blue */
+.reveal .progress {
+    color: #2596be;
+    height: 3px;
+}
+
+.reveal .progress span {
+    background: #2596be;
+}
+
+/* Slide numbers styling - Updated for white theme */
+.reveal .slide-number {
+    color: #2596be;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #2596be;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
+/* Text styling - Ensure black text on white background */
+.reveal p, .reveal li {
+    color: #000000;
+}
+
+/* Links styling */
+.reveal a {
+    color: #2596be;
+    text-decoration: none;
+}
+
+.reveal a:hover {
+    color: #1f7a9a;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .reveal h1 {
+        font-size: 1.7em; /* Adjusted between 1.8em and 1.6em */
+    }
+    
+    .reveal pre {
+        font-size: 0.62em; /* Adjusted between 0.65em and 0.6em */
+    }
+    
+    .reveal table {
+        font-size: 0.78em; /* Adjusted between 0.8em and 0.75em */
+    }
+    
+    .reveal .slides section::after {
+        width: 60px;
+        height: 45px;
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    .two-columns {
+        flex-direction: column;
+        gap: 1em;
+    }
+}
+
+/* Print styles */
+@media print {
+    .reveal .slides section::before {
+        display: none;
+    }
+}
+
+/* Force white background and override any theme defaults */
+.reveal,
+.reveal .slides,
+.reveal .slides section,
+.reveal .backgrounds,
+.reveal .slide-background {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+
+/* Ensure all text elements are black */
+.reveal .slides section * {
+    color: inherit;
+}
+
+.reveal .slides section {
+    color: #000000;
+}

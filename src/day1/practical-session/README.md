@@ -37,6 +37,12 @@ The exercises are provided as Jupyter notebooks:
 
 ### Getting Started
 
+#### Option 1: Automated Setup
+1. For Windows: Run `setup.bat`
+2. For macOS/Linux: Run `bash setup.sh`
+3. Follow the prompts to complete setup
+
+#### Option 2: Manual Setup
 1. Create a virtual environment:
    ```bash
    python -m venv venv

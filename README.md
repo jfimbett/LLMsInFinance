@@ -31,6 +31,16 @@ For the practical sessions, you'll need:
 
 See each practical session's README for specific setup instructions.
 
+## Preliminaries
+
+If you're new to Python or need a refresher on the fundamentals needed for this course, check out the [Preliminaries](src/preliminaries/README.md) section, which includes:
+
+- A comprehensive [Python Crash Course](src/preliminaries/01-python-crash-course.ipynb) with NumPy and PyTorch
+- Introduction to vectors and tensors for neural networks
+- Basic neural network concepts for understanding LLMs
+
+This material will help you get up to speed before diving into the main course content.
+
 ## Day 1 Practical Session
 
 The Day 1 practical session now includes comprehensive Jupyter notebooks covering:

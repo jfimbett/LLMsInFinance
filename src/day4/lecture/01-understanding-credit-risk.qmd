@@ -1,0 +1,358 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\01-understanding-credit-risk.qmd
+---
+title: "Understanding Credit Risk with LLMs"
+format: html
+---
+
+# Understanding Credit Risk
+
+## Credit Risk Fundamentals
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Credit risk definition**:
+  - Probability of default
+  - Loss given default
+  - Exposure at default
+  
+- **Traditional assessment methods**:
+  - Credit scoring models
+  - Rating agency methodologies
+  - Financial ratio analysis
+  - Market-based approaches
+  
+- **Challenges in credit risk assessment**:
+  - Information asymmetry
+  - Forward-looking assessment
+  - Behavioral factors
+  - Data quality and availability
+:::
+
+::: {.column width="40%"}
+![Credit Risk Components](../../images/credit_risk.png)
+:::
+
+::::
+
+## Consumer Credit Risk Assessment
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Traditional factors**:
+  - Credit history and payment behavior
+  - Income and employment stability
+  - Debt-to-income ratio
+  - Credit utilization
+  - Length of credit history
+  
+- **Alternative data sources**:
+  - Transaction data
+  - Utility payments
+  - Rental history
+  - Mobile phone usage
+  - Social media and digital footprint
+:::
+
+::: {.column width="40%"}
+- **Limitations of traditional approaches**:
+  - Reliance on historical data
+  - Limited coverage of thin-file consumers
+  - Difficulty capturing life events
+  - Potential for bias and discrimination
+  - Model transparency issues
+  
+- **Regulatory considerations**:
+  - Fair lending requirements
+  - Adverse action notifications
+  - Explainability mandates
+  - Data privacy constraints
+:::
+
+::::
+
+## Corporate Credit Risk Assessment
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Financial metrics**:
+  - Leverage ratios
+  - Profitability measures
+  - Liquidity indicators
+  - Interest coverage
+  - Cash flow adequacy
+  
+- **Qualitative factors**:
+  - Management quality
+  - Industry dynamics
+  - Competitive positioning
+  - Regulatory environment
+  - Geographic concentration
+:::
+
+::: {.column width="40%"}
+- **Market-based indicators**:
+  - Credit default swaps
+  - Bond spreads
+  - Implied volatility
+  - Distance-to-default measures
+  - Market capitalization trends
+  
+- **Forward-looking considerations**:
+  - Strategic plans
+  - Capital expenditure projections
+  - Financial policy commitments
+  - Covenant structures
+  - Refinancing risks
+:::
+
+::::
+
+## LLMs for Credit Risk Assessment
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Text-based insights**:
+  - Management discussion analysis
+  - Earnings call transcripts
+  - News sentiment
+  - Regulatory filings
+  - Audit opinions
+  
+- **Advantages of LLM approaches**:
+  - Processing unstructured information
+  - Contextual understanding
+  - Temporal awareness
+  - Cross-entity comparisons
+  - Language nuance detection
+:::
+
+::: {.column width="40%"}
+```
+Example prompt for corporate credit analysis:
+
+Analyze the credit risk profile of Company X
+based on the following excerpt from their
+recent 10-K filing and earnings call.
+Focus on:
+1. Cash flow generation capacity
+2. Debt service ability
+3. Refinancing risks
+4. Management's risk mitigation strategies
+5. Forward-looking statements about financial
+   position
+
+10-K excerpt: "The Company faced significant
+headwinds in the third quarter, with operating
+cash flow declining 15% year-over-year. Our
+debt-to-EBITDA ratio increased to 3.5x from
+2.8x last year. To address these challenges,
+we've implemented a cost reduction program
+expected to generate $50M in annual savings
+and have secured an extension on our $200M
+revolving credit facility to 2025..."
+```
+:::
+
+::::
+
+## Case Study: Consumer Loan Default Prediction
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Traditional approach**:
+  - Logistic regression on credit variables
+  - Feature engineering from structured data
+  - Threshold-based decision rules
+  - Standardized application process
+  
+- **LLM-enhanced approach**:
+  - Text analysis of loan purpose descriptions
+  - Pattern detection in payment narratives
+  - Context-aware feature extraction
+  - Nuanced risk categorization
+  
+- **Performance comparison**:
+  - 12% improvement in discrimination
+  - 8% reduction in false positives
+  - More granular risk stratification
+  - Better handling of edge cases
+:::
+
+::: {.column width="40%"}
+```
+Loan purpose text samples:
+
+1. "Need to consolidate my credit card
+debt from 5 different cards with high
+interest rates."
+
+2. "Home renovation to increase property
+value by adding a bathroom and upgrading
+kitchen."
+
+3. "Temporary cash flow issue due to job
+transition. Starting new position with
+higher salary next month."
+
+4. "Unexpected medical expenses not covered
+by insurance. Will repay from annual bonus
+in December."
+
+LLM analysis extracts repayment sources,
+value creation potential, desperation
+signals, and planning indicators from
+these narratives.
+```
+:::
+
+::::
+
+## Case Study: Corporate Credit Rating Prediction
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Traditional approach**:
+  - Ratio-based statistical models
+  - Industry-specific adjustments
+  - Ordinal regression techniques
+  - Structured interview processes
+  
+- **LLM-enhanced approach**:
+  - Deep analysis of financial disclosures
+  - Management communication assessment
+  - Regulatory filing examination
+  - Industry trend incorporation
+  
+- **Performance comparison**:
+  - 15% improved rating accuracy
+  - Earlier detection of deterioration
+  - More consistent cross-sector analysis
+  - Reduction in analyst time requirements
+:::
+
+::: {.column width="40%"}
+```
+Rating agency justification:
+"The downgrade reflects our view that the
+company's financial risk profile has weakened
+due to aggressive debt-funded acquisitions,
+resulting in adjusted leverage above 4.0x.
+While management has articulated a deleveraging
+plan, execution risks remain elevated given
+the challenging operating environment and
+integration complexities."
+
+LLM can identify similar patterns in other
+companies' disclosures before formal rating
+actions, providing early warning signals.
+```
+:::
+
+::::
+
+## Model Calibration and Validation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Calibration challenges**:
+  - Scarcity of default events
+  - Economic cycle impacts
+  - Portfolio concentration issues
+  - Model drift over time
+  
+- **Validation approaches**:
+  - Backtesting against actual defaults
+  - Benchmarking against market signals
+  - Out-of-time and out-of-sample testing
+  - Stress testing and scenario analysis
+  
+- **LLM-specific considerations**:
+  - Prompt engineering for consistency
+  - Context length limitations
+  - Fine-tuning requirements
+  - Explainability mechanisms
+:::
+
+::: {.column width="40%"}
+```python
+# Simplified calibration example
+
+# Historical default rates by model score decile
+actual_defaults = [0.1, 0.3, 0.7, 1.2, 2.0, 
+                  3.1, 4.5, 6.8, 10.5, 18.9]
+
+# Model predicted probabilities
+predicted_probs = [0.2, 0.5, 0.9, 1.5, 2.2, 
+                  2.9, 4.0, 7.2, 9.8, 17.5]
+
+# Calculate calibration metrics
+brier_score = mean_squared_error(
+    actual_defaults, predicted_probs)
+
+# Apply calibration adjustment
+calibrated_probs = isotonic_regression(
+    predicted_probs, actual_defaults)
+```
+:::
+
+::::
+
+## Limitations and Ethical Considerations
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Fairness concerns**:
+  - Potential amplification of historical biases
+  - Disparate impact across demographic groups
+  - Limited interpretability of complex models
+  - Proxy discrimination risks
+  
+- **Regulatory compliance**:
+  - Adverse action explanation requirements
+  - Model documentation standards
+  - Risk management framework integration
+  - Testing and monitoring obligations
+  
+- **Operational considerations**:
+  - Model governance processes
+  - Fallback procedures
+  - Human oversight mechanisms
+  - Periodic revalidation requirements
+:::
+
+::: {.column width="40%"}
+- **Mitigation strategies**:
+  - Bias detection and remediation
+  - Diverse training data selection
+  - Explainable AI techniques
+  - Regular fairness audits
+  - Transparency in model documentation
+  
+- **Implementation best practices**:
+  - Phased deployment approach
+  - Side-by-side testing with existing models
+  - Customer impact analysis
+  - Staff training and change management
+  - Ongoing monitoring and adjustments
+:::
+
+::::
+
+## Future Directions
+
+- **Multimodal credit analysis**: Combining text, financial data, and alternative sources
+- **Real-time credit monitoring**: Continuous assessment using streaming data
+- **Personalized lending solutions**: Tailored products based on nuanced risk understanding
+- **Cross-domain knowledge integration**: Leveraging broader context for better assessment
+- **Collaborative human-AI credit systems**: Optimal division of analytical labor
+- **Explainable credit decisions**: Clear articulation of factors influencing risk assessments
+```

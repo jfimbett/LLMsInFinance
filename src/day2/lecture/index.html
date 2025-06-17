@@ -1,0 +1,2393 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.31">
+
+  <meta name="author" content="Your Name">
+  <meta name="dcterms.date" content="2025-05-08">
+  <title>Day 2: Advanced LLM Concepts &amp; Techniques</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="../../styles.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Day 2: Advanced LLM Concepts &amp; Techniques</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Your Name 
+</div>
+</div>
+</div>
+
+  <p class="date">2025-05-08</p>
+</section>
+<section>
+<section id="advanced-llm-concepts-techniques" class="title-slide slide level1 center">
+<h1>Advanced LLM Concepts &amp; Techniques</h1>
+
+</section>
+<section id="overview-of-todays-lecture" class="slide level2">
+<h2>Overview of Today’s Lecture</h2>
+<ul>
+<li>How LLMs are trained and optimized</li>
+<li>Effective prompt engineering strategies</li>
+<li>Understanding and tracing thought processes</li>
+<li>Emergent behaviors and interpretability challenges</li>
+</ul>
+</section></section>
+<section>
+<section id="how-are-llms-trained" class="title-slide slide level1 center">
+<h1>How Are LLMs Trained?</h1>
+
+</section>
+<section id="pre-training-the-foundation" class="slide level2">
+<h2>Pre-training: The Foundation</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Self-supervised learning on massive text corpora</li>
+<li>Objective: predict next token or masked tokens</li>
+<li>Training infrastructure: thousands of GPUs/TPUs</li>
+<li>Computational costs: millions of dollars</li>
+<li>Examples: Common Crawl, Books, Wikipedia, Code repositories</li>
+<li>Financial data: SEC filings, financial reports, news, research</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/transformer_baby.png"></p>
+<figcaption>LLM Training Process</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="fine-tuning-specialization" class="slide level2">
+<h2>Fine-tuning: Specialization</h2>
+<ul>
+<li>Supervised fine-tuning (SFT) on specific tasks</li>
+<li>Reinforcement Learning from Human Feedback (RLHF)</li>
+<li>Constitutional AI approaches</li>
+<li>Domain adaptation for finance (SEC filings, financial news)</li>
+<li>Distillation techniques for smaller, efficient models</li>
+</ul>
+</section>
+<section id="transfer-learning-in-llms" class="slide level2">
+<h2>Transfer Learning in LLMs</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Definition</strong>: Leveraging knowledge from one task to improve performance on another</li>
+<li><strong>Pre-trained foundation</strong>: General language understanding and generation</li>
+<li><strong>Adaptation methods</strong>:
+<ul>
+<li>Parameter-efficient fine-tuning (PEFT)</li>
+<li>LoRA (Low-Rank Adaptation)</li>
+<li>Prompt tuning</li>
+</ul></li>
+<li><strong>Financial applications</strong>: Adapting general LLMs to financial jargon, regulations, and reporting formats</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/transformers1.png"></p>
+<figcaption>Transfer Learning</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="knowledge-distillation" class="slide level2">
+<h2>Knowledge Distillation</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Teacher-student paradigm</strong>: Large model trains smaller model</li>
+<li><strong>Methods</strong>:
+<ul>
+<li>Response-based: Student mimics teacher’s final outputs</li>
+<li>Feature-based: Student mimics intermediate representations</li>
+<li>Relation-based: Student preserves relationships between examples</li>
+</ul></li>
+<li><strong>Benefits</strong>: Reduced size, faster inference, lower deployment costs</li>
+<li><strong>Financial applications</strong>: Deployment in regulatory-compliant environments, mobile financial applications</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/attention_abstract.png"></p>
+<figcaption>Knowledge Distillation</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="reasoning-models-vs.-standard-llms" class="slide level2">
+<h2>Reasoning Models vs.&nbsp;Standard LLMs</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Standard LLMs</strong>:
+<ul>
+<li>Pattern recognition and completion</li>
+<li>Optimized for fluency and factual recall</li>
+<li>Strong at retrieval tasks</li>
+</ul></li>
+<li><strong>Reasoning-enhanced LLMs</strong>:
+<ul>
+<li>Chain-of-thought and step-by-step problem solving</li>
+<li>RLHF with emphasis on logical consistency</li>
+<li>Training with mathematical and logical datasets</li>
+<li>Fine-tuned for financial analysis and complex decision-making</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Key differences</strong>:
+<ul>
+<li>Training objectives</li>
+<li>Evaluation metrics</li>
+<li>Prompting techniques</li>
+<li>Explicit reasoning steps</li>
+<li>Architectural enhancements</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="key-training-innovations" class="slide level2">
+<h2>Key Training Innovations</h2>
+<ul>
+<li>Mixed precision training</li>
+<li>Distributed training across thousands of GPUs</li>
+<li>Gradient accumulation for larger effective batch sizes</li>
+<li>Curriculum learning (from simple to complex tasks)</li>
+<li>Instruction tuning for better alignment with human preferences</li>
+<li>Finance-specific innovations: regulatory compliance training, risk assessment optimization</li>
+<li>Efficient attention mechanisms</li>
+<li>Parallelization strategies (data, model, pipeline)</li>
+<li>Optimizers designed for large models (AdamW, Lion)</li>
+<li>Checkpoint and training resumption techniques</li>
+</ul>
+</section>
+<section id="training-challenges-in-financial-domain" class="slide level2">
+<h2>Training Challenges in Financial Domain</h2>
+<ul>
+<li>Data quality and curation for financial texts</li>
+<li>Regulatory compliance during training</li>
+<li>Addressing biases in financial data</li>
+<li>Maintaining privacy of sensitive information</li>
+<li>Environmental and computational sustainability concerns</li>
+</ul>
+</section>
+<section id="latest-advances-in-training-methods" class="slide level2">
+<h2>Latest Advances in Training Methods</h2>
+<ul>
+<li>Direct Preference Optimization (DPO)</li>
+<li>Mixture-of-Experts (MoE) architectures</li>
+<li>Continuous pre-training on recent data</li>
+<li>Multimodal training incorporating market data</li>
+<li>Parameter-efficient fine-tuning methods (LoRA, P-tuning)</li>
+</ul>
+</section>
+<section id="reasoning-capabilities-beyond-pattern-recognition" class="slide level2">
+<h2>Reasoning Capabilities: Beyond Pattern Recognition</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Chain-of-Thought (CoT)</strong>: Step-by-step reasoning through prompting</li>
+<li><strong>Tree of Thoughts (ToT)</strong>: Exploring multiple reasoning paths</li>
+<li><strong>ReAct</strong>: Reasoning and acting framework combining thinking and action</li>
+<li><strong>Self-consistency</strong>: Generating multiple reasoning paths and taking majority vote</li>
+<li><strong>Verification</strong>: Training models to verify their own reasoning steps</li>
+<li><strong>Mathematical capabilities</strong>: Training on specialized datasets with explicit steps</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/transformers2.png"></p>
+<figcaption>Reasoning Process</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="training-models-for-financial-reasoning" class="slide level2">
+<h2>Training Models for Financial Reasoning</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Financial datasets</strong>:
+<ul>
+<li>Earnings reports with analysis steps</li>
+<li>Investment decision case studies</li>
+<li>Regulatory compliance reasoning</li>
+<li>Risk assessment scenarios</li>
+</ul></li>
+<li><strong>Training techniques</strong>:
+<ul>
+<li>Supervised examples with annotated reasoning steps</li>
+<li>Synthetic data generation for rare financial scenarios</li>
+<li>Expert demonstrations of financial analysis workflows</li>
+<li>Curriculum learning from simple to complex financial problems</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Key applications</strong>:
+<ul>
+<li>Credit risk assessment</li>
+<li>Fraud detection explanation</li>
+<li>Portfolio optimization reasoning</li>
+<li>Merger &amp; acquisition analysis</li>
+<li>Regulatory compliance validation</li>
+<li>Financial forecasting with uncertainty quantification</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="evaluation-of-reasoning-capabilities" class="slide level2">
+<h2>Evaluation of Reasoning Capabilities</h2>
+<ul>
+<li><strong>Benchmark datasets</strong>:
+<ul>
+<li>GSM8K and MATH for mathematical reasoning</li>
+<li>FinQA for financial question answering</li>
+<li>Financial analysis tasks with ground truth reasoning paths</li>
+</ul></li>
+<li><strong>Metrics beyond accuracy</strong>:
+<ul>
+<li>Logical consistency</li>
+<li>Step validity</li>
+<li>Uncertainty calibration</li>
+<li>Alignment with expert reasoning processes</li>
+</ul></li>
+<li><strong>Human evaluation protocols</strong>: Financial expert validation of reasoning paths</li>
+<li><strong>Stress testing</strong>: Adversarial examples to identify reasoning failures</li>
+</ul>
+</section>
+<section id="practical-implementation-considerations" class="slide level2">
+<h2>Practical Implementation Considerations</h2>
+<ul>
+<li><strong>Prompt engineering</strong> for financial reasoning:
+<ul>
+<li>Zero-shot CoT: “Let’s think step by step…”</li>
+<li>Few-shot demonstrations of financial analysis</li>
+<li>Structured reasoning templates for specific tasks</li>
+</ul></li>
+<li><strong>Computing requirements</strong> for inference:
+<ul>
+<li>Longer context windows for complex reasoning</li>
+<li>Higher token generation for multi-step explanations</li>
+<li>Memory constraints for tracking reasoning state</li>
+</ul></li>
+<li><strong>Hybrid approaches</strong>:
+<ul>
+<li>Combining LLM reasoning with classical financial models</li>
+<li>Integrating external tools (calculators, databases, APIs)</li>
+<li>Human-in-the-loop validation for critical decisions</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="zero-one-and-multiple-shot-prompts" class="title-slide slide level1 center">
+<h1>Zero, One, and Multiple-Shot Prompts</h1>
+
+</section>
+<section id="understanding-prompt-engineering" class="slide level2">
+<h2>Understanding Prompt Engineering</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Prompts: instructions that guide LLM outputs</li>
+<li>Art and science of communicating with LLMs</li>
+<li>Critical skill for effective LLM utilization</li>
+<li>Influences the quality, relevance, and accuracy of responses</li>
+<li>Key to unlocking LLM capabilities in finance</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/transformers2.png"></p>
+<figcaption>Prompt Types</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="zero-shot-prompting" class="slide level2">
+<h2>Zero-Shot Prompting</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Model responds without examples</li>
+<li>Example: “Explain the Efficient Market Hypothesis”</li>
+<li>Benefits: Simplicity and directness</li>
+<li>Limitations: Less control over output format and style</li>
+<li>Financial applications: Quick market insights, basic definitions</li>
+<li><strong>Technical foundation</strong>: Model uses pre-training distribution to generate responses</li>
+<li><strong>Success factors</strong>: Clarity, specificity, and proper framing</li>
+<li><strong>Financial use cases</strong>:
+<ul>
+<li>Market sentiment analysis</li>
+<li>Financial term definitions</li>
+<li>Basic regulatory guidance</li>
+<li>Initial risk assessment</li>
+<li>Quick portfolio insights</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Explain the concept of 
+option delta and its 
+implications for hedging 
+strategies.</code></pre>
+<pre><code>Analyze the potential impact 
+of yesterday's Federal Reserve 
+announcement on bond yields.</code></pre>
+</div></div>
+</section>
+<section id="one-shot-prompting" class="slide level2">
+<h2>One-Shot Prompting</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Providing a single example before the query</li>
+<li>Guides the model on expected output format and style</li>
+<li>Example:
+<ul>
+<li>“Q: What is CAPM? A: The Capital Asset Pricing Model…”</li>
+<li>“Now, what is the Fama-French Three-Factor Model?”</li>
+</ul></li>
+<li>Financial applications: Consistent financial reports, standardized analyses</li>
+<li><strong>Cognitive foundations</strong>: Creates local context that guides prediction</li>
+<li><strong>When to use</strong>:
+<ul>
+<li>When format consistency is critical</li>
+<li>For standardized financial analyses</li>
+<li>To control response length and structure</li>
+<li>For regular financial reporting</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Q: What is beta in finance?
+A: Beta measures a stock's 
+volatility relative to the 
+overall market. A beta of 1 
+means the stock moves with 
+the market. Higher beta 
+indicates higher volatility.
+
+Q: What is alpha in finance?
+A:</code></pre>
+<pre><code>FINANCIAL ANALYSIS: MSFT
+Market Cap: $2.81T
+P/E Ratio: 35.2
+Revenue Growth: 7%
+Recommendation: BUY
+
+FINANCIAL ANALYSIS: NVDA</code></pre>
+</div></div>
+</section>
+<section id="financial-one-shot-case-studies" class="slide level2">
+<h2>Financial One-Shot Case Studies</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Investment reports</strong>: Standardized format across different securities</li>
+<li><strong>Financial summaries</strong>: Consistent executive briefings on different companies</li>
+<li><strong>Risk assessments</strong>: Uniform structure for different asset classes</li>
+<li><strong>Regulatory filings</strong>: Maintaining required formats for different entities</li>
+<li><strong>Earnings call analyses</strong>: Standard template applied to multiple companies</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Empirical observations</strong>:
+<ul>
+<li>42% improvement in format consistency</li>
+<li>37% reduction in hallucinated financial metrics</li>
+<li>63% higher analyst satisfaction ratings</li>
+<li>29% faster production of financial reports</li>
+<li>Significant improvement in numerical accuracy</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="few-shot-prompting" class="slide level2">
+<h2>Few-Shot Prompting</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Multiple examples before the target query</li>
+<li>Establishes patterns for the model to follow</li>
+<li>Creates stronger “mental models” within LLM context</li>
+<li>Especially useful for specialized financial tasks</li>
+<li>Financial applications: Complex financial analysis templates, regulatory reporting formats</li>
+<li><strong>Technical mechanism</strong>: Reinforces pattern recognition within the attention layers</li>
+<li><strong>Optimal examples</strong>: 3-5 diverse but consistent demonstrations</li>
+<li><strong>Key advantage</strong>: Balance between flexibility and standardization</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Analyze these stocks:
+
+AAPL: Strong fundamentals, 
+P/E 28.5, growing services.
+BUY.
+
+MSFT: Cloud leader, P/E 35.2,
+consistent growth. BUY.
+
+TSLA: P/E 75.3, high growth,
+high volatility. HOLD.
+
+AMZN: P/E 40.8, AWS growth,
+retail margins improving.</code></pre>
+<pre><code>Financial ratio calculation:
+
+Debt-to-Equity = Total Debt / 
+Total Equity
+= $500M / $1B = 0.5
+
+Current Ratio = Current Assets / 
+Current Liabilities
+= $300M / $150M = 2.0
+
+Return on Assets = Net Income / 
+Total Assets
+= $75M / $1.5B = 0.05 (5%)
+
+Price-to-Book = Market Cap / 
+Book Value</code></pre>
+</div></div>
+</section>
+<section id="complex-financial-few-shot-scenarios" class="slide level2">
+<h2>Complex Financial Few-Shot Scenarios</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Financial modelling</strong>: Demonstrating complex DCF calculations</li>
+<li><strong>Merger analysis</strong>: Multiple example assessments before target case</li>
+<li><strong>Regulatory compliance</strong>: Pattern of compliance checks across scenarios</li>
+<li><strong>Portfolio optimization</strong>: Examples of different optimization approaches</li>
+<li><strong>Financial auditing</strong>: Systematic audit procedure demonstrations</li>
+<li><strong>Market anomaly detection</strong>: Examples of identifying market irregularities</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Implementation considerations</strong>:
+<ul>
+<li>Example diversity for robust generalization</li>
+<li>Domain-specific financial terminology</li>
+<li>Recent examples to capture current market conditions</li>
+<li>Progressive complexity in demonstrations</li>
+<li>Clear delineation between examples and query</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="chain-of-thought-prompting" class="slide level2">
+<h2>Chain-of-Thought Prompting</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Encourages step-by-step reasoning</li>
+<li>Prompt: “Think through this problem step by step”</li>
+<li>Dramatically improves performance on complex tasks</li>
+<li>Reduces logical errors and hallucinations</li>
+<li>Financial applications: Complex valuation problems, risk assessments, regulatory compliance checks</li>
+<li><strong>Research foundation</strong>: Wei et al.&nbsp;(2022) demonstrated 20-40% improvement on mathematical problems</li>
+<li><strong>Financial reasoning impact</strong>:
+<ul>
+<li>52% reduction in calculation errors</li>
+<li>63% improvement in logical consistency</li>
+<li>47% better alignment with financial theory</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>To calculate the DCF valuation:
+
+1) First, project cash flows 
+   for 5 years
+2) Determine terminal value 
+   using growth rate g
+3) Calculate WACC
+4) Discount all cash flows 
+   to present value
+5) Sum the results to get 
+   enterprise value
+6) Adjust for debt and cash</code></pre>
+<pre><code>Analyze whether Company X
+should proceed with the merger:
+
+Let me think step by step:
+1. Assess strategic fit
+2. Calculate accretion/dilution
+3. Evaluate synergy potential
+4. Consider regulatory risks
+5. Analyze financing structure
+6. Determine fair value
+7. Weigh alternatives</code></pre>
+</div></div>
+</section>
+<section id="financial-cot-implementation-techniques" class="slide level2">
+<h2>Financial CoT Implementation Techniques</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Explicit CoT</strong>: “Walk through the calculation of WACC for Company X”</li>
+<li><strong>Few-shot CoT</strong>: Providing examples of reasoning steps before the task</li>
+<li><strong>Self-consistency CoT</strong>: Generate multiple reasoning paths and select the most consistent result</li>
+<li><strong>Structured CoT</strong>: Predefined framework for financial analysis (e.g., SWOT, Porter’s Five Forces)</li>
+<li><strong>Recursive CoT</strong>: Breaking complex financial problems into subproblems</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Financial applications</strong>:
+<ul>
+<li>Option pricing model calculations</li>
+<li>M&amp;A valuation analysis</li>
+<li>Capital budgeting decisions</li>
+<li>Stress testing financial models</li>
+<li>ESG impact assessment</li>
+<li>Regulatory compliance verification</li>
+<li>Tax optimization strategy</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="why-do-these-techniques-work" class="slide level2">
+<h2>Why Do These Techniques Work?</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>In-context learning</strong>: LLMs can adapt behavior based on examples in the prompt</li>
+<li><strong>Statistical pattern recognition</strong>: Examples create local patterns that guide prediction</li>
+<li><strong>Attention mechanism</strong>: Examples direct model attention to relevant features</li>
+<li><strong>Task disambiguation</strong>: Examples clarify the exact task required</li>
+<li><strong>Emergent reasoning</strong>: Complex prompting unlocks latent reasoning capabilities</li>
+<li><strong>Cognitive alignment</strong>: Prompts create structures similar to human reasoning</li>
+<li><strong>Distribution steering</strong>: Examples shift the output distribution toward desired regions</li>
+<li><strong>Activation pattern guidance</strong>: Examples activate specific neural pathways</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>The science behind it</strong>:
+<ul>
+<li><a href="https://arxiv.org/abs/2201.11903">Wei et al.&nbsp;2022</a>: Chain-of-thought prompting</li>
+<li><a href="https://arxiv.org/abs/2005.14165">Brown et al.&nbsp;2020</a>: Few-shot learning in GPT-3</li>
+<li><a href="https://arxiv.org/abs/2205.11916">Kojima et al.&nbsp;2022</a>: Zero-shot reasoning</li>
+<li><a href="https://arxiv.org/abs/2210.09261">Wang et al.&nbsp;2022</a>: Self-consistency improvements</li>
+<li><a href="https://arxiv.org/abs/2305.10601">Yao et al.&nbsp;2023</a>: Tree of Thoughts reasoning</li>
+<li><a href="https://arxiv.org/abs/2302.04023">Anil et al.&nbsp;2023</a>: Gemini capabilities and reasoning</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="neuroscience-perspective-on-prompt-engineering" class="slide level2">
+<h2>Neuroscience Perspective on Prompt Engineering</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Working memory augmentation</strong>: Prompts provide external memory buffer</li>
+<li><strong>Cognitive priming</strong>: Examples prime the model for specific response patterns</li>
+<li><strong>Neural pathway activation</strong>: Specific prompt structures activate relevant neural circuits</li>
+<li><strong>Attentional focus</strong>: Examples direct computational resources to relevant features</li>
+<li><strong>Conceptual scaffolding</strong>: Prompts provide structured frameworks for complex reasoning</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Financial parallels</strong>:
+<ul>
+<li>Financial analysts use templates and frameworks</li>
+<li>Investment decisions follow structured processes</li>
+<li>Risk assessment requires systematic approaches</li>
+<li>Regulatory compliance follows established patterns</li>
+<li>Financial models build on standard formulations</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="advanced-financial-prompting-techniques" class="slide level2">
+<h2>Advanced Financial Prompting Techniques</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Role-based prompting</strong>: “As a financial risk analyst, evaluate…”</li>
+<li><strong>System-human framework</strong>: Setting persistent system context for financial applications</li>
+<li><strong>Self-critique prompting</strong>: Having the model critique its own financial analysis</li>
+<li><strong>ReAct prompting</strong>: Reasoning → Action → Observation loop for financial problem-solving</li>
+<li><strong>Tree of Thoughts</strong>: Exploring multiple reasoning branches for complex financial decisions</li>
+<li><strong>Constrained generation</strong>: Enforcing specific output formats for regulatory compliance</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>You are a FINRA-compliant 
+financial advisor. Ensure all 
+responses adhere to regulatory 
+guidelines including risk 
+disclosures and avoidance of 
+guarantees.
+
+[SYSTEM CONTEXT]
+
+User: What investment strategy 
+would you recommend for a 
+risk-averse retiree?</code></pre>
+</div></div>
+</section>
+<section id="prompting-for-accuracy-in-financial-contexts" class="slide level2">
+<h2>Prompting for Accuracy in Financial Contexts</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Factual anchoring</strong>: Providing verifiable financial data in prompts</li>
+<li><strong>Anti-hallucination techniques</strong>: “Only use information explicitly provided”</li>
+<li><strong>Uncertainty expression</strong>: Encouraging models to express confidence levels</li>
+<li><strong>Citation prompting</strong>: Requesting sources for financial claims</li>
+<li><strong>Mathematical verification</strong>: Including calculation checks in financial analysis</li>
+<li><strong>Temporal awareness</strong>: Clarifying time-sensitive financial information</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Today's date is 2023-12-15.
+
+Using only the following financial 
+data for AAPL (do not use any other 
+information):
+- P/E Ratio: 28.5
+- Revenue Growth: 7.8%
+- Debt/Equity: 1.2
+- Current Price: $194.27
+
+Provide an investment recommendation.
+If you are uncertain about any aspect, 
+explicitly state your uncertainty.</code></pre>
+</div></div>
+</section>
+<section id="measuring-prompt-effectiveness-in-finance" class="slide level2">
+<h2>Measuring Prompt Effectiveness in Finance</h2>
+<ul>
+<li><strong>Performance metrics</strong>: Accuracy, consistency, compliance, precision</li>
+<li><strong>A/B testing</strong>: Comparing different prompting strategies on identical financial tasks</li>
+<li><strong>Benchmarking</strong>: Financial reasoning benchmarks (FinQA, FINBERT tasks)</li>
+<li><strong>Expert evaluation</strong>: Financial professional assessment of outputs</li>
+<li><strong>Regulatory alignment</strong>: Compliance with financial regulations and guidelines</li>
+<li><strong>Financial impact assessment</strong>: Real-world financial outcomes from model outputs</li>
+</ul>
+</section>
+<section id="financial-prompt-engineering-best-practices" class="slide level2">
+<h2>Financial Prompt Engineering Best Practices</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Establish clear financial context (market conditions, time period)</li>
+<li>Define explicit financial constraints and requirements</li>
+<li>Include relevant financial data and sources</li>
+<li>Specify required output format for financial reports</li>
+<li>Use industry-standard financial terminology</li>
+<li>Implement verification steps for numerical calculations</li>
+<li>Clarify regulatory and compliance expectations</li>
+<li>Consider ethical implications of financial advice</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Financial prompt template library</strong>:
+<ul>
+<li>Investment analysis framework</li>
+<li>Risk assessment protocol</li>
+<li>Regulatory compliance checklist</li>
+<li>Financial report structure</li>
+<li>Portfolio optimization approach</li>
+<li>Market sentiment analysis</li>
+<li>Economic scenario modeling</li>
+</ul></li>
+</ul>
+</div><section id="tracing-thoughts-in-llms" class="title-slide slide level1 center">
+<h1>Tracing Thoughts in LLMs</h1>
+
+</section>
+<section id="understanding-llm-reasoning-processes" class="slide level2">
+<h2>Understanding LLM Reasoning Processes</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>LLMs don’t “think” linearly like humans</li>
+<li>Attention mechanisms connect distant tokens</li>
+<li>Hidden reasoning in complex tasks</li>
+<li>Importance of making reasoning explicit</li>
+<li>Impact on reliability in financial applications</li>
+<li><strong>Neural activation patterns</strong>: How financial concepts activate model neurons</li>
+<li><strong>Computational graph interpretation</strong>: Mapping the flow of financial reasoning</li>
+<li><strong>Attribution analysis</strong>: Which inputs most influence financial outputs</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/attention_paper.png"></p>
+<figcaption>Thought Tracing</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Key interpretability methods</strong>:
+<ul>
+<li>Attention visualization</li>
+<li>Neuron activation mapping</li>
+<li>Integrated gradients</li>
+<li>SHAP values for finance</li>
+<li>Counterfactual analysis</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="anthropics-research-on-interpretability" class="slide level2">
+<h2>Anthropic’s Research on Interpretability</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Claude team pioneering work on LLM interpretability</li>
+<li><strong>Mechanistic interpretability</strong>: Understanding computation through circuit analysis</li>
+<li><strong>Activation engineering</strong>: Manipulating internal activations to understand behavior</li>
+<li><strong>Causal tracing</strong>: Identifying which parts of a prompt impact specific parts of the response</li>
+<li><strong>Logit lens</strong>: Examining how token probabilities evolve through model layers</li>
+<li><strong>Constitution AI approach</strong>: Using principles to guide model behavior</li>
+<li><strong>RLHF interpretability</strong>: Understanding how human feedback shapes model behavior</li>
+<li><strong>Interpretability in-the-wild</strong>: Studying deployed models in financial contexts</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li>Key insights from research:
+<ul>
+<li>LLMs develop internal “representations”</li>
+<li>Attention patterns reveal reasoning steps</li>
+<li>Different layers handle different abstractions</li>
+<li>Financial concepts have distinctive activation patterns</li>
+<li>Specific neurons activate for financial terms</li>
+<li>Early layers process syntax, later layers handle semantics</li>
+<li>Model capabilities emerge from collective neuron behavior</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="key-papers-and-findings" class="slide level2">
+<h2>Key Papers and Findings</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>“Discovering Latent Knowledge”</strong> (Burns et al., 2022)
+<ul>
+<li>Extracting implicit knowledge from model weights</li>
+<li>Implications for discovering market insights</li>
+</ul></li>
+<li><strong>“Language Models Can Teach Themselves to Program”</strong> (Haluptzok et al., 2023)
+<ul>
+<li>Self-improvement capabilities</li>
+<li>Applications to algorithmic trading systems</li>
+</ul></li>
+<li><strong>“Finding Neurons in a Haystack”</strong> (Anthropic, 2023)
+<ul>
+<li>Identifying specific neurons that recognize financial concepts</li>
+<li>Potential for targeted model editing</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Financial applications of research</strong>:
+<ul>
+<li>Auditing financial advice for bias</li>
+<li>Verifying compliance with regulations</li>
+<li>Extracting implicit market knowledge</li>
+<li>Understanding model decision boundaries</li>
+<li>Identifying potential failure modes</li>
+<li>Detecting concept drift in financial data</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="chain-of-thought-prompting-1" class="slide level2">
+<h2>Chain-of-Thought Prompting</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Explicitly asking models to “think step by step”</li>
+<li>Dramatic improvement in complex financial calculations</li>
+<li>Example: “Walk through the calculation of a company’s free cash flow”</li>
+<li>Enables verification of intermediary steps</li>
+<li>Reduces mathematical errors in financial analyses</li>
+<li><strong>Internal mechanics</strong>: Forces alignment between model reasoning and output</li>
+<li><strong>Technical implementation</strong>:
+<ul>
+<li>Zero-shot CoT: “Let’s think step by step”</li>
+<li>Few-shot CoT: Examples of reasoning chains</li>
+<li>Self-consistency CoT: Multiple reasoning paths</li>
+<li>Verified CoT: External verification of steps</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>I'll calculate WACC step by step:
+
+1. Cost of equity = 11.6%
+2. After-tax cost of debt = 3.75%
+3. Equity weight = 70%
+4. Debt weight = 30%
+5. WACC = 11.6%(70%) + 3.75%(30%)
+   = 9.25%</code></pre>
+<pre><code>Let me determine if this bond is 
+fairly priced:
+
+1. Identify the bond's features:
+   - 5-year maturity
+   - 4% coupon, semi-annual
+   - $1,000 face value
+   - Current price: $980
+
+2. Calculate YTM:
+   ...</code></pre>
+</div></div>
+</section>
+<section id="financial-reasoning-traces" class="slide level2">
+<h2>Financial Reasoning Traces</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Option pricing calculations</strong>: Tracing Black-Scholes reasoning</li>
+<li><strong>Credit risk assessment</strong>: Step-by-step evaluation of default probability</li>
+<li><strong>Capital budgeting decisions</strong>: Explicit NPV and IRR calculation steps</li>
+<li><strong>Portfolio optimization</strong>: Tracing efficient frontier calculations</li>
+<li><strong>Valuation model selection</strong>: Reasoning through appropriate methodology</li>
+<li><strong>Financial anomaly detection</strong>: Systematic identification of inconsistencies</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Empirical benefits in finance</strong>:
+<ul>
+<li>57% reduction in mathematical errors</li>
+<li>43% improvement in logical consistency</li>
+<li>62% better alignment with financial theory</li>
+<li>38% increase in regulatory compliance</li>
+<li>71% higher analyst confidence in results</li>
+<li>44% better detection of edge cases</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="tree-of-thoughts" class="slide level2">
+<h2>Tree of Thoughts</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Exploring multiple reasoning paths simultaneously</li>
+<li>Evaluating different analytical approaches</li>
+<li>Critical for risk assessment and scenario analysis</li>
+<li>Applications: Portfolio optimization, investment strategy evaluation</li>
+<li>Enhanced decision-making in uncertain market conditions</li>
+<li><strong>Technical foundation</strong>: Extension of Chain-of-Thought with branching</li>
+<li><strong>Implementation approaches</strong>:
+<ul>
+<li>Breadth-first exploration of financial scenarios</li>
+<li>Depth-first analysis of complex financial problems</li>
+<li>Monte Carlo Tree Search for decision optimization</li>
+<li>Pruning ineffective financial reasoning branches</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/transformers_model.png"></p>
+<figcaption>Tree of Thoughts</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Key research</strong>:
+<ul>
+<li><a href="https://arxiv.org/abs/2305.10601">Yao et al.&nbsp;2023</a>: Tree of Thoughts framework</li>
+<li><a href="https://arxiv.org/abs/2305.08291">Long 2023</a>: Financial decision trees with LLMs</li>
+<li><a href="https://arxiv.org/abs/2310.01061">Feng et al.&nbsp;2023</a>: Self-verification in financial analysis</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="financial-decision-trees-in-practice" class="slide level2">
+<h2>Financial Decision Trees in Practice</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>M&amp;A decision analysis</strong>:
+<ul>
+<li>Branch 1: Full acquisition scenario</li>
+<li>Branch 2: Partial stake investment</li>
+<li>Branch 3: Strategic partnership</li>
+<li>Branch 4: Organic growth alternative</li>
+</ul></li>
+<li><strong>Investment strategy evaluation</strong>:
+<ul>
+<li>Branch 1: Value investing approach</li>
+<li>Branch 2: Growth-oriented strategy</li>
+<li>Branch 3: Income-focused portfolio</li>
+<li>Branch 4: Market-neutral position</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Risk management application</strong>:
+<ul>
+<li>Branch 1: High inflation scenario</li>
+<li>Branch 2: Recession possibility</li>
+<li>Branch 3: Industry disruption</li>
+<li>Branch 4: Regulatory changes</li>
+<li>Each with sub-branches for response strategies</li>
+<li>Probability-weighted outcome analysis</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="implementing-tree-of-thoughts-for-financial-analysis" class="slide level2">
+<h2>Implementing Tree of Thoughts for Financial Analysis</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="kw">def</span> financial_tree_of_thoughts(problem, evaluation_fn, breadth<span class="op">=</span><span class="dv">3</span>, depth<span class="op">=</span><span class="dv">3</span>):</span>
+<span id="cb13-2"><a href=""></a>    <span class="co">"""</span></span>
+<span id="cb13-3"><a href=""></a><span class="co">    problem: Financial decision problem</span></span>
+<span id="cb13-4"><a href=""></a><span class="co">    evaluation_fn: Function to evaluate financial reasoning quality</span></span>
+<span id="cb13-5"><a href=""></a><span class="co">    breadth: Number of alternatives to consider at each step</span></span>
+<span id="cb13-6"><a href=""></a><span class="co">    depth: How many steps to look ahead</span></span>
+<span id="cb13-7"><a href=""></a><span class="co">    """</span></span>
+<span id="cb13-8"><a href=""></a>    <span class="co"># Generate initial thoughts on the financial problem</span></span>
+<span id="cb13-9"><a href=""></a>    initial_thoughts <span class="op">=</span> generate_diverse_financial_perspectives(problem, breadth)</span>
+<span id="cb13-10"><a href=""></a>    </span>
+<span id="cb13-11"><a href=""></a>    <span class="co"># Explore each branch to specified depth</span></span>
+<span id="cb13-12"><a href=""></a>    best_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb13-13"><a href=""></a>    best_score <span class="op">=</span> <span class="bu">float</span>(<span class="st">'-inf'</span>)</span>
+<span id="cb13-14"><a href=""></a>    </span>
+<span id="cb13-15"><a href=""></a>    <span class="cf">for</span> thought <span class="kw">in</span> initial_thoughts:</span>
+<span id="cb13-16"><a href=""></a>        path, score <span class="op">=</span> explore_financial_path(thought, evaluation_fn, depth<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb13-17"><a href=""></a>        <span class="cf">if</span> score <span class="op">&gt;</span> best_score:</span>
+<span id="cb13-18"><a href=""></a>            best_path <span class="op">=</span> [thought] <span class="op">+</span> path</span>
+<span id="cb13-19"><a href=""></a>            best_score <span class="op">=</span> score</span>
+<span id="cb13-20"><a href=""></a>            </span>
+<span id="cb13-21"><a href=""></a>    <span class="cf">return</span> best_path, best_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="visualizing-attention-patterns" class="slide level2">
+<h2>Visualizing Attention Patterns</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Attention maps reveal which inputs influence which outputs</li>
+<li>Tools like BertViz and OpenAI’s Attention tool</li>
+<li>Financial applications:
+<ul>
+<li>See which financial terms most influence predictions</li>
+<li>Visualize relationships between financial concepts</li>
+<li>Identify when models focus on relevant vs.&nbsp;irrelevant information</li>
+</ul></li>
+<li><strong>Technical approaches</strong>:
+<ul>
+<li>Head-level attention visualization</li>
+<li>Layer-wise relevance propagation</li>
+<li>Integrated gradients for feature attribution</li>
+<li>SHAP values for financial outputs</li>
+<li>Attention flow analysis across layers</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/encoder-decoder-attention.png"></p>
+<figcaption>Attention Visualization</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Visualization tools</strong>:
+<ul>
+<li><a href="https://github.com/jessevig/bertviz">BertViz</a></li>
+<li><a href="https://github.com/jalammar/ecco">Ecco</a></li>
+<li><a href="https://pair-code.github.io/lit/">LIT (Language Interpretability Tool)</a></li>
+<li><a href="https://captum.ai/">Captum</a> for financial NLP</li>
+<li><a href="https://github.com/interpretml/interpret">InterpretML</a></li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="financial-attention-case-studies" class="slide level2">
+<h2>Financial Attention Case Studies</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Earnings call analysis</strong>:
+<ul>
+<li>Which phrases capture model attention?</li>
+<li>Forward-looking statements vs.&nbsp;historical results</li>
+<li>Management tone and sentiment detection</li>
+<li>Hidden signals of financial distress</li>
+</ul></li>
+<li><strong>Financial news impact assessment</strong>:
+<ul>
+<li>Attention to specific market events</li>
+<li>Entity relationships in financial networks</li>
+<li>Sentiment propagation across news items</li>
+<li>Temporal attention patterns in market reactions</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Regulatory document analysis</strong>:
+<ul>
+<li>Critical clauses in financial regulations</li>
+<li>Compliance requirement identification</li>
+<li>Risk disclosure attention patterns</li>
+<li>Cross-references in regulatory frameworks</li>
+<li>Exception and qualification detection</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="attention-interpretation-in-financial-contexts" class="slide level2">
+<h2>Attention Interpretation in Financial Contexts</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="kw">def</span> analyze_financial_attention(text, model, layer_idx<span class="op">=-</span><span class="dv">1</span>, head_idx<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb14-2"><a href=""></a>    <span class="co">"""</span></span>
+<span id="cb14-3"><a href=""></a><span class="co">    Analyzes attention patterns in financial text</span></span>
+<span id="cb14-4"><a href=""></a><span class="co">    </span></span>
+<span id="cb14-5"><a href=""></a><span class="co">    Args:</span></span>
+<span id="cb14-6"><a href=""></a><span class="co">        text: Financial text to analyze</span></span>
+<span id="cb14-7"><a href=""></a><span class="co">        model: The LLM to use for analysis</span></span>
+<span id="cb14-8"><a href=""></a><span class="co">        layer_idx: Which transformer layer to examine</span></span>
+<span id="cb14-9"><a href=""></a><span class="co">        head_idx: Which attention head to focus on</span></span>
+<span id="cb14-10"><a href=""></a><span class="co">        </span></span>
+<span id="cb14-11"><a href=""></a><span class="co">    Returns:</span></span>
+<span id="cb14-12"><a href=""></a><span class="co">        attention_matrix: Token-to-token attention weights</span></span>
+<span id="cb14-13"><a href=""></a><span class="co">        key_influences: Most influential tokens/phrases</span></span>
+<span id="cb14-14"><a href=""></a><span class="co">    """</span></span>
+<span id="cb14-15"><a href=""></a>    <span class="co"># Generate token-level attention maps</span></span>
+<span id="cb14-16"><a href=""></a>    inputs <span class="op">=</span> tokenizer(text, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb14-17"><a href=""></a>    outputs <span class="op">=</span> model(<span class="op">**</span>inputs, output_attentions<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-18"><a href=""></a>    </span>
+<span id="cb14-19"><a href=""></a>    <span class="co"># Extract attention from specified layer/head</span></span>
+<span id="cb14-20"><a href=""></a>    attention <span class="op">=</span> outputs.attentions[layer_idx]</span>
+<span id="cb14-21"><a href=""></a>    <span class="cf">if</span> head_idx <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb14-22"><a href=""></a>        attention <span class="op">=</span> attention[:, head_idx, :, :]</span>
+<span id="cb14-23"><a href=""></a>    </span>
+<span id="cb14-24"><a href=""></a>    <span class="co"># Identify key financial entities with high attention</span></span>
+<span id="cb14-25"><a href=""></a>    financial_entities <span class="op">=</span> extract_financial_entities(text)</span>
+<span id="cb14-26"><a href=""></a>    entity_attention <span class="op">=</span> calculate_entity_attention(attention, financial_entities)</span>
+<span id="cb14-27"><a href=""></a>    </span>
+<span id="cb14-28"><a href=""></a>    <span class="cf">return</span> attention, entity_attention</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="self-consistency-verification" class="slide level2">
+<h2>Self-Consistency &amp; Verification</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Generating multiple solutions to the same problem</li>
+<li>Identifying inconsistencies in financial reasoning</li>
+<li>Cross-checking numerical results and conclusions</li>
+<li>Improved accuracy for high-stakes financial decisions</li>
+<li>Essential for regulatory compliance and audit trails</li>
+<li><strong>Implementation techniques</strong>:
+<ul>
+<li>Ensemble of reasoning paths</li>
+<li>Majority voting on financial decisions</li>
+<li>Confidence-weighted aggregation</li>
+<li>Sensitivity analysis of financial conclusions</li>
+<li>Multi-model cross-verification</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="kw">def</span> self_consistent_valuation(company_data, num_paths<span class="op">=</span><span class="dv">5</span>):</span>
+<span id="cb15-2"><a href=""></a>    <span class="co">"""</span></span>
+<span id="cb15-3"><a href=""></a><span class="co">    Performs multiple valuation analyses and </span></span>
+<span id="cb15-4"><a href=""></a><span class="co">    aggregates results for consistency</span></span>
+<span id="cb15-5"><a href=""></a><span class="co">    """</span></span>
+<span id="cb15-6"><a href=""></a>    valuations <span class="op">=</span> []</span>
+<span id="cb15-7"><a href=""></a>    reasoning_paths <span class="op">=</span> []</span>
+<span id="cb15-8"><a href=""></a>    </span>
+<span id="cb15-9"><a href=""></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_paths):</span>
+<span id="cb15-10"><a href=""></a>        <span class="co"># Generate different reasoning approaches</span></span>
+<span id="cb15-11"><a href=""></a>        reasoning <span class="op">=</span> llm.generate(</span>
+<span id="cb15-12"><a href=""></a>            <span class="ss">f"Analyze </span><span class="sc">{</span>company_data<span class="sc">}</span><span class="ss"> using approach </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-13"><a href=""></a>        reasoning_paths.append(reasoning)</span>
+<span id="cb15-14"><a href=""></a>        </span>
+<span id="cb15-15"><a href=""></a>        <span class="co"># Extract valuation estimate</span></span>
+<span id="cb15-16"><a href=""></a>        valuation <span class="op">=</span> extract_valuation(reasoning)</span>
+<span id="cb15-17"><a href=""></a>        valuations.append(valuation)</span>
+<span id="cb15-18"><a href=""></a>    </span>
+<span id="cb15-19"><a href=""></a>    <span class="co"># Check consistency</span></span>
+<span id="cb15-20"><a href=""></a>    consistency <span class="op">=</span> calculate_variance(valuations)</span>
+<span id="cb15-21"><a href=""></a>    consensus <span class="op">=</span> weighted_average(valuations)</span>
+<span id="cb15-22"><a href=""></a>    </span>
+<span id="cb15-23"><a href=""></a>    <span class="cf">return</span> consensus, consistency, reasoning_paths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
+<section id="real-time-tracing-techniques" class="slide level2">
+<h2>Real-time Tracing Techniques</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Token-by-token analysis</strong>: Examining probabilities as each token is generated</li>
+<li><strong>Alternative path exploration</strong>: What would the model do differently with small changes?</li>
+<li><strong>Prompt sensitivity analysis</strong>: How do slight prompt variations affect reasoning?</li>
+<li><strong>Layerwise relevance propagation</strong>: Tracking contribution of each input to outputs</li>
+<li><strong>Financial applications</strong>:
+<ul>
+<li>Regulatory compliance verification</li>
+<li>Auditing financial model decisions</li>
+<li>Identifying potential biases in financial analysis</li>
+<li>Early detection of reasoning failures</li>
+<li>Confidence calibration for financial advice</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Tools and frameworks</strong>:
+<ul>
+<li><a href="https://github.com/EleutherAI/lm-evaluation-harness">Eleuther AI’s language model evaluation harness</a></li>
+<li><a href="https://github.com/krishnap25/mauve">MAUVE</a> for distribution comparison</li>
+<li><a href="https://github.com/jalammar/ecco">Ecco</a> for token probability analysis</li>
+<li><a href="https://github.com/ProsusAI/finBERT">FinBERT</a> for financial sentiment</li>
+<li>Custom financial reasoning trackers</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="implementing-llm-tracing-in-production-systems" class="slide level2">
+<h2>Implementing LLM Tracing in Production Systems</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Logging strategies</strong>: Capturing model reasoning for later analysis</li>
+<li><strong>Monitoring frameworks</strong>: Real-time assessment of reasoning quality</li>
+<li><strong>Alert systems</strong>: Flagging potential reasoning failures</li>
+<li><strong>Explainability APIs</strong>: Making reasoning transparent to users</li>
+<li><strong>Compliance documentation</strong>: Generating audit trails for regulators</li>
+<li><strong>Feedback loops</strong>: Improving model reasoning based on outcomes</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>System architecture components</strong>:
+<ul>
+<li>Reasoning quality metrics dashboard</li>
+<li>Token-level confidence visualization</li>
+<li>Alternative reasoning path explorer</li>
+<li>Financial domain knowledge verification</li>
+<li>Model uncertainty quantification</li>
+<li>Drift detection for financial concepts</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="advanced-interpretability-research" class="slide level2">
+<h2>Advanced Interpretability Research</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Neural Circuit Analysis</strong>: Identifying specific circuits for financial concepts</li>
+<li><strong>Causal Mediation Analysis</strong>: Understanding how interventions affect outcomes</li>
+<li><strong>Activation Steering</strong>: Guiding model reasoning in desired directions</li>
+<li><strong>Adversarial Testing</strong>: Probing for weaknesses in financial reasoning</li>
+<li><strong>Controlled Generation</strong>: Ensuring outputs follow regulatory constraints</li>
+<li><strong>Faithful Explanations</strong>: Creating truly representative explanations</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Research frontiers</strong>:
+<ul>
+<li>Identifying financial concept neurons</li>
+<li>Transformer interpretability at scale</li>
+<li>Causal inference in financial models</li>
+<li>Alignment with financial regulations</li>
+<li>Financial concept representation learning</li>
+<li>Robust reasoning in market volatility</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="ghost-in-the-machine" class="title-slide slide level1 center">
+<h1>Ghost in the Machine</h1>
+
+</section>
+<section id="understanding-llm-emergent-behaviors" class="slide level2">
+<h2>Understanding LLM Emergent Behaviors</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Emergent capabilities beyond explicit training</li>
+<li>Scale-dependent phenomena in large models</li>
+<li>Unexpected reasoning and generalization abilities</li>
+<li>“Sparks of AGI” debate</li>
+<li>Implications for financial applications</li>
+<li><strong>Scientific foundations</strong>:
+<ul>
+<li>Phase transitions in complex systems</li>
+<li>Information theory perspectives</li>
+<li>Computational complexity emergence</li>
+<li>Collective neuron behavior models</li>
+<li>Self-organizing systems research</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/transformer_baby.png"></p>
+<figcaption>Emergent Behaviors</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Key emergent capability thresholds</strong>:
+<ul>
+<li>~100M parameters: Basic pattern recognition</li>
+<li>~1B parameters: Robust in-context learning</li>
+<li>~10B parameters: Complex reasoning abilities</li>
+<li>~100B parameters: Zero-shot task generalization</li>
+<li>~1T parameters: Advanced reasoning integration</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="the-emergence-debate-in-ai" class="slide level2">
+<h2>The Emergence Debate in AI</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Continuity hypothesis</strong>: Capabilities improve smoothly with scale</li>
+<li><strong>Phase transition hypothesis</strong>: Sudden jumps in capabilities at thresholds</li>
+<li><strong>Implicit knowledge hypothesis</strong>: Capabilities hidden until prompted correctly</li>
+<li><strong>Multi-system hypothesis</strong>: Different cognitive systems emerge independently</li>
+<li><strong>Perspectives from leading AI labs</strong>:
+<ul>
+<li>Google DeepMind on emergence in Gemini models</li>
+<li>Anthropic on capabilities in Claude models</li>
+<li>OpenAI’s observations in GPT model series</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Empirical evidence</strong>:
+<ul>
+<li>MMLU score discontinuities</li>
+<li>Chain-of-thought effectiveness jumps</li>
+<li>Tool use capability thresholds</li>
+<li>Theory of mind test performances</li>
+<li>Mathematical reasoning breakthroughs</li>
+<li>Financial analysis capability shifts</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="unexpected-capabilities" class="slide level2">
+<h2>Unexpected Capabilities</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Tool use</strong>: Models learn to use calculators, databases without specific training</li>
+<li><strong>Translation</strong>: Zero-shot translation between language pairs never seen together</li>
+<li><strong>Mathematical reasoning</strong>: Complex calculations beyond training examples</li>
+<li><strong>Meta-learning</strong>: Learning how to learn from few examples</li>
+<li><strong>Financial analysis</strong>: Applying general reasoning to specialized financial problems</li>
+<li><strong>Algorithmic thinking</strong>: Solving novel computational problems</li>
+<li><strong>Analogical reasoning</strong>: Transferring insights across domains</li>
+<li><strong>Temporal reasoning</strong>: Understanding time-dependent relationships</li>
+<li><strong>Counterfactual analysis</strong>: Evaluating hypothetical scenarios</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Examples in finance</strong>:
+<ul>
+<li>Discovering arbitrage opportunities</li>
+<li>Complex risk assessment</li>
+<li>Regulatory compliance checking</li>
+<li>Financial anomaly detection</li>
+<li>Sophisticated market analysis</li>
+<li>Synthesizing economic indicators</li>
+<li>Identifying market regime shifts</li>
+<li>Cross-asset correlation analysis</li>
+<li>Macroeconomic impact forecasting</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="financial-reasoning-case-studies" class="slide level2">
+<h2>Financial Reasoning Case Studies</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Option pricing strategies</strong>:
+<ul>
+<li>GPT-4 solving Black-Scholes equations without training</li>
+<li>Correctly identifying volatility smile implications</li>
+<li>Understanding Greeks relationships without definitions</li>
+</ul></li>
+<li><strong>Credit risk assessment</strong>:
+<ul>
+<li>Detecting subtle default risk indicators</li>
+<li>Creating novel early warning systems</li>
+<li>Connecting macroeconomic factors to credit events</li>
+</ul></li>
+<li><strong>Portfolio optimization</strong>:
+<ul>
+<li>Reinventing modern portfolio theory concepts</li>
+<li>Suggesting non-obvious diversification strategies</li>
+<li>Discovering factor exposures in complex portfolios</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Market anomaly detection</strong>:
+<ul>
+<li>Identifying statistical arbitrage opportunities</li>
+<li>Spotting potential market manipulation patterns</li>
+<li>Flagging unusual trading activity</li>
+</ul></li>
+<li><strong>Regulatory compliance</strong>:
+<ul>
+<li>Interpreting complex regulatory frameworks</li>
+<li>Identifying potential compliance issues</li>
+<li>Suggesting implementation approaches</li>
+</ul></li>
+<li><strong>Financial forecasting</strong>:
+<ul>
+<li>Integrating disparate data sources</li>
+<li>Identifying leading indicators</li>
+<li>Recognizing pattern shifts in time series</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="scaling-laws-and-emergent-abilities" class="slide level2">
+<h2>Scaling Laws and Emergent Abilities</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Certain abilities only appear above specific model sizes</li>
+<li><strong>Discontinuous improvements</strong>: Sudden jumps in capability with scale</li>
+<li><strong>Kaplan et al.&nbsp;scaling laws</strong>: Predictable improvements with model size</li>
+<li><strong>Chinchilla scaling</strong>: Optimal data-to-parameter ratios</li>
+<li><strong>Implications</strong>: Larger models for finance may unlock new capabilities</li>
+<li><strong>Power law scaling</strong>: Performance scaling as a power of compute</li>
+<li><strong>Data scaling relationship</strong>: More data needed as models grow</li>
+<li><strong>Transfer learning implications</strong>: Better pre-training improves downstream tasks</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/rnn1.png"></p>
+<figcaption>Scaling Laws</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Key scaling research</strong>:
+<ul>
+<li><a href="https://arxiv.org/abs/2001.08361">Kaplan et al.&nbsp;2020</a>: Original scaling laws</li>
+<li><a href="https://arxiv.org/abs/2203.15556">Hoffmann et al.&nbsp;2022</a>: Chinchilla scaling</li>
+<li><a href="https://arxiv.org/abs/2206.04615">Wei et al.&nbsp;2022</a>: Emergent abilities</li>
+<li><a href="https://arxiv.org/abs/2204.02311">Srivastava et al.&nbsp;2022</a>: BIG-Bench</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="financial-capabilities-emergence-thresholds" class="slide level2">
+<h2>Financial Capabilities Emergence Thresholds</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Basic financial understanding</strong>: ~1B parameters
+<ul>
+<li>Financial terminology comprehension</li>
+<li>Simple financial calculations</li>
+<li>Basic market concepts</li>
+</ul></li>
+<li><strong>Intermediate financial analysis</strong>: ~10B parameters
+<ul>
+<li>DCF valuation execution</li>
+<li>Multi-factor model application</li>
+<li>Financial statement analysis</li>
+<li>Basic risk assessment</li>
+</ul></li>
+<li><strong>Advanced financial reasoning</strong>: ~100B parameters
+<ul>
+<li>Multi-step financial strategy development</li>
+<li>Complex scenario analysis</li>
+<li>Integrated market system understanding</li>
+<li>Nuanced regulatory interpretation</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Specialized financial capabilities</strong>:
+<ul>
+<li>Options strategy design: ~20B parameters</li>
+<li>Merger arbitrage analysis: ~50B parameters</li>
+<li>Macroeconomic forecasting: ~75B parameters</li>
+<li>Systematic trading strategy design: ~100B parameters</li>
+<li>Central bank policy impact assessment: ~175B parameters</li>
+</ul></li>
+<li><strong>Performance examples</strong>:
+<ul>
+<li>FINQA benchmark: 32% → 76% → 92%</li>
+<li>Financial NLI: 61% → 83% → 94%</li>
+<li>Financial sentiment: 72% → 89% → 97%</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="computational-implications-for-financial-institutions" class="slide level2">
+<h2>Computational Implications for Financial Institutions</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Infrastructure requirements</strong>:
+<ul>
+<li>GPU/TPU clusters for large model training</li>
+<li>Edge deployment for low-latency inference</li>
+<li>Memory-efficient serving architectures</li>
+<li>Batch processing for efficiency</li>
+</ul></li>
+<li><strong>Cost considerations</strong>:
+<ul>
+<li>Training costs: $500K-$10M for large models</li>
+<li>Inference optimization techniques</li>
+<li>Model distillation for deployment</li>
+<li>Hardware acceleration requirements</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Practical strategies</strong>:
+<ul>
+<li>Fine-tuning existing large models</li>
+<li>Parameter-efficient adaptation (LoRA)</li>
+<li>Strategic API usage vs.&nbsp;internal deployment</li>
+<li>Domain-specific medium-sized models</li>
+<li>Hybrid architecture with specialized components</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="hallucinations-and-financial-risk" class="slide level2">
+<h2>Hallucinations and Financial Risk</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Confident generation of false information</li>
+<li>Potential impacts on financial decision-making</li>
+<li>Detection strategies in financial contexts:
+<ul>
+<li>Consistency checks</li>
+<li>External verification</li>
+<li>Probability thresholds</li>
+<li>Multi-model consensus</li>
+</ul></li>
+<li>Risk mitigation approaches</li>
+<li><strong>Root causes of hallucinations</strong>:
+<ul>
+<li>Pattern completion gone wrong</li>
+<li>Over-extrapolation from training data</li>
+<li>Lack of uncertainty calibration</li>
+<li>Statistical artifacts in training</li>
+<li>Distribution shift from training to application</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Financial hallucination examples</strong>:
+<ul>
+<li>Fabricated financial metrics</li>
+<li>Non-existent regulations</li>
+<li>Imaginary market events</li>
+<li>False historical performance</li>
+<li>Invented company information</li>
+<li>Fictional financial instruments</li>
+<li>Made-up economic data</li>
+<li>Incorrect tax regulations</li>
+<li>Fabricated trading strategies</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="hallucination-mitigation-in-financial-applications" class="slide level2">
+<h2>Hallucination Mitigation in Financial Applications</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>RAG (Retrieval Augmented Generation)</strong>:
+<ul>
+<li>Grounding in verified financial data sources</li>
+<li>Real-time financial database integration</li>
+<li>Citation of primary financial sources</li>
+<li>Retrieval verification loops</li>
+</ul></li>
+<li><strong>Controlled generation techniques</strong>:
+<ul>
+<li>Constraint-based generation</li>
+<li>Template-based financial outputs</li>
+<li>Fact checking against known databases</li>
+<li>Output filtering with expert systems</li>
+<li>Calibrated uncertainty expressions</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="kw">def</span> financial_fact_checking(generated_text):</span>
+<span id="cb16-2"><a href=""></a>    <span class="co">"""</span></span>
+<span id="cb16-3"><a href=""></a><span class="co">    Verify financial claims in generated text</span></span>
+<span id="cb16-4"><a href=""></a><span class="co">    against trusted sources</span></span>
+<span id="cb16-5"><a href=""></a><span class="co">    """</span></span>
+<span id="cb16-6"><a href=""></a>    <span class="co"># Extract financial claims</span></span>
+<span id="cb16-7"><a href=""></a>    claims <span class="op">=</span> extract_financial_claims(generated_text)</span>
+<span id="cb16-8"><a href=""></a>    </span>
+<span id="cb16-9"><a href=""></a>    <span class="co"># Verify each claim</span></span>
+<span id="cb16-10"><a href=""></a>    verification_results <span class="op">=</span> {}</span>
+<span id="cb16-11"><a href=""></a>    <span class="cf">for</span> claim <span class="kw">in</span> claims:</span>
+<span id="cb16-12"><a href=""></a>        <span class="co"># Check claim against financial databases</span></span>
+<span id="cb16-13"><a href=""></a>        result <span class="op">=</span> verify_against_sources(claim)</span>
+<span id="cb16-14"><a href=""></a>        verification_results[claim] <span class="op">=</span> result</span>
+<span id="cb16-15"><a href=""></a>    </span>
+<span id="cb16-16"><a href=""></a>    <span class="co"># Generate confidence score</span></span>
+<span id="cb16-17"><a href=""></a>    confidence <span class="op">=</span> calculate_overall_confidence(</span>
+<span id="cb16-18"><a href=""></a>        verification_results)</span>
+<span id="cb16-19"><a href=""></a>    </span>
+<span id="cb16-20"><a href=""></a>    <span class="cf">return</span> verification_results, confidence</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
+<section id="practical-implementation-strategies" class="slide level2">
+<h2>Practical Implementation Strategies</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Human-in-the-loop design</strong>:
+<ul>
+<li>Expert verification of critical financial outputs</li>
+<li>Confidence thresholds for human review</li>
+<li>Staged generation with checkpoints</li>
+<li>Expert feedback incorporation</li>
+</ul></li>
+<li><strong>Technical implementation patterns</strong>:
+<ul>
+<li>Self-critique generation before final output</li>
+<li>Adversarial validation techniques</li>
+<li>Multi-model verification ensemble</li>
+<li>Probabilistic output calibration</li>
+<li>Output consistency checks</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Financial risk framework</strong>:
+<ul>
+<li>Critical vs.&nbsp;advisory information classification</li>
+<li>Risk-weighted verification allocation</li>
+<li>Compliance-sensitive content identification</li>
+<li>Uncertainty-aware decision support</li>
+<li>Transparency in confidence levels</li>
+<li>Auditable generation process</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="financial-regulatory-considerations" class="slide level2">
+<h2>Financial Regulatory Considerations</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>SEC requirements</strong>:
+<ul>
+<li>AI-generated content disclosure</li>
+<li>Material information verification</li>
+<li>Audit trail requirements</li>
+<li>Regulatory reporting considerations</li>
+</ul></li>
+<li><strong>FINRA guidance</strong>:
+<ul>
+<li>AI supervision requirements</li>
+<li>Financial advice restrictions</li>
+<li>Risk disclosure mandates</li>
+<li>Record-keeping obligations</li>
+</ul></li>
+<li><strong>Global regulatory landscape</strong>:
+<ul>
+<li>EU AI Act implications</li>
+<li>UK FCA guidelines</li>
+<li>Singapore MAS framework</li>
+<li>International coordination efforts</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Practical compliance approaches</strong>:
+<ul>
+<li>Model documentation standards</li>
+<li>Verification process documentation</li>
+<li>Human oversight frameworks</li>
+<li>Regular audit procedures</li>
+<li>Output sampling and review</li>
+<li>Continuous monitoring systems</li>
+<li>Responsible AI governance</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="interpretability-challenges" class="slide level2">
+<h2>Interpretability Challenges</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Black box nature of large language models</li>
+<li>Difficulty tracing specific outputs to training data</li>
+<li>Regulatory concerns in financial services:
+<ul>
+<li>SEC disclosure requirements</li>
+<li>EU AI Act transparency provisions</li>
+<li>FINRA guidance on AI explainability</li>
+</ul></li>
+<li>Methods for improving transparency</li>
+<li>The tension between performance and explainability</li>
+<li><strong>Fundamental challenges</strong>:
+<ul>
+<li>Distributed representations across neurons</li>
+<li>Superposition of concepts in weights</li>
+<li>Non-linear interactions between components</li>
+<li>Emergent behaviors from collective activity</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Explainability techniques</strong>:
+<ul>
+<li>LIME and SHAP for financial NLP</li>
+<li>Attention visualization</li>
+<li>Input perturbation analysis</li>
+<li>Counterfactual explanations</li>
+<li>Feature attribution methods</li>
+<li>Local explanation generation</li>
+<li>Rule extraction approaches</li>
+<li>Concept activation vectors</li>
+<li>Neuron interpretation tools</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="financial-explainability-case-studies" class="slide level2">
+<h2>Financial Explainability Case Studies</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>JPMorgan’s XAI Initiative</strong>:
+<ul>
+<li>Post-hoc explanation generation</li>
+<li>Investment recommendation justification</li>
+<li>Regulatory compliance documentation</li>
+</ul></li>
+<li><strong>BlackRock’s Aladdin Explain</strong>:
+<ul>
+<li>Portfolio decision attribution</li>
+<li>Risk factor decomposition</li>
+<li>Model confidence visualization</li>
+</ul></li>
+<li><strong>Citadel’s Interpretable ML</strong>:
+<ul>
+<li>Trading strategy explanation</li>
+<li>Anomaly detection justification</li>
+<li>Model monitoring dashboards</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Goldman Sachs’ Transparency Tools</strong>:
+<ul>
+<li>Client-facing explanation generation</li>
+<li>Regulatory reporting automation</li>
+<li>Model governance framework</li>
+</ul></li>
+<li><strong>Bank of England’s Model Transparency</strong>:
+<ul>
+<li>Stress testing visualization</li>
+<li>Scenario analysis explanation</li>
+<li>Policy impact assessment</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="alignment-with-financial-values" class="slide level2">
+<h2>Alignment with Financial Values</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Ensuring LLMs optimize for beneficial financial outcomes</li>
+<li>Safety measures for automated financial systems</li>
+<li>Ethics of financial advice from LLMs</li>
+<li>Preventing market manipulation</li>
+<li>Balancing innovation with responsible deployment</li>
+<li><strong>Value alignment techniques</strong>:
+<ul>
+<li>Constitutional AI approaches</li>
+<li>Reinforcement learning from human feedback</li>
+<li>Red-teaming for financial misuse</li>
+<li>Value-sensitive design principles</li>
+<li>Stakeholder-inclusive development</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Financial domain alignment</strong>:
+<ul>
+<li>Fiduciary responsibility principles</li>
+<li>Fair market conduct guidelines</li>
+<li>Consumer protection standards</li>
+<li>Systemic risk considerations</li>
+<li>Financial inclusion objectives</li>
+<li>Sustainability and ESG integration</li>
+<li>Ethical investment frameworks</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="frontier-research-directions" class="slide level2">
+<h2>Frontier Research Directions</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Mechanistic interpretability</strong>:
+<ul>
+<li>Understanding financial concept encoding</li>
+<li>Mapping causal paths in model reasoning</li>
+<li>Circuit analysis for financial decisions</li>
+</ul></li>
+<li><strong>Neurosymbolic approaches</strong>:
+<ul>
+<li>Combining neural and symbolic methods</li>
+<li>Explicit reasoning with LLM capabilities</li>
+<li>Verifiable financial calculations</li>
+</ul></li>
+<li><strong>Alignment techniques</strong>:
+<ul>
+<li>Constitutional AI for financial services</li>
+<li>Beneficial financial assistants</li>
+<li>Long-term financial welfare optimization</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Multi-modal financial AI</strong>:
+<ul>
+<li>Market data + text understanding</li>
+<li>Financial chart interpretation</li>
+<li>Document + data integration</li>
+</ul></li>
+<li><strong>Financial reasoning enhancement</strong>:
+<ul>
+<li>External tools and augmentation</li>
+<li>Causal reasoning improvements</li>
+<li>Temporal reasoning capabilities</li>
+</ul></li>
+<li><strong>Responsible deployment</strong>:
+<ul>
+<li>Progressive disclosure frameworks</li>
+<li>Capability control mechanisms</li>
+<li>Impact assessment methodologies</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="the-future-financial-ai-landscape" class="slide level2">
+<h2>The Future Financial AI Landscape</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Near-term developments</strong> (1-2 years):
+<ul>
+<li>Specialized financial fine-tuning</li>
+<li>Domain-specific reasoning improvements</li>
+<li>Integration with existing workflows</li>
+<li>Enhanced regulatory compliance tools</li>
+</ul></li>
+<li><strong>Medium-term outlook</strong> (3-5 years):
+<ul>
+<li>Multi-modal financial reasoning</li>
+<li>Autonomous financial assistants</li>
+<li>Enhanced causal understanding</li>
+<li>Reliable uncertainty quantification</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Long-term possibilities</strong> (5-10 years):
+<ul>
+<li>Human-level financial reasoning</li>
+<li>General-purpose financial advisors</li>
+<li>System-wide financial optimization</li>
+<li>Algorithmic financial governance</li>
+<li>Novel financial system design</li>
+<li>Emergent economic behaviors</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="whats-next" class="slide level2">
+<h2>What’s Next?</h2>
+<ul>
+<li>Practical session: Training your own LLM and exploring model internals</li>
+<li>Hands-on experience with advanced memory architectures and function calling</li>
+<li>Building more sophisticated financial applications</li>
+</ul>
+
+</section>
+
+</div>
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../../images/logo_header.svg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

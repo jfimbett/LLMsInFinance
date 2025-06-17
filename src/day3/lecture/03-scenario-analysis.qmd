@@ -1,0 +1,298 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\lecture\03-scenario-analysis.qmd
+# Scenario Analysis with LLMs
+
+## Beyond Base Case Forecasting
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Single forecasts fail to capture uncertainty
+- Scenario analysis explores multiple potential futures
+- Traditional approach:
+  - Base, upside, downside cases
+  - Limited by human imagination and resources
+- LLMs enable:
+  - Broader scenario generation
+  - Systematic variation of inputs
+  - Creative yet plausible alternative futures
+  - Internally consistent scenario narratives
+:::
+
+::: {.column width="40%"}
+![Scenario Analysis](../../images/transformer_baby.png)
+:::
+
+::::
+
+## LLM-Powered Scenario Framework
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **1. Scenario Identification**:
+  - Systematic exploration of key uncertainties
+  - Critical variable identification
+  - Coherent narrative development
+  
+- **2. Parameter Variation**:
+  - Systematic variation of inputs
+  - Correlation preservation
+  - Cross-impact analysis
+  
+- **3. Financial Modeling**:
+  - Scenario-specific forecasts
+  - Internally consistent projections
+  - Financial statement integration
+:::
+
+::: {.column width="40%"}
+- **4. Valuation Impact**:
+  - DCF under multiple scenarios
+  - Probability-weighted outcomes
+  - Risk-adjusted valuations
+  
+- **5. Strategic Implications**:
+  - Decision node identification
+  - Contingency planning
+  - Strategic flexibility valuation
+  - Real options analysis
+:::
+
+::::
+
+## Scenario Generation Techniques
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Divergent thinking prompts**:
+  - "Generate five distinct future scenarios for industry X"
+  - "What unexpected developments could impact this sector?"
+  
+- **Structured variation**:
+  - Systematically varying key parameters
+  - "Generate a scenario where variable X is 20% higher"
+  
+- **Constraint-based scenarios**:
+  - "Create a scenario constrained by factors A, B, and C"
+  - Boundary exploration
+:::
+
+::: {.column width="40%"}
+```
+Generate three distinct but plausible 
+scenarios for Tesla's business 
+environment in 2025:
+
+1. A BASE CASE scenario reflecting 
+   consensus expectations
+   
+2. An UPSIDE CASE incorporating 
+   positive but reasonable 
+   developments
+   
+3. A DOWNSIDE CASE reflecting 
+   significant but plausible 
+   challenges
+
+For each scenario, provide:
+- Key assumptions
+- Market conditions
+- Competitive landscape
+- Regulatory environment
+- Technology development path
+```
+:::
+
+::::
+
+## Cross-Impact Analysis
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Relationships between variables in complex systems
+- Traditional challenge: manually mapping interactions
+- LLM approach:
+  - Identifying relationships between variables
+  - Assessing mutual influences
+  - Maintaining consistency across projections
+  - Avoiding contradictory assumptions
+:::
+
+::: {.column width="40%"}
+```python
+def cross_impact_matrix(variables):
+    """
+    Generate cross-impact matrix for scenario
+    
+    Parameters:
+    variables - Key scenario variables
+    
+    Returns:
+    Matrix of impact relationships and strengths
+    """
+    matrix = {}
+    
+    for v1 in variables:
+        matrix[v1] = {}
+        for v2 in variables:
+            if v1 != v2:
+                # LLM assessment of relationship
+                impact = assess_impact(v1, v2)
+                matrix[v1][v2] = impact
+    
+    return matrix
+```
+:::
+
+::::
+
+## Monte Carlo Integration
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Moving beyond discrete scenarios to probability distributions
+- LLMs can help with:
+  - Parameter distribution definition
+  - Correlation structure identification
+  - Realistic constraint setting
+  - Output interpretation
+  
+- Implementation approaches:
+  - LLM-guided Monte Carlo simulation
+  - Narrative interpretation of statistical results
+  - Identifying key drivers of uncertainty
+  - Tail risk articulation
+:::
+
+::: {.column width="40%"}
+```python
+def llm_guided_monte_carlo(variables, 
+                          correlations, 
+                          iterations=10000):
+    """
+    LLM-guided Monte Carlo simulation
+    
+    Parameters:
+    variables - Key input variables with distributions
+    correlations - Correlation matrix between variables
+    iterations - Number of simulation runs
+    
+    Returns:
+    Simulation results with narrative interpretation
+    """
+    # Generate correlated random variables
+    simulations = generate_correlated_samples(
+        variables, correlations, iterations)
+    
+    # Calculate output for each simulation
+    results = [calculate_output(sim) for sim in simulations]
+    
+    # LLM interpretation of results
+    interpretation = interpret_simulation(results)
+    
+    return results, interpretation
+```
+:::
+
+::::
+
+## Narrative Scenario Construction
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- LLMs excel at creating coherent narratives
+- Benefits of narrative scenarios:
+  - Engaging for stakeholders
+  - Easier to comprehend than pure numbers
+  - Captures qualitative factors
+  - Provides context for quantitative projections
+  
+- Process:
+  1. Generate narrative skeleton
+  2. Develop quantitative implications
+  3. Ensure internal consistency
+  4. Link to financial projections
+:::
+
+::: {.column width="40%"}
+**Example Scenario Narrative:**
+
+*"By 2026, the electric vehicle market has reached a tipping point with 37% market share in major markets. Tesla has maintained leadership with 28% EV market share despite intensified competition from legacy automakers and new entrants. Their energy business has grown to represent 15% of revenue as grid-scale storage adoption accelerated following policy shifts in key markets. Manufacturing efficiency improvements have lifted gross margins to 27% despite pricing pressure in the mid-range segment..."*
+
+*[Continues with specific financial implications]*
+:::
+
+::::
+
+## Decision Trees and Real Options
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Scenarios connected to decision points
+- Traditional challenge: manual tree construction
+- LLM enhancements:
+  - Identifying decision nodes
+  - Suggesting flexible strategies
+  - Valuing optionality
+  - Creating adaptive approaches
+  
+- Applications:
+  - Capital investment decisions
+  - R&D portfolio management
+  - Market entry strategy
+  - Capacity expansion planning
+  - Acquisition evaluation
+:::
+
+::: {.column width="40%"}
+```
+For the expansion into European manufacturing:
+
+Decision Node 1: Timing
+- Option A: Immediate expansion
+- Option B: Wait 18 months
+- Option C: Staged approach
+
+Decision Node 2: Scale
+- Option A: Full-scale factory
+- Option B: Limited assembly only
+- Option C: Partnership approach
+
+For each decision path:
+1. Key success factors
+2. Primary risks
+3. Financial implications
+4. Strategic flexibility
+```
+:::
+
+::::
+
+## Practical Implementation Considerations
+
+- **Computation considerations**:
+  - Balancing scenario quantity vs. quality
+  - Efficient simulation approaches
+  - Parameter space exploration techniques
+
+- **Communication methods**:
+  - Executive-friendly scenario summaries
+  - Interactive scenario explorers
+  - Visual representation of scenario spaces
+
+- **Integration with existing systems**:
+  - Financial model connectivity
+  - Strategy process integration
+  - Continuous updating approaches
+  
+- **Behavioral aspects**:
+  - Avoiding scenario attachment
+  - Managing cognitive biases
+  - Institutionalizing scenario thinking
+```

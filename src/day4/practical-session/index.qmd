@@ -1,0 +1,45 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\practical-session\index.qmd
+---
+title: "Day 4: Practical Session - Credit Risk and Advanced LLM Applications"
+author: "Your Name"
+date: "2025-05-11"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    code-tools: true
+---
+
+# LLMs for Credit Risk and Advanced Applications
+
+## Overview
+
+In this practical session, we will explore how Large Language Models can be applied to credit risk assessment and other advanced financial applications. We'll examine how LLMs can enhance traditional credit analysis methods, work with mathematical problems, and use transformer architectures beyond text data. The session focuses on:
+
+1. Fine-tuning models for credit default prediction
+2. Simulating complex household financial decisions
+3. Building practical applications for real-world financial scenarios
+
+## Session Structure
+
+The practical session is divided into three main notebooks:
+
+1. **Fine-tuning for Default Probability**: Techniques for fine-tuning BERT models to predict loan default probabilities, including data preparation, model training, evaluation, and calibration of probabilities.
+
+2. **Simulating Household Financial Decisions**: Using LLMs to simulate complex household financial decision-making processes under different economic scenarios, including budget constraints, risk preferences, and future planning.
+
+3. **Building a Mortgage Rate Estimator**: Developing a practical application that estimates personalized mortgage rates based on client profiles using Flask and LLM-powered API systems.
+
+## Learning Objectives
+
+By the end of this session, you will be able to:
+
+- Fine-tune transformer models for financial prediction tasks
+- Properly calibrate and interpret model probabilities for risk assessment
+- Create simulations of complex financial decision-making processes
+- Build practical applications that integrate LLMs into financial workflows
+- Implement LLM-based APIs for financial services
+- Understand the strengths and limitations of LLMs in credit risk assessment
+```

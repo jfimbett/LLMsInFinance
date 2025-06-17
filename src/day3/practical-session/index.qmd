@@ -1,0 +1,70 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\practical-session\index.qmd
+---
+title: "Day 3: Practical Session - Valuation with LLMs"
+author: "Your Name"
+date: "2025-05-10"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    code-tools: true
+---
+
+# LLMs for Financial Valuation
+
+## Overview
+
+In this practical session, we will apply Large Language Models to various aspects of financial valuation, focusing on a case study of Tesla (TSLA). We'll explore how LLMs can enhance traditional valuation processes by:
+
+1. Processing and analyzing large financial documents
+2. Generating forward-looking financial projections
+3. Selecting appropriate comparable companies
+4. Creating comprehensive valuation analyses
+5. Building agent-based systems for financial document analysis
+
+## Session Structure
+
+The practical session is divided into five main notebooks:
+
+1. **Reading Large Financial Documents**: Techniques for efficiently processing annual reports, earnings transcripts, and other large financial texts using LLMs.
+
+2. **Forecasting Cashflows with LLMs**: Using LLMs to generate financial projections while avoiding look-ahead bias and incorporating appropriate scenario analysis.
+
+3. **Comparable Company Selection**: Leveraging LLMs to identify and analyze appropriate peer companies for relative valuation.
+
+4. **Tesla Valuation Case Study**: Applying all the techniques learned to perform a comprehensive valuation of Tesla.
+
+5. **Financial Filing Agents**: Building specialized AI agents that work together as a crew to analyze corporate filings and extract valuable insights.
+
+## Learning Objectives
+
+By the end of this session, you will be able to:
+
+- Apply best practices for processing large financial documents with LLMs
+- Create structured prompts for financial forecasting tasks
+- Implement robust comparable company selection methodologies
+- Integrate LLM outputs into valuation workflows
+- Build agent-based systems for automated financial analysis
+- Understand the limitations and best practices for LLMs in valuation contexts
+
+## Prerequisites
+
+This session builds on the fundamentals covered in Days 1 and 2. You should be familiar with:
+
+- Basic LLM prompting techniques
+- Core financial valuation methodologies (DCF and multiples)
+- Python programming fundamentals
+- Financial statement analysis
+
+## Getting Started
+
+Please make sure you have installed all the required libraries listed in the `requirements.txt` file:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then, proceed with the notebooks in the order listed above.
+```

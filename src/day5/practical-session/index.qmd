@@ -1,0 +1,50 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day5\practical-session\index.qmd
+---
+title: "Day 5: Practical Session - Advanced LLM Applications"
+author: "Your Name"
+date: "2025-05-12"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    code-tools: true
+---
+
+# Advanced LLM Applications
+
+## Overview
+
+In this final practical session, we explore advanced applications of Large Language Models beyond traditional text processing. We'll examine the current state and limitations of AI systems, dive into structured generation techniques for efficient information retrieval, and explore the architecture of text-to-image models as an example of multimodal AI systems. This session provides a forward-looking perspective on where LLM technology is heading and how financial professionals can prepare for future developments.
+
+## Session Structure
+
+The practical session is divided into three main notebooks:
+
+1. **Current State of AI: Capabilities and Limitations**: Examines what current AI systems can and cannot do effectively, with a focus on financial applications. We'll explore evaluation methodologies, benchmarking results, and the gap between expectations and reality.
+
+2. **Structured Generation for Information Retrieval**: Demonstrates techniques for efficient information extraction using structured outputs from LLMs. We'll implement structured generation patterns to transform unstructured financial documents into structured, queryable data.
+
+3. **Beyond Text: Architecture of Text-to-Image Models**: Provides an accessible explanation of how text-to-image models work, using them as a case study for understanding multimodal AI systems and their potential applications in finance.
+
+## Learning Objectives
+
+By the end of this session, you will be able to:
+
+- Realistically assess AI capabilities and limitations in financial contexts
+- Implement structured generation patterns for efficient information extraction
+- Understand the fundamental architecture of multimodal AI systems
+- Apply these advanced techniques to practical financial use cases
+- Evaluate the potential impact of emerging AI technologies on financial services
+
+## Prerequisites
+
+- Familiarity with Python and Jupyter notebooks
+- Understanding of basic LLM concepts covered in previous sessions
+- Access to LLM APIs (OpenAI, Anthropic, or similar)
+
+## Resources
+
+All code and datasets used in this session are available in the repository, and each notebook contains detailed explanations and implementation guidance. The techniques demonstrated can be adapted to various financial analysis tasks and integrated into existing workflows.
+```

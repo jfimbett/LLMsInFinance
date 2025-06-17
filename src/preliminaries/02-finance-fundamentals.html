@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Finance Fundamentals: Valuations Demystified</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="02-finance-fundamentals_files/libs/clipboard/clipboard.min.js"></script>
+<script src="02-finance-fundamentals_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="02-finance-fundamentals_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="02-finance-fundamentals_files/libs/quarto-html/popper.min.js"></script>
+<script src="02-finance-fundamentals_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="02-finance-fundamentals_files/libs/quarto-html/anchor.min.js"></script>
+<link href="02-finance-fundamentals_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="02-finance-fundamentals_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="02-finance-fundamentals_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="02-finance-fundamentals_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="02-finance-fundamentals_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Finance Fundamentals: Valuations Demystified</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="finance-fundamentals-valuations-demystified" class="level1">
+<h1>Finance Fundamentals: Valuations Demystified</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Welcome to “Finance Fundamentals: Valuations Demystified” - your friendly guide to understanding the core concepts of business valuation. Whether you’re new to finance or looking for a refresher, this guide will equip you with the essential knowledge needed for our LLMs in Finance course.</p>
+</section>
+<section id="the-foundations-financial-statements" class="level2">
+<h2 class="anchored" data-anchor-id="the-foundations-financial-statements">1. The Foundations: Financial Statements</h2>
+<p>Before diving into valuation methods, let’s establish a solid understanding of the three primary financial statements:</p>
+<section id="income-statement-the-profit-journey" class="level3">
+<h3 class="anchored" data-anchor-id="income-statement-the-profit-journey">Income Statement: The Profit Journey</h3>
+<p>The income statement shows a company’s revenues, expenses, and profits over a specific period:</p>
+<pre><code>Revenue (or Sales)
+- Cost of Goods Sold (COGS)
+= Gross Profit
+- Operating Expenses (SG&amp;A, R&amp;D, etc.)
+= Operating Income (EBIT)
+- Interest Expense
+= Pre-tax Income
+- Taxes
+= Net Income</code></pre>
+<p><strong>Key metrics:</strong> - <strong>Gross Margin</strong> = Gross Profit / Revenue - <strong>Operating Margin</strong> = Operating Income / Revenue - <strong>Net Profit Margin</strong> = Net Income / Revenue</p>
+</section>
+<section id="balance-sheet-the-financial-snapshot" class="level3">
+<h3 class="anchored" data-anchor-id="balance-sheet-the-financial-snapshot">Balance Sheet: The Financial Snapshot</h3>
+<p>The balance sheet provides a snapshot of what a company owns (assets), what it owes (liabilities), and shareholder equity at a specific point in time:</p>
+<pre><code>Assets = Liabilities + Shareholders' Equity</code></pre>
+<p><strong>Key components:</strong> - <strong>Assets</strong>: Cash, Accounts Receivable, Inventory, Property &amp; Equipment, Intangible Assets - <strong>Liabilities</strong>: Accounts Payable, Debt (Short-term and Long-term) - <strong>Shareholders’ Equity</strong>: Common Stock, Retained Earnings</p>
+</section>
+<section id="cash-flow-statement-following-the-money" class="level3">
+<h3 class="anchored" data-anchor-id="cash-flow-statement-following-the-money">Cash Flow Statement: Following the Money</h3>
+<p>The cash flow statement tracks the inflows and outflows of cash across three categories:</p>
+<ol type="1">
+<li><strong>Operating Activities</strong>: Cash generated from core business operations</li>
+<li><strong>Investing Activities</strong>: Cash used for long-term asset investments</li>
+<li><strong>Financing Activities</strong>: Cash from investors and creditors, and payments to shareholders</li>
+</ol>
+<p><strong>Key insight</strong>: A company can be profitable on paper (income statement) but still face cash flow problems!</p>
+</section>
+</section>
+<section id="discounted-cash-flow-dcf-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="discounted-cash-flow-dcf-analysis">2. Discounted Cash Flow (DCF) Analysis</h2>
+<p>DCF is the gold standard of valuation methods, based on the principle that a business’s value is the sum of all its future cash flows, discounted to present value.</p>
+<section id="the-dcf-formula" class="level3">
+<h3 class="anchored" data-anchor-id="the-dcf-formula">The DCF Formula</h3>
+<p>The formula for calculating the present value of future cash flows is:</p>
+<p><span class="math display">\[PV = \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} + \frac{TV}{(1+r)^n}\]</span></p>
+<p>Where: - <span class="math inline">\(PV\)</span> = Present Value - <span class="math inline">\(CF_t\)</span> = Cash Flow in period t - <span class="math inline">\(r\)</span> = Discount Rate (often WACC) - <span class="math inline">\(TV\)</span> = Terminal Value - <span class="math inline">\(n\)</span> = Forecast Period</p>
+</section>
+<section id="step-1-forecast-free-cash-flows-fcf" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-forecast-free-cash-flows-fcf">Step 1: Forecast Free Cash Flows (FCF)</h3>
+<p>Free Cash Flow represents the cash a company generates after accounting for capital expenditures:</p>
+<p><span class="math display">\[FCF = EBIT \times (1 - \text{Tax Rate}) + \text{Depreciation} - \text{Capital Expenditures} - \Delta \text{Working Capital}\]</span></p>
+<p>Typically, we forecast detailed cash flows for 5-10 years.</p>
+</section>
+<section id="step-2-calculate-terminal-value" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-calculate-terminal-value">Step 2: Calculate Terminal Value</h3>
+<p>Terminal value represents all cash flows beyond the forecast period, calculated using either:</p>
+<p><strong>Perpetuity Growth Method:</strong> <span class="math display">\[TV = \frac{FCF_{n+1}}{r - g}\]</span></p>
+<p>Where <span class="math inline">\(g\)</span> is the perpetual growth rate (often 2-3%)</p>
+<p><strong>Exit Multiple Method:</strong> <span class="math display">\[TV = FCF_n \times \text{Terminal Multiple}\]</span></p>
+<p>Where the Terminal Multiple is often based on EV/EBITDA.</p>
+</section>
+<section id="step-3-discount-to-present-value" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-discount-to-present-value">Step 3: Discount to Present Value</h3>
+<p>Calculate the present value of projected cash flows using an appropriate discount rate, typically the Weighted Average Cost of Capital (WACC):</p>
+<p><span class="math display">\[WACC = E/(D+E) \times R_e + D/(D+E) \times R_d \times (1 - T)\]</span></p>
+<p>Where: - <span class="math inline">\(E\)</span> = Market value of equity - <span class="math inline">\(D\)</span> = Market value of debt - <span class="math inline">\(R_e\)</span> = Cost of equity (often calculated using CAPM) - <span class="math inline">\(R_d\)</span> = Cost of debt - <span class="math inline">\(T\)</span> = Tax rate</p>
+</section>
+<section id="step-4-calculate-enterprise-value-and-equity-value" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-calculate-enterprise-value-and-equity-value">Step 4: Calculate Enterprise Value and Equity Value</h3>
+<p><span class="math display">\[\text{Enterprise Value (EV)} = \sum \text{PV of FCFs} + \text{PV of Terminal Value}\]</span></p>
+<p><span class="math display">\[\text{Equity Value} = \text{Enterprise Value} - \text{Net Debt} + \text{Non-operating Assets}\]</span></p>
+<p><span class="math display">\[\text{Share Price} = \text{Equity Value} / \text{Shares Outstanding}\]</span></p>
+</section>
+<section id="example-simple-dcf-calculation" class="level3">
+<h3 class="anchored" data-anchor-id="example-simple-dcf-calculation">Example: Simple DCF Calculation</h3>
+<p>Let’s walk through a simplified example:</p>
+<p>Assumptions: - Year 1 FCF: $100 million - Growth rate: 5% for years 2-5, then 2% terminal growth - Discount rate (WACC): 10% - Shares outstanding: 50 million</p>
+<p>FCF Projections: - Year 1: $100 million - Year 2: $105 million - Year 3: $110.25 million - Year 4: $115.76 million - Year 5: $121.55 million</p>
+<p>Terminal value: <span class="math display">\[TV = \frac{121.55 \times (1 + 0.02)}{0.10 - 0.02} = \frac{124}{0.08} = $1,550 \text{ million}\]</span></p>
+<p>Present values (in $millions): - Year 1: $100 / 1.1 = <span class="math inline">\(90.91\)</span> - Year 2: $105 / 1.1^2 = <span class="math inline">\(86.78\)</span> - Year 3: $110.25 / 1.1^3 = <span class="math inline">\(82.82\)</span> - Year 4: $115.76 / 1.1^4 = <span class="math inline">\(79.02\)</span> - Year 5: $121.55 / 1.1^5 = <span class="math inline">\(75.47\)</span> - Terminal value: $1,550 / 1.1^5 = <span class="math inline">\(962.14\)</span></p>
+<p>Enterprise Value: $90.91 + $86.78 + $82.82 + $79.02 + $75.47 + $962.14 = $1,377.14 million</p>
+<p>If net debt is $177.14 million, then: Equity Value = $1,377.14 - $177.14 = $1,200 million</p>
+<p>Share price = $1,200 million / 50 million shares = $24 per share</p>
+</section>
+</section>
+<section id="multiple-valuation-methods" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-valuation-methods">3. Multiple Valuation Methods</h2>
+<p>Multiple-based valuation compares a company to similar companies using standardized valuation ratios.</p>
+<section id="common-valuation-multiples" class="level3">
+<h3 class="anchored" data-anchor-id="common-valuation-multiples">Common Valuation Multiples</h3>
+<section id="enterprise-value-ev-multiples" class="level4">
+<h4 class="anchored" data-anchor-id="enterprise-value-ev-multiples">Enterprise Value (EV) Multiples</h4>
+<ul>
+<li><strong>EV/EBITDA</strong>: Enterprise Value / Earnings Before Interest, Taxes, Depreciation &amp; Amortization
+<ul>
+<li>Typical ranges: 5-8x (mature), 8-12x (growing), 12x+ (high growth)</li>
+</ul></li>
+<li><strong>EV/Revenue</strong>: Enterprise Value / Revenue
+<ul>
+<li>Useful for pre-profit companies</li>
+<li>Typical ranges: 1-3x (mature), 3-6x (growing), 6x+ (high growth)</li>
+</ul></li>
+<li><strong>EV/EBIT</strong>: Enterprise Value / Earnings Before Interest &amp; Taxes</li>
+</ul>
+</section>
+<section id="equity-multiples" class="level4">
+<h4 class="anchored" data-anchor-id="equity-multiples">Equity Multiples</h4>
+<ul>
+<li><strong>P/E Ratio</strong>: Price per Share / Earnings per Share
+<ul>
+<li>Typical ranges: 10-15x (value), 15-25x (growth), 25x+ (high growth)</li>
+</ul></li>
+<li><strong>P/B Ratio</strong>: Price per Share / Book Value per Share
+<ul>
+<li>Useful for financial institutions</li>
+</ul></li>
+<li><strong>P/S Ratio</strong>: Price per Share / Sales per Share</li>
+</ul>
+</section>
+</section>
+<section id="example-valuing-a-company-using-multiples" class="level3">
+<h3 class="anchored" data-anchor-id="example-valuing-a-company-using-multiples">Example: Valuing a Company Using Multiples</h3>
+<p>For a company with: - EBITDA of $50 million - Net income of $25 million - 10 million shares outstanding</p>
+<p>If comparable companies trade at: - EV/EBITDA of 8x - P/E of 15x</p>
+<p>Then: - EV = $50 million × 8 = $400 million - If net debt is $100 million, Equity Value = $400 million - $100 million = $300 million - Share price = $300 million / 10 million shares = $30 per share</p>
+<p>OR: - Share price = $25 million × 15 / 10 million shares = $37.5 per share</p>
+<p>The difference between the two methods indicates potential mispricing or different growth expectations.</p>
+</section>
+</section>
+<section id="key-accounting-concepts-for-valuation" class="level2">
+<h2 class="anchored" data-anchor-id="key-accounting-concepts-for-valuation">4. Key Accounting Concepts for Valuation</h2>
+<section id="accrual-vs.-cash-accounting" class="level3">
+<h3 class="anchored" data-anchor-id="accrual-vs.-cash-accounting">Accrual vs.&nbsp;Cash Accounting</h3>
+<ul>
+<li><strong>Accrual Accounting</strong>: Recognizes revenue when earned and expenses when incurred</li>
+<li><strong>Cash Accounting</strong>: Recognizes revenue and expenses only when cash changes hands</li>
+</ul>
+<p>Financial statements use accrual accounting, but cash flow is what matters for valuation!</p>
+</section>
+<section id="ebitda-vs.-net-income" class="level3">
+<h3 class="anchored" data-anchor-id="ebitda-vs.-net-income">EBITDA vs.&nbsp;Net Income</h3>
+<ul>
+<li><strong>EBITDA</strong>: Operating performance before capital structure, tax strategies, and capex decisions</li>
+<li><strong>Net Income</strong>: Bottom-line profit after all expenses, taxes, and accounting adjustments</li>
+</ul>
+<p>EBITDA is often preferred for valuation as it’s more comparable across companies with different capital structures.</p>
+</section>
+<section id="working-capital" class="level3">
+<h3 class="anchored" data-anchor-id="working-capital">Working Capital</h3>
+<p>Working capital represents the operational liquidity of a business:</p>
+<p><span class="math display">\[\text{Working Capital} = \text{Current Assets} - \text{Current Liabilities}\]</span></p>
+<p>Changes in working capital impact free cash flow: - Increasing working capital requirements = Cash outflow - Decreasing working capital requirements = Cash inflow</p>
+</section>
+</section>
+<section id="advanced-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="advanced-concepts">5. Advanced Concepts</h2>
+<section id="adjusting-for-non-recurring-items" class="level3">
+<h3 class="anchored" data-anchor-id="adjusting-for-non-recurring-items">Adjusting for Non-Recurring Items</h3>
+<p>When valuing a company, it’s important to adjust for one-time or unusual items: - Restructuring charges - Litigation settlements - Asset impairments - Gains/losses from asset sales</p>
+<p>These should be excluded when forecasting future performance.</p>
+</section>
+<section id="growth-vs.-value" class="level3">
+<h3 class="anchored" data-anchor-id="growth-vs.-value">Growth vs.&nbsp;Value</h3>
+<p>Two fundamental approaches to valuation: - <strong>Growth investing</strong>: Focuses on future potential, often using revenue multiples or DCF with aggressive growth assumptions - <strong>Value investing</strong>: Focuses on current fundamentals and looks for discrepancies between market price and intrinsic value</p>
+</section>
+<section id="the-role-of-industry-specific-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="the-role-of-industry-specific-metrics">The Role of Industry-Specific Metrics</h3>
+<p>Different industries may have unique valuation metrics: - <strong>SaaS</strong>: Annual Recurring Revenue (ARR), Customer Acquisition Cost (CAC), Lifetime Value (LTV) - <strong>Retail</strong>: Same-store sales, sales per square foot - <strong>Banking</strong>: Net Interest Margin, Loan-to-Deposit Ratio - <strong>Insurance</strong>: Combined Ratio, Loss Ratio</p>
+</section>
+</section>
+<section id="how-llms-are-changing-valuation" class="level2">
+<h2 class="anchored" data-anchor-id="how-llms-are-changing-valuation">6. How LLMs Are Changing Valuation</h2>
+<p>As we transition into the main course material, consider these ways LLMs are impacting financial analysis:</p>
+<ol type="1">
+<li><strong>Sentiment Analysis</strong>: Extracting market sentiment from news, social media, and earnings calls</li>
+<li><strong>Financial Statement Analysis</strong>: Automating the extraction and analysis of financial data</li>
+<li><strong>Comparable Company Selection</strong>: Identifying truly comparable companies based on business models</li>
+<li><strong>Forecast Generation</strong>: Creating and stress-testing financial projections</li>
+<li><strong>Valuation Report Writing</strong>: Generating comprehensive valuation reports with key insights</li>
+</ol>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This guide has covered the fundamental concepts of business valuation that will serve as a foundation for our exploration of LLMs in finance. Remember that valuation is both an art and a science—financial models provide a framework, but judgment and context remain critically important.</p>
+</section>
+<section id="further-resources" class="level2">
+<h2 class="anchored" data-anchor-id="further-resources">Further Resources</h2>
+<ul>
+<li><a href="http://pages.stern.nyu.edu/~adamodar/">Damodaran Online</a> - Professor Aswath Damodaran’s extensive resources on valuation</li>
+<li><a href="https://financialmodelingprep.com/">Financial Modeling Prep</a> - Financial statements and data</li>
+<li><a href="https://www.cfainstitute.org/">CFA Institute</a> - Educational resources on equity valuation</li>
+<li><a href="https://www.investopedia.com/">Investopedia</a> - Explanations of financial concepts</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

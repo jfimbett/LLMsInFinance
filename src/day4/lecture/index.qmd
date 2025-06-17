@@ -1,0 +1,56 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\index.qmd
+---
+title: "Day 4: Advanced Financial Applications of LLMs"
+format: html
+---
+
+# Day 4: Advanced Financial Applications of LLMs
+
+## Overview
+
+Today's lectures focus on advanced applications of LLMs in finance, with special emphasis on credit risk assessment, mathematical capabilities, probability calibration, and using transformer architectures beyond text for financial prediction tasks.
+
+## Today's Topics
+
+1. [Understanding Credit Risk with LLMs](01-understanding-credit-risk.html)
+   - Credit risk fundamentals
+   - Consumer and corporate credit assessment
+   - LLM applications in credit analysis
+   - Case studies and implementation considerations
+
+2. [Can LLMs Do Math?](02-llms-and-mathematics.html)
+   - Mathematical capabilities and limitations of LLMs
+   - Performance benchmarks and evaluation
+   - Prompt engineering for mathematical tasks
+   - Financial mathematics applications
+
+3. [Understanding Softmax Probabilities](03-softmax-probabilities.html)
+   - Softmax function fundamentals
+   - Calibration of model probabilities
+   - Translating to real-world probabilities
+   - Financial applications and case studies
+
+4. [Beyond Text: Transformers as Prediction Machines](04-beyond-text-transformers.html)
+   - Transformer applications beyond natural language
+   - Time series and tabular data modeling
+   - Multimodal financial applications
+   - Case studies in financial prediction
+
+## Learning Objectives
+
+By the end of today, you will be able to:
+
+- Understand how LLMs can enhance credit risk assessment
+- Evaluate the mathematical capabilities of LLMs and apply them to financial problems
+- Interpret and calibrate softmax probabilities for real-world applications
+- Leverage transformer architectures for financial prediction tasks beyond text
+
+## Practical Applications
+
+Today's lectures will prepare you for the practical session, where you will:
+
+- Fine-tune a model to assess default probabilities
+- Simulate complex household decisions with LLMs
+- Develop an application that estimates mortgage rates based on client profiles
+```

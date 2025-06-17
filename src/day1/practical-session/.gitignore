@@ -1,0 +1,46 @@
+# Environment variables
+.env
+
+# Python virtual environment
+venv/
+env/
+.venv/
+.env/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Log files
+*.log
+
+# API key files
+*_key.txt
+*_api_key.txt
+*_secret.txt
+
+# Model weights (can be large)
+*.gguf
+*.bin
+*.pt
+*.pth
+*.onnx
+
+# Output files generated during notebook execution
+output/
+results/
+
+# macOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db

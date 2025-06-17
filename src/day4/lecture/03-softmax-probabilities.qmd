@@ -1,0 +1,455 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\03-softmax-probabilities.qmd
+---
+title: "Understanding Softmax Probabilities"
+format: html
+---
+
+# Understanding Softmax Probabilities
+
+## Softmax Function Fundamentals
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Definition and purpose**:
+  - Converts raw model scores (logits) to probabilities
+  - Ensures outputs sum to 1.0
+  - Maintains relative ordering of inputs
+  - Creates a proper probability distribution
+  
+- **Mathematical formulation**:
+  - $P(y_i) = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}$
+  - $z_i$ is the logit (raw score) for class $i$
+  - $K$ is the total number of classes
+  - $P(y_i)$ is the probability of class $i$
+  
+- **Properties**:
+  - Outputs in range [0, 1]
+  - Sum of outputs equals 1
+  - Preserves rank ordering of inputs
+  - Non-linear transformation
+  - Differentiable (important for training)
+:::
+
+::: {.column width="40%"}
+```python
+import numpy as np
+
+def softmax(logits):
+    """Convert logits to probabilities using softmax"""
+    # Subtract max for numerical stability
+    exp_logits = np.exp(logits - np.max(logits))
+    # Calculate softmax values
+    return exp_logits / np.sum(exp_logits)
+
+# Example logits
+logits = np.array([2.0, 1.0, 0.1])
+probs = softmax(logits)
+print(f"Logits: {logits}")
+print(f"Probabilities: {probs}")
+print(f"Sum of probabilities: {np.sum(probs)}")
+
+# Output:
+# Logits: [2.  1.  0.1]
+# Probabilities: [0.659, 0.243, 0.098]
+# Sum of probabilities: 1.0
+```
+:::
+
+::::
+
+## Softmax in Neural Networks
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Role in classification models**:
+  - Final layer activation function
+  - Converts network outputs to class probabilities
+  - Used with cross-entropy loss function
+  - Enables probabilistic interpretation
+  
+- **Common applications**:
+  - Multi-class classification
+  - Token prediction in language models
+  - Entity type classification
+  - Topic modeling
+  - Sentiment analysis
+  
+- **Gradient properties**:
+  - Simple derivative form
+  - Well-behaved gradients
+  - Compatible with backpropagation
+  - Stable with appropriate scaling
+:::
+
+::: {.column width="40%"}
+![Softmax in Neural Networks](../../images/softmax_nn.png)
+:::
+
+::::
+
+## Interpreting Softmax Outputs
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Probability vs. confidence**:
+  - Not true probabilities in Bayesian sense
+  - Relative preference between classes
+  - Influenced by model architecture
+  - Affected by training data distribution
+  
+- **Typical behavior patterns**:
+  - Overconfidence in standard models
+  - Concentration on few classes
+  - Sensitivity to input perturbations
+  - Correlation with prediction accuracy
+  
+- **Shape characteristics**:
+  - Peakedness for confident predictions
+  - Uniform distribution for uncertainty
+  - Bimodal for ambiguous cases
+  - Long tail distributions
+:::
+
+::: {.column width="40%"}
+```
+Example softmax distributions:
+
+High Confidence:
+[0.92, 0.05, 0.02, 0.01]
+- Strong peak on one class
+- Very low probabilities for others
+- Often seen with clear examples
+
+Medium Confidence:
+[0.65, 0.25, 0.07, 0.03]
+- Dominant class but viable alternatives
+- Second highest probability non-negligible
+- Common in partially ambiguous inputs
+
+Low Confidence/Uncertain:
+[0.35, 0.30, 0.20, 0.15]
+- Flatter distribution
+- Multiple plausible classes
+- Indicates model uncertainty
+- May suggest out-of-distribution input
+```
+:::
+
+::::
+
+## Calibration of Softmax Probabilities
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Calibration challenges**:
+  - Raw softmax outputs often miscalibrated
+  - Overconfidence in neural networks
+  - Distribution shifts from training data
+  - Task complexity effects
+  
+- **Evaluation methods**:
+  - Reliability diagrams
+  - Expected calibration error (ECE)
+  - Brier score
+  - Proper scoring rules
+  
+- **Calibration techniques**:
+  - Temperature scaling
+  - Platt scaling
+  - Isotonic regression
+  - Ensemble methods
+  - Bayesian approaches
+:::
+
+::: {.column width="40%"}
+```python
+# Temperature scaling example
+def temperature_scaling(logits, T=1.0):
+    """Apply temperature scaling to logits"""
+    return softmax(logits / T)
+
+# Original logits
+logits = np.array([8.0, 2.0, 0.0, -2.0])
+
+# Uncalibrated (standard softmax)
+uncalibrated = softmax(logits)
+print(f"Uncalibrated: {uncalibrated}")
+# [0.996, 0.003, 0.000, 0.000]
+
+# Calibrated with T=2.0 (higher T = softer)
+calibrated = temperature_scaling(logits, T=2.0)
+print(f"Calibrated (T=2.0): {calibrated}")
+# [0.952, 0.034, 0.008, 0.006]
+
+# Calibrated with T=3.0 (even softer)
+calibrated = temperature_scaling(logits, T=3.0)
+print(f"Calibrated (T=3.0): {calibrated}")
+# [0.877, 0.080, 0.029, 0.014]
+```
+:::
+
+::::
+
+## From Softmax to Real-World Probabilities
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Bridging the gap**:
+  - Softmax outputs ≠ true probabilities
+  - Need for proper calibration
+  - Domain adaptation requirements
+  - Real-world frequency alignment
+  
+- **Translation approaches**:
+  - Empirical validation with historical data
+  - Bayesian updates with domain knowledge
+  - Adjustment for class imbalance
+  - Alignment with observed frequencies
+  
+- **Domain-specific considerations**:
+  - Base rates in target population
+  - Cost matrix for different error types
+  - Temporal consistency requirements
+  - Regulatory compliance factors
+:::
+
+::: {.column width="40%"}
+```
+Credit Default Example:
+
+LLM predicts probability of default:
+- Raw softmax: [0.15, 0.85] for [Default, Non-default]
+- Historical default rate: 3%
+
+Calibration process:
+1. Calculate calibration factor from historical data
+2. Adjust raw probabilities using Bayes' rule
+3. Incorporate risk factors specific to customer
+4. Apply business-specific threshold criteria
+5. Produce final calibrated default probability: 7%
+
+The 7% represents a real-world probability
+that aligns with observed frequencies while
+incorporating the signal from the model.
+```
+:::
+
+::::
+
+## Financial Applications of Softmax Probabilities
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Credit risk modeling**:
+  - Default probability estimation
+  - Risk tier classification
+  - Early warning systems
+  - Collection prioritization
+  
+- **Market prediction**:
+  - Directional movement probabilities
+  - Regime change detection
+  - Volatility state prediction
+  - Trading signal generation
+  
+- **Investment management**:
+  - Asset allocation probabilities
+  - Sector rotation signals
+  - Style factor exposure predictions
+  - Manager selection assessments
+:::
+
+::: {.column width="40%"}
+- **Insurance applications**:
+  - Claim frequency prediction
+  - Fraud detection probabilities
+  - Risk classification
+  - Premium optimization
+  
+- **Banking operations**:
+  - Customer churn prediction
+  - Cross-sell opportunity scoring
+  - Transaction fraud probability
+  - Branch traffic forecasting
+  
+- **Corporate finance**:
+  - M&A success probability
+  - Financing round completion likelihood
+  - Covenant breach prediction
+  - Bankruptcy risk assessment
+:::
+
+::::
+
+## Case Study: Credit Default Prediction
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Model architecture**:
+  - BERT-based text encoder
+  - Financial features integration
+  - Classification head with softmax
+  - Calibration layer
+  
+- **Input data**:
+  - Loan application text
+  - Credit bureau features
+  - Transaction history
+  - Employment information
+  
+- **Interpretation framework**:
+  - Raw softmax output analysis
+  - Probability calibration process
+  - Feature attribution methods
+  - Confidence interval estimation
+  
+- **Performance metrics**:
+  - AUC-ROC: 0.89
+  - Precision/Recall balance
+  - Expected calibration error: 0.02
+  - Profit per loan increase: 15%
+:::
+
+::: {.column width="40%"}
+```
+Example credit application analysis:
+
+Input: "Looking to consolidate $12k in credit 
+card debt. Recently changed jobs from retail 
+to tech support with 20% salary increase. 
+Some late payments last year during unemployment
+but current on all obligations for past 6 months."
+
+Model process:
+1. Text encoding with BERT → semantic representation
+2. Combine with credit score (680) and DTI (35%)
+3. Classification head produces logits: [1.2, 2.8]
+4. Raw softmax: [0.18, 0.82] for [Default, Non-default]
+5. Calibration adjustment based on loan type
+6. Final default probability: 22%
+7. Decision: Approve with risk-based pricing
+```
+:::
+
+::::
+
+## Implementation Challenges and Best Practices
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Numerical stability**:
+  - Logit scaling for precision
+  - Log-sum-exp trick implementation
+  - Handling extreme values
+  - Precision in probability calculations
+  
+- **Calibration workflow**:
+  - Regular recalibration schedule
+  - Population drift monitoring
+  - Segmented calibration approach
+  - Validation with recent data
+  
+- **Interpretability techniques**:
+  - Probability explanation methods
+  - Confidence interval communication
+  - Risk factor attribution
+  - Scenario-based explanation
+:::
+
+::: {.column width="40%"}
+- **Integration considerations**:
+  - Decision threshold optimization
+  - Business rule alignment
+  - Human oversight mechanisms
+  - Feedback loops for improvement
+  
+- **Regulatory requirements**:
+  - Model documentation standards
+  - Fairness and bias assessment
+  - Adverse action compliance
+  - Probability disclosure policies
+  
+- **Evaluation framework**:
+  - Calibration metrics tracking
+  - Segment-specific performance
+  - Temporal stability measurement
+  - Business impact assessment
+:::
+
+::::
+
+## Beyond Classification: Advanced Probability Modeling
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Hierarchical softmax**:
+  - Tree-structured probability distribution
+  - Efficient for large output spaces
+  - Natural for taxonomic classifications
+  - Computational advantages
+  
+- **Mixture density networks**:
+  - Predicting distribution parameters
+  - Handling multimodal outcomes
+  - Uncertainty quantification
+  - Full probability distributions
+  
+- **Energy-based models**:
+  - Alternative to softmax formulation
+  - Flexible dependency modeling
+  - Joint probability distributions
+  - Complex constraint satisfaction
+:::
+
+::: {.column width="40%"}
+```python
+# Example of mixture density network output
+# for stock return prediction
+
+# Model outputs parameters for mixture of Gaussians
+means = [-0.02, 0.01, 0.03]  # Component means
+stds = [0.01, 0.02, 0.015]   # Component std devs
+weights = [0.25, 0.5, 0.25]  # Component weights
+
+# Calculate probability density at any point
+def mixture_density(x, means, stds, weights):
+    """Compute PDF for Gaussian mixture"""
+    from scipy.stats import norm
+    components = [w * norm.pdf(x, loc=m, scale=s) 
+                 for w, m, s in zip(weights, means, stds)]
+    return sum(components)
+
+# Probability of return > 2%
+# (requires numerical integration in practice)
+probability_above_2pct = 0.32
+
+# Most likely return (mode of distribution)
+most_likely_return = 0.01  # (1%)
+
+# 90% confidence interval
+confidence_interval = [-0.035, 0.045]
+```
+:::
+
+::::
+
+## Future Directions
+
+- **Uncertainty-aware softmax**: Better handling of epistemic uncertainty
+- **Adaptive calibration**: Context-dependent probability adjustments
+- **Explainable probabilities**: Transparent softmax interpretation
+- **Multi-resolution probabilities**: Different granularity for different needs
+- **Domain-specific calibration**: Financial risk-aligned probability modeling
+- **Causal probability models**: Intervention-aware probability estimates
+- **Temporal probability modeling**: Time-varying confidence estimation
+```

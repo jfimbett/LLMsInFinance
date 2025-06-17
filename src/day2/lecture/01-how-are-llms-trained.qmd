@@ -10,10 +10,11 @@
 - Training infrastructure: thousands of GPUs/TPUs
 - Computational costs: millions of dollars
 - Examples: Common Crawl, Books, Wikipedia, Code repositories
+- Financial data: SEC filings, financial reports, news, research
 :::
 
 ::: {.column width="40%"}
-![LLM Training Process](images/llm_training_placeholder.png)
+![LLM Training Process](../../images/transformer_baby.png)
 :::
 
 ::::
@@ -26,9 +27,81 @@
 - Domain adaptation for finance (SEC filings, financial news)
 - Distillation techniques for smaller, efficient models
 
+## Transfer Learning in LLMs
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Definition**: Leveraging knowledge from one task to improve performance on another
+- **Pre-trained foundation**: General language understanding and generation
+- **Adaptation methods**:
+  - Parameter-efficient fine-tuning (PEFT)
+  - LoRA (Low-Rank Adaptation)
+  - Prompt tuning
+- **Financial applications**: Adapting general LLMs to financial jargon, regulations, and reporting formats
+:::
+
+::: {.column width="40%"}
+![Transfer Learning](../../images/transformers1.png)
+:::
+
+::::
+
+## Knowledge Distillation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Teacher-student paradigm**: Large model trains smaller model
+- **Methods**:
+  - Response-based: Student mimics teacher's final outputs
+  - Feature-based: Student mimics intermediate representations
+  - Relation-based: Student preserves relationships between examples
+- **Benefits**: Reduced size, faster inference, lower deployment costs
+- **Financial applications**: Deployment in regulatory-compliant environments, mobile financial applications
+:::
+
+::: {.column width="40%"}
+![Knowledge Distillation](../../images/attention_abstract.png)
+:::
+
+::::
+
+## Reasoning Models vs. Standard LLMs
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Standard LLMs**: 
+  - Pattern recognition and completion
+  - Optimized for fluency and factual recall
+  - Strong at retrieval tasks
+- **Reasoning-enhanced LLMs**:
+  - Chain-of-thought and step-by-step problem solving
+  - RLHF with emphasis on logical consistency
+  - Training with mathematical and logical datasets
+  - Fine-tuned for financial analysis and complex decision-making
+:::
+
+::: {.column width="40%"}
+- **Key differences**:
+  - Training objectives
+  - Evaluation metrics
+  - Prompting techniques
+  - Explicit reasoning steps
+  - Architectural enhancements
+:::
+
+::::
+
 ## Key Training Innovations
 
 - Mixed precision training
+- Distributed training across thousands of GPUs
+- Gradient accumulation for larger effective batch sizes
+- Curriculum learning (from simple to complex tasks)
+- Instruction tuning for better alignment with human preferences
+- Finance-specific innovations: regulatory compliance training, risk assessment optimization
 - Efficient attention mechanisms
 - Parallelization strategies (data, model, pipeline)
 - Optimizers designed for large models (AdamW, Lion)
@@ -49,3 +122,80 @@
 - Continuous pre-training on recent data
 - Multimodal training incorporating market data
 - Parameter-efficient fine-tuning methods (LoRA, P-tuning)
+
+## Reasoning Capabilities: Beyond Pattern Recognition
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Chain-of-Thought (CoT)**: Step-by-step reasoning through prompting
+- **Tree of Thoughts (ToT)**: Exploring multiple reasoning paths
+- **ReAct**: Reasoning and acting framework combining thinking and action
+- **Self-consistency**: Generating multiple reasoning paths and taking majority vote
+- **Verification**: Training models to verify their own reasoning steps
+- **Mathematical capabilities**: Training on specialized datasets with explicit steps
+:::
+
+::: {.column width="40%"}
+![Reasoning Process](../../images/transformers2.png)
+:::
+
+::::
+
+## Training Models for Financial Reasoning
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Financial datasets**:
+  - Earnings reports with analysis steps
+  - Investment decision case studies
+  - Regulatory compliance reasoning
+  - Risk assessment scenarios
+- **Training techniques**:
+  - Supervised examples with annotated reasoning steps
+  - Synthetic data generation for rare financial scenarios
+  - Expert demonstrations of financial analysis workflows
+  - Curriculum learning from simple to complex financial problems
+:::
+
+::: {.column width="40%"}
+- **Key applications**:
+  - Credit risk assessment
+  - Fraud detection explanation
+  - Portfolio optimization reasoning
+  - Merger & acquisition analysis
+  - Regulatory compliance validation
+  - Financial forecasting with uncertainty quantification
+:::
+
+::::
+
+## Evaluation of Reasoning Capabilities
+
+- **Benchmark datasets**:
+  - GSM8K and MATH for mathematical reasoning
+  - FinQA for financial question answering
+  - Financial analysis tasks with ground truth reasoning paths
+- **Metrics beyond accuracy**:
+  - Logical consistency
+  - Step validity
+  - Uncertainty calibration
+  - Alignment with expert reasoning processes
+- **Human evaluation protocols**: Financial expert validation of reasoning paths
+- **Stress testing**: Adversarial examples to identify reasoning failures
+
+## Practical Implementation Considerations
+
+- **Prompt engineering** for financial reasoning:
+  - Zero-shot CoT: "Let's think step by step..."
+  - Few-shot demonstrations of financial analysis
+  - Structured reasoning templates for specific tasks
+- **Computing requirements** for inference:
+  - Longer context windows for complex reasoning
+  - Higher token generation for multi-step explanations
+  - Memory constraints for tracking reasoning state
+- **Hybrid approaches**:
+  - Combining LLM reasoning with classical financial models
+  - Integrating external tools (calculators, databases, APIs)
+  - Human-in-the-loop validation for critical decisions

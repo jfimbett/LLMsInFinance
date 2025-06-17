@@ -1,0 +1,56 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day5\lecture\index.qmd
+---
+title: "Day 5: Advanced LLM Applications in Finance"
+author: "Your Name"
+date: "2025-05-12"
+format:
+  html:
+    theme: cosmo
+    toc: true
+---
+
+# Day 5: Advanced LLM Applications in Finance
+
+## Overview
+
+In our final day, we explore cutting-edge applications of Large Language Models in finance, with a focus on:
+
+1. **Forecasting Financial Returns with LLMs**: We examine groundbreaking research by Alejandro López-Lira and others on using language models for stock return prediction and market analysis.
+
+2. **AI in Asset Management**: We investigate the potential and limitations of AI-managed portfolios, exploring the possibility of delegating investment decisions to AI agents.
+
+3. **Reinforcement Learning in LLMs**: We study how reinforcement learning techniques enhance LLMs' decision-making capabilities, with applications to financial strategy optimization.
+
+## Learning Objectives
+
+By the end of today's lectures, you will be able to:
+
+- Understand how LLMs can be used to forecast stock returns and identify market patterns
+- Evaluate the potential of AI-managed portfolios and associated challenges
+- Recognize the role of reinforcement learning in improving LLM performance for financial applications
+- Assess the current limitations and future potential of AI in finance
+
+## Schedule
+
+1. **Forecasting Financial Returns with LLMs**
+   - Research overview: López-Lira's work on LLMs and return prediction
+   - Textual analysis of financial news and its predictive power
+   - Recent developments and empirical evidence
+
+2. **AI in Asset Management**
+   - The evolution of quantitative investment strategies
+   - Current capabilities and limitations of AI portfolio managers
+   - Regulatory and ethical considerations
+   - Case studies and performance evaluation
+
+3. **Reinforcement Learning in LLMs**
+   - Fundamentals of reinforcement learning for LLMs
+   - Applications to financial decision-making
+   - RLHF (Reinforcement Learning from Human Feedback) in finance
+   - Implementation challenges and best practices
+
+## Conclusion of the Course
+
+This final day wraps up our exploration of LLMs in finance, looking toward future developments while grounding our understanding in current capabilities and limitations.
+```

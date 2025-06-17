@@ -1,0 +1,384 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\02-llms-and-mathematics.qmd
+---
+title: "Can LLMs Do Math? Mathematical Capabilities and Limitations"
+format: html
+---
+
+# Can LLMs Do Math?
+
+## Mathematical Capabilities of LLMs
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Evolution of mathematical ability**:
+  - Early models: Poor arithmetic skills
+  - GPT-3: Basic calculation improvement
+  - GPT-4: Enhanced mathematical reasoning
+  - Specialized models: Claude, Minerva, MathGPT
+  
+- **Performance across math domains**:
+  - Arithmetic: Increasingly reliable
+  - Algebra: Moderate capability
+  - Calculus: Variable performance
+  - Statistics: Surprisingly effective
+  - Proofs: Emerging capabilities
+:::
+
+::: {.column width="40%"}
+![Math Capabilities](../../images/math_llm.png)
+:::
+
+::::
+
+## How LLMs Process Mathematical Problems
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Token-based numerical representation**:
+  - Tokenization of numerical values
+  - Positional encoding limitations
+  - Non-native mathematical operations
+  
+- **Learning mathematical patterns**:
+  - Statistical associations from training data
+  - Simulation of mathematical procedures
+  - Pattern recognition in solutions
+  
+- **Reasoning approaches**:
+  - Chain-of-thought problem solving
+  - Decomposition of complex problems
+  - Self-verification techniques
+  - Explicit algorithm simulation
+:::
+
+::: {.column width="40%"}
+```
+Example of chain-of-thought calculation:
+
+Q: A bank account starts with $3,250 and
+earns 4.5% annual interest compounded
+monthly. How much will be in the account
+after 3 years?
+
+A: Let me solve this step by step:
+1) Monthly interest rate = 4.5% / 12 = 0.375%
+2) Number of months = 3 years × 12 = 36 months
+3) Using compound interest formula:
+   A = P(1 + r)^t
+   A = 3,250(1 + 0.00375)^36
+4) (1 + 0.00375)^36 = 1.1441
+5) 3,250 × 1.1441 = $3,718.33
+
+The account will have $3,718.33 after 3 years.
+```
+:::
+
+::::
+
+## Performance Benchmarks and Evaluation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Standard mathematical benchmarks**:
+  - GSM8K: Grade school math problems
+  - MATH: High school competition problems
+  - MMLU: Multitask language understanding
+  - HELM: Holistic evaluation framework
+  
+- **Performance metrics**:
+  - Accuracy on different problem types
+  - Consistency of correct solutions
+  - Error patterns and limitations
+  - Comparison to human performance
+  
+- **Key findings**:
+  - Rapid improvement in recent generations
+  - Problem complexity vs. accuracy correlation
+  - Chain-of-thought prompting impact
+  - Few-shot learning effectiveness
+:::
+
+::: {.column width="40%"}
+```
+Benchmark Performance (GPT-4 example):
+
+GSM8K (Grade School Math):
+- Zero-shot: 82% accuracy
+- Chain-of-thought: 92% accuracy
+
+MATH (Competition Math):
+- Zero-shot: 42% accuracy
+- Chain-of-thought: 68% accuracy
+
+Financial Math Problems:
+- Simple calculations: 95% accuracy
+- Time value of money: 88% accuracy
+- Derivatives pricing: 65% accuracy
+- Portfolio optimization: 48% accuracy
+```
+:::
+
+::::
+
+## Error Patterns and Limitations
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Common error categories**:
+  - Computational mistakes with large numbers
+  - Conceptual misunderstandings
+  - Procedural errors in multi-step problems
+  - Hallucination of incorrect formulas
+  - Confusion with similar mathematical concepts
+  
+- **Scale and complexity barriers**:
+  - Error rates increase with problem length
+  - Performance degrades with computational steps
+  - Consistent issues with large numbers
+  - Struggles with unconventional problem framing
+  
+- **Domain-specific challenges**:
+  - Financial calculations requiring precision
+  - Statistical concepts with subtle distinctions
+  - Multi-variable optimization problems
+  - Non-standard mathematical notation
+:::
+
+::: {.column width="40%"}
+```
+Example of calculation error:
+
+Q: If a bond with face value $1,000 has a
+coupon rate of 5.25% paid semi-annually
+and yields 4.8%, what is its price?
+
+Incorrect response:
+"The bond pays $52.50 annually, or $26.25
+semi-annually. Using the bond pricing formula
+with 5.25% coupon, 4.8% yield, and assuming
+10 years to maturity:
+Price = $1,025.82"
+
+Correct calculation should yield $1,038.21
+(Error due to miscalculating present value
+of payment stream)
+```
+:::
+
+::::
+
+## Prompt Engineering for Mathematical Tasks
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Effective prompting strategies**:
+  - Explicit step-by-step instructions
+  - Requesting intermediate calculations
+  - Few-shot examples with similar problems
+  - Self-verification prompting
+  - Multiple solution paths
+  
+- **Chain-of-thought techniques**:
+  - Breaking down complex problems
+  - Showing working explicitly
+  - Verification after each step
+  - Final answer validation
+  
+- **Specialized mathematical prompts**:
+  - Explicit formula specification
+  - Units and precision requirements
+  - Error checking procedures
+  - Solution format standardization
+:::
+
+::: {.column width="40%"}
+```
+Improved prompt example:
+
+"Calculate the present value of a 5-year bond
+with:
+- Face value: $1,000
+- Annual coupon rate: 4.5%
+- Coupon payments: Semi-annual
+- Yield to maturity: 5.2%
+
+Please:
+1. Calculate the semi-annual coupon payment
+2. Determine the discount rate per period
+3. Calculate PV of all coupon payments
+4. Calculate PV of the principal repayment
+5. Sum the present values for the bond price
+6. Round to the nearest cent ($0.01)
+7. Verify your calculation with an alternative
+   approach if possible"
+```
+:::
+
+::::
+
+## Financial Mathematics Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Valuation calculations**:
+  - Discounted cash flow analysis
+  - Option pricing models
+  - Bond valuation and duration
+  - Mortgage payment calculations
+  
+- **Risk assessment computations**:
+  - Value at Risk (VaR) calculations
+  - Portfolio variance and correlation
+  - Credit risk modeling
+  - Insurance premium determination
+  
+- **Investment analytics**:
+  - Return metrics (IRR, CAGR, TWR)
+  - Performance attribution
+  - Factor analysis computations
+  - Scenario analysis calculations
+:::
+
+::: {.column width="40%"}
+- **Financial planning**:
+  - Retirement savings projections
+  - Education funding calculations
+  - Tax optimization modeling
+  - Estate planning scenarios
+  
+- **Algorithmic trading**:
+  - Technical indicator calculation
+  - Statistical arbitrage models
+  - Trading signal generation
+  - Backtesting performance metrics
+  
+- **Corporate finance**:
+  - Capital budgeting (NPV, IRR)
+  - Cost of capital calculations
+  - M&A valuation models
+  - Financial ratio analysis
+:::
+
+::::
+
+## Enhancement Techniques
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Tool augmentation approaches**:
+  - Calculator/API integration
+  - Python code generation
+  - Wolfram Alpha connections
+  - Database lookups for financial data
+  
+- **LLM-specific training approaches**:
+  - Fine-tuning on mathematical datasets
+  - Reinforcement learning from feedback
+  - Supervised fine-tuning with solutions
+  - Specialized mathematical tokenization
+  
+- **Verification mechanisms**:
+  - Multiple calculation paths
+  - Self-consistency checking
+  - Answer validation procedures
+  - Confidence scoring methods
+:::
+
+::: {.column width="40%"}
+```python
+# Example of tool-augmented calculation
+
+def calculate_bond_price(face_value, coupon_rate, 
+                        yield_rate, years, frequency=2):
+    """Calculate bond price with semi-annual compounding"""
+    # Convert rates to decimal
+    coupon_rate = coupon_rate / 100
+    yield_rate = yield_rate / 100
+    
+    # Adjust for frequency
+    periods = years * frequency
+    periodic_coupon = (coupon_rate / frequency) * face_value
+    periodic_yield = yield_rate / frequency
+    
+    # Calculate present value of coupon payments
+    coupon_pv = periodic_coupon * (1 - (1 + periodic_yield)**-periods) / periodic_yield
+    
+    # Calculate present value of principal
+    principal_pv = face_value / (1 + periodic_yield)**periods
+    
+    # Total bond price
+    bond_price = coupon_pv + principal_pv
+    
+    return round(bond_price, 2)
+```
+:::
+
+::::
+
+## Case Study: Portfolio Optimization
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Traditional approach**:
+  - Markowitz mean-variance optimization
+  - Matrix algebra for efficient frontier
+  - Numerical methods for constraints
+  - Specialized optimization libraries
+  
+- **LLM-based approach**:
+  - Problem translation to mathematical form
+  - Code generation for optimization
+  - Interpretation of results
+  - Sensitivity analysis generation
+  
+- **Comparative performance**:
+  - Mathematical formulation accuracy
+  - Computational efficiency
+  - Error detection and handling
+  - Explanation quality and insights
+:::
+
+::: {.column width="40%"}
+```
+Portfolio Optimization Task:
+
+"Construct an optimal portfolio allocation for 
+5 assets with the following expected returns 
+and correlation matrix. Target a portfolio 
+volatility of 12% while maximizing expected 
+return. Include a maximum weight constraint 
+of 30% per asset."
+
+[Returns and correlation data provided]
+
+LLM Response:
+1. Translates to quadratic programming problem
+2. Generates Python code using cvxpy
+3. Executes optimization
+4. Returns optimal weights: [0.3, 0.15, 0.3, 0.1, 0.15]
+5. Calculates expected portfolio return: 8.5%
+6. Verifies volatility constraint met
+7. Explains asset concentration reasons
+```
+:::
+
+::::
+
+## Future Directions
+
+- **Specialized mathematical models**: Purpose-built for numerical reasoning
+- **Multimodal mathematical processing**: Handling equations, graphs, and tables
+- **Symbolic mathematics integration**: Combining with computer algebra systems
+- **Neuro-symbolic approaches**: Hybrid neural-symbolic architectures
+- **Reliable uncertainty quantification**: Confidence levels for calculations
+- **Financial-specific mathematical capabilities**: Domain-tuned calculation precision
+```

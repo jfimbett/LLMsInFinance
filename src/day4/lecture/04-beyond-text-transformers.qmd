@@ -1,0 +1,503 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\04-beyond-text-transformers.qmd
+---
+title: "Beyond Text: Transformers as Prediction Machines"
+format: html
+---
+
+# Beyond Text: Transformers as Prediction Machines
+
+## Transformers: Beyond Natural Language
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Evolution of transformer applications**:
+  - Origin in natural language processing
+  - Expansion to computer vision (ViT)
+  - Adaptation for time series data
+  - Applications in structured data
+  - Multimodal capabilities
+  
+- **Key architectural advantages**:
+  - Self-attention mechanism
+  - Parallel processing efficiency
+  - Long-range dependency capture
+  - Positional flexibility
+  - Transfer learning capabilities
+:::
+
+::: {.column width="40%"}
+![Transformer Architecture](../../images/transformers1.png)
+:::
+
+::::
+
+## Transformers for Time Series Data
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Adaptation requirements**:
+  - Temporal positional encoding
+  - Causal masking for forecasting
+  - Handling numerical features
+  - Appropriate normalization
+  - Time-based feature augmentation
+  
+- **Architectural variations**:
+  - Informer: Efficient long sequences
+  - Autoformer: Frequency decomposition
+  - Time-Series Transformer: Specialized design
+  - PatchTST: Patched time series processing
+  
+- **Financial applications**:
+  - Asset price prediction
+  - Volatility forecasting
+  - Trading volume estimation
+  - Economic indicator prediction
+  - Anomaly detection in markets
+:::
+
+::: {.column width="40%"}
+```python
+# Example of time series transformer input preparation
+
+def prepare_time_series(series, seq_len=60, step=1):
+    """Create sliding window sequences for transformer"""
+    windows = []
+    targets = []
+    
+    for i in range(0, len(series) - seq_len - 1, step):
+        windows.append(series[i:i+seq_len])
+        targets.append(series[i+seq_len])
+    
+    # Convert to appropriate tensor format
+    X = np.array(windows)
+    y = np.array(targets)
+    
+    # Add special tokens and positional encoding
+    X_transformed = add_positional_encoding(X)
+    
+    return X_transformed, y
+```
+:::
+
+::::
+
+## Transformers for Tabular Data
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Handling structured data**:
+  - Feature embedding strategies
+  - Categorical variable representation
+  - Numerical feature normalization
+  - Missing value management
+  - Feature interaction modeling
+  
+- **Architectural approaches**:
+  - TabTransformer: Column-wise attention
+  - SAINT: Self-attention and MLPs
+  - FT-Transformer: Feature tokenization
+  - TabNet: Attention-based feature selection
+  
+- **Financial use cases**:
+  - Credit scoring
+  - Fraud detection
+  - Customer segmentation
+  - Loan pricing optimization
+  - Investment portfolio construction
+:::
+
+::: {.column width="40%"}
+```
+TabTransformer architecture overview:
+
+1. Input: Tabular data with mixed feature types
+   - Categorical: employment_status, loan_purpose
+   - Numerical: income, loan_amount, debt_ratio
+
+2. Embedding layer:
+   - Categorical → dense embeddings
+   - Numerical → normalized and projected
+
+3. Column-wise self-attention:
+   - Features attend to other features
+   - Captures interdependencies
+   - Multiple transformer layers
+
+4. Feature transformation:
+   - Contextually enhanced representations
+   - Maintains feature interpretability
+
+5. Prediction layer:
+   - Task-specific head (classification/regression)
+   - Optional calibration layer
+```
+:::
+
+::::
+
+## Transformers for Financial Forecasting
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Market prediction challenges**:
+  - Non-stationarity of financial data
+  - Regime changes and structural breaks
+  - High noise-to-signal ratio
+  - Multi-resolution temporal patterns
+  - Complex feature interactions
+  
+- **Transformer advantages**:
+  - Multi-horizon forecasting
+  - Feature importance through attention
+  - Handling of irregular time intervals
+  - Integration of multiple data types
+  - Capture of market regimes
+  
+- **Implementation approaches**:
+  - Multivariate time series modeling
+  - Market state representation
+  - Technical indicator integration
+  - Fundamental data incorporation
+  - Alternative data fusion
+:::
+
+::: {.column width="40%"}
+```python
+# Example of multi-horizon forecasting with transformers
+
+class FinancialTransformer(nn.Module):
+    def __init__(self, input_dim, forecast_horizons=[1,5,10,22]):
+        super().__init__()
+        self.input_embedding = nn.Linear(input_dim, d_model)
+        self.positional_encoding = PositionalEncoding(d_model)
+        self.transformer_encoder = nn.TransformerEncoder(
+            nn.TransformerEncoderLayer(d_model, nhead), 
+            num_layers
+        )
+        
+        # Multiple prediction heads for different horizons
+        self.forecast_heads = nn.ModuleDict({
+            f"h{h}": nn.Linear(d_model, 1) 
+            for h in forecast_horizons
+        })
+    
+    def forward(self, x):
+        # x shape: [batch, seq_len, features]
+        x = self.input_embedding(x)
+        x = self.positional_encoding(x)
+        encoded = self.transformer_encoder(x)
+        
+        # Generate forecasts for multiple horizons
+        forecasts = {
+            f"h{h}": head(encoded[:,-1,:]) 
+            for h, head in self.forecast_heads.items()
+        }
+        
+        return forecasts
+```
+:::
+
+::::
+
+## Multimodal Financial Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Data fusion approaches**:
+  - Textual + numerical data integration
+  - Image + time series combination
+  - Document + structured data processing
+  - Audio + text analysis (earnings calls)
+  
+- **Architectural strategies**:
+  - Early fusion (input level)
+  - Late fusion (prediction level)
+  - Cross-attention mechanisms
+  - Shared representation learning
+  
+- **Financial use cases**:
+  - Earnings report + price data analysis
+  - News sentiment + market indicators
+  - SEC filings + financial statements
+  - Social media + trading volumes
+  - Satellite imagery + company fundamentals
+:::
+
+::: {.column width="40%"}
+```
+Multimodal transformer example:
+
+Input sources:
+1. Quarterly earnings call transcript
+2. Financial statements (10-Q)
+3. Stock price and volume data
+4. Analyst estimates
+
+Processing pipeline:
+1. Text encoder processes transcript
+2. Financial data encoder processes statements
+3. Time series encoder processes price/volume
+4. Cross-attention layer integrates information
+5. Prediction heads for:
+   - Price movement forecast
+   - Earnings surprise probability
+   - Volatility prediction
+   - Analyst revision likelihood
+
+The model leverages complementary signals
+across modalities for enhanced prediction.
+```
+:::
+
+::::
+
+## Transformer-Based Risk Models
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Risk modeling applications**:
+  - Portfolio risk assessment
+  - Default prediction
+  - Market stress detection
+  - Liquidity risk forecasting
+  - Operational risk classification
+  
+- **Architectural components**:
+  - Multi-horizon risk forecasting
+  - Tail event modeling
+  - Uncertainty quantification
+  - Scenario generation
+  - Hierarchical risk decomposition
+  
+- **Advantages over traditional models**:
+  - Non-linear risk factor relationships
+  - Regime-dependent correlations
+  - Conditional risk assessment
+  - Integration of diverse risk signals
+  - Forward-looking risk measures
+:::
+
+::: {.column width="40%"}
+```
+Risk transformer use case:
+Credit default prediction for corporate loans
+
+Model inputs:
+1. Historical financial ratios (10 quarters)
+2. Macroeconomic indicators
+3. Industry-specific metrics
+4. Text from MD&A sections
+5. Credit events and rating changes
+
+Prediction outputs:
+- Probability of default (1-year horizon)
+- Expected time to default
+- Conditional default probabilities under
+  different economic scenarios
+- Risk factor contributions
+- Early warning signals with confidence scores
+
+Model achieves 24% improvement over
+traditional logistic regression approach.
+```
+:::
+
+::::
+
+## Case Study: Asset Price Prediction
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Problem formulation**:
+  - Predict next-day price movement direction
+  - Estimate magnitude of price change
+  - Assess prediction confidence
+  - Identify influential factors
+  
+- **Data sources**:
+  - Historical price and volume
+  - Technical indicators
+  - Fundamental metrics
+  - Market sentiment
+  - News and events
+  
+- **Model architecture**:
+  - Multimodal transformer
+  - Price sequence encoder
+  - Technical feature encoder
+  - News sentiment encoder
+  - Cross-attention integration
+  
+- **Performance metrics**:
+  - Directional accuracy: 62%
+  - Mean absolute percentage error: 0.8%
+  - Sharpe ratio of strategy: 1.35
+  - Performance vs. benchmarks: +18%
+:::
+
+::: {.column width="40%"}
+```
+Example prediction process:
+
+For AAPL stock prediction:
+
+1. Input processing:
+   - 60 days of price/volume data
+   - 20 technical indicators
+   - Recent earnings data
+   - News sentiment scores
+   - Sector performance metrics
+
+2. Transformer encoding:
+   - Self-attention on price sequence
+   - Feature attention on technicals
+   - Cross-modal attention across sources
+
+3. Output generation:
+   - Predicted price change: +1.4%
+   - Direction confidence: 68%
+   - Key drivers identified:
+     * Positive earnings surprise
+     * Sector momentum
+     * Volume pattern recognition
+     * Bullish analyst revisions
+
+4. Trading signal strength: Medium-Strong Buy
+```
+:::
+
+::::
+
+## Case Study: Client Credit Assessment
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Problem formulation**:
+  - Predict probability of default
+  - Estimate credit score
+  - Determine appropriate credit limit
+  - Identify risk factors
+  
+- **Data sources**:
+  - Application form data
+  - Credit bureau information
+  - Transaction history
+  - Employment details
+  - Behavioral patterns
+  
+- **Model architecture**:
+  - TabTransformer for structured data
+  - Text transformer for descriptions
+  - Temporal transformer for history
+  - Multi-task prediction heads
+  
+- **Performance metrics**:
+  - AUC-ROC: 0.91 (default prediction)
+  - Gini coefficient: 0.76
+  - Expected calibration error: 0.03
+  - Lift over logistic regression: +15%
+:::
+
+::: {.column width="40%"}
+```
+Transformer-based credit assessment:
+
+Input features:
+- Demographic: age, location, housing status
+- Financial: income, expenses, assets, debts
+- Credit history: past loans, payments, inquiries
+- Behavioral: transaction patterns, app usage
+- Text: loan purpose, employment description
+
+Processing flow:
+1. Feature tokenization and embedding
+2. Self-attention across feature dimensions
+3. Feature interaction modeling
+4. Risk factor identification
+5. Prediction with calibration
+
+Output:
+- Default probability: 3.8%
+- Recommended credit limit: $12,500
+- Risk tier: A2
+- Key risk factors:
+  * Recent job change
+  * High credit utilization
+  * Seasonal income pattern
+```
+:::
+
+::::
+
+## Implementation Considerations
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Computational requirements**:
+  - GPU/TPU acceleration needs
+  - Model size optimization
+  - Inference latency management
+  - Batch processing strategies
+  - Deployment architecture
+  
+- **Data preparation**:
+  - Feature normalization approaches
+  - Missing data handling
+  - Categorical encoding methods
+  - Temporal alignment
+  - Training-serving skew prevention
+  
+- **Training methodologies**:
+  - Transfer learning strategies
+  - Fine-tuning approaches
+  - Regularization techniques
+  - Learning rate scheduling
+  - Validation protocols
+:::
+
+::: {.column width="40%"}
+- **Evaluation framework**:
+  - Task-specific metrics
+  - Business impact assessment
+  - Comparative benchmarking
+  - Sensitivity analysis
+  - Robustness testing
+  
+- **Productionization**:
+  - Model versioning
+  - Monitoring setup
+  - Performance tracking
+  - Retraining pipelines
+  - Fallback mechanisms
+  
+- **Governance aspects**:
+  - Model documentation
+  - Explanation capabilities
+  - Fairness assessment
+  - Compliance validation
+  - Audit procedures
+:::
+
+::::
+
+## Future Directions
+
+- **Efficient transformers**: Reduced computational requirements for financial applications
+- **Specialized financial architectures**: Domain-specific transformer designs
+- **Multimodal financial intelligence**: Seamless integration of diverse data types
+- **Interpretable attention mechanisms**: Enhanced explainability for financial decisions
+- **Reinforcement learning integration**: Self-improving financial prediction systems
+- **Real-time adaptive models**: Dynamic adjustment to market conditions
+- **Federated financial transformers**: Privacy-preserving collaborative learning
+```

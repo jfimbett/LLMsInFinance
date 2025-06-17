@@ -1,0 +1,251 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\lecture\02-forecasting-with-llms.qmd
+# Forecasting with LLMs
+
+## Beyond Traditional Forecasting
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Conventional forecasting relies on:
+  - Historical data extrapolation
+  - Analyst judgment
+  - Statistical models (ARIMA, regression)
+  - Expert consensus
+- LLMs offer complementary capabilities:
+  - Text + numerical data integration
+  - Contextual understanding
+  - Pattern recognition across domains
+  - Synthesizing diverse information sources
+:::
+
+::: {.column width="40%"}
+![Forecasting Evolution](../../images/transformers_model.png)
+:::
+
+::::
+
+## LLM Forecasting: Data Sources
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Financial Statements**:
+  - Historical performance trends
+  - Management guidance
+  - Accounting policy impacts
+
+- **Earnings Calls Transcripts**:
+  - Management tone and sentiment
+  - Forward-looking statements
+  - Analyst concerns and questions
+  
+- **News and Press Releases**:
+  - Company developments
+  - Industry trends
+  - Competitive landscape
+:::
+
+::: {.column width="40%"}
+- **SEC Filings**:
+  - Risk factors
+  - Legal proceedings
+  - Management discussion & analysis
+  
+- **Industry Reports**:
+  - Market size and growth
+  - Technological disruption
+  - Regulatory environment
+  
+- **Macroeconomic Data**:
+  - Interest rates
+  - Inflation projections
+  - GDP forecasts
+  - Consumer sentiment
+:::
+
+::::
+
+## The Look-Ahead Bias Challenge
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Definition**: Using future information not available at forecast time
+- **Critical issue with LLMs**:
+  - Training data includes past events presented as historical facts
+  - Model may "know" outcomes that weren't available at decision point
+- **Manifestations**:
+  - "Predicting" known past events
+  - Incorporating market reactions that followed events
+  - Referencing subsequent strategic shifts
+:::
+
+::: {.column width="40%"}
+- **Mitigation strategies**:
+  - Explicit temporal context setting
+  - Point-in-time data retrieval
+  - Vintage database access
+  - Prompt engineering with time constraints
+  - Validation against contemporary forecasts
+  - Critical evaluation of predictions
+:::
+
+::::
+
+## Example: Time-Aware Prompting
+
+```
+CONTEXT: Today is June 10, 2022. You are a financial analyst 
+preparing revenue forecasts for Tesla (TSLA).
+
+USE ONLY INFORMATION AVAILABLE BEFORE THIS DATE.
+DO NOT reference events, product launches, or financial 
+results that occurred after June 10, 2022.
+
+Based on Tesla's historical performance, industry trends, and 
+currently announced plans, forecast quarterly revenue for 
+Q3 and Q4 2022, explaining your methodology and key 
+assumptions.
+```
+
+## Vintage-Based Approaches
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Point-in-time databases**:
+  - Financial data as it was reported (before restatements)
+  - Historical analyst estimates
+  - News archives with publication dates
+  
+- **Temporal scaffolding**:
+  - Structuring prompts with explicit timeframes
+  - "As of [specific date]" framing
+  - Limiting knowledge context
+:::
+
+::: {.column width="40%"}
+- **Implementation techniques**:
+  - Retrieval systems with temporal filters
+  - Date-stamped document collections
+  - Version-controlled financial databases
+  - News archives with original publication dates
+  - Historical market data snapshots
+:::
+
+::::
+
+## Weighting Methodologies
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Source reliability weighting**:
+  - Credibility assessment
+  - Track record evaluation
+  - Expertise-based weighting
+  
+- **Temporal proximity weighting**:
+  - Recent information weighted higher
+  - Decay functions for older data
+  - Event-triggered reweighting
+  
+- **Consensus vs. outlier handling**:
+  - Aggregation methodologies
+  - Outlier detection and treatment
+  - Minority view incorporation
+:::
+
+::: {.column width="40%"}
+```python
+def weighted_forecast(sources, weights):
+    """
+    Weighted ensemble of forecasts
+    
+    Parameters:
+    sources - Different forecast sources
+    weights - Reliability/relevance weights
+    
+    Returns:
+    Weighted forecast with confidence
+    """
+    forecast = sum(s*w for s, w in 
+                  zip(sources, weights))
+    
+    # Confidence calculation
+    dispersion = calculate_dispersion(sources)
+    confidence = adjust_for_dispersion(
+        weights, dispersion)
+    
+    return forecast, confidence
+```
+:::
+
+::::
+
+## Evaluating LLM Forecasts
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Quantitative metrics**:
+  - Mean Absolute Error (MAE)
+  - Mean Absolute Percentage Error (MAPE)
+  - Root Mean Squared Error (RMSE)
+  - Directional accuracy
+  
+- **Qualitative assessment**:
+  - Reasoning quality
+  - Assumption transparency
+  - Contextual relevance
+  - Scenario coherence
+:::
+
+::: {.column width="40%"}
+- **Comparison benchmarks**:
+  - Analyst consensus
+  - Management guidance
+  - Traditional statistical models
+  - Market-implied forecasts
+  - Historical forecast accuracy
+  
+- **Continuous improvement**:
+  - Feedback loops
+  - Iterative refinement
+  - Post-mortem analysis
+  - Adaptive weighting
+:::
+
+::::
+
+## Financial Forecasting Case Studies
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Revenue Forecasting**:
+  - Integrating product roadmaps, market trends, and competitive analysis
+  - Example: Tech company with multiple product lines
+  
+- **Margin Evolution**:
+  - Analyzing cost structures, efficiency initiatives, and industry benchmarks
+  - Example: Manufacturing company with commodity exposure
+  
+- **Capital Expenditure Planning**:
+  - Evaluating expansion plans, maintenance requirements, and technological trends
+  - Example: Energy company transitioning to renewables
+:::
+
+::: {.column width="40%"}
+- **Working Capital Projections**:
+  - Assessing operational efficiency, payment terms, and industry practices
+  - Example: Retail company with seasonal inventory
+  
+- **Full Financial Statement Forecasting**:
+  - Integrated P&L, balance sheet, and cash flow projections
+  - Example: Financial institution with complex balance sheet
+:::
+
+::::
+```

@@ -1,0 +1,139 @@
+```quarto
+// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\lecture\01-valuation-methods-recap.qmd
+# Valuation Methods Recap
+
+## Traditional Valuation Approaches
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Fundamental building blocks of financial analysis
+- Two primary approaches:
+  - Intrinsic valuation (DCF)
+  - Relative valuation (multiples)
+- Complementary methodologies
+- Critical for investment decisions, M&A, and capital allocation
+:::
+
+::: {.column width="40%"}
+![Valuation Methods](../../images/transformers2.png)
+:::
+
+::::
+
+## Discounted Cash Flow (DCF)
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Core Principle**: Value = Present value of future cash flows
+- **Key Components**:
+  - Forecast period (typically 5-10 years)
+  - Terminal value
+  - Discount rate (WACC)
+- **Advantages**:
+  - Theoretically sound
+  - Forward-looking
+  - Captures long-term value creation
+- **Challenges**:
+  - Sensitivity to assumptions
+  - Forecast accuracy
+  - Terminal value dominance
+:::
+
+::: {.column width="40%"}
+$$\text{Enterprise Value} = \sum_{t=1}^{n} \frac{FCF_t}{(1+WACC)^t} + \frac{TV}{(1+WACC)^n}$$
+
+$$TV = \frac{FCF_{n+1}}{WACC - g}$$
+
+Where:
+- $FCF_t$ = Free Cash Flow in year t
+- $WACC$ = Weighted Average Cost of Capital
+- $TV$ = Terminal Value
+- $g$ = Perpetual growth rate
+:::
+
+::::
+
+## Multiples-Based Valuation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Core Principle**: Value based on similar assets/companies
+- **Common Multiples**:
+  - P/E (Price-to-Earnings)
+  - EV/EBITDA (Enterprise Value to EBITDA)
+  - EV/Revenue
+  - P/B (Price-to-Book)
+  - Industry-specific metrics
+- **Advantages**:
+  - Market-based
+  - Simple to apply
+  - Reflects current sentiment
+- **Challenges**:
+  - Peer selection
+  - Market inefficiencies
+  - Differences in accounting practices
+:::
+
+::: {.column width="40%"}
+$$\text{Implied Value} = \text{Multiple}_{\text{peer}} \times \text{Metric}_{\text{target}}$$
+
+Example:
+$$\text{EV}_{\text{target}} = \text{Median EV/EBITDA}_{\text{peers}} \times \text{EBITDA}_{\text{target}}$$
+
+- Requires careful selection of:
+  - Comparable companies
+  - Appropriate multiples
+  - Adjustment factors
+:::
+
+::::
+
+## Traditional Challenges in Valuation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Forecasting Accuracy**:
+  - Future cash flow projection difficulties
+  - Growth rate assumptions
+  - Margin evolution
+  
+- **Comparable Selection**:
+  - Finding truly similar companies
+  - Adjusting for size/growth differences
+  - Industry classification limitations
+  
+- **Market Conditions**:
+  - Cyclical effects
+  - Macroeconomic factors
+  - Market sentiment distortion
+:::
+
+::: {.column width="40%"}
+- **Data Limitations**:
+  - Information asymmetry
+  - Data accessibility
+  - Processing large volumes of financial data
+  
+- **Human Biases**:
+  - Anchoring
+  - Confirmation bias
+  - Overconfidence
+  - Recency bias
+:::
+
+::::
+
+## LLMs in Valuation: Transformative Potential
+
+- **Data Integration**: Processing vast amounts of structured and unstructured financial data
+- **Pattern Recognition**: Identifying trends and relationships beyond human capacity
+- **Forecast Enhancement**: Improved cash flow projections based on multiple data sources
+- **Peer Identification**: More sophisticated comparable company selection
+- **Bias Reduction**: Systematic approach to valuation with less human bias
+- **Scenario Generation**: Multiple futures and sensitivity analysis
+- **Narrative Understanding**: Extracting insights from textual financial information
+```

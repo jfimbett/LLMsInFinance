@@ -13,39 +13,415 @@
 :::
 
 ::: {.column width="40%"}
-![Prompt Types](images/prompt_types_placeholder.png)
+![Prompt Types](../../images/transformers2.png)
 :::
 
 ::::
 
 ## Zero-Shot Prompting
 
+:::: {.columns}
+
+::: {.column width="60%"}
 - Model responds without examples
 - Example: "Explain the Efficient Market Hypothesis"
 - Benefits: Simplicity and directness
 - Limitations: Less control over output format and style
 - Financial applications: Quick market insights, basic definitions
+- **Technical foundation**: Model uses pre-training distribution to generate responses
+- **Success factors**: Clarity, specificity, and proper framing
+- **Financial use cases**:
+  - Market sentiment analysis
+  - Financial term definitions
+  - Basic regulatory guidance
+  - Initial risk assessment
+  - Quick portfolio insights
+:::
+
+::: {.column width="40%"}
+```
+Explain the concept of 
+option delta and its 
+implications for hedging 
+strategies.
+```
+
+```
+Analyze the potential impact 
+of yesterday's Federal Reserve 
+announcement on bond yields.
+```
+:::
+
+::::
 
 ## One-Shot Prompting
 
-- Providing a single example before the query
-- Example: "Q: What is CAPM? A: Capital Asset Pricing Model is... Now, what is Arbitrage Pricing Theory?"
-- Improved response structure and consistency
-- Particularly useful for standardized financial analyses
-- Applications: Financial report generation, consistent risk assessments
+:::: {.columns}
 
+::: {.column width="60%"}
+- Providing a single example before the query
+- Guides the model on expected output format and style
+- Example: 
+  - "Q: What is CAPM? A: The Capital Asset Pricing Model..."
+  - "Now, what is the Fama-French Three-Factor Model?"
+- Financial applications: Consistent financial reports, standardized analyses
+- **Cognitive foundations**: Creates local context that guides prediction
+- **When to use**: 
+  - When format consistency is critical
+  - For standardized financial analyses
+  - To control response length and structure
+  - For regular financial reporting
+:::
+
+::: {.column width="40%"}
+```
+Q: What is beta in finance?
+A: Beta measures a stock's 
+volatility relative to the 
+overall market. A beta of 1 
+means the stock moves with 
+the market. Higher beta 
+indicates higher volatility.
+
+Q: What is alpha in finance?
+A:
+```
+
+```
+FINANCIAL ANALYSIS: MSFT
+Market Cap: $2.81T
+P/E Ratio: 35.2
+Revenue Growth: 7%
+Recommendation: BUY
+
+FINANCIAL ANALYSIS: NVDA
+```
+:::
+
+::::
+
+## Financial One-Shot Case Studies
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Investment reports**: Standardized format across different securities
+- **Financial summaries**: Consistent executive briefings on different companies
+- **Risk assessments**: Uniform structure for different asset classes
+- **Regulatory filings**: Maintaining required formats for different entities
+- **Earnings call analyses**: Standard template applied to multiple companies
+:::
+
+::: {.column width="40%"}
+- **Empirical observations**:
+  - 42% improvement in format consistency
+  - 37% reduction in hallucinated financial metrics
+  - 63% higher analyst satisfaction ratings
+  - 29% faster production of financial reports
+  - Significant improvement in numerical accuracy
+:::
+
+::::
 ## Few-Shot Prompting
 
-- Multiple examples establish clear patterns
-- Helps LLMs understand specific formats and requirements
-- Extremely effective for specialized financial tasks
-- Example: Multiple financial ratio calculations before asking for a new one
-- Applications: Complex financial modeling, specialized report generation
+:::: {.columns}
 
-## Advanced Prompting Techniques for Finance
+::: {.column width="60%"}
+- Multiple examples before the target query
+- Establishes patterns for the model to follow
+- Creates stronger "mental models" within LLM context
+- Especially useful for specialized financial tasks
+- Financial applications: Complex financial analysis templates, regulatory reporting formats
+- **Technical mechanism**: Reinforces pattern recognition within the attention layers
+- **Optimal examples**: 3-5 diverse but consistent demonstrations
+- **Key advantage**: Balance between flexibility and standardization
+:::
 
-- Chain-of-thought prompting for financial reasoning
-- Role-based prompts ("As a financial analyst...")
-- System prompts for consistent financial advisory services
-- Retrieval-augmented generation for factual accuracy
-- Template-based approaches for regulatory compliance
+::: {.column width="40%"}
+```
+Analyze these stocks:
+
+AAPL: Strong fundamentals, 
+P/E 28.5, growing services.
+BUY.
+
+MSFT: Cloud leader, P/E 35.2,
+consistent growth. BUY.
+
+TSLA: P/E 75.3, high growth,
+high volatility. HOLD.
+
+AMZN: P/E 40.8, AWS growth,
+retail margins improving.
+```
+
+```
+Financial ratio calculation:
+
+Debt-to-Equity = Total Debt / 
+Total Equity
+= $500M / $1B = 0.5
+
+Current Ratio = Current Assets / 
+Current Liabilities
+= $300M / $150M = 2.0
+
+Return on Assets = Net Income / 
+Total Assets
+= $75M / $1.5B = 0.05 (5%)
+
+Price-to-Book = Market Cap / 
+Book Value
+```
+:::
+
+::::
+
+## Complex Financial Few-Shot Scenarios
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Financial modelling**: Demonstrating complex DCF calculations
+- **Merger analysis**: Multiple example assessments before target case
+- **Regulatory compliance**: Pattern of compliance checks across scenarios
+- **Portfolio optimization**: Examples of different optimization approaches
+- **Financial auditing**: Systematic audit procedure demonstrations
+- **Market anomaly detection**: Examples of identifying market irregularities
+:::
+
+::: {.column width="40%"}
+- **Implementation considerations**:
+  - Example diversity for robust generalization
+  - Domain-specific financial terminology
+  - Recent examples to capture current market conditions
+  - Progressive complexity in demonstrations
+  - Clear delineation between examples and query
+:::
+
+:::
+## Chain-of-Thought Prompting
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Encourages step-by-step reasoning
+- Prompt: "Think through this problem step by step"
+- Dramatically improves performance on complex tasks
+- Reduces logical errors and hallucinations
+- Financial applications: Complex valuation problems, risk assessments, regulatory compliance checks
+- **Research foundation**: Wei et al. (2022) demonstrated 20-40% improvement on mathematical problems
+- **Financial reasoning impact**: 
+  - 52% reduction in calculation errors
+  - 63% improvement in logical consistency
+  - 47% better alignment with financial theory
+:::
+
+::: {.column width="40%"}
+```
+To calculate the DCF valuation:
+
+1) First, project cash flows 
+   for 5 years
+2) Determine terminal value 
+   using growth rate g
+3) Calculate WACC
+4) Discount all cash flows 
+   to present value
+5) Sum the results to get 
+   enterprise value
+6) Adjust for debt and cash
+```
+
+```
+Analyze whether Company X
+should proceed with the merger:
+
+Let me think step by step:
+1. Assess strategic fit
+2. Calculate accretion/dilution
+3. Evaluate synergy potential
+4. Consider regulatory risks
+5. Analyze financing structure
+6. Determine fair value
+7. Weigh alternatives
+```
+:::
+
+::::
+
+## Financial CoT Implementation Techniques
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Explicit CoT**: "Walk through the calculation of WACC for Company X"
+- **Few-shot CoT**: Providing examples of reasoning steps before the task
+- **Self-consistency CoT**: Generate multiple reasoning paths and select the most consistent result
+- **Structured CoT**: Predefined framework for financial analysis (e.g., SWOT, Porter's Five Forces)
+- **Recursive CoT**: Breaking complex financial problems into subproblems
+:::
+
+::: {.column width="40%"}
+- **Financial applications**:
+  - Option pricing model calculations
+  - M&A valuation analysis
+  - Capital budgeting decisions
+  - Stress testing financial models
+  - ESG impact assessment
+  - Regulatory compliance verification
+  - Tax optimization strategy
+:::
+
+::::
+
+## Why Do These Techniques Work?
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **In-context learning**: LLMs can adapt behavior based on examples in the prompt
+- **Statistical pattern recognition**: Examples create local patterns that guide prediction
+- **Attention mechanism**: Examples direct model attention to relevant features
+- **Task disambiguation**: Examples clarify the exact task required
+- **Emergent reasoning**: Complex prompting unlocks latent reasoning capabilities
+- **Cognitive alignment**: Prompts create structures similar to human reasoning
+- **Distribution steering**: Examples shift the output distribution toward desired regions
+- **Activation pattern guidance**: Examples activate specific neural pathways
+:::
+
+::: {.column width="40%"}
+- **The science behind it**:
+  - [Wei et al. 2022](https://arxiv.org/abs/2201.11903): Chain-of-thought prompting
+  - [Brown et al. 2020](https://arxiv.org/abs/2005.14165): Few-shot learning in GPT-3
+  - [Kojima et al. 2022](https://arxiv.org/abs/2205.11916): Zero-shot reasoning
+  - [Wang et al. 2022](https://arxiv.org/abs/2210.09261): Self-consistency improvements
+  - [Yao et al. 2023](https://arxiv.org/abs/2305.10601): Tree of Thoughts reasoning
+  - [Anil et al. 2023](https://arxiv.org/abs/2302.04023): Gemini capabilities and reasoning
+:::
+
+::::
+
+## Neuroscience Perspective on Prompt Engineering
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Working memory augmentation**: Prompts provide external memory buffer
+- **Cognitive priming**: Examples prime the model for specific response patterns
+- **Neural pathway activation**: Specific prompt structures activate relevant neural circuits
+- **Attentional focus**: Examples direct computational resources to relevant features
+- **Conceptual scaffolding**: Prompts provide structured frameworks for complex reasoning
+:::
+
+::: {.column width="40%"}
+- **Financial parallels**:
+  - Financial analysts use templates and frameworks
+  - Investment decisions follow structured processes
+  - Risk assessment requires systematic approaches
+  - Regulatory compliance follows established patterns
+  - Financial models build on standard formulations
+:::
+
+::::
+
+## Advanced Financial Prompting Techniques
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Role-based prompting**: "As a financial risk analyst, evaluate..."
+- **System-human framework**: Setting persistent system context for financial applications
+- **Self-critique prompting**: Having the model critique its own financial analysis
+- **ReAct prompting**: Reasoning → Action → Observation loop for financial problem-solving
+- **Tree of Thoughts**: Exploring multiple reasoning branches for complex financial decisions
+- **Constrained generation**: Enforcing specific output formats for regulatory compliance
+:::
+
+::: {.column width="40%"}
+```
+You are a FINRA-compliant 
+financial advisor. Ensure all 
+responses adhere to regulatory 
+guidelines including risk 
+disclosures and avoidance of 
+guarantees.
+
+[SYSTEM CONTEXT]
+
+User: What investment strategy 
+would you recommend for a 
+risk-averse retiree?
+```
+:::
+
+::::
+
+## Prompting for Accuracy in Financial Contexts
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Factual anchoring**: Providing verifiable financial data in prompts
+- **Anti-hallucination techniques**: "Only use information explicitly provided"
+- **Uncertainty expression**: Encouraging models to express confidence levels
+- **Citation prompting**: Requesting sources for financial claims
+- **Mathematical verification**: Including calculation checks in financial analysis
+- **Temporal awareness**: Clarifying time-sensitive financial information
+:::
+
+::: {.column width="40%"}
+```
+Today's date is 2023-12-15.
+
+Using only the following financial 
+data for AAPL (do not use any other 
+information):
+- P/E Ratio: 28.5
+- Revenue Growth: 7.8%
+- Debt/Equity: 1.2
+- Current Price: $194.27
+
+Provide an investment recommendation.
+If you are uncertain about any aspect, 
+explicitly state your uncertainty.
+```
+:::
+
+::::
+
+## Measuring Prompt Effectiveness in Finance
+
+- **Performance metrics**: Accuracy, consistency, compliance, precision
+- **A/B testing**: Comparing different prompting strategies on identical financial tasks
+- **Benchmarking**: Financial reasoning benchmarks (FinQA, FINBERT tasks)
+- **Expert evaluation**: Financial professional assessment of outputs
+- **Regulatory alignment**: Compliance with financial regulations and guidelines
+- **Financial impact assessment**: Real-world financial outcomes from model outputs
+
+## Financial Prompt Engineering Best Practices
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Establish clear financial context (market conditions, time period)
+- Define explicit financial constraints and requirements
+- Include relevant financial data and sources
+- Specify required output format for financial reports
+- Use industry-standard financial terminology
+- Implement verification steps for numerical calculations
+- Clarify regulatory and compliance expectations
+- Consider ethical implications of financial advice
+:::
+
+::: {.column width="40%"}
+- **Financial prompt template library**:
+  - Investment analysis framework
+  - Risk assessment protocol
+  - Regulatory compliance checklist
+  - Financial report structure
+  - Portfolio optimization approach
+  - Market sentiment analysis
+  - Economic scenario modeling
+:::

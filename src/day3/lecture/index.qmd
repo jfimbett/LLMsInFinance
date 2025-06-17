@@ -1,7 +1,7 @@
 ---
-title: "Day 3: Prompt Engineering for Financial Applications"
+title: "Day 3: LLMs for Financial Valuation and Analysis"
 author: "Your Name"
-date: "2025-05-09"
+date: "2025-05-10"
 format:
   revealjs:
     theme: default
@@ -11,29 +11,33 @@ format:
     logo: ../../images/logo_header.svg
 ---
 
-# Prompt Engineering for Financial Applications
+# LLMs for Financial Valuation and Analysis
 
 ## Overview of Today's Lecture
 
-- Fundamentals of prompt engineering
-- Financial domain-specific prompting techniques
-- Designing prompts for financial analysis
-- Chain-of-thought and multi-step reasoning
-- Ethical considerations in financial applications
+- Recap of traditional valuation methods (DCF and multiples)
+- Forecasting financial data with LLMs
+- Scenario analysis and sensitivity testing using LLMs
+- Comparable company selection with LLMs
+- Entity recognition in financial documents
+- AI agents for financial analysis
 
-{{< include 01-prompt-engineering-fundamentals.qmd >}}
+{{< include 01-valuation-methods-recap.qmd >}}
 
-{{< include 02-financial-domain-prompting.qmd >}}
+{{< include 02-forecasting-with-llms.qmd >}}
 
-{{< include 03-financial-analysis-prompts.qmd >}}
+{{< include 03-scenario-analysis.qmd >}}
 
-{{< include 04-chain-of-thought-reasoning.qmd >}}
+{{< include 04-comparable-selection.qmd >}}
 
-{{< include 05-ethical-considerations.qmd >}}
+{{< include 05-entity-recognition.qmd >}}
+
+{{< include 06-ai-agents.qmd >}}
 
 ## What's Next?
 
-- Practical session: Crafting effective prompts for financial tasks
-- Hands-on experience with prompt templates and evaluation
-- Building prompt libraries for financial applications
-- Preview of Day 4: RAG and LLM Infrastructure
+- Practical session: Applying LLMs to financial valuation
+- Case study: Valuing a technology company (e.g., TSLA)
+- Working with large financial documents
+- Forecasting cashflows and selecting comparables
+- Preview of Day 4: Advanced LLM Applications in Finance

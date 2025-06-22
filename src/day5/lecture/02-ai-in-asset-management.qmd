@@ -1,8 +1,6 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day5\lecture\02-ai-in-asset-management.qmd
 ---
 title: "AI in Asset Management"
-format: html
+format: revealjs
 ---
 
 # AI in Asset Management
@@ -524,5 +522,3 @@ Example AI Agent Framework:
   - Ongoing performance differentiation
 :::
 
-::::
-```

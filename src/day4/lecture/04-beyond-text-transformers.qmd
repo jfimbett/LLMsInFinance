@@ -1,8 +1,6 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\04-beyond-text-transformers.qmd
 ---
 title: "Beyond Text: Transformers as Prediction Machines"
-format: html
+format: revealjs
 ---
 
 # Beyond Text: Transformers as Prediction Machines
@@ -60,27 +58,23 @@ format: html
 :::
 
 ::: {.column width="40%"}
-```python
-# Example of time series transformer input preparation
+**Time Series Transformer Input Preparation:**
 
-def prepare_time_series(series, seq_len=60, step=1):
-    """Create sliding window sequences for transformer"""
-    windows = []
-    targets = []
-    
-    for i in range(0, len(series) - seq_len - 1, step):
-        windows.append(series[i:i+seq_len])
-        targets.append(series[i+seq_len])
-    
-    # Convert to appropriate tensor format
-    X = np.array(windows)
-    y = np.array(targets)
-    
-    # Add special tokens and positional encoding
-    X_transformed = add_positional_encoding(X)
-    
-    return X_transformed, y
-```
+- **Sliding Window Approach**:
+  - Create sequential windows of fixed length (e.g., 60 time steps)
+  - Each window becomes an input sequence
+  - Next value becomes the prediction target
+  
+- **Data Transformation Steps**:
+  1. Extract overlapping sequences from time series
+  2. Convert to tensor format suitable for transformers
+  3. Add positional encoding to preserve temporal information
+  4. Apply normalization and scaling
+  
+- **Key Considerations**:
+  - Sequence length affects model memory and computation
+  - Overlap between windows can improve training
+  - Positional encoding critical for temporal awareness
 :::
 
 ::::
@@ -169,38 +163,24 @@ TabTransformer architecture overview:
 
 ::: {.column width="40%"}
 ```python
-# Example of multi-horizon forecasting with transformers
+**Multi-Horizon Financial Forecasting Architecture:**
 
-class FinancialTransformer(nn.Module):
-    def __init__(self, input_dim, forecast_horizons=[1,5,10,22]):
-        super().__init__()
-        self.input_embedding = nn.Linear(input_dim, d_model)
-        self.positional_encoding = PositionalEncoding(d_model)
-        self.transformer_encoder = nn.TransformerEncoder(
-            nn.TransformerEncoderLayer(d_model, nhead), 
-            num_layers
-        )
-        
-        # Multiple prediction heads for different horizons
-        self.forecast_heads = nn.ModuleDict({
-            f"h{h}": nn.Linear(d_model, 1) 
-            for h in forecast_horizons
-        })
-    
-    def forward(self, x):
-        # x shape: [batch, seq_len, features]
-        x = self.input_embedding(x)
-        x = self.positional_encoding(x)
-        encoded = self.transformer_encoder(x)
-        
-        # Generate forecasts for multiple horizons
-        forecasts = {
-            f"h{h}": head(encoded[:,-1,:]) 
-            for h, head in self.forecast_heads.items()
-        }
-        
-        return forecasts
-```
+- **Core Components**:
+  - Input embedding layer for feature transformation
+  - Positional encoding for temporal awareness
+  - Transformer encoder for sequence processing
+  - Multiple prediction heads for different time horizons
+  
+- **Forecasting Horizons**:
+  - Short-term: 1-day ahead predictions
+  - Medium-term: 5-day outlook
+  - Monthly: 22-day forecasts
+  - Quarterly: 66-day projections
+  
+- **Architecture Benefits**:
+  - Shared representation learning across horizons
+  - Efficient computation through parallel heads
+  - Consistent temporal modeling approach
 :::
 
 ::::

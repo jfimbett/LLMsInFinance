@@ -1,0 +1,366 @@
+---
+title: "Forecasting Financial Returns with LLMs"
+format: revealjs
+---
+
+# Forecasting Financial Returns with LLMs
+
+## The Challenge of Return Prediction
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Traditional challenges in return forecasting**:
+  - Efficient market hypothesis constraints
+  - Low signal-to-noise ratio
+  - Time-varying relationships
+  - Non-stationarity of financial time series
+  - Regime changes and structural breaks
+  
+- **Limitations of conventional approaches**:
+  - Reliance on structured numerical data
+  - Linear modeling assumptions
+  - Difficulty capturing market sentiment
+  - Limited incorporation of textual information
+  - Challenges with feature engineering
+:::
+
+::: {.column width="40%"}
+- **Information sources for prediction**:
+  - Historical price data
+  - Financial statements
+  - Macroeconomic indicators
+  - News and social media
+  - Analyst reports
+  - Alternative data
+  
+- **The promise of language models**:
+  - Processing unstructured textual data
+  - Capturing market narratives
+  - Identifying latent relationships
+  - Contextual understanding
+  - Cross-asset insights
+:::
+
+::::
+
+## López-Lira's Research on LLMs and Return Prediction
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Key paper: "Forecasting with Large Language Models" (2023)**
+  - Authors: Alejandro López-Lira and Yuewei Tang
+  - Published in Journal of Financial Economics (forthcoming)
+  
+- **Central hypothesis**:
+  - LLMs can extract predictive signals from textual data
+  - These signals provide incremental value beyond traditional factors
+  - Models can identify temporal patterns in market narratives
+  
+- **Methodological approach**:
+  - Fine-tuning LLMs on financial texts
+  - Prompting for return predictions
+  - Extracting embeddings for downstream tasks
+  - Comparing to traditional forecasting methods
+:::
+
+::: {.column width="40%"}
+- **Data sources used**:
+  - SEC filings (10-K, 10-Q)
+  - Earnings call transcripts
+  - Financial news articles
+  - Analyst reports
+  - Central bank communications
+  
+- **Key findings**:
+  - LLMs generate return predictions with significant out-of-sample R²
+  - Performance exceeds traditional factor models
+  - Particular effectiveness for stocks with high information asymmetry
+  - Ability to process multiple textual sources simultaneously
+  - Enhanced performance during periods of market stress
+:::
+
+::::
+
+## Empirical Evidence and Implementation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Portfolio construction methodology**:
+  - Long-short portfolios based on LLM predictions
+  - Monthly rebalancing based on new textual data
+  - Risk-adjusted performance evaluation
+  - Factor neutralization techniques
+  
+- **Performance metrics**:
+  - Annualized Sharpe ratio: 1.2-1.8
+  - Information ratio vs. factor models: 0.6-0.9
+  - Monthly alpha: 40-70 basis points
+  - Reduced drawdowns during market turbulence
+  - Improved diversification benefits
+:::
+
+::: {.column width="40%"}
+- **Implementation framework**:
+  - Load pre-trained financial language model
+  - Process earnings call transcripts and financial texts
+  - Create structured prediction prompts
+  - Generate return forecasts with confidence intervals
+  - Extract quantitative predictions from text outputs
+  
+- **Key technical components**:
+  - Financial domain-specific tokenization
+  - Earnings transcript preprocessing
+  - Prompt engineering for return prediction
+  - Output parsing and validation
+  - Integration with portfolio construction
+:::
+
+::::
+
+## Extracting Signals from Financial News
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **News-based prediction framework**:
+  - Event identification and classification
+  - Sentiment analysis and quantification
+  - Entity relationship mapping
+  - Causal inference from news flow
+  - Multi-document summarization
+  
+- **López-Lira's findings on news analysis**:
+  - Differential impact across market sectors
+  - Time-varying importance of news sources
+  - Interaction effects with market conditions
+  - Attention mechanisms for relevant extraction
+  - Contextual interpretation of news impacts
+:::
+
+::: {.column width="40%"}
+- **Implementation challenges**:
+  - News data acquisition and cleaning
+  - Real-time processing requirements
+  - Filtering relevant information
+  - Handling contradictory news items
+  - Avoiding overfitting to historical narratives
+  
+- **Recent extensions**:
+  - Integration with alternative data sources
+  - Cross-lingual news analysis
+  - Entity-specific news tracking
+  - Supply chain relationship mapping
+  - Market feedback loop identification
+:::
+
+::::
+
+## "When Talk is Cheap, Revisited: LLMs and Stock Returns"
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Follow-up research (2024)**:
+  - Extending textual analysis to broader datasets
+  - Comparing specialized vs. general-purpose LLMs
+  - Testing robustness across market regimes
+  - Identifying limits to predictability
+  
+- **Key innovations**:
+  - Multi-modal integration (text + numerical data)
+  - Time-aware prompting strategies
+  - Contrastive learning approaches
+  - Meta-learning for adaptive strategies
+  - Confidence calibration techniques
+:::
+
+::: {.column width="40%"}
+- **Empirical results**:
+  - Enhanced predictability for small and mid-cap stocks
+  - Diminishing returns for heavily-analyzed companies
+  - Information advantage persistence: 3-6 months
+  - Sector-specific effectiveness patterns
+  - Complementarity with traditional factors
+  
+- **Methodological improvements**:
+  - Transfer learning from related financial tasks
+  - Few-shot learning for new situations
+  - Uncertainty quantification in predictions
+  - Adaptive prompt engineering
+  - Ensemble methods across model architectures
+:::
+
+::::
+
+## Narrative Economics and Market Efficiency
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Theoretical framework**:
+  - Robert Shiller's narrative economics
+  - Informational efficiency debates
+  - Behavioral finance perspectives
+  - Adaptive markets hypothesis
+  
+- **LLM contributions to theory**:
+  - Quantifying narrative formation and spread
+  - Measuring narrative fragility and persistence
+  - Identifying competing market stories
+  - Tracking narrative shifts and evolution
+  - Linking narratives to asset price movements
+:::
+
+::: {.column width="40%"}
+- **Recent López-Lira findings (2024)**:
+  - Narratives predict returns beyond fundamentals
+  - Narrative strength correlates with momentum
+  - Narrative shifts precede factor rotation
+  - Heterogeneous narrative impact across investors
+  - Market professionals vs. retail narrative reception
+  
+- **Implications for market efficiency**:
+  - Information processing friction identification
+  - Gradual information diffusion evidence
+  - Limited attention and processing capacity
+  - Rational inattention quantification
+  - Attention allocation strategies
+:::
+
+::::
+
+## Practical Implementation Considerations
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Model selection and fine-tuning**:
+  - Domain-specific pre-training benefits
+  - Financial corpus fine-tuning strategies
+  - Parameter-efficient adaptation techniques
+  - Evaluation metrics for financial tasks
+  
+- **Prompting strategies**:
+  - Structured vs. open-ended prompts
+  - Few-shot learning examples
+  - Chain-of-thought reasoning
+  - Temporal context incorporation
+  - Multi-step analytical frameworks
+:::
+
+::: {.column width="40%"}
+- **Example analytical framework**:
+
+  Analyze earnings call transcript for Company XYZ and predict stock return over next 3 months.
+
+  **Consider these factors**:
+  1. Revenue growth trends and guidance
+  2. Margin expansion or contraction
+  3. Management tone and confidence
+  4. Analyst question topics and responses
+  5. Comparison to previous quarterly language
+  6. Capital expenditure and R&D plans
+  7. Competitive positioning statements
+
+  **Process**: Extract key insights from each factor, then synthesize to generate return prediction with confidence interval.
+:::
+
+::::
+
+## Current Limitations and Challenges
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Technical challenges**:
+  - Context length restrictions
+  - Computational resource requirements
+  - Latency for real-time applications
+  - Inconsistency in numerical reasoning
+  - Hallucination during extreme events
+  
+- **Statistical concerns**:
+  - Overfitting to historical patterns
+  - Data leakage prevention
+  - Look-ahead bias risks
+  - Robust backtest methodologies
+  - Multiple testing problems
+:::
+
+::: {.column width="40%"}
+- **Implementation barriers**:
+  - Data acquisition costs
+  - Computational infrastructure needs
+  - Model development expertise
+  - Regulatory compliance requirements
+  - Model risk management
+  
+- **Ongoing research directions**:
+  - Multi-task learning approaches
+  - Causal inference techniques
+  - Interpretability enhancements
+  - Handling distribution shifts
+  - Self-supervised learning advancements
+:::
+
+::::
+
+## Case Studies from López-Lira's Research
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Case 1: Earnings Surprises Prediction**
+  - Training on historical transcripts and outcomes
+  - Identifying linguistic patterns preceding surprises
+  - Capturing management tone and hedging language
+  - Results: 22% improvement over analyst consensus
+  
+- **Case 2: Sector Rotation Strategies**
+  - Analyzing Fed communications and policy shifts
+  - Mapping language patterns to sector performance
+  - Developing lead indicators from communication changes
+  - Results: 15% enhancement to traditional timing models
+  
+- **Case 3: ESG Impact Assessment**
+  - Evaluating sustainability disclosures
+  - Measuring greenwashing vs. substantive commitments
+  - Linking language to subsequent controversy occurrences
+  - Results: Significant predictive power for controversies
+:::
+
+::: {.column width="40%"}
+- **Case 4: M&A Activity Prediction**
+  - Identifying acquisition targets from language cues
+  - Detecting management receptiveness to offers
+  - Analyzing industry consolidation narratives
+  - Results: 35% of targets identified before announcements
+  
+- **Case 5: Volatility Forecasting**
+  - Extracting uncertainty signals from text
+  - Measuring disagreement in analyst language
+  - Tracking narrative cohesion across sources
+  - Results: Improved VaR estimates during market stress
+  
+- **Case 6: Thematic Investing**
+  - Identifying emerging technology narratives
+  - Measuring thematic penetration across sectors
+  - Tracking innovation diffusion through language
+  - Results: Early identification of cross-sector trends
+:::
+
+::::
+
+## Future Research Directions
+
+- **Integration with structured data**: Combining textual insights with traditional factors and alternative data
+- **Causal inference**: Moving beyond correlation to identify causal relationships in financial texts
+- **Multi-modal approaches**: Incorporating images, audio, and video from financial presentations
+- **Cross-asset applications**: Extending textual analysis to fixed income, commodities, and derivatives
+- **Market microstructure insights**: Using LLMs to understand liquidity provision and order flow
+- **Adaptive models**: Developing systems that continuously update as market conditions evolve
+- **Interpretable predictions**: Enhancing transparency in model reasoning and decision processes
+- **Feedback loops**: Understanding how model-driven trading affects subsequent market dynamics

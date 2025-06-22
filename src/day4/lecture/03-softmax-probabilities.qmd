@@ -1,8 +1,6 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\03-softmax-probabilities.qmd
 ---
 title: "Understanding Softmax Probabilities"
-format: html
+format: revealjs
 ---
 
 # Understanding Softmax Probabilities
@@ -33,28 +31,18 @@ format: html
 :::
 
 ::: {.column width="40%"}
-```python
-import numpy as np
+**Softmax Example (in words):**
 
-def softmax(logits):
-    """Convert logits to probabilities using softmax"""
-    # Subtract max for numerical stability
-    exp_logits = np.exp(logits - np.max(logits))
-    # Calculate softmax values
-    return exp_logits / np.sum(exp_logits)
+Suppose a model produces three logits: 2.0, 1.0, and 0.1. To convert these to probabilities:
 
-# Example logits
-logits = np.array([2.0, 1.0, 0.1])
-probs = softmax(logits)
-print(f"Logits: {logits}")
-print(f"Probabilities: {probs}")
-print(f"Sum of probabilities: {np.sum(probs)}")
+1. Subtract the maximum logit from each value for numerical stability.
+2. Exponentiate each adjusted logit.
+3. Divide each exponentiated value by the sum of all exponentiated values.
 
-# Output:
-# Logits: [2.  1.  0.1]
-# Probabilities: [0.659, 0.243, 0.098]
-# Sum of probabilities: 1.0
-```
+For logits [2.0, 1.0, 0.1], the resulting probabilities are approximately [0.66, 0.24, 0.10].
+
+- The sum of probabilities is always 1.0.
+- The largest logit gets the highest probability.
 :::
 
 ::::
@@ -167,30 +155,18 @@ Low Confidence/Uncertain:
 :::
 
 ::: {.column width="40%"}
-```python
-# Temperature scaling example
-def temperature_scaling(logits, T=1.0):
-    """Apply temperature scaling to logits"""
-    return softmax(logits / T)
+**Temperature Scaling (in words):**
 
-# Original logits
-logits = np.array([8.0, 2.0, 0.0, -2.0])
+Temperature scaling is a simple way to calibrate softmax probabilities:
+- Divide each logit by a temperature $T$ before applying softmax.
+- Higher $T$ (e.g., $T=2$ or $T=3$) makes the probability distribution softer (less peaked).
+- Lower $T$ (closer to 1) makes the distribution more confident (more peaked).
 
-# Uncalibrated (standard softmax)
-uncalibrated = softmax(logits)
-print(f"Uncalibrated: {uncalibrated}")
-# [0.996, 0.003, 0.000, 0.000]
-
-# Calibrated with T=2.0 (higher T = softer)
-calibrated = temperature_scaling(logits, T=2.0)
-print(f"Calibrated (T=2.0): {calibrated}")
-# [0.952, 0.034, 0.008, 0.006]
-
-# Calibrated with T=3.0 (even softer)
-calibrated = temperature_scaling(logits, T=3.0)
-print(f"Calibrated (T=3.0): {calibrated}")
-# [0.877, 0.080, 0.029, 0.014]
-```
+**Example:**
+- Original logits: [8.0, 2.0, 0.0, -2.0]
+- Standard softmax (T=1): Most probability on the first class.
+- With $T=2$, probabilities are more spread out among classes.
+- With $T=3$, the distribution is even softer, further reducing overconfidence.
 :::
 
 ::::
@@ -412,33 +388,18 @@ Model process:
 :::
 
 ::: {.column width="40%"}
-```python
-# Example of mixture density network output
-# for stock return prediction
+**Mixture Density Network Example (in words):**
 
-# Model outputs parameters for mixture of Gaussians
-means = [-0.02, 0.01, 0.03]  # Component means
-stds = [0.01, 0.02, 0.015]   # Component std devs
-weights = [0.25, 0.5, 0.25]  # Component weights
+A mixture density network can predict, for example, that a stock return is a mixture of three possible outcomes:
+- One centered at -2% (with 25% weight),
+- One at +1% (with 50% weight),
+- One at +3% (with 25% weight).
 
-# Calculate probability density at any point
-def mixture_density(x, means, stds, weights):
-    """Compute PDF for Gaussian mixture"""
-    from scipy.stats import norm
-    components = [w * norm.pdf(x, loc=m, scale=s) 
-                 for w, m, s in zip(weights, means, stds)]
-    return sum(components)
+Each outcome has its own mean and standard deviation. The overall probability of a specific return is the weighted sum of the probabilities from each component.
 
-# Probability of return > 2%
-# (requires numerical integration in practice)
-probability_above_2pct = 0.32
-
-# Most likely return (mode of distribution)
-most_likely_return = 0.01  # (1%)
-
-# 90% confidence interval
-confidence_interval = [-0.035, 0.045]
-```
+- The model can estimate the probability of a return above 2% (e.g., 32%),
+- The most likely return (the mode),
+- And a confidence interval (e.g., 90% of returns between -3.5% and +4.5%).
 :::
 
 ::::

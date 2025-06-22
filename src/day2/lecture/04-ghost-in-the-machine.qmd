@@ -280,28 +280,25 @@
 :::
 
 ::: {.column width="40%"}
-```python
-def financial_fact_checking(generated_text):
-    """
-    Verify financial claims in generated text
-    against trusted sources
-    """
-    # Extract financial claims
-    claims = extract_financial_claims(generated_text)
-    
-    # Verify each claim
-    verification_results = {}
-    for claim in claims:
-        # Check claim against financial databases
-        result = verify_against_sources(claim)
-        verification_results[claim] = result
-    
-    # Generate confidence score
-    confidence = calculate_overall_confidence(
-        verification_results)
-    
-    return verification_results, confidence
-```
+- **Financial fact-checking framework**:
+  - Extract financial claims from generated content
+  - Verify claims against trusted financial databases
+  - Cross-reference with authoritative sources
+  - Calculate confidence scores for accuracy assessment
+  
+- **Verification components**:
+  - Financial claim identification and extraction
+  - Database lookup and cross-referencing
+  - Source credibility assessment
+  - Consistency checking across multiple sources
+  - Overall confidence calculation methodology
+  
+- **Output validation**:
+  - Claim-by-claim verification results
+  - Source attribution for verified facts
+  - Confidence scoring for uncertain claims
+  - Flagging of unverifiable assertions
+  - Recommendation for human review thresholds
 :::
 
 ::::

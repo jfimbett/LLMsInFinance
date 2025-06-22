@@ -219,29 +219,24 @@ fairly priced:
 
 ## Implementing Tree of Thoughts for Financial Analysis
 
-```python
-def financial_tree_of_thoughts(problem, evaluation_fn, breadth=3, depth=3):
-    """
-    problem: Financial decision problem
-    evaluation_fn: Function to evaluate financial reasoning quality
-    breadth: Number of alternatives to consider at each step
-    depth: How many steps to look ahead
-    """
-    # Generate initial thoughts on the financial problem
-    initial_thoughts = generate_diverse_financial_perspectives(problem, breadth)
-    
-    # Explore each branch to specified depth
-    best_path = None
-    best_score = float('-inf')
-    
-    for thought in initial_thoughts:
-        path, score = explore_financial_path(thought, evaluation_fn, depth-1)
-        if score > best_score:
-            best_path = [thought] + path
-            best_score = score
-            
-    return best_path, best_score
-```
+- **Tree of Thoughts framework**:
+  - Generate diverse initial perspectives on financial problems
+  - Evaluate reasoning quality using financial criteria
+  - Explore multiple analytical paths with configurable breadth and depth
+  - Select optimal reasoning pathway based on evaluation scores
+  
+- **Implementation components**:
+  - Financial problem formulation
+  - Perspective generation function
+  - Path exploration mechanism
+  - Evaluation criteria for financial reasoning
+  - Best path selection algorithm
+  
+- **Key parameters**:
+  - Breadth: Number of alternative viewpoints to consider
+  - Depth: Number of analytical steps to explore
+  - Evaluation function: Quality assessment criteria
+  - Exploration strategy: Systematic vs. heuristic search
 
 ## Visualizing Attention Patterns
 
@@ -306,36 +301,25 @@ def financial_tree_of_thoughts(problem, evaluation_fn, breadth=3, depth=3):
 
 ## Attention Interpretation in Financial Contexts
 
-```python
-def analyze_financial_attention(text, model, layer_idx=-1, head_idx=None):
-    """
-    Analyzes attention patterns in financial text
-    
-    Args:
-        text: Financial text to analyze
-        model: The LLM to use for analysis
-        layer_idx: Which transformer layer to examine
-        head_idx: Which attention head to focus on
-        
-    Returns:
-        attention_matrix: Token-to-token attention weights
-        key_influences: Most influential tokens/phrases
-    """
-    # Generate token-level attention maps
-    inputs = tokenizer(text, return_tensors="pt")
-    outputs = model(**inputs, output_attentions=True)
-    
-    # Extract attention from specified layer/head
-    attention = outputs.attentions[layer_idx]
-    if head_idx is not None:
-        attention = attention[:, head_idx, :, :]
-    
-    # Identify key financial entities with high attention
-    financial_entities = extract_financial_entities(text)
-    entity_attention = calculate_entity_attention(attention, financial_entities)
-    
-    return attention, entity_attention
-```
+- **Financial attention analysis framework**:
+  - Process financial texts through transformer models
+  - Extract attention patterns from specified layers and heads
+  - Identify token-to-token attention relationships
+  - Calculate attention weights for financial entities
+  
+- **Analysis components**:
+  - Text tokenization and model input preparation
+  - Attention pattern extraction from transformer layers
+  - Financial entity recognition and mapping
+  - Attention weight calculation for identified entities
+  - Key influence identification for financial reasoning
+  
+- **Output interpretation**:
+  - Attention matrices showing token relationships
+  - Entity-specific attention scores
+  - Most influential tokens for financial analysis
+  - Layer and head-specific attention patterns
+  - Financial reasoning pathway visualization
 
 ## Self-Consistency & Verification
 
@@ -356,31 +340,25 @@ def analyze_financial_attention(text, model, layer_idx=-1, head_idx=None):
 :::
 
 ::: {.column width="40%"}
-```python
-def self_consistent_valuation(company_data, num_paths=5):
-    """
-    Performs multiple valuation analyses and 
-    aggregates results for consistency
-    """
-    valuations = []
-    reasoning_paths = []
-    
-    for i in range(num_paths):
-        # Generate different reasoning approaches
-        reasoning = llm.generate(
-            f"Analyze {company_data} using approach {i}")
-        reasoning_paths.append(reasoning)
-        
-        # Extract valuation estimate
-        valuation = extract_valuation(reasoning)
-        valuations.append(valuation)
-    
-    # Check consistency
-    consistency = calculate_variance(valuations)
-    consensus = weighted_average(valuations)
-    
-    return consensus, consistency, reasoning_paths
-```
+- **Self-consistent valuation methodology**:
+  - Generate multiple independent valuation analyses
+  - Apply different analytical approaches to same company
+  - Extract numerical valuation estimates from each analysis
+  - Calculate consistency metrics across approaches
+  
+- **Implementation process**:
+  - Multi-path reasoning generation
+  - Diverse analytical framework application
+  - Valuation extraction and aggregation
+  - Variance analysis for consistency assessment
+  - Weighted consensus calculation
+  
+- **Output components**:
+  - Consensus valuation estimate
+  - Consistency confidence measure
+  - Multiple reasoning pathway documentation
+  - Approach-specific valuation ranges
+  - Cross-validation reliability metrics
 :::
 
 ::::

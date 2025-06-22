@@ -1,5 +1,3 @@
-```quarto
-// filepath: /Users/juan/Library/CloudStorage/Dropbox/Teaching/LLM/LLMsInFinance/src/day4/lecture/01-understanding-credit-risk.qmd
 ---
 title: "Understanding Credit Risk with LLMs"
 format: revealjs
@@ -298,25 +296,17 @@ actions, providing early warning signals.
 :::
 
 ::: {.column width="40%"}
-```python
-# Simplified calibration example
+**Calibration Process Overview:**
 
-# Historical default rates by model score decile
-actual_defaults = [0.1, 0.3, 0.7, 1.2, 2.0, 
-                  3.1, 4.5, 6.8, 10.5, 18.9]
-
-# Model predicted probabilities
-predicted_probs = [0.2, 0.5, 0.9, 1.5, 2.2, 
-                  2.9, 4.0, 7.2, 9.8, 17.5]
-
-# Calculate calibration metrics
-brier_score = mean_squared_error(
-    actual_defaults, predicted_probs)
-
-# Apply calibration adjustment
-calibrated_probs = isotonic_regression(
-    predicted_probs, actual_defaults)
-```
+- **Historical Analysis**: Compare model predictions with actual default rates across different score ranges (deciles)
+- **Calibration Metrics**: 
+  - Brier Score: Measures prediction accuracy
+  - Expected Calibration Error: Quantifies miscalibration
+- **Calibration Methods**:
+  - Isotonic Regression: Monotonic mapping from predictions to true rates
+  - Platt Scaling: Sigmoid function adjustment
+  - Temperature Scaling: Simple scaling parameter
+- **Result**: Adjusted probabilities that better reflect real-world default frequencies
 :::
 
 ::::

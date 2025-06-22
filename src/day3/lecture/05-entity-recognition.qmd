@@ -1,5 +1,3 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\lecture\05-entity-recognition.qmd
 # Entity Recognition in Large Texts
 
 ## The Financial Document Challenge
@@ -142,37 +140,24 @@ exact text, and any relevant context.
 :::
 
 ::: {.column width="40%"}
-```python
-def extract_entity_network(text):
-    """
-    Extract entities and their relationships
-    
-    Parameters:
-    text - Financial document text
-    
-    Returns:
-    Entity network with relationship types
-    """
-    # Extract entities
-    entities = extract_entities(text)
-    
-    # Identify relationships
-    relationships = []
-    for e1 in entities:
-        for e2 in entities:
-            if e1 != e2:
-                relation = identify_relationship(text, e1, e2)
-                if relation:
-                    relationships.append({
-                        "source": e1,
-                        "target": e2,
-                        "type": relation["type"],
-                        "context": relation["context"]
-                    })
-    
-    return {"entities": entities, 
-            "relationships": relationships}
-```
+**Entity Network Extraction Process:**
+
+- **Entity Identification**:
+  - Extract companies, people, financial metrics, dates
+  - Classify entity types and attributes
+  - Resolve entity references and aliases
+
+- **Relationship Detection**:
+  - Identify connections between entities
+  - Classify relationship types (ownership, partnership, etc.)
+  - Extract contextual information about relationships
+  - Quantify relationship strength
+
+- **Network Construction**:
+  - Build graph structure with entities as nodes
+  - Relationships as edges with type and context
+  - Enable network analysis and visualization
+  - Support relationship-based queries
 :::
 
 ::::
@@ -241,32 +226,26 @@ new or changed from the previous quarter.
 :::
 
 ::: {.column width="40%"}
-```python
-def build_financial_knowledge_graph(documents):
-    """
-    Construct knowledge graph from documents
-    
-    Parameters:
-    documents - Collection of financial documents
-    
-    Returns:
-    Knowledge graph with entities and relationships
-    """
-    graph = initialize_graph()
-    
-    for doc in documents:
-        # Extract entities and relationships
-        extraction = extract_entity_network(doc.text)
-        
-        # Add to graph with document as source
-        for entity in extraction["entities"]:
-            add_or_update_node(graph, entity, doc)
-            
-        for rel in extraction["relationships"]:
-            add_or_update_edge(graph, rel, doc)
-    
-    return graph
-```
+**Financial Knowledge Graph Construction:**
+
+- **Document Processing Pipeline**:
+  - Process multiple financial documents
+  - Extract entities and relationships from each
+  - Aggregate information across documents
+  - Resolve entity duplicates and conflicts
+
+- **Graph Building Steps**:
+  1. Initialize empty knowledge graph structure
+  2. For each document, extract entity networks
+  3. Add/update entities as nodes with attributes
+  4. Add/update relationships as edges with context
+  5. Track document sources for provenance
+
+- **Benefits**:
+  - Cross-document entity tracking
+  - Relationship evolution over time
+  - Comprehensive financial entity database
+  - Support for complex queries across documents
 :::
 
 ::::

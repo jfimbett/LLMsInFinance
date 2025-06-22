@@ -1,5 +1,3 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\lecture\06-ai-agents.qmd
 # Bonus: AI Agents for Financial Analysis
 
 ## Beyond Single-Task LLMs: The CrewAI Paradigm

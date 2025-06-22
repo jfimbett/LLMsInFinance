@@ -1,5 +1,3 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\lecture\02-forecasting-with-llms.qmd
 # Forecasting with LLMs
 
 ## Beyond Traditional Forecasting
@@ -158,28 +156,19 @@ assumptions.
 :::
 
 ::: {.column width="40%"}
-```python
-def weighted_forecast(sources, weights):
-    """
-    Weighted ensemble of forecasts
-    
-    Parameters:
-    sources - Different forecast sources
-    weights - Reliability/relevance weights
-    
-    Returns:
-    Weighted forecast with confidence
-    """
-    forecast = sum(s*w for s, w in 
-                  zip(sources, weights))
-    
-    # Confidence calculation
-    dispersion = calculate_dispersion(sources)
-    confidence = adjust_for_dispersion(
-        weights, dispersion)
-    
-    return forecast, confidence
-```
+**Weighted Forecast Ensemble Approach:**
+
+- **Input Sources**: Multiple forecast inputs from different data types
+- **Weighting Scheme**: Assign reliability scores based on:
+  - Historical accuracy of each source
+  - Relevance to current market conditions  
+  - Data freshness and quality
+- **Ensemble Calculation**: 
+  - Final forecast = Σ(source_i × weight_i)
+- **Confidence Estimation**:
+  - Higher dispersion among sources → Lower confidence
+  - Agreement among sources → Higher confidence
+  - Adjust final confidence based on source reliability
 :::
 
 ::::

@@ -1,5 +1,3 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\lecture\03-scenario-analysis.qmd
 # Scenario Analysis with LLMs
 
 ## Beyond Base Case Forecasting
@@ -122,29 +120,22 @@ For each scenario, provide:
 :::
 
 ::: {.column width="40%"}
-```python
-def cross_impact_matrix(variables):
-    """
-    Generate cross-impact matrix for scenario
-    
-    Parameters:
-    variables - Key scenario variables
-    
-    Returns:
-    Matrix of impact relationships and strengths
-    """
-    matrix = {}
-    
-    for v1 in variables:
-        matrix[v1] = {}
-        for v2 in variables:
-            if v1 != v2:
-                # LLM assessment of relationship
-                impact = assess_impact(v1, v2)
-                matrix[v1][v2] = impact
-    
-    return matrix
-```
+**Cross-Impact Analysis Framework:**
+
+- **Variable Relationships**: Map how scenario variables influence each other
+- **Impact Assessment Methods**:
+  - Historical correlation analysis
+  - Expert judgment integration
+  - LLM-based relationship evaluation
+  - Economic theory validation
+- **Matrix Construction**:
+  - Each cell represents influence strength
+  - Quantified impact scores (-1 to +1)
+  - Asymmetric relationships captured
+- **Applications**:
+  - Scenario consistency checking
+  - Propagation effect modeling
+  - Feedback loop identification
 :::
 
 ::::
@@ -169,33 +160,20 @@ def cross_impact_matrix(variables):
 :::
 
 ::: {.column width="40%"}
-```python
-def llm_guided_monte_carlo(variables, 
-                          correlations, 
-                          iterations=10000):
-    """
-    LLM-guided Monte Carlo simulation
-    
-    Parameters:
-    variables - Key input variables with distributions
-    correlations - Correlation matrix between variables
-    iterations - Number of simulation runs
-    
-    Returns:
-    Simulation results with narrative interpretation
-    """
-    # Generate correlated random variables
-    simulations = generate_correlated_samples(
-        variables, correlations, iterations)
-    
-    # Calculate output for each simulation
-    results = [calculate_output(sim) for sim in simulations]
-    
-    # LLM interpretation of results
-    interpretation = interpret_simulation(results)
-    
-    return results, interpretation
-```
+**LLM-Guided Monte Carlo Process:**
+
+- **Input Variables**: Define probability distributions for key drivers
+- **Correlation Matrix**: Capture relationships between variables
+- **Simulation Steps**:
+  1. Generate correlated random samples
+  2. Calculate outcomes for each scenario
+  3. Aggregate statistical results
+  4. LLM interprets patterns and outliers
+- **Narrative Output**:
+  - Statistical summary with business interpretation
+  - Key risk drivers identification
+  - Tail event characterization
+  - Actionable insights generation
 :::
 
 ::::

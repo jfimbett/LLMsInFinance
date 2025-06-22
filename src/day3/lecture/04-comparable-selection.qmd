@@ -1,5 +1,3 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day3\lecture\04-comparable-selection.qmd
 # Comparable Selection with LLMs
 
 ## The Comparable Company Challenge
@@ -152,50 +150,26 @@ across these dimensions.
 :::
 
 ::: {.column width="40%"}
-```python
-def identify_comparables(target_company, 
-                        candidate_pool,
-                        dimensions,
-                        weights):
-    """
-    LLM-powered comparable company selection
-    
-    Parameters:
-    target_company - Company to find peers for
-    candidate_pool - Universe of potential peers
-    dimensions - Similarity dimensions to assess
-    weights - Importance weights for dimensions
-    
-    Returns:
-    Ranked comparables with similarity scores
-    """
-    comparables = []
-    
-    for candidate in candidate_pool:
-        # Calculate similarity across dimensions
-        similarity = {}
-        for dim in dimensions:
-            score = assess_similarity(
-                target_company, candidate, dim)
-            similarity[dim] = score
-        
-        # Calculate weighted similarity score
-        weighted_score = sum(
-            similarity[d] * weights[d] 
-            for d in dimensions)
-        
-        comparables.append({
-            "company": candidate,
-            "score": weighted_score,
-            "dimension_scores": similarity
-        })
-    
-    # Sort by overall similarity
-    comparables.sort(key=lambda x: x["score"], 
-                    reverse=True)
-    
-    return comparables
-```
+**LLM-Powered Comparable Selection Process:**
+
+- **Input Parameters**:
+  - Target company profile
+  - Universe of candidate companies
+  - Similarity dimensions (business model, size, growth, etc.)
+  - Dimension importance weights
+
+- **Similarity Assessment**:
+  - Multi-dimensional comparison across:
+    - Business model characteristics
+    - Financial profile metrics
+    - Market positioning
+    - Operational similarities
+  
+- **Scoring and Ranking**:
+  - Weighted similarity scores calculated
+  - Companies ranked by overall similarity
+  - Dimension-specific scores provided for transparency
+  - Top matches selected as comparables
 :::
 
 ::::

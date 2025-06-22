@@ -1,8 +1,6 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day5\lecture\01-forecasting-returns-with-llms.qmd
 ---
 title: "Forecasting Financial Returns with LLMs"
-format: html
+format: revealjs
 ---
 
 # Forecasting Financial Returns with LLMs
@@ -105,37 +103,19 @@ format: html
 :::
 
 ::: {.column width="40%"}
-```python
-# Simplified implementation example
-
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-# Load pre-trained financial LLM
-model_name = "financial-bert-large"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
-
-# Prepare earnings call transcript
-transcript = "In Q3, we saw robust growth in our..."
-
-# Create prediction prompt
-prompt = f"""
-Based on the following earnings call transcript, 
-predict the stock's return over the next month. 
-Transcript: {transcript}
-The expected return is:
-"""
-
-# Generate prediction
-inputs = tokenizer(prompt, return_tensors="pt")
-output = model.generate(
-    inputs.input_ids, 
-    max_length=100,
-    temperature=0.1
-)
-prediction = tokenizer.decode(output[0])
-```
+- **Implementation framework**:
+  - Load pre-trained financial language model
+  - Process earnings call transcripts and financial texts
+  - Create structured prediction prompts
+  - Generate return forecasts with confidence intervals
+  - Extract quantitative predictions from text outputs
+  
+- **Key technical components**:
+  - Financial domain-specific tokenization
+  - Earnings transcript preprocessing
+  - Prompt engineering for return prediction
+  - Output parsing and validation
+  - Integration with portfolio construction
 :::
 
 ::::
@@ -272,28 +252,20 @@ prediction = tokenizer.decode(output[0])
 :::
 
 ::: {.column width="40%"}
-```
-Example prompt for return forecasting:
+- **Example analytical framework**:
 
-Analyze the following earnings call transcript 
-for Company XYZ and predict the stock's return 
-over the next 3 months.
+  Analyze earnings call transcript for Company XYZ and predict stock return over next 3 months.
 
-Consider:
-1. Revenue growth trends and guidance
-2. Margin expansion or contraction
-3. Management tone and confidence
-4. Analyst question topics and management responses
-5. Comparison to previous quarterly language
-6. Capex and R&D investment plans
-7. Competitive positioning statements
+  **Consider these factors**:
+  1. Revenue growth trends and guidance
+  2. Margin expansion or contraction
+  3. Management tone and confidence
+  4. Analyst question topics and responses
+  5. Comparison to previous quarterly language
+  6. Capital expenditure and R&D plans
+  7. Competitive positioning statements
 
-Transcript: [...]
-
-First, extract key points from each consideration.
-Then, synthesize these insights to generate a
-return prediction with confidence interval.
-```
+  **Process**: Extract key insights from each factor, then synthesize to generate return prediction with confidence interval.
 :::
 
 ::::
@@ -392,4 +364,3 @@ return prediction with confidence interval.
 - **Adaptive models**: Developing systems that continuously update as market conditions evolve
 - **Interpretable predictions**: Enhancing transparency in model reasoning and decision processes
 - **Feedback loops**: Understanding how model-driven trading affects subsequent market dynamics
-```

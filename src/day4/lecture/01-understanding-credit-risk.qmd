@@ -1,8 +1,8 @@
 ```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\01-understanding-credit-risk.qmd
+// filepath: /Users/juan/Library/CloudStorage/Dropbox/Teaching/LLM/LLMsInFinance/src/day4/lecture/01-understanding-credit-risk.qmd
 ---
 title: "Understanding Credit Risk with LLMs"
-format: html
+format: revealjs
 ---
 
 # Understanding Credit Risk
@@ -22,7 +22,19 @@ format: html
   - Rating agency methodologies
   - Financial ratio analysis
   - Market-based approaches
-  
+:::
+
+::: {.column width="40%"}
+![Credit Risk Components](../../images/credit_risk.png)
+:::
+
+::::
+
+## Credit Risk Challenges
+
+:::: {.columns}
+
+::: {.column width="60%"}
 - **Challenges in credit risk assessment**:
   - Information asymmetry
   - Forward-looking assessment
@@ -31,7 +43,11 @@ format: html
 :::
 
 ::: {.column width="40%"}
-![Credit Risk Components](../../images/credit_risk.png)
+- **Emerging considerations**:
+  - Climate risk integration
+  - Supply chain vulnerabilities
+  - Digital transformation impacts
+  - Pandemic-like shock resilience
 :::
 
 ::::

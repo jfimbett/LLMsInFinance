@@ -18,7 +18,7 @@
 
 ::::
 
-## Zero-Shot Prompting
+## Zero-Shot Prompting: Basics
 
 :::: {.columns}
 
@@ -28,14 +28,6 @@
 - Benefits: Simplicity and directness
 - Limitations: Less control over output format and style
 - Financial applications: Quick market insights, basic definitions
-- **Technical foundation**: Model uses pre-training distribution to generate responses
-- **Success factors**: Clarity, specificity, and proper framing
-- **Financial use cases**:
-  - Market sentiment analysis
-  - Financial term definitions
-  - Basic regulatory guidance
-  - Initial risk assessment
-  - Quick portfolio insights
 :::
 
 ::: {.column width="40%"}
@@ -55,7 +47,28 @@ announcement on bond yields.
 
 ::::
 
-## One-Shot Prompting
+## Zero-Shot Prompting: Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Technical foundation**: Model uses pre-training distribution to generate responses
+- **Success factors**: Clarity, specificity, and proper framing
+- **Financial use cases**:
+  - Market sentiment analysis
+  - Financial term definitions
+  - Basic regulatory guidance
+  - Initial risk assessment
+  - Quick portfolio insights
+:::
+
+::: {.column width="40%"}
+![Zero-Shot Results](../../images/transformers1.png)
+:::
+
+::::
+
+## One-Shot Prompting: Basics
 
 :::: {.columns}
 
@@ -66,12 +79,6 @@ announcement on bond yields.
   - "Q: What is CAPM? A: The Capital Asset Pricing Model..."
   - "Now, what is the Fama-French Three-Factor Model?"
 - Financial applications: Consistent financial reports, standardized analyses
-- **Cognitive foundations**: Creates local context that guides prediction
-- **When to use**: 
-  - When format consistency is critical
-  - For standardized financial analyses
-  - To control response length and structure
-  - For regular financial reporting
 :::
 
 ::: {.column width="40%"}
@@ -87,7 +94,24 @@ indicates higher volatility.
 Q: What is alpha in finance?
 A:
 ```
+:::
 
+::::
+
+## One-Shot Prompting: Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Cognitive foundations**: Creates local context that guides prediction
+- **When to use**: 
+  - When format consistency is critical
+  - For standardized financial analyses
+  - To control response length and structure
+  - For regular financial reporting
+:::
+
+::: {.column width="40%"}
 ```
 FINANCIAL ANALYSIS: MSFT
 Market Cap: $2.81T
@@ -101,7 +125,7 @@ FINANCIAL ANALYSIS: NVDA
 
 ::::
 
-## Financial One-Shot Case Studies
+## Financial One-Shot Case Studies: Part 1
 
 :::: {.columns}
 
@@ -109,8 +133,6 @@ FINANCIAL ANALYSIS: NVDA
 - **Investment reports**: Standardized format across different securities
 - **Financial summaries**: Consistent executive briefings on different companies
 - **Risk assessments**: Uniform structure for different asset classes
-- **Regulatory filings**: Maintaining required formats for different entities
-- **Earnings call analyses**: Standard template applied to multiple companies
 :::
 
 ::: {.column width="40%"}
@@ -118,12 +140,30 @@ FINANCIAL ANALYSIS: NVDA
   - 42% improvement in format consistency
   - 37% reduction in hallucinated financial metrics
   - 63% higher analyst satisfaction ratings
-  - 29% faster production of financial reports
-  - Significant improvement in numerical accuracy
 :::
 
 ::::
-## Few-Shot Prompting
+
+## Financial One-Shot Case Studies: Part 2
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Regulatory filings**: Maintaining required formats for different entities
+- **Earnings call analyses**: Standard template applied to multiple companies
+- **Portfolio summaries**: Consistent presentation across asset classes
+:::
+
+::: {.column width="40%"}
+- **Efficiency metrics**:
+  - 29% faster production of financial reports
+  - Significant improvement in numerical accuracy
+  - 34% higher compliance approval rate
+:::
+
+::::
+
+## Few-Shot Prompting: Concepts
 
 :::: {.columns}
 
@@ -133,9 +173,6 @@ FINANCIAL ANALYSIS: NVDA
 - Creates stronger "mental models" within LLM context
 - Especially useful for specialized financial tasks
 - Financial applications: Complex financial analysis templates, regulatory reporting formats
-- **Technical mechanism**: Reinforces pattern recognition within the attention layers
-- **Optimal examples**: 3-5 diverse but consistent demonstrations
-- **Key advantage**: Balance between flexibility and standardization
 :::
 
 ::: {.column width="40%"}
@@ -152,10 +189,28 @@ consistent growth. BUY.
 TSLA: P/E 75.3, high growth,
 high volatility. HOLD.
 
-AMZN: P/E 40.8, AWS growth,
-retail margins improving.
+AMZN:
 ```
+:::
 
+::::
+
+## Few-Shot Prompting: Implementation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Technical mechanism**: Reinforces pattern recognition within the attention layers
+- **Optimal examples**: 3-5 diverse but consistent demonstrations
+- **Key advantage**: Balance between flexibility and standardization
+- **Best practices**:
+  - Provide relevant financial examples
+  - Maintain consistent format across examples
+  - Order examples from simple to complex
+  - Include diverse but related scenarios
+:::
+
+::: {.column width="40%"}
 ```
 Financial ratio calculation:
 
@@ -171,14 +226,13 @@ Return on Assets = Net Income /
 Total Assets
 = $75M / $1.5B = 0.05 (5%)
 
-Price-to-Book = Market Cap / 
-Book Value
+Price-to-Book =
 ```
 :::
 
 ::::
 
-## Complex Financial Few-Shot Scenarios
+## Complex Financial Few-Shot Scenarios: Part 1
 
 :::: {.columns}
 
@@ -186,6 +240,37 @@ Book Value
 - **Financial modelling**: Demonstrating complex DCF calculations
 - **Merger analysis**: Multiple example assessments before target case
 - **Regulatory compliance**: Pattern of compliance checks across scenarios
+:::
+
+::: {.column width="40%"}
+```
+M&A Analysis Examples:
+
+Target: CompanyA
+Valuation: $500M
+Synergy Est: $50M
+Recommendation: PROCEED
+Rationale: 10% accretive, 
+strategic market fit
+
+Target: CompanyB
+Valuation: $350M
+Synergy Est: $15M
+Recommendation: HOLD
+Rationale: 2% dilutive, 
+integration challenges
+
+Target: CompanyC
+```
+:::
+
+::::
+
+## Complex Financial Few-Shot Scenarios: Part 2
+
+:::: {.columns}
+
+::: {.column width="60%"}
 - **Portfolio optimization**: Examples of different optimization approaches
 - **Financial auditing**: Systematic audit procedure demonstrations
 - **Market anomaly detection**: Examples of identifying market irregularities
@@ -200,8 +285,8 @@ Book Value
   - Clear delineation between examples and query
 :::
 
-:::
-## Chain-of-Thought Prompting
+::::
+## Chain-of-Thought Prompting: Concepts
 
 :::: {.columns}
 
@@ -210,12 +295,7 @@ Book Value
 - Prompt: "Think through this problem step by step"
 - Dramatically improves performance on complex tasks
 - Reduces logical errors and hallucinations
-- Financial applications: Complex valuation problems, risk assessments, regulatory compliance checks
 - **Research foundation**: Wei et al. (2022) demonstrated 20-40% improvement on mathematical problems
-- **Financial reasoning impact**: 
-  - 52% reduction in calculation errors
-  - 63% improvement in logical consistency
-  - 47% better alignment with financial theory
 :::
 
 ::: {.column width="40%"}
@@ -233,7 +313,28 @@ To calculate the DCF valuation:
    enterprise value
 6) Adjust for debt and cash
 ```
+:::
 
+::::
+
+## Chain-of-Thought Prompting: Financial Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Financial reasoning impact**: 
+  - 52% reduction in calculation errors
+  - 63% improvement in logical consistency
+  - 47% better alignment with financial theory
+- **Key use cases**:
+  - Complex valuation problems
+  - Risk assessments
+  - Regulatory compliance checks
+  - Investment decision processes
+  - Credit analysis frameworks
+:::
+
+::: {.column width="40%"}
 ```
 Analyze whether Company X
 should proceed with the merger:

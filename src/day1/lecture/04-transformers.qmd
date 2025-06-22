@@ -9,11 +9,11 @@
 
 ![Attention Paper](../../images/attention_paper.png)
 
-## Contribution
+## Transformer Evolution
 
 ![Attention Mechanism](../../images/attention_abstract.png)
 
-## A toy representation
+## A Visual Representation
 
 ![Transformer Baby](../../images/transformer_baby.png)
 
@@ -28,19 +28,22 @@
 
 
 
-## The recipe
+## The recipe: Part 1
 
 
-- **Tokenise** the *source* sentence and add start/end markers.  
-- **Embed** each token **+** add positional encodings.
+- **Tokenise** the *source* sentence and add start/end markers  
+- **Embed** each token **+** add positional encodings
 
 - **Encoder (× N layers)**  
-  - Multi-head **self-attention**.  
-  - Position-wise **feed-forward network**.  
-  - **Residual connection + LayerNorm** after each sub-layer.  
+  - Multi-head **self-attention**  
+  - Position-wise **feed-forward network**  
+  - **Residual connection + LayerNorm** after each sub-layer  
 
-- Cache the resulting **encoder hidden states** (the “memory”).
+- Cache the resulting **encoder hidden states** (the "memory")
 
+
+
+## The recipe: Part 2
 
 
 - **Decoder (run autoregressively)**  
@@ -62,13 +65,13 @@
 - **Layer Normalization**: A technique to stabilize and accelerate training by normalizing the inputs to each layer, applied after residual connections.
 
 
-## Step 1: Input Embeddings + Positional Encoding
+## Step 1: Input Embeddings
 
 ### Token Embeddings
-- When you feed a sequence of tokens into a transformer‐based LLM, the first thing that happens is that each discrete token (an integer index) is turned into a dense vector of much lower dimensionality than the size of the vocabulary.
+- When you feed a sequence of tokens into a transformer‐based LLM, each discrete token (an integer index) is turned into a dense vector of lower dimensionality than the vocabulary size
 
-- Let $V$ be the vocabulary size, and $N$ the sequence length. 
-- A token $j$ is an integer in the set $\{0, 1, \ldots, V-1\}$.
+- Let $V$ be the vocabulary size, and $N$ the sequence length 
+- A token $j$ is an integer in the set $\{0, 1, \ldots, V-1\}$
 - A brute force one-hot vector encoding $x \in \{0,1\}^V$
 $$
 x_j = \begin{cases}
@@ -77,13 +80,15 @@ x_j = \begin{cases}
 \end{cases}
 $$
 
-- This is inefficient, especially for large vocabularies, as it results in high-dimensional sparse vectors. Instead, we use a **learnable embedding matrix** $\mathbf{E} \in \mathbb{R}^{V \times d_{\text{model}}}$, where $d_{\text{model}}$ is the embedding dimension. Where $d_{\text{model}}$ is typically much smaller than $V$.
+- This is inefficient, especially for large vocabularies, as it results in high-dimensional sparse vectors
+- Instead, we use a **learnable embedding matrix** $\mathbf{E} \in \mathbb{R}^{V \times d_{\text{model}}}$, where $d_{\text{model}}$ is typically much smaller than $V$
+
+## Step 1: Positional Encoding
 
 - If token $t$ is represented by index $j$, its embedding is given by the $j$-th row of 
 $$
 \mathbf{e}_j = \mathbf{x}_j^T \mathbf{E} = \mathbf{E}_j
 $$
-
 
 ### Positional Encoding
 Since transformers have no inherent notion of position, we add positional information:
@@ -109,7 +114,7 @@ Where $\mathbf{W}^Q, \mathbf{W}^K, \mathbf{W}^V \in \mathbb{R}^{d_{\text{model}}
 
 
 
-## Step 3: Computing Attention Scores
+## Step 3: Computing Attention - The Intuition
 
 ### Attention Formula
 $$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}$$
@@ -121,106 +126,181 @@ $$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\fr
 3. **Normalize**: Apply softmax to get attention weights
 4. **Weighted sum**: Multiply by values $\mathbf{V}$
 
+## Step 3: Attention Visualization
 
+![Attention Visualization](../../images/transformers1.png)
+
+- Each token attends to all other tokens
+- Attention weights determine how much information flows
+- Self-attention is the key to capturing dependencies regardless of distance
+- This replaces the need for recurrence in traditional RNNs
 
 ## Step 4: Multi-Head Attention
 
-Instead of single attention, we use **multiple attention heads**:
+- Single attention mechanism provides limited representational power
+- **Multi-head attention** runs multiple attention computations in parallel
+- Each "head" learns different relationship patterns:
+  - Some heads focus on nearby words
+  - Others capture long-range dependencies
+  - Some track syntactic relationships
 
-$$\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)\mathbf{W}^O$$
+$$\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \text{head}_2, ..., \text{head}_h)\mathbf{W}^O$$
 
-Where each head is:
+Where each head is computed as:
 $$\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)$$
-
-**Why multiple heads?**
-- Each head can focus on different types of relationships
-- Increases model's representational capacity
-- Typical: 8-16 heads in practice
-
 
 ## Step 5: Feed-Forward Networks
 
-After attention, each position goes through a feed-forward network:
+- After attention, each position goes through identical feed-forward networks
+- Applied to each position separately and identically
+- Consists of two linear transformations with a ReLU activation in between:
 
-$$\text{FFN}(\mathbf{x}) = \text{max}(0, \mathbf{x}\mathbf{W}_1 + \mathbf{b}_1)\mathbf{W}_2 + \mathbf{b}_2$$
+$$\text{FFN}(x) = \max(0, x\mathbf{W}_1 + \mathbf{b}_1)\mathbf{W}_2 + \mathbf{b}_2$$
 
-**Architecture details:**
-- Input dimension: $d_{\text{model}}$ (e.g., 512)  
-- Hidden dimension: $d_{ff}$ (typically $4 \times d_{\text{model}} = 2048$)
-- Output dimension: $d_{\text{model}}$ (back to 512)
-- Applied **identically** to each position
-
+- This introduces non-linearity and allows the model to transform the representation
 
 ## Step 6: Residual Connections & Layer Normalization
 
-Each sub-layer (attention or FFN) is wrapped with:
+- **Residual connections** help with training deep networks:
+  - Add the input of each sub-layer to its output: $x + \text{Sublayer}(x)$
+  - Allows gradients to flow through the network more easily
 
-$$\text{LayerNorm}(\mathbf{x} + \text{Sublayer}(\mathbf{x}))$$
+- **Layer normalization** stabilizes the learning process:
+  - Normalizes the inputs across the features
+  - Applied after each residual connection
 
-**Why this matters:**
-- **Residual connections**: Prevent vanishing gradients in deep networks
-- **Layer normalization**: Stabilizes training by normalizing across features
-- **Order**: In original paper, LayerNorm comes after; in practice, often before
+$$\text{LayerNorm}(x + \text{Sublayer}(x))$$
 
+## Transformer Model Applications
 
-## GPT-2: Decoder-Only Architecture
+- **Machine Translation**: Original use case in "Attention Is All You Need"
+- **Text Generation**: Foundation for GPT models
+- **Document Understanding**: BERT and its variants
+- **Multimodal Applications**: Vision transformers, audio transformers
+- **Financial Applications**: Market prediction, sentiment analysis, report generation
 
+## GPT-2: A Landmark Decoder-Only Model
 
+### GPT-2 Architecture Basics
 
-**Key differences from original Transformer:**
-- **No encoder**: Only decoder blocks
-- **Masked self-attention**: Can only attend to previous tokens
-- **Autoregressive generation**: Predicts next token given previous tokens
+- Released by OpenAI in 2019
+- Decoder-only transformer architecture
+- Trained on 40GB of internet text
+- Available in different sizes:
+  - Small: 117M parameters
+  - Medium: 345M parameters
+  - Large: 762M parameters
+  - XL: 1.5B parameters
 
-### Masked Attention
-$$\text{score}_{i,j} = \begin{cases} 
-\mathbf{q}_i \cdot \mathbf{k}_j & \text{if } j \leq i \\
--\infty & \text{if } j > i 
-\end{cases}$$
+## GPT-2: Model Architecture Details
 
+- Uses masked self-attention (can only attend to previous tokens)
+- No encoder-decoder structure, just the decoder component
+- Trained on a simple next-token prediction objective
+- Layer configuration (for 1.5B model):
+  - 48 layers
+  - 1600 dimensional embeddings
+  - 25 attention heads
 
+## GPT-2: Key Innovations
 
-## Step 7: Text Generation with GPT-2
+- Demonstrated impressive zero-shot capabilities
+- Introduced **unsupervised pre-training** at scale
+- Showed that scaling model size and data substantially improves performance
+- Established the foundation for subsequent models like GPT-3 and GPT-4
+- Pioneered better sampling methods for text generation
 
-### The Generation Process
-1. **Input**: Prompt tokens $[x_1, x_2, \ldots, x_n]$
-2. **Forward pass**: Compute probability distribution over vocabulary
-3. **Sampling**: Select next token $x_{n+1}$ from distribution  
-4. **Repeat**: Append $x_{n+1}$ and generate $x_{n+2}$, etc.
+## Sampling Strategies: Introduction
 
-### Next-Token Prediction
-$$P(x_{t+1} | x_1, \ldots, x_t) = \text{softmax}(\mathbf{W}_{\text{vocab}} \mathbf{h}_t + \mathbf{b})$$
+- After the model computes the probability distribution for the next token, how do we select it?
+- Different sampling methods produce different text qualities and characteristics
+- Trade-off between:
+  - **Determinism**: Consistent, predictable outputs
+  - **Creativity**: Novel, diverse text generation
+  - **Coherence**: Staying on topic without degrading
 
-Where $\mathbf{h}_t$ is the final hidden state for position $t$.
+## Sampling Strategy: Greedy Decoding
 
+- **Approach**: Always select the most probable next token
+- **Formula**: $y_t = \arg\max_w P(w|y_{<t})$
 
-## Sampling Strategies
+### Advantages:
+- Simple to implement
+- Often produces coherent text for short sequences
+- Deterministic results
 
-### Greedy Decoding
-$$x_{t+1} = \arg\max_{x} P(x | x_1, \ldots, x_t)$$
+### Disadvantages:
+- Lacks diversity
+- Can get stuck in repetition loops
+- May produce suboptimal overall sequences
 
-### Top-k Sampling  
-Sample from the $k$ most likely tokens
+## Sampling Strategy: Temperature Sampling
 
-### Nucleus (Top-p) Sampling
-Sample from smallest set of tokens whose cumulative probability ≥ $p$
+- **Approach**: Sample from softmax distribution with temperature adjustment
+- **Formula**: $P(w|y_{<t}) = \frac{\exp(z_w/T)}{\sum_{w'} \exp(z_{w'}/T)}$
 
-### Temperature Scaling
-$$P'(x_i) = \frac{\exp(z_i / \tau)}{\sum_j \exp(z_j / \tau)}$$
-- $\tau < 1$: More focused (conservative)
-- $\tau > 1$: More random (creative)
+### Temperature effects:
+- $T < 1$: Makes distribution more peaked (less random)
+- $T > 1$: Makes distribution more uniform (more random)
+- $T = 1$: Standard softmax, no adjustment
+- $T \to 0$: Approaches greedy decoding
 
+## Sampling Strategy: Top-K Sampling
 
-## Why Transformers Work So Well
+- **Approach**: Limit sampling to the K most likely next tokens
+- **Procedure**:
+  1. Sort the vocabulary by probability
+  2. Keep only the top K tokens
+  3. Renormalize probabilities
+  4. Sample from this smaller distribution
 
-### Advantages over RNNs
-- **Parallelization**: All positions processed simultaneously
-- **Long-range dependencies**: Direct connections between any two positions
-- **Gradient flow**: Shorter paths for gradient propagation
+### Advantages:
+- Reduces chance of selecting low-probability (potentially nonsensical) tokens
+- Maintains some randomness
+- Often produces more coherent text than pure sampling
 
-### Computational Complexity
-- **Self-attention**: $O(n^2 \cdot d)$ where $n$ is sequence length
-- **RNN**: $O(n \cdot d^2)$ but sequential
-- **Trade-off**: Memory vs. parallelization
+### Disadvantages:
+- K is a fixed hyperparameter regardless of confidence distribution
+- May be too restrictive for some contexts, too permissive for others
+
+## Sampling Strategy: Nucleus (Top-p) Sampling
+
+- **Approach**: Sample from the smallest set of tokens whose cumulative probability exceeds threshold p
+- **Procedure**:
+  1. Sort tokens by probability
+  2. Keep adding tokens until cumulative probability ≥ p
+  3. Renormalize and sample from this dynamic set
+
+### Advantages:
+- Adapts to the confidence of the model
+- More flexible than Top-K
+- Current standard for high-quality text generation
+
+### Disadvantages:
+- Slightly more complex to implement
+- Still requires tuning the p parameter (typically 0.9-0.95)
+
+## Sampling in Financial Applications
+
+### Conservative Approach (Low Temperature/High Precision):
+- Regulatory reporting
+- Earnings statement generation
+- Financial advice
+
+### Creative Approach (Higher Temperature/More Exploration):
+- Market scenario generation
+- Stress testing
+- Alternative investment thesis formulation
+
+## Putting It All Together: The Transformer Revolution
+
+- Transformers dramatically improved NLP capabilities through:
+  - **Parallelization**: Training efficiency
+  - **Attention Mechanism**: Better at capturing relationships
+  - **Scalability**: Performance continues to improve with size
+
+- Led to a new paradigm of foundation models
+- Enabled financial applications previously considered impossible
+- Continues to evolve with each new model generation
 
 

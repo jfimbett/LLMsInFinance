@@ -22,17 +22,398 @@ format:
 - Entity recognition in financial documents
 - AI agents for financial analysis
 
-{{< include 01-valuation-methods-recap.qmd >}}
+---
 
-{{< include 02-forecasting-with-llms.qmd >}}
+# Valuation Methods Recap
 
-{{< include 03-scenario-analysis.qmd >}}
+## Traditional Valuation Approaches
 
-{{< include 04-comparable-selection.qmd >}}
+::: {.columns}
 
-{{< include 05-entity-recognition.qmd >}}
+::: {.column width="60%"}
+- Fundamental building blocks of financial analysis
+- Two primary approaches:
+  - Intrinsic valuation (DCF)
+  - Relative valuation (multiples)
+- Complementary methodologies
+- Critical for investment decisions, M&A, and capital allocation
+:::
 
-{{< include 06-ai-agents.qmd >}}
+::: {.column width="40%"}
+![Valuation Methods](../../images/transformers2.png)
+:::
+
+:::
+
+## Discounted Cash Flow (DCF)
+
+::: columns
+
+:::: column width="60%"
+- **Core Principle**: Value = Present value of future cash flows
+- **Key Components**:
+  - Forecast period (typically 5-10 years)
+  - Terminal value
+  - Discount rate (WACC)
+- **Advantages**:
+  - Theoretically sound
+  - Forward-looking
+  - Captures long-term value creation
+- **Challenges**:
+  - Sensitivity to assumptions
+  - Forecast accuracy
+  - Terminal value dominance
+::::
+
+:::: column width="40%"
+$\text{Enterprise Value} = \sum_{t=1}^{n} \frac{FCF_t}{(1+WACC)^t} + \frac{TV}{(1+WACC)^n}$
+
+$TV = \frac{FCF_{n+1}}{WACC - g}$
+
+Where:
+- $FCF_t$ = Free Cash Flow in year t
+::::
+
+:::
+
+---
+
+# Forecasting with LLMs
+
+## Beyond Traditional Forecasting
+
+::: columns
+
+:::: column width="60%"
+- Conventional forecasting relies on:
+  - Historical data extrapolation
+  - Analyst judgment
+  - Statistical models (ARIMA, regression)
+  - Expert consensus
+- LLMs offer complementary capabilities:
+  - Text + numerical data integration
+  - Contextual understanding
+  - Pattern recognition across domains
+  - Synthesizing diverse information sources
+::::
+
+:::: column width="40%"
+![Forecasting Evolution](../../images/transformers_model.png)
+::::
+
+:::
+
+## LLM Forecasting: Data Sources
+
+::: {.columns}
+
+::: {.column width="60%"}
+- **Financial Statements**:
+  - Historical performance trends
+  - Management guidance
+  - Accounting policy impacts
+- **Earnings Calls Transcripts**:
+  - Management tone and sentiment
+  - Forward-looking statements
+  - Analyst concerns and questions
+:::
+
+::: {.column width="40%"}
+- **News and Press Releases**:
+  - Company developments
+  - Industry trends
+  - Competitive landscape
+- **SEC Filings**:
+  - Risk disclosures
+  - Legal proceedings
+  - Strategic initiatives
+:::
+
+:::
+
+:::
+
+---
+
+# Scenario Analysis with LLMs
+
+## Beyond Base Case Forecasting
+
+::: columns
+
+:::: column width="60%"
+- Single forecasts fail to capture uncertainty
+- Scenario analysis explores multiple potential futures
+- Traditional approach:
+  - Base, upside, downside cases
+  - Limited by human imagination and resources
+- LLMs enable:
+  - Broader scenario generation
+  - Systematic variation of inputs
+  - Creative yet plausible alternative futures
+  - Internally consistent scenario narratives
+::::
+
+:::: column width="40%"
+![Scenario Analysis](../../images/transformer_baby.png)
+::::
+
+:::
+
+## LLM-Powered Scenario Framework: Part 1
+
+::: {.columns}
+
+::: {.column width="60%"}
+- **1. Scenario Identification**:
+  - Systematic exploration of key uncertainties
+  - Critical variable identification
+  - Coherent narrative development
+- **2. Parameter Variation**:
+  - Systematic variation of inputs
+  - Correlation preservation
+  - Cross-impact analysis
+:::
+
+::: {.column width="40%"}
+![Scenario Framework](../../images/transformer_baby.png)
+:::
+
+:::
+
+## LLM-Powered Scenario Framework: Part 2
+
+::: {.columns}
+
+::: {.column width="60%"}
+- **3. Financial Modeling**:
+  - Scenario-specific forecasts
+  - Internally consistent projections
+  - Financial statement integration
+- **4. Valuation Impact**:
+  - Probability-weighted outcomes
+  - Sensitivity analysis
+  - Risk factor quantification
+:::
+
+::: {.column width="40%"}
+```
+Scenario: Global Recession
+Parameters:
+- GDP Growth: -2.5%
+- Interest Rates: +150bps
+- Industry Revenue: -15%
+- Margins: -300bps
+- CapEx: -40%
+
+Outcome:
+- DCF Value: $32-38/share
+- Probability: 25%
+```
+:::
+
+:::
+
+:::
+
+---
+
+# Comparable Selection with LLMs
+
+## The Comparable Company Challenge
+
+::: columns
+
+:::: column width="60%"
+- Cornerstone of relative valuation
+- Traditional methods rely on:
+  - Industry classification systems (GICS, SIC)
+  - Analyst judgment
+  - Size and growth filtering
+  - Liquidity thresholds
+- Key limitations:
+  - Rigid classification systems
+  - Missed cross-industry similarities
+  - Superficial matching criteria
+  - Time-consuming manual selection
+::::
+
+:::: column width="40%"
+![Comparable Selection](../../images/encoder-decoder-attention.png)
+::::
+
+:::
+
+## Beyond Industry Classifications: Part 1
+
+::: {.columns}
+
+::: {.column width="60%"}
+- **Traditional industry grouping systems**:
+  - GICS (Global Industry Classification Standard)
+  - SIC (Standard Industrial Classification)
+  - NAICS (North American Industry Classification System)
+  - ICB (Industry Classification Benchmark)
+:::
+
+::: {.column width="40%"}
+![Industry Classification](../../images/encoder-decoder-attention.png)
+:::
+
+:::
+
+## Beyond Industry Classifications: Part 2
+
+::: {.columns}
+
+::: {.column width="60%"}
+- **Limitations of traditional systems**:
+  - Rigid boundaries
+  - Outdated categories
+  - Missing emerging business models
+  - Conglomerate classification challenges
+  - Cross-industry similarities overlooked
+:::
+
+::: {.column width="40%"}
+- **LLM enhancements**:
+  - Nuanced business model understanding
+  - Dynamic sector relationships
+  - Real-time classification updates
+  - Multi-dimensional similarity analysis
+  - Contextual peer identification
+:::
+
+:::
+
+:::
+
+---
+
+# Entity Recognition in Large Texts
+
+## The Financial Document Challenge
+
+::: columns
+
+:::: column width="60%"
+- Financial analysis requires processing extensive text
+- Key document types:
+  - Annual reports (10-K, Annual Report)
+  - Quarterly filings (10-Q)
+  - Earnings call transcripts
+  - Proxy statements
+  - Prospectuses and offering memoranda
+  - Analyst reports
+  - News and press releases
+- Traditional challenges:
+  - Volume (often 100+ pages)
+  - Technical language
+  - Structured and unstructured elements
+  - Critical information dispersal
+::::
+
+:::: column width="40%"
+![Document Analysis](../../images/attention_paper.png)
+::::
+
+:::
+
+## Named Entity Recognition (NER)
+
+::: {.columns}
+
+::: {.column width="60%"}
+- **Definition**: Identifying and classifying named entities in text
+- **Traditional NER entities**:
+  - Person names
+  - Organizations
+  - Locations
+  - Dates
+  - Monetary values
+:::
+
+::: {.column width="40%"}
+- **Financial-specific entities**:
+  - Financial metrics (EBITDA, ROE)
+  - Company products and services
+  - Business segments
+  - Regulatory references (SEC rules)
+  - Market terms (bull market, bear market)
+:::
+
+:::
+
+:::
+
+---
+
+# Bonus: AI Agents for Financial Analysis
+
+## Beyond Single-Task LLMs: The CrewAI Paradigm
+
+::: columns
+
+:::: column width="60%"
+- Moving from standalone LLMs to **agent crews** for financial analysis
+- **Defining characteristics**:
+  - Specialized agent roles with specific expertise
+  - Task-based decomposition of complex problems
+  - Coordinated workflow between agents
+  - Memory and context sharing across the crew
+  - Goal-directed collaborative behavior
+  - Tool and API orchestration
+  - Multi-step reasoning with handoffs
+::::
+
+:::: column width="40%"
+![AI Agents](../../images/rnn1.png)
+::::
+
+:::
+
+## Financial Agent Architecture: Part 1
+
+::: {.columns}
+
+::: {.column width="60%"}
+- **CrewAI Structure**:
+  - **Crew**: The orchestrating entity managing the workflow
+  - **Agents**: Specialized financial experts with defined roles
+  - **Tasks**: Discrete financial analysis activities
+  - **Tools**: External resources and capabilities
+:::
+
+::: {.column width="40%"}
+![AI Agents](../../images/rnn1.png)
+:::
+
+:::
+
+## Financial Agent Architecture: Part 2
+
+::: {.columns}
+
+::: {.column width="60%"}
+- **Key Elements**:
+  - **Role Definition**: Clear expertise boundaries
+  - **Task Assignment**: Matching tasks to optimal agents
+  - **Workflow Design**: Sequential and parallel execution paths
+:::
+
+::: {.column width="40%"}
+- **Critical Components**:
+  - **Memory Systems**: Shared knowledge repository
+  - **Tool Integration**: Access to financial resources
+  - **Decision Framework**: How conclusions are reached
+  - **Feedback Loops**: Self-improvement mechanisms
+:::
+
+:::
+
+:::
+
+---
 
 ## What's Next?
 

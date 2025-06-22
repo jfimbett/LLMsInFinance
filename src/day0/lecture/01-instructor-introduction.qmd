@@ -1,18 +1,15 @@
-## About Your Instructor
+## About Me
 
-### Dr. Juan F. Imbet
+### Juan F. Imbet
 - **Academic Position**: Assistant Professor in Finance, Paris Dauphine University - PSL
-- **Education**: Ph.D. in Finance (2021), Universitat Pompeu Fabra and Barcelona School of Economics
+- **Education**: Ph.D. in Finance (2021), Universitat Pompeu Fabra and Barcelona School of Economics, Industrial Engineering and Economics, Universidad de los Andes (2014)
 - **Industry Experience**: Consultant for financial institutions implementing ML/NLP solutions
 
-### Research & Expertise
-- **Research Focus**: Asset pricing, computational finance, and NLP applications in finance
-- **Publications**: Journal of Finance, Review of Financial Studies, Journal of Financial Economics
-- **Technical Skills**: Deep learning models, large language models, quantitative methods
-- **Current Projects**: Using LLMs for financial sentiment analysis and risk assessment
+### Research & Teaching
+- **Research Focus**: Asset Management, Corporate Finance, Asset Pricing and Computational Finance.
+- **Teaching Focus**: Python, Asset Pricing, Asset Management.
 
 ### Contact Information
-- **Email**: juan.imbet@bse.eu
-- **Office Hours**: Daily 16:30-17:30 during the course
+- **Email**: juan.imbet@dauphine.psl.eu
 - **GitHub**: [github.com/jfimbett](https://github.com/jfimbett)
 - **Website**: [jfimbett.github.io](https://jfimbett.github.io)

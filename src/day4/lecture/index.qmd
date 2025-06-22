@@ -1,8 +1,14 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\lecture\index.qmd
 ---
 title: "Day 4: Advanced Financial Applications of LLMs"
-format: html
+author: "Your Name"
+date: "2025-05-11"
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    preview-links: auto
+    css: ../../styles.css
+    logo: ../../images/logo_header.svg
 ---
 
 # Day 4: Advanced Financial Applications of LLMs

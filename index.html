@@ -278,12 +278,10 @@
             align-items: center;
             margin: 20px 0;
             perspective: 1000px;
-        }
-
-        .llm-letter {
+        }        .llm-letter {
             font-size: 4rem;
             font-weight: 900;
-            margin: 0 10px;
+            margin: 0 3px;
             color: #ffffff;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
             transform-style: preserve-3d;
@@ -366,14 +364,127 @@
                 transform: scale(1.2);
                 opacity: 0;
             }
-        }
-
-        .llm-container {
+        }        .llm-container {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 120px;
+            height: 200px;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Transformer Box Styles */
+        .transformer-box {
+            width: 180px;
+            height: 80px;
+            background: linear-gradient(145deg, #1a1a1a, #333);
+            border: 2px solid #444;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                inset 0 2px 8px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transformer-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.4), transparent);
+            animation: transformerGlow 3s ease-in-out infinite;
+        }
+
+        .transformer-label {
+            color: #4a90e2;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 1;
+        }
+
+        @keyframes transformerGlow {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        /* Output Animation Styles */
+        .output-animation {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0;
+            animation: fadeInOutput 1s ease-in-out 4s forwards;
+        }
+
+        .output-word {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .output-word.in {
+            animation: wordAppear 0.8s ease-out 4.5s forwards;
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .output-word.finance {
+            animation: wordAppear 0.8s ease-out 5.5s forwards;
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes fadeInOutput {
+            to { opacity: 1; }
+        }
+
+        @keyframes wordAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced letter animation for transformer flow */
+        .llm-letter.processing {
+            animation: letterToTransformer 2s ease-in-out forwards;
+        }
+
+        @keyframes letterToTransformer {
+            0% {
+                transform: translateY(0px) rotateY(0deg) scale(1);
+            }
+            30% {
+                transform: translateY(-40px) rotateY(180deg) scale(0.8);
+            }
+            50% {
+                transform: translateY(0px) rotateY(360deg) scale(0.6);
+                opacity: 0.3;
+            }
+            70% {
+                transform: translateY(20px) rotateY(540deg) scale(0.8);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(0px) rotateY(720deg) scale(1);
+                opacity: 1;
+            }
         }
 
         /* Interactive hover effects */
@@ -385,7 +496,7 @@
         }        @media (max-width: 768px) {
             .llm-letter {
                 font-size: 2.5rem;
-                margin: 0 5px;
+                margin: 0 2px;
             }
             
             .llm-letter:nth-child(4) {
@@ -406,6 +517,24 @@
                 width: 210px;
                 height: 210px;
             }
+
+            .llm-container {
+                height: 180px;
+                gap: 20px;
+            }
+
+            .transformer-box {
+                width: 140px;
+                height: 60px;
+            }
+
+            .transformer-label {
+                font-size: 0.6rem;
+            }
+
+            .output-word {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -415,16 +544,29 @@
         <div class="container">
             <div class="row justify-content-center">                <div class="col-lg-10">
                     <h1 class="hero-title">Large Language Models in Finance</h1>
-                    
-                    <!-- Animated LLM Letters -->
+                      <!-- Animated LLM Letters -->
                     <div class="llm-container">
                         <div class="pulse-ring"></div>
                         <div class="pulse-ring"></div>
-                        <div class="pulse-ring"></div>                        <div class="llm-animation">
+                        <div class="pulse-ring"></div>
+                        
+                        <!-- Input: LLMs letters -->
+                        <div class="llm-animation">
                             <div class="llm-letter">L</div>
                             <div class="llm-letter">L</div>
                             <div class="llm-letter">M</div>
                             <div class="llm-letter">s</div>
+                        </div>
+
+                        <!-- Transformer Box -->
+                        <div class="transformer-box">
+                            <span class="transformer-label">Transformer</span>
+                        </div>
+
+                        <!-- Output: in Finance -->
+                        <div class="output-animation">
+                            <span class="output-word in">in</span>
+                            <span class="output-word finance">Finance</span>
                         </div>
                     </div>
                     
@@ -877,15 +1019,52 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // Enhanced LLM Animation JavaScript
+      <script>
+        // Enhanced LLM Animation JavaScript with Transformer Flow
         document.addEventListener('DOMContentLoaded', function() {
             const letters = document.querySelectorAll('.llm-letter');
+            const transformerBox = document.querySelector('.transformer-box');
+            let animationCycle = 0;
+            
+            // Auto-trigger transformer sequence every 8 seconds
+            function startTransformerSequence() {
+                animationCycle++;
+                
+                // Add processing class to letters with staggered timing
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.classList.add('processing');
+                    }, index * 200);
+                });
+
+                // Add glow effect to transformer box
+                setTimeout(() => {
+                    transformerBox.style.boxShadow = `
+                        0 8px 32px rgba(74, 144, 226, 0.6),
+                        inset 0 2px 8px rgba(255, 255, 255, 0.2),
+                        0 0 40px rgba(74, 144, 226, 0.4)
+                    `;
+                }, 800);
+
+                // Reset after animation completes
+                setTimeout(() => {
+                    letters.forEach(letter => {
+                        letter.classList.remove('processing');
+                    });
+                    transformerBox.style.boxShadow = '';
+                }, 6000);
+            }
+
+            // Start the sequence initially after 2 seconds, then repeat every 8 seconds
+            setTimeout(startTransformerSequence, 2000);
+            setInterval(startTransformerSequence, 8000);
             
             // Add click events for fun interactions
             letters.forEach((letter, index) => {
                 letter.addEventListener('click', function() {
+                    // Trigger immediate transformer sequence
+                    startTransformerSequence();
+                    
                     // Create a burst effect
                     this.style.transform = 'translateY(-50px) rotateY(720deg) scale(1.5)';
                     this.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
@@ -905,17 +1084,26 @@
                 
                 // Add mouseenter event for preview
                 letter.addEventListener('mouseenter', function() {
-                    this.style.animationPlayState = 'paused';
-                    this.style.transform = 'translateY(-20px) scale(1.2)';
-                    this.style.transition = 'all 0.3s ease';
+                    if (!this.classList.contains('processing')) {
+                        this.style.animationPlayState = 'paused';
+                        this.style.transform = 'translateY(-20px) scale(1.2)';
+                        this.style.transition = 'all 0.3s ease';
+                    }
                 });
                 
                 // Add mouseleave event to resume
                 letter.addEventListener('mouseleave', function() {
-                    this.style.animationPlayState = 'running';
-                    this.style.transform = '';
-                    this.style.transition = '';
+                    if (!this.classList.contains('processing')) {
+                        this.style.animationPlayState = 'running';
+                        this.style.transform = '';
+                        this.style.transition = '';
+                    }
                 });
+            });
+            
+            // Add click event to transformer box
+            transformerBox.addEventListener('click', function() {
+                startTransformerSequence();
             });
             
             // Add scroll-triggered animation pause/resume
@@ -923,14 +1111,18 @@
             window.addEventListener('scroll', function() {
                 if (!isScrolling) {
                     letters.forEach(letter => {
-                        letter.style.animationPlayState = 'paused';
+                        if (!letter.classList.contains('processing')) {
+                            letter.style.animationPlayState = 'paused';
+                        }
                     });
                 }
                 
                 clearTimeout(window.scrollTimeout);
                 window.scrollTimeout = setTimeout(function() {
                     letters.forEach(letter => {
-                        letter.style.animationPlayState = 'running';
+                        if (!letter.classList.contains('processing')) {
+                            letter.style.animationPlayState = 'running';
+                        }
                     });
                     isScrolling = false;
                 }, 100);
@@ -943,13 +1135,14 @@
                 letters.forEach(letter => {
                     if (document.hidden) {
                         letter.style.animationPlayState = 'paused';
-                    } else {
+                    } else if (!letter.classList.contains('processing')) {
                         letter.style.animationPlayState = 'running';
                     }
                 });
             });
         });
-          // Optional: Add keyboard controls (L, L, M, s keys)
+        
+        // Optional: Add keyboard controls (L, L, M, s keys and T for transformer)
         document.addEventListener('keydown', function(event) {
             const letters = document.querySelectorAll('.llm-letter');
             
@@ -970,6 +1163,10 @@
                     break;
                 case 's':
                     letters[3].click(); // s is the fourth letter
+                    break;
+                case 't':
+                    // Trigger transformer sequence
+                    document.querySelector('.transformer-box').click();
                     break;
             }
         });

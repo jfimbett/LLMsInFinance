@@ -1,0 +1,17 @@
+## Learning Outcomes (Continued)
+
+### Domain Knowledge
+- **Understand different LLM architectures** and their comparative advantages
+- **Apply LLMs to specific finance use cases**:
+  - Sentiment analysis of financial news and earnings calls
+  - Automated financial report generation and summarization
+  - Risk assessment and regulatory compliance
+  - Customer service automation and personalized advising
+  - Market trend analysis and prediction
+- **Navigate regulatory considerations** (GDPR, SEC guidelines, etc.)
+
+### Project Experience
+- **Complete hands-on projects** throughout the course
+- **Build a portfolio** of LLM applications in finance
+- **Collaborate on real-world scenarios** and case studies
+- **Develop critical thinking skills** about AI limitations and potential biases

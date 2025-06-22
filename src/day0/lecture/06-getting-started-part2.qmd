@@ -1,0 +1,23 @@
+## Getting Started (Continued)
+
+### Environment Setup (Continued)
+```bash
+# Install required packages
+pip install -r requirements.txt
+
+# Verify installation
+python -c "import torch; import transformers; import pandas; print('Setup successful!')"
+```
+
+### First Day Preparation
+- **Review**: Skim the preliminary reading materials
+- **Preparation**: Think about potential finance LLM use cases in your work
+- **Questions**: Prepare any initial questions about the course
+- **Devices**: Fully charged laptop with at least 10GB free disk space
+- **Mindset**: Come with an open and curious attitude - we'll be learning together!
+
+### Optional Pre-Course Reading
+- [OpenAI Documentation](https://platform.openai.com/docs/introduction)
+- [Transformers: Attention Is All You Need](https://arxiv.org/abs/1706.03762) (Vaswani et al.)
+- [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774)
+- [A Survey of LLMs in Finance](https://arxiv.org/abs/2402.05493) (Wu et al., 2024)

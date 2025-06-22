@@ -1,13 +1,14 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day5\lecture\index.qmd
 ---
 title: "Day 5: Advanced LLM Applications in Finance"
 author: "Your Name"
 date: "2025-05-12"
 format:
-  html:
-    theme: cosmo
-    toc: true
+  revealjs:
+    theme: default
+    slide-number: true
+    preview-links: auto
+    css: ../../styles.css
+    logo: ../../images/logo_header.svg
 ---
 
 # Day 5: Advanced LLM Applications in Finance

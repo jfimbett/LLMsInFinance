@@ -1,0 +1,11 @@
+## Logistics and Expectations
+
+### Materials and Resources
+- **Course Repository**: All code, slides, and resources available on GitHub
+- **Required Software**: 
+  - Python 3.9+ with conda/venv environment management
+  - VS Code or JupyterLab for development
+  - Git for version control and collaboration
+- **API Access**: Temporary keys provided for OpenAI, Anthropic, and HuggingFace
+- **Cloud Resources**: Google Colab Pro accounts for GPU-accelerated notebooks
+- **Hardware**: Laptop with 16GB+ RAM recommended (8GB minimum)

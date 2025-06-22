@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,16 +24,15 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="04-transformers_files/libs/clipboard/clipboard.min.js"></script>
-<script src="04-transformers_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="04-transformers_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="04-transformers_files/libs/quarto-html/quarto.js"></script>
 <script src="04-transformers_files/libs/quarto-html/popper.min.js"></script>
 <script src="04-transformers_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="04-transformers_files/libs/quarto-html/anchor.min.js"></script>
 <link href="04-transformers_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="04-transformers_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="04-transformers_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="04-transformers_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="04-transformers_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="04-transformers_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="04-transformers_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -67,7 +66,7 @@ window.Quarto = {
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="fullcontent">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 
@@ -93,8 +92,8 @@ window.Quarto = {
 </figure>
 </div>
 </section>
-<section id="contribution" class="level2">
-<h2 class="anchored" data-anchor-id="contribution">Contribution</h2>
+<section id="transformer-evolution" class="level2">
+<h2 class="anchored" data-anchor-id="transformer-evolution">Transformer Evolution</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/attention_abstract.png" class="img-fluid figure-img"></p>
@@ -102,8 +101,8 @@ window.Quarto = {
 </figure>
 </div>
 </section>
-<section id="a-toy-representation" class="level2">
-<h2 class="anchored" data-anchor-id="a-toy-representation">A toy representation</h2>
+<section id="a-visual-representation" class="level2">
+<h2 class="anchored" data-anchor-id="a-visual-representation">A Visual Representation</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../images/transformer_baby.png" class="img-fluid figure-img"></p>
@@ -125,22 +124,27 @@ window.Quarto = {
 <li><strong>Parallelizable</strong>: No sequential dependencies like RNNs</li>
 </ul>
 </section>
-<section id="the-recipe" class="level2">
-<h2 class="anchored" data-anchor-id="the-recipe">The recipe</h2>
+<section id="the-recipe-part-1" class="level2">
+<h2 class="anchored" data-anchor-id="the-recipe-part-1">The recipe: Part 1</h2>
 <ul>
-<li><p><strong>Tokenise</strong> the <em>source</em> sentence and add start/end markers.<br>
+<li><p><strong>Tokenise</strong> the <em>source</em> sentence and add start/end markers<br>
 </p></li>
-<li><p><strong>Embed</strong> each token <strong>+</strong> add positional encodings.</p></li>
+<li><p><strong>Embed</strong> each token <strong>+</strong> add positional encodings</p></li>
 <li><p><strong>Encoder (× N layers)</strong></p>
 <ul>
-<li>Multi-head <strong>self-attention</strong>.<br>
+<li>Multi-head <strong>self-attention</strong><br>
 </li>
-<li>Position-wise <strong>feed-forward network</strong>.<br>
+<li>Position-wise <strong>feed-forward network</strong><br>
 </li>
-<li><strong>Residual connection + LayerNorm</strong> after each sub-layer.</li>
+<li><strong>Residual connection + LayerNorm</strong> after each sub-layer</li>
 </ul></li>
-<li><p>Cache the resulting <strong>encoder hidden states</strong> (the “memory”).</p></li>
-<li><p><strong>Decoder (run autoregressively)</strong></p>
+<li><p>Cache the resulting <strong>encoder hidden states</strong> (the “memory”)</p></li>
+</ul>
+</section>
+<section id="the-recipe-part-2" class="level2">
+<h2 class="anchored" data-anchor-id="the-recipe-part-2">The recipe: Part 2</h2>
+<ul>
+<li><strong>Decoder (run autoregressively)</strong>
 <ol type="1">
 <li>Embed the generated prefix tokens <strong>+</strong> positional encodings.<br>
 </li>
@@ -167,26 +171,32 @@ window.Quarto = {
 <li><strong>Layer Normalization</strong>: A technique to stabilize and accelerate training by normalizing the inputs to each layer, applied after residual connections.</li>
 </ul>
 </section>
-<section id="step-1-input-embeddings-positional-encoding" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-input-embeddings-positional-encoding">Step 1: Input Embeddings + Positional Encoding</h2>
+<section id="step-1-input-embeddings" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-input-embeddings">Step 1: Input Embeddings</h2>
 <section id="token-embeddings" class="level3">
 <h3 class="anchored" data-anchor-id="token-embeddings">Token Embeddings</h3>
 <ul>
-<li><p>When you feed a sequence of tokens into a transformer‐based LLM, the first thing that happens is that each discrete token (an integer index) is turned into a dense vector of much lower dimensionality than the size of the vocabulary.</p></li>
-<li><p>Let <span class="math inline">\(V\)</span> be the vocabulary size, and <span class="math inline">\(N\)</span> the sequence length.</p></li>
-<li><p>A token <span class="math inline">\(j\)</span> is an integer in the set <span class="math inline">\(\{0, 1, \ldots, V-1\}\)</span>.</p></li>
+<li><p>When you feed a sequence of tokens into a transformer‐based LLM, each discrete token (an integer index) is turned into a dense vector of lower dimensionality than the vocabulary size</p></li>
+<li><p>Let <span class="math inline">\(V\)</span> be the vocabulary size, and <span class="math inline">\(N\)</span> the sequence length</p></li>
+<li><p>A token <span class="math inline">\(j\)</span> is an integer in the set <span class="math inline">\(\{0, 1, \ldots, V-1\}\)</span></p></li>
 <li><p>A brute force one-hot vector encoding <span class="math inline">\(x \in \{0,1\}^V\)</span> <span class="math display">\[
 x_j = \begin{cases}
 1 &amp; \text{if } j = i \\
 0 &amp; \text{otherwise}
 \end{cases}
 \]</span></p></li>
-<li><p>This is inefficient, especially for large vocabularies, as it results in high-dimensional sparse vectors. Instead, we use a <strong>learnable embedding matrix</strong> <span class="math inline">\(\mathbf{E} \in \mathbb{R}^{V \times d_{\text{model}}}\)</span>, where <span class="math inline">\(d_{\text{model}}\)</span> is the embedding dimension. Where <span class="math inline">\(d_{\text{model}}\)</span> is typically much smaller than <span class="math inline">\(V\)</span>.</p></li>
-<li><p>If token <span class="math inline">\(t\)</span> is represented by index <span class="math inline">\(j\)</span>, its embedding is given by the <span class="math inline">\(j\)</span>-th row of <span class="math display">\[
-\mathbf{e}_j = \mathbf{x}_j^T \mathbf{E} = \mathbf{E}_j
-\]</span></p></li>
+<li><p>This is inefficient, especially for large vocabularies, as it results in high-dimensional sparse vectors</p></li>
+<li><p>Instead, we use a <strong>learnable embedding matrix</strong> <span class="math inline">\(\mathbf{E} \in \mathbb{R}^{V \times d_{\text{model}}}\)</span>, where <span class="math inline">\(d_{\text{model}}\)</span> is typically much smaller than <span class="math inline">\(V\)</span></p></li>
 </ul>
 </section>
+</section>
+<section id="step-1-positional-encoding" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-positional-encoding">Step 1: Positional Encoding</h2>
+<ul>
+<li>If token <span class="math inline">\(t\)</span> is represented by index <span class="math inline">\(j\)</span>, its embedding is given by the <span class="math inline">\(j\)</span>-th row of <span class="math display">\[
+\mathbf{e}_j = \mathbf{x}_j^T \mathbf{E} = \mathbf{E}_j
+\]</span></li>
+</ul>
 <section id="positional-encoding" class="level3">
 <h3 class="anchored" data-anchor-id="positional-encoding">Positional Encoding</h3>
 <p>Since transformers have no inherent notion of position, we add positional information:</p>
@@ -205,8 +215,8 @@ x_j = \begin{cases}
 <p>Where <span class="math inline">\(\mathbf{W}^Q, \mathbf{W}^K, \mathbf{W}^V \in \mathbb{R}^{d_{\text{model}} \times d_k}\)</span> are learned parameter matrices.</p>
 </section>
 </section>
-<section id="step-3-computing-attention-scores" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-computing-attention-scores">Step 3: Computing Attention Scores</h2>
+<section id="step-3-computing-attention---the-intuition" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-computing-attention---the-intuition">Step 3: Computing Attention - The Intuition</h2>
 <section id="attention-formula" class="level3">
 <h3 class="anchored" data-anchor-id="attention-formula">Attention Formula</h3>
 <p><span class="math display">\[\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}\]</span></p>
@@ -221,334 +231,494 @@ x_j = \begin{cases}
 </ol>
 </section>
 </section>
+<section id="step-3-attention-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-attention-visualization">Step 3: Attention Visualization</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/transformers1.png" class="img-fluid figure-img"></p>
+<figcaption>Attention Visualization</figcaption>
+</figure>
+</div>
+<ul>
+<li>Each token attends to all other tokens</li>
+<li>Attention weights determine how much information flows</li>
+<li>Self-attention is the key to capturing dependencies regardless of distance</li>
+<li>This replaces the need for recurrence in traditional RNNs</li>
+</ul>
+</section>
 <section id="step-4-multi-head-attention" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-multi-head-attention">Step 4: Multi-Head Attention</h2>
-<p>Instead of single attention, we use <strong>multiple attention heads</strong>:</p>
-<p><span class="math display">\[\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)\mathbf{W}^O\]</span></p>
-<p>Where each head is: <span class="math display">\[\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)\]</span></p>
-<p><strong>Why multiple heads?</strong> - Each head can focus on different types of relationships - Increases model’s representational capacity - Typical: 8-16 heads in practice</p>
+<ul>
+<li>Single attention mechanism provides limited representational power</li>
+<li><strong>Multi-head attention</strong> runs multiple attention computations in parallel</li>
+<li>Each “head” learns different relationship patterns:
+<ul>
+<li>Some heads focus on nearby words</li>
+<li>Others capture long-range dependencies</li>
+<li>Some track syntactic relationships</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \text{head}_2, ..., \text{head}_h)\mathbf{W}^O\]</span></p>
+<p>Where each head is computed as: <span class="math display">\[\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)\]</span></p>
 </section>
 <section id="step-5-feed-forward-networks" class="level2">
 <h2 class="anchored" data-anchor-id="step-5-feed-forward-networks">Step 5: Feed-Forward Networks</h2>
-<p>After attention, each position goes through a feed-forward network:</p>
-<p><span class="math display">\[\text{FFN}(\mathbf{x}) = \text{max}(0, \mathbf{x}\mathbf{W}_1 + \mathbf{b}_1)\mathbf{W}_2 + \mathbf{b}_2\]</span></p>
-<p><strong>Architecture details:</strong> - Input dimension: <span class="math inline">\(d_{\text{model}}\)</span> (e.g., 512)<br>
-- Hidden dimension: <span class="math inline">\(d_{ff}\)</span> (typically <span class="math inline">\(4 \times d_{\text{model}} = 2048\)</span>) - Output dimension: <span class="math inline">\(d_{\text{model}}\)</span> (back to 512) - Applied <strong>identically</strong> to each position</p>
+<ul>
+<li>After attention, each position goes through identical feed-forward networks</li>
+<li>Applied to each position separately and identically</li>
+<li>Consists of two linear transformations with a ReLU activation in between:</li>
+</ul>
+<p><span class="math display">\[\text{FFN}(x) = \max(0, x\mathbf{W}_1 + \mathbf{b}_1)\mathbf{W}_2 + \mathbf{b}_2\]</span></p>
+<ul>
+<li>This introduces non-linearity and allows the model to transform the representation</li>
+</ul>
 </section>
 <section id="step-6-residual-connections-layer-normalization" class="level2">
 <h2 class="anchored" data-anchor-id="step-6-residual-connections-layer-normalization">Step 6: Residual Connections &amp; Layer Normalization</h2>
-<p>Each sub-layer (attention or FFN) is wrapped with:</p>
-<p><span class="math display">\[\text{LayerNorm}(\mathbf{x} + \text{Sublayer}(\mathbf{x}))\]</span></p>
-<p><strong>Why this matters:</strong> - <strong>Residual connections</strong>: Prevent vanishing gradients in deep networks - <strong>Layer normalization</strong>: Stabilizes training by normalizing across features - <strong>Order</strong>: In original paper, LayerNorm comes after; in practice, often before</p>
+<ul>
+<li><strong>Residual connections</strong> help with training deep networks:
+<ul>
+<li>Add the input of each sub-layer to its output: <span class="math inline">\(x + \text{Sublayer}(x)\)</span></li>
+<li>Allows gradients to flow through the network more easily</li>
+</ul></li>
+<li><strong>Layer normalization</strong> stabilizes the learning process:
+<ul>
+<li>Normalizes the inputs across the features</li>
+<li>Applied after each residual connection</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[\text{LayerNorm}(x + \text{Sublayer}(x))\]</span></p>
 </section>
-<section id="gpt-2-decoder-only-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="gpt-2-decoder-only-architecture">GPT-2: Decoder-Only Architecture</h2>
-<p><strong>Key differences from original Transformer:</strong> - <strong>No encoder</strong>: Only decoder blocks - <strong>Masked self-attention</strong>: Can only attend to previous tokens - <strong>Autoregressive generation</strong>: Predicts next token given previous tokens</p>
-<section id="masked-attention" class="level3">
-<h3 class="anchored" data-anchor-id="masked-attention">Masked Attention</h3>
-<p><span class="math display">\[\text{score}_{i,j} = \begin{cases}
-\mathbf{q}_i \cdot \mathbf{k}_j &amp; \text{if } j \leq i \\
--\infty &amp; \text{if } j &gt; i
-\end{cases}\]</span></p>
+<section id="transformer-model-applications" class="level2">
+<h2 class="anchored" data-anchor-id="transformer-model-applications">Transformer Model Applications</h2>
+<ul>
+<li><strong>Machine Translation</strong>: Original use case in “Attention Is All You Need”</li>
+<li><strong>Text Generation</strong>: Foundation for GPT models</li>
+<li><strong>Document Understanding</strong>: BERT and its variants</li>
+<li><strong>Multimodal Applications</strong>: Vision transformers, audio transformers</li>
+<li><strong>Financial Applications</strong>: Market prediction, sentiment analysis, report generation</li>
+</ul>
+</section>
+<section id="gpt-2-a-landmark-decoder-only-model" class="level2">
+<h2 class="anchored" data-anchor-id="gpt-2-a-landmark-decoder-only-model">GPT-2: A Landmark Decoder-Only Model</h2>
+<section id="gpt-2-architecture-basics" class="level3">
+<h3 class="anchored" data-anchor-id="gpt-2-architecture-basics">GPT-2 Architecture Basics</h3>
+<ul>
+<li>Released by OpenAI in 2019</li>
+<li>Decoder-only transformer architecture</li>
+<li>Trained on 40GB of internet text</li>
+<li>Available in different sizes:
+<ul>
+<li>Small: 117M parameters</li>
+<li>Medium: 345M parameters</li>
+<li>Large: 762M parameters</li>
+<li>XL: 1.5B parameters</li>
+</ul></li>
+</ul>
 </section>
 </section>
-<section id="step-7-text-generation-with-gpt-2" class="level2">
-<h2 class="anchored" data-anchor-id="step-7-text-generation-with-gpt-2">Step 7: Text Generation with GPT-2</h2>
-<section id="the-generation-process" class="level3">
-<h3 class="anchored" data-anchor-id="the-generation-process">The Generation Process</h3>
+<section id="gpt-2-model-architecture-details" class="level2">
+<h2 class="anchored" data-anchor-id="gpt-2-model-architecture-details">GPT-2: Model Architecture Details</h2>
+<ul>
+<li>Uses masked self-attention (can only attend to previous tokens)</li>
+<li>No encoder-decoder structure, just the decoder component</li>
+<li>Trained on a simple next-token prediction objective</li>
+<li>Layer configuration (for 1.5B model):
+<ul>
+<li>48 layers</li>
+<li>1600 dimensional embeddings</li>
+<li>25 attention heads</li>
+</ul></li>
+</ul>
+</section>
+<section id="gpt-2-key-innovations" class="level2">
+<h2 class="anchored" data-anchor-id="gpt-2-key-innovations">GPT-2: Key Innovations</h2>
+<ul>
+<li>Demonstrated impressive zero-shot capabilities</li>
+<li>Introduced <strong>unsupervised pre-training</strong> at scale</li>
+<li>Showed that scaling model size and data substantially improves performance</li>
+<li>Established the foundation for subsequent models like GPT-3 and GPT-4</li>
+<li>Pioneered better sampling methods for text generation</li>
+</ul>
+</section>
+<section id="sampling-strategies-introduction" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-strategies-introduction">Sampling Strategies: Introduction</h2>
+<ul>
+<li>After the model computes the probability distribution for the next token, how do we select it?</li>
+<li>Different sampling methods produce different text qualities and characteristics</li>
+<li>Trade-off between:
+<ul>
+<li><strong>Determinism</strong>: Consistent, predictable outputs</li>
+<li><strong>Creativity</strong>: Novel, diverse text generation</li>
+<li><strong>Coherence</strong>: Staying on topic without degrading</li>
+</ul></li>
+</ul>
+</section>
+<section id="sampling-strategy-greedy-decoding" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-strategy-greedy-decoding">Sampling Strategy: Greedy Decoding</h2>
+<ul>
+<li><strong>Approach</strong>: Always select the most probable next token</li>
+<li><strong>Formula</strong>: <span class="math inline">\(y_t = \arg\max_w P(w|y_{&lt;t})\)</span></li>
+</ul>
+<section id="advantages" class="level3">
+<h3 class="anchored" data-anchor-id="advantages">Advantages:</h3>
+<ul>
+<li>Simple to implement</li>
+<li>Often produces coherent text for short sequences</li>
+<li>Deterministic results</li>
+</ul>
+</section>
+<section id="disadvantages" class="level3">
+<h3 class="anchored" data-anchor-id="disadvantages">Disadvantages:</h3>
+<ul>
+<li>Lacks diversity</li>
+<li>Can get stuck in repetition loops</li>
+<li>May produce suboptimal overall sequences</li>
+</ul>
+</section>
+</section>
+<section id="sampling-strategy-temperature-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-strategy-temperature-sampling">Sampling Strategy: Temperature Sampling</h2>
+<ul>
+<li><strong>Approach</strong>: Sample from softmax distribution with temperature adjustment</li>
+<li><strong>Formula</strong>: <span class="math inline">\(P(w|y_{&lt;t}) = \frac{\exp(z_w/T)}{\sum_{w'} \exp(z_{w'}/T)}\)</span></li>
+</ul>
+<section id="temperature-effects" class="level3">
+<h3 class="anchored" data-anchor-id="temperature-effects">Temperature effects:</h3>
+<ul>
+<li><span class="math inline">\(T &lt; 1\)</span>: Makes distribution more peaked (less random)</li>
+<li><span class="math inline">\(T &gt; 1\)</span>: Makes distribution more uniform (more random)</li>
+<li><span class="math inline">\(T = 1\)</span>: Standard softmax, no adjustment</li>
+<li><span class="math inline">\(T \to 0\)</span>: Approaches greedy decoding</li>
+</ul>
+</section>
+</section>
+<section id="sampling-strategy-top-k-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-strategy-top-k-sampling">Sampling Strategy: Top-K Sampling</h2>
+<ul>
+<li><strong>Approach</strong>: Limit sampling to the K most likely next tokens</li>
+<li><strong>Procedure</strong>:
 <ol type="1">
-<li><strong>Input</strong>: Prompt tokens <span class="math inline">\([x_1, x_2, \ldots, x_n]\)</span></li>
-<li><strong>Forward pass</strong>: Compute probability distribution over vocabulary</li>
-<li><strong>Sampling</strong>: Select next token <span class="math inline">\(x_{n+1}\)</span> from distribution<br>
-</li>
-<li><strong>Repeat</strong>: Append <span class="math inline">\(x_{n+1}\)</span> and generate <span class="math inline">\(x_{n+2}\)</span>, etc.</li>
-</ol>
-</section>
-<section id="next-token-prediction" class="level3">
-<h3 class="anchored" data-anchor-id="next-token-prediction">Next-Token Prediction</h3>
-<p><span class="math display">\[P(x_{t+1} | x_1, \ldots, x_t) = \text{softmax}(\mathbf{W}_{\text{vocab}} \mathbf{h}_t + \mathbf{b})\]</span></p>
-<p>Where <span class="math inline">\(\mathbf{h}_t\)</span> is the final hidden state for position <span class="math inline">\(t\)</span>.</p>
-</section>
-</section>
-<section id="sampling-strategies" class="level2">
-<h2 class="anchored" data-anchor-id="sampling-strategies">Sampling Strategies</h2>
-<section id="greedy-decoding" class="level3">
-<h3 class="anchored" data-anchor-id="greedy-decoding">Greedy Decoding</h3>
-<p><span class="math display">\[x_{t+1} = \arg\max_{x} P(x | x_1, \ldots, x_t)\]</span></p>
-</section>
-<section id="top-k-sampling" class="level3">
-<h3 class="anchored" data-anchor-id="top-k-sampling">Top-k Sampling</h3>
-<p>Sample from the <span class="math inline">\(k\)</span> most likely tokens</p>
-</section>
-<section id="nucleus-top-p-sampling" class="level3">
-<h3 class="anchored" data-anchor-id="nucleus-top-p-sampling">Nucleus (Top-p) Sampling</h3>
-<p>Sample from smallest set of tokens whose cumulative probability ≥ <span class="math inline">\(p\)</span></p>
-</section>
-<section id="temperature-scaling" class="level3">
-<h3 class="anchored" data-anchor-id="temperature-scaling">Temperature Scaling</h3>
-<p><span class="math display">\[P'(x_i) = \frac{\exp(z_i / \tau)}{\sum_j \exp(z_j / \tau)}\]</span> - <span class="math inline">\(\tau &lt; 1\)</span>: More focused (conservative) - <span class="math inline">\(\tau &gt; 1\)</span>: More random (creative)</p>
-</section>
-</section>
-<section id="why-transformers-work-so-well" class="level2">
-<h2 class="anchored" data-anchor-id="why-transformers-work-so-well">Why Transformers Work So Well</h2>
-<section id="advantages-over-rnns" class="level3">
-<h3 class="anchored" data-anchor-id="advantages-over-rnns">Advantages over RNNs</h3>
+<li>Sort the vocabulary by probability</li>
+<li>Keep only the top K tokens</li>
+<li>Renormalize probabilities</li>
+<li>Sample from this smaller distribution</li>
+</ol></li>
+</ul>
+<section id="advantages-1" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-1">Advantages:</h3>
 <ul>
-<li><strong>Parallelization</strong>: All positions processed simultaneously</li>
-<li><strong>Long-range dependencies</strong>: Direct connections between any two positions</li>
-<li><strong>Gradient flow</strong>: Shorter paths for gradient propagation</li>
+<li>Reduces chance of selecting low-probability (potentially nonsensical) tokens</li>
+<li>Maintains some randomness</li>
+<li>Often produces more coherent text than pure sampling</li>
 </ul>
 </section>
-<section id="computational-complexity" class="level3">
-<h3 class="anchored" data-anchor-id="computational-complexity">Computational Complexity</h3>
+<section id="disadvantages-1" class="level3">
+<h3 class="anchored" data-anchor-id="disadvantages-1">Disadvantages:</h3>
 <ul>
-<li><strong>Self-attention</strong>: <span class="math inline">\(O(n^2 \cdot d)\)</span> where <span class="math inline">\(n\)</span> is sequence length</li>
-<li><strong>RNN</strong>: <span class="math inline">\(O(n \cdot d^2)\)</span> but sequential</li>
-<li><strong>Trade-off</strong>: Memory vs.&nbsp;parallelization</li>
+<li>K is a fixed hyperparameter regardless of confidence distribution</li>
+<li>May be too restrictive for some contexts, too permissive for others</li>
 </ul>
 </section>
+</section>
+<section id="sampling-strategy-nucleus-top-p-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-strategy-nucleus-top-p-sampling">Sampling Strategy: Nucleus (Top-p) Sampling</h2>
+<ul>
+<li><strong>Approach</strong>: Sample from the smallest set of tokens whose cumulative probability exceeds threshold p</li>
+<li><strong>Procedure</strong>:
+<ol type="1">
+<li>Sort tokens by probability</li>
+<li>Keep adding tokens until cumulative probability ≥ p</li>
+<li>Renormalize and sample from this dynamic set</li>
+</ol></li>
+</ul>
+<section id="advantages-2" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-2">Advantages:</h3>
+<ul>
+<li>Adapts to the confidence of the model</li>
+<li>More flexible than Top-K</li>
+<li>Current standard for high-quality text generation</li>
+</ul>
+</section>
+<section id="disadvantages-2" class="level3">
+<h3 class="anchored" data-anchor-id="disadvantages-2">Disadvantages:</h3>
+<ul>
+<li>Slightly more complex to implement</li>
+<li>Still requires tuning the p parameter (typically 0.9-0.95)</li>
+</ul>
+</section>
+</section>
+<section id="sampling-in-financial-applications" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-in-financial-applications">Sampling in Financial Applications</h2>
+<section id="conservative-approach-low-temperaturehigh-precision" class="level3">
+<h3 class="anchored" data-anchor-id="conservative-approach-low-temperaturehigh-precision">Conservative Approach (Low Temperature/High Precision):</h3>
+<ul>
+<li>Regulatory reporting</li>
+<li>Earnings statement generation</li>
+<li>Financial advice</li>
+</ul>
+</section>
+<section id="creative-approach-higher-temperaturemore-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="creative-approach-higher-temperaturemore-exploration">Creative Approach (Higher Temperature/More Exploration):</h3>
+<ul>
+<li>Market scenario generation</li>
+<li>Stress testing</li>
+<li>Alternative investment thesis formulation</li>
+</ul>
+</section>
+</section>
+<section id="putting-it-all-together-the-transformer-revolution" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-all-together-the-transformer-revolution">Putting It All Together: The Transformer Revolution</h2>
+<ul>
+<li>Transformers dramatically improved NLP capabilities through:
+<ul>
+<li><strong>Parallelization</strong>: Training efficiency</li>
+<li><strong>Attention Mechanism</strong>: Better at capturing relationships</li>
+<li><strong>Scalability</strong>: Performance continues to improve with size</li>
+</ul></li>
+<li>Led to a new paradigm of foundation models</li>
+<li>Enabled financial applications previously considered impossible</li>
+<li>Continues to evolve with each new model generation</li>
+</ul>
 </section>
 </section>
 
 </main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
       }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
-        }
-        return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
         }
       }
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
     }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
     }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
       } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
         }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
       }
     }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
           }
         } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
+          // See if we can fetch this
+          fetch(url.split('#')[0])
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
+            const note = htmlDoc.getElementById(id);
             if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
+              const html = processXRef(id, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -556,161 +726,185 @@ x_j = \begin{cases}
             instance.show();
           });
         }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          let top = null;
-          let height = null;
-          let parent = null;
-          if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
-            }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
-            }
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
       } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
             }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
         });
       }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
     }
-  });
-  </script>
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
 </div> <!-- /content -->
 
 

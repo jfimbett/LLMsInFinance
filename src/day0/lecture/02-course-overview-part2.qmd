@@ -1,0 +1,29 @@
+## The Evolution of AI in Finance
+
+- **First wave: Rules-based systems (1960s-1990s)**
+  - Expert systems for credit decisions
+  - Rule-based trading algorithms
+  
+- **Second wave: Statistical ML (1990s-2010s)**
+  - Supervised learning for credit scoring
+  - Random forests for fraud detection
+  - Support vector machines for market prediction
+  
+- **Third wave: Deep learning (2010s-2020)**
+  - Neural networks for portfolio optimization
+  - CNNs/RNNs for time series forecasting
+  - Word embeddings for sentiment analysis
+  
+- **Fourth wave: Foundation models (2020+)**
+  - Large language models for research automation
+  - Multimodal models combining text, data, and visuals
+  - Agent-based systems for autonomous financial tasks
+
+## Course Objectives
+
+1. **Understand LLM fundamentals** and architecture
+2. **Develop practical skills** in implementing LLM solutions
+3. **Explore real-world use cases** across financial services
+4. **Build end-to-end projects** combining finance and AI
+5. **Navigate ethical considerations** and regulatory compliance
+6. **Stay ahead of the curve** in a rapidly evolving field

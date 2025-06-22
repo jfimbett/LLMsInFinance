@@ -1,0 +1,18 @@
+## Course Overview
+
+### Why LLMs in Finance?
+- **Financial markets generate massive amounts of text data**
+  - News articles, earnings calls, research reports
+  - Social media sentiment, regulatory filings
+  - Customer communications, risk assessments
+
+- **Traditional NLP approaches have limitations**
+  - Rule-based systems are rigid
+  - Classical ML requires extensive feature engineering
+  - Limited contextual understanding
+
+- **LLMs offer transformative capabilities**
+  - Understanding complex financial language and nuance
+  - Automated analysis of unstructured financial documents
+  - Enhanced prediction capabilities and insight generation
+  - Augmenting decision-making across the financial ecosystem

@@ -10,7 +10,7 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <meta name="author" content="Your Name">
+  <meta name="author" content="Juan F. Imbet">
   <meta name="dcterms.date" content="2025-05-07">
   <title>Day 1: Introduction to Large Language Models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -333,7 +333,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Your Name 
+Juan F. Imbet 
 </div>
 </div>
 </div>
@@ -352,6 +352,7 @@ Your Name
 <li>Word Embeddings</li>
 <li>Tokenizers</li>
 <li>The Transformers Architecture</li>
+<li>Softmax Probabilities and Token Generation</li>
 <li>Classification and Scalability of LLMs</li>
 </ul>
 </section></section>
@@ -363,22 +364,19 @@ Your Name
 <section id="historical-development" class="slide level2">
 <h2>Historical Development</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:100%;">
 <ul>
-<li><strong>Traditional rule-based approaches (1960s – 1990s)</strong> – keyword spotting and hand-written grammars for parsing bank statements and wire stories.<br>
+<li><strong>Traditional rule-based approaches (1960s – 1990s)</strong> keyword spotting and hand-written grammars for parsing bank statements and wire stories. Access to computing power limited to large institutions.</li>
+<li><strong>Statistical methods (1990s – 2010s)</strong> – TF-IDF, n-grams, naïve Bayes sentiment.</li>
+<li><strong>Machine-learning era (2010s)</strong> – supervised classifiers &amp; finance-specific dictionaries.<br>
 </li>
-<li><strong>Statistical methods (1990s – 2010s)</strong> – TF-IDF, n-grams, naïve Bayes sentiment (e.g.&nbsp;<a href="https://doi.org/10.1111/j.1540-6261.2004.00662.x">Antweiler &amp; Frank 2004</a>)<br>
-</li>
-<li><strong>Machine-learning era (2010s)</strong> – supervised classifiers &amp; finance-specific dictionaries (e.g.&nbsp;<a href="https://doi.org/10.1111/j.1540-6261.2010.01625.x">Loughran &amp; McDonald 2011</a>)<br>
-</li>
-<li><strong>Deep-learning revolution (≈2015 +)</strong> – word-embeddings, CNN/RNN sentiment on earnings calls, transformer topic models (e.g.&nbsp;<a href="https://doi.org/10.1016/j.jfineco.2016.08.013">Manela &amp; Moreira 2017</a>)<br>
-</li>
+<li><strong>Deep-learning revolution (≈2015 +)</strong> – word-embeddings, CNN/RNN sentiment on earnings calls, topic models.</li>
 <li><strong>Large Language Models (2018 +)</strong> – GPT-style chatbots &amp; summarizers now embedded in research and advisory workflows (see Morgan Stanley GPT-4 Assistant 2023).</li>
 </ul>
 </div></div>
 </section>
-<section id="academic-milestones-2004-2024" class="slide level2">
-<h2>Academic Milestones (2004 – 2024)</h2>
+<section id="selected-academic-milestones-2004-2024" class="slide level2">
+<h2>Selected Academic Milestones (2004 – 2024)</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
@@ -1037,6 +1035,524 @@ x_j = \begin{cases}
 <li>Enabled financial applications previously considered impossible</li>
 <li>Continues to evolve with each new model generation</li>
 </ul>
+</section></section>
+<section>
+<section id="softmax-probabilities-in-token-generation" class="title-slide slide level1 center">
+<h1>Softmax Probabilities in Token Generation</h1>
+
+</section>
+<section id="from-encoder-decoder-to-next-token-prediction" class="slide level2">
+<h2>From Encoder-Decoder to Next Token Prediction</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>The transformer pipeline overview</strong>:
+<ul>
+<li>Input tokens → Embeddings → Encoder layers</li>
+<li>Decoder layers → Linear projection → Softmax</li>
+<li>Probability distribution over vocabulary</li>
+<li>Sampling/selection of next token</li>
+</ul></li>
+<li><strong>Key transformation stages</strong>:
+<ul>
+<li>Multi-head attention creates contextual representations</li>
+<li>Feed-forward networks refine token representations<br>
+</li>
+<li>Layer normalization ensures stable training</li>
+<li>Final linear layer maps to vocabulary size</li>
+<li>Softmax converts logits to probabilities</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../../images/transformers_model.png"></p>
+<figcaption>Transformer Architecture</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>Mathematical flow</strong>:
+<ul>
+<li>Hidden states: <span class="math inline">\(h_i \in \mathbb{R}^{d_{model}}\)</span></li>
+<li>Linear projection: <span class="math inline">\(W_{out} \in \mathbb{R}^{d_{model} \times |V|}\)</span></li>
+<li>Logits: <span class="math inline">\(z_i = h_i W_{out}\)</span></li>
+<li>Probabilities: <span class="math inline">\(p_i = \text{softmax}(z_i)\)</span></li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="the-softmax-function-in-detail" class="slide level2">
+<h2>The Softmax Function in Detail</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Mathematical definition</strong>: <span class="math display">\[\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{|V|} e^{z_j}}\]</span></p></li>
+<li><p><strong>Key properties</strong>:</p>
+<ul>
+<li>Outputs sum to 1 (valid probability distribution)</li>
+<li>Emphasizes largest logit values (temperature effect)</li>
+<li>Differentiable for backpropagation</li>
+<li>Maps any real number to (0,1) range</li>
+</ul></li>
+<li><p><strong>Temperature parameter</strong>: <span class="math display">\[\text{softmax}(z_i/T) = \frac{e^{z_i/T}}{\sum_{j=1}^{|V|} e^{z_j/T}}\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Temperature effects</strong>:
+<ul>
+<li><span class="math inline">\(T = 1\)</span>: Standard softmax</li>
+<li><span class="math inline">\(T &gt; 1\)</span>: More uniform distribution (creative)</li>
+<li><span class="math inline">\(T &lt; 1\)</span>: More peaked distribution (conservative)</li>
+<li><span class="math inline">\(T \to 0\)</span>: Approaches argmax (deterministic)</li>
+<li><span class="math inline">\(T \to \infty\)</span>: Approaches uniform distribution</li>
+</ul></li>
+<li><strong>Financial text implications</strong>:
+<ul>
+<li>Low temperature: Precise financial terminology</li>
+<li>High temperature: Creative financial analysis</li>
+<li>Balanced approach for professional content</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="vocabulary-mapping-and-logits" class="slide level2">
+<h2>Vocabulary Mapping and Logits</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Vocabulary construction</strong>:
+<ul>
+<li>Tokenizer creates mapping: token ↔︎ integer ID</li>
+<li>Vocabulary size typically 30K-100K+ tokens</li>
+<li>Special tokens: [PAD], [UNK], [CLS], [SEP]</li>
+<li>Subword tokenization (BPE, WordPiece, SentencePiece)</li>
+</ul></li>
+<li><strong>Logit computation</strong>:
+<ul>
+<li>Final hidden state: <span class="math inline">\(h_{final} \in \mathbb{R}^{d_{model}}\)</span></li>
+<li>Output projection: <span class="math inline">\(W_{out} \in \mathbb{R}^{d_{model} \times |V|}\)</span></li>
+<li>Bias term: <span class="math inline">\(b_{out} \in \mathbb{R}^{|V|}\)</span></li>
+<li>Logits: <span class="math inline">\(z = h_{final} W_{out} + b_{out}\)</span></li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Financial vocabulary considerations</strong>:
+<ul>
+<li>Specialized financial terms (EBITDA, derivatives)</li>
+<li>Numerical representations ($, %, basis points)</li>
+<li>Company names and ticker symbols</li>
+<li>Regulatory terminology (SEC, GAAP, IFRS)</li>
+<li>Domain-specific abbreviations (P/E, ROE, NPV)</li>
+</ul></li>
+<li><strong>Example logit interpretation</strong>:
+<ul>
+<li>High logit for “earnings” after “quarterly”</li>
+<li>High logit for “%” after numerical values</li>
+<li>Context-dependent probabilities</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="from-probabilities-to-token-selection" class="slide level2">
+<h2>From Probabilities to Token Selection</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Deterministic selection (Greedy)</strong>:
+<ul>
+<li>Choose token with highest probability</li>
+<li><span class="math inline">\(\text{token} = \arg\max_i p_i\)</span></li>
+<li>Consistent but potentially repetitive</li>
+<li>Risk of getting stuck in loops</li>
+</ul></li>
+<li><strong>Probabilistic sampling</strong>:
+<ul>
+<li>Sample from probability distribution</li>
+<li><span class="math inline">\(\text{token} \sim \text{Multinomial}(p_1, p_2, ..., p_{|V|})\)</span></li>
+<li>Introduces randomness and creativity</li>
+<li>Multiple runs produce different outputs</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Advanced sampling strategies</strong>:</p>
+<p><strong>Top-k sampling</strong>:</p>
+<ul>
+<li>Consider only k most probable tokens</li>
+<li>Reduces probability mass on unlikely tokens</li>
+<li>Balances quality and diversity</li>
+</ul>
+<p><strong>Top-p (nucleus) sampling</strong>:</p>
+<ul>
+<li>Select smallest set with cumulative probability ≥ p</li>
+<li>Adaptive vocabulary size based on confidence</li>
+<li>More dynamic than fixed top-k</li>
+</ul>
+<p><strong>Beam search</strong> (for deterministic quality):</p>
+<ul>
+<li>Maintain multiple candidate sequences</li>
+<li>Exponential search space pruning</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="temperature-and-sampling-in-financial-context" class="slide level2">
+<h2>Temperature and Sampling in Financial Context</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Conservative financial writing</strong> (T = 0.3-0.7):
+<ul>
+<li>Precise terminology and standard phrases</li>
+<li>Regulatory compliance language</li>
+<li>Technical analysis descriptions</li>
+<li>Risk disclosures and disclaimers</li>
+</ul></li>
+<li><strong>Creative financial analysis</strong> (T = 0.8-1.2):
+<ul>
+<li>Novel insights and interpretations</li>
+<li>Alternative scenario descriptions</li>
+<li>Innovative investment strategies</li>
+<li>Market commentary and opinions</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Practical temperature settings</strong>:</p>
+<pre><code>Financial reports: T = 0.2
+"The company reported strong 
+ quarterly earnings..."
+
+Market analysis: T = 0.7  
+"Given current market dynamics,
+ we anticipate..."
+
+Creative insights: T = 1.0
+"An unconventional perspective 
+ suggests..."</code></pre></li>
+<li><p><strong>Risk considerations</strong>:</p>
+<ul>
+<li>High temperature may generate inaccurate numbers</li>
+<li>Low temperature may lack analytical depth</li>
+<li>Context-dependent optimization needed</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="mathematical-properties-of-financial-token-generation" class="slide level2">
+<h2>Mathematical Properties of Financial Token Generation</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Probability distribution constraints</strong>:
+<ul>
+<li><span class="math inline">\(\sum_{i=1}^{|V|} p_i = 1\)</span> (normalization)</li>
+<li><span class="math inline">\(p_i \geq 0\)</span> for all <span class="math inline">\(i\)</span> (non-negativity)</li>
+<li><span class="math inline">\(\max_i p_i\)</span> indicates model confidence</li>
+<li>Entropy <span class="math inline">\(H = -\sum_i p_i \log p_i\)</span> measures uncertainty</li>
+</ul></li>
+<li><strong>Information theory perspective</strong>:
+<ul>
+<li>Low entropy: Model is confident (peaked distribution)</li>
+<li>High entropy: Model is uncertain (flat distribution)</li>
+<li>Cross-entropy loss drives training optimization</li>
+<li>Perplexity measures model surprise: <span class="math inline">\(2^H\)</span></li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Financial implications</strong>:</p>
+<p><strong>High confidence predictions</strong>:</p>
+<ul>
+<li>Standard financial formulas</li>
+<li>Well-established market terminology</li>
+<li>Common financial ratios and metrics</li>
+</ul>
+<p><strong>High uncertainty predictions</strong>:</p>
+<ul>
+<li>Novel market conditions</li>
+<li>Emerging financial instruments</li>
+<li>Ambiguous regulatory interpretations</li>
+</ul></li>
+<li><p><strong>Quality metrics</strong>:</p>
+<ul>
+<li>Perplexity on financial test sets</li>
+<li>Domain-specific evaluation benchmarks</li>
+<li>Human expert evaluation scores</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="attention-influence-on-token-probabilities" class="slide level2">
+<h2>Attention Influence on Token Probabilities</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Attention-weighted context</strong>:
+<ul>
+<li>Each token attends to relevant previous tokens</li>
+<li>Attention weights influence final representations</li>
+<li>Financial entities receive higher attention weights</li>
+<li>Temporal relationships in financial time series</li>
+</ul></li>
+<li><strong>Multi-head attention aggregation</strong>:
+<ul>
+<li>Different heads capture different relationships</li>
+<li>Some heads focus on syntax, others on semantics</li>
+<li>Financial domain heads for numerical relationships</li>
+<li>Entity-relation heads for company connections</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Financial attention patterns</strong>:</p>
+<p><strong>Entity-focused attention</strong>:</p>
+<ul>
+<li>Company names → Financial metrics</li>
+<li>Dates → Performance periods</li>
+<li>Currency symbols → Numerical values</li>
+</ul>
+<p><strong>Causal attention</strong>:</p>
+<ul>
+<li>Market events → Price movements</li>
+<li>Economic indicators → Sector performance</li>
+<li>Regulatory changes → Compliance requirements</li>
+</ul>
+<p><strong>Temporal attention</strong>:</p>
+<ul>
+<li>Historical performance → Future projections</li>
+<li>Seasonal patterns in financial data</li>
+<li>Business cycle phase relationships</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="practical-implementation-considerations" class="slide level2">
+<h2>Practical Implementation Considerations</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Computational efficiency</strong>:
+<ul>
+<li>Softmax computation over large vocabularies</li>
+<li>Memory requirements for probability distributions</li>
+<li>Hierarchical softmax for very large vocabularies</li>
+<li>Approximate methods for real-time applications</li>
+</ul></li>
+<li><strong>Numerical stability</strong>:
+<ul>
+<li>LogSumExp trick: <span class="math inline">\(\log(\sum e^{x_i}) = \max(x) + \log(\sum e^{x_i - \max(x)})\)</span></li>
+<li>Prevents overflow for large logits</li>
+<li>Critical for stable training and inference</li>
+<li>Especially important for financial applications</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Implementation details</strong>:</p>
+<p><strong>Efficient softmax computation</strong>:</p>
+<pre><code># Numerical stability approach
+logits_max = max(logits)
+logits_shifted = logits - logits_max
+exp_logits = exp(logits_shifted)
+probabilities = exp_logits / sum(exp_logits)</code></pre>
+<p><strong>Memory optimization</strong>:</p>
+<ul>
+<li>Sparse attention for long sequences</li>
+<li>Gradient checkpointing</li>
+<li>Mixed precision training</li>
+<li>Model parallelism for large vocabularies</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="advanced-token-generation-strategies" class="slide level2">
+<h2>Advanced Token Generation Strategies</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Repetition penalties</strong>:
+<ul>
+<li>Reduce probability of recently generated tokens</li>
+<li>Prevent repetitive financial phrases</li>
+<li>Encourage diverse vocabulary usage</li>
+<li>Balance between coherence and variety</li>
+</ul></li>
+<li><strong>Length penalties</strong>:
+<ul>
+<li>Bias toward longer or shorter sequences</li>
+<li>Important for financial document structure</li>
+<li>Executive summary vs.&nbsp;detailed analysis</li>
+<li>Regulatory compliance requirements</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Constrained generation</strong>:</p>
+<p><strong>Financial format constraints</strong>:</p>
+<ul>
+<li>Currency formatting ($1,234.56)</li>
+<li>Percentage notation (12.34%)</li>
+<li>Date standardization (Q1 2024)</li>
+<li>Ticker symbol validation (AAPL, MSFT)</li>
+</ul>
+<p><strong>Content constraints</strong>:</p>
+<ul>
+<li>Regulatory compliance checking</li>
+<li>Factual accuracy verification</li>
+<li>Risk disclosure requirements</li>
+<li>Professional tone maintenance</li>
+</ul></li>
+<li><p><strong>Quality control mechanisms</strong>:</p>
+<ul>
+<li>Post-processing validation</li>
+<li>Rule-based filtering</li>
+<li>Confidence thresholding</li>
+<li>Human-in-the-loop verification</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="evaluation-metrics-for-financial-token-generation" class="slide level2">
+<h2>Evaluation Metrics for Financial Token Generation</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Intrinsic metrics</strong>:
+<ul>
+<li>Perplexity on financial corpora</li>
+<li>BLEU scores for reference comparisons</li>
+<li>ROUGE scores for summarization tasks</li>
+<li>BERTScore for semantic similarity</li>
+</ul></li>
+<li><strong>Extrinsic metrics</strong>:
+<ul>
+<li>Financial accuracy of generated numbers</li>
+<li>Compliance with regulatory requirements</li>
+<li>Professional tone and style consistency</li>
+<li>Domain expert evaluation scores</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Financial-specific evaluation</strong>:</p>
+<p><strong>Numerical accuracy</strong>:</p>
+<ul>
+<li>Correct calculation of financial ratios</li>
+<li>Consistent units and formatting</li>
+<li>Reasonable value ranges</li>
+<li>Mathematical relationship preservation</li>
+</ul>
+<p><strong>Domain coherence</strong>:</p>
+<ul>
+<li>Appropriate financial terminology</li>
+<li>Logical sequence of financial concepts</li>
+<li>Compliance with industry standards</li>
+<li>Factual consistency with known data</li>
+</ul></li>
+<li><p><strong>Human evaluation criteria</strong>:</p>
+<ul>
+<li>Professional appropriateness</li>
+<li>Analytical insight quality</li>
+<li>Recommendation soundness</li>
+<li>Risk assessment accuracy</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="debugging-and-interpretability" class="slide level2">
+<h2>Debugging and Interpretability</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Probability analysis techniques</strong>:
+<ul>
+<li>Ranking top-k predictions at each step</li>
+<li>Analyzing probability mass distribution</li>
+<li>Identifying confident vs.&nbsp;uncertain predictions</li>
+<li>Tracking probability changes across layers</li>
+</ul></li>
+<li><strong>Attention visualization</strong>:
+<ul>
+<li>Which input tokens influenced final prediction</li>
+<li>Head-specific attention patterns</li>
+<li>Layer-wise attention evolution</li>
+<li>Financial entity relationship mapping</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Diagnostic tools</strong>:</p>
+<p><strong>Probability debugging</strong>:</p>
+<pre><code>Top 5 predictions:
+1. "earnings" (p=0.34)
+2. "revenue" (p=0.22) 
+3. "profit" (p=0.18)
+4. "income" (p=0.12)
+5. "performance" (p=0.08)</code></pre>
+<p><strong>Attention analysis</strong>:</p>
+<ul>
+<li>Input: “Q3 financial results show”</li>
+<li>High attention: “Q3” → time context</li>
+<li>High attention: “financial” → domain context</li>
+<li>Output prediction: “strong” (financial qualifier)</li>
+</ul></li>
+<li><p><strong>Model introspection</strong>:</p>
+<ul>
+<li>Layer-wise representation analysis</li>
+<li>Neuron activation patterns</li>
+<li>Concept emergence tracking</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="future-directions-and-research" class="slide level2">
+<h2>Future Directions and Research</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Improved sampling methods</strong>:
+<ul>
+<li>Contrastive search for coherent generation</li>
+<li>Typical sampling for natural distributions</li>
+<li>Mirostat for consistent text quality</li>
+<li>Adaptive temperature scheduling</li>
+</ul></li>
+<li><strong>Financial domain adaptations</strong>:
+<ul>
+<li>Specialized vocabularies for financial subdomains</li>
+<li>Multi-modal token generation (text + numbers)</li>
+<li>Structured output generation (tables, reports)</li>
+<li>Fact-grounded generation techniques</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Emerging research areas</strong>:</p>
+<p><strong>Controllable generation</strong>:</p>
+<ul>
+<li>Style and tone control</li>
+<li>Risk level adjustment</li>
+<li>Audience-specific adaptation</li>
+<li>Compliance-aware generation</li>
+</ul>
+<p><strong>Multimodal integration</strong>:</p>
+<ul>
+<li>Chart and graph generation</li>
+<li>Table structure prediction</li>
+<li>Visual financial data interpretation</li>
+<li>Cross-modal attention mechanisms</li>
+</ul></li>
+<li><p><strong>Evaluation advances</strong>:</p>
+<ul>
+<li>Automated fact-checking</li>
+<li>Real-time accuracy assessment</li>
+<li>Bias detection and mitigation</li>
+<li>Professional quality metrics</li>
+</ul></li>
+</ul>
+</div></div>
 </section></section>
 <section>
 <section id="tokenizers-theory-algorithms-and-practical-considerations" class="title-slide slide level1 center">

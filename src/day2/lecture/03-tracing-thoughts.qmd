@@ -177,7 +177,6 @@ fairly priced:
 :::
 
 ::: {.column width="40%"}
-![Tree of Thoughts](../../images/transformers_model.png)
 
 - **Key research**:
   - [Yao et al. 2023](https://arxiv.org/abs/2305.10601): Tree of Thoughts framework

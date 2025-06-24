@@ -4,11 +4,11 @@
 
 :::: {.columns}
 
-::: {.column width="60%"}
-- **Traditional rule-based approaches (1960s – 1990s)** – keyword spotting and hand-written grammars for parsing bank statements and wire stories.  
-- **Statistical methods (1990s – 2010s)** – TF-IDF, n-grams, naïve Bayes sentiment (e.g. [Antweiler & Frank 2004](https://doi.org/10.1111/j.1540-6261.2004.00662.x))  
-- **Machine-learning era (2010s)** – supervised classifiers & finance-specific dictionaries (e.g. [Loughran & McDonald 2011](https://doi.org/10.1111/j.1540-6261.2010.01625.x))  
-- **Deep-learning revolution (≈2015 +)** – word-embeddings, CNN/RNN sentiment on earnings calls, transformer topic models (e.g. [Manela & Moreira 2017](https://doi.org/10.1016/j.jfineco.2016.08.013))  
+::: {.column width="100%"}
+- **Traditional rule-based approaches (1960s – 1990s)** keyword spotting and hand-written grammars for parsing bank statements and wire stories. Access to computing power limited to large institutions.
+- **Statistical methods (1990s – 2010s)** – TF-IDF, n-grams, naïve Bayes sentiment. 
+- **Machine-learning era (2010s)** – supervised classifiers & finance-specific dictionaries.  
+- **Deep-learning revolution (≈2015 +)** – word-embeddings, CNN/RNN sentiment on earnings calls, topic models.
 - **Large Language Models (2018 +)** – GPT-style chatbots & summarizers now embedded in research and advisory workflows (see Morgan Stanley GPT-4 Assistant 2023).
 :::
 
@@ -16,7 +16,7 @@
 
 ---
 
-## Academic Milestones (2004 – 2024)
+## Selected Academic Milestones (2004 – 2024)
 
 :::: {.columns}
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>limitations</title>
+<title>prompt-engineering-fundamentals</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,16 +23,16 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="03-limitations_files/libs/clipboard/clipboard.min.js"></script>
-<script src="03-limitations_files/libs/quarto-html/quarto.js"></script>
-<script src="03-limitations_files/libs/quarto-html/popper.min.js"></script>
-<script src="03-limitations_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="03-limitations_files/libs/quarto-html/anchor.min.js"></script>
-<link href="03-limitations_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="03-limitations_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="03-limitations_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="03-limitations_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="03-limitations_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="01-prompt-engineering-fundamentals_files/libs/clipboard/clipboard.min.js"></script>
+<script src="01-prompt-engineering-fundamentals_files/libs/quarto-html/quarto.js"></script>
+<script src="01-prompt-engineering-fundamentals_files/libs/quarto-html/popper.min.js"></script>
+<script src="01-prompt-engineering-fundamentals_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="01-prompt-engineering-fundamentals_files/libs/quarto-html/anchor.min.js"></script>
+<link href="01-prompt-engineering-fundamentals_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="01-prompt-engineering-fundamentals_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="01-prompt-engineering-fundamentals_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="01-prompt-engineering-fundamentals_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="01-prompt-engineering-fundamentals_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -46,111 +46,194 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="limitations-of-traditional-embeddings" class="level2">
-<h2 class="anchored" data-anchor-id="limitations-of-traditional-embeddings">Limitations of traditional embeddings</h2>
+<section id="prompt-engineering-fundamentals" class="level1">
+<h1>Prompt Engineering Fundamentals</h1>
+<section id="what-is-prompt-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-prompt-engineering">What is Prompt Engineering?</h2>
 <ul>
-<li>Do you recall how the word <strong><em>bank</em></strong> can refer to a financial institution or the side of a river? Traditional word embeddings struggle with such polysemy, as they assign a single vector representation to each word, regardless of context.</li>
-<li>The only way to address this is to use context-sensitive embeddings, which means that words need to talk to each other.</li>
-<li>Letting words <strong>talk to each other</strong> was first explored in the context of machine translation using RNN (Recurrent Neural Networks).</li>
-<li>However. it was not until the introduction of the <strong>Transformer architecture</strong> that we could effectively let words talk to each other in a scalable way. We will explore this in the next section.</li>
+<li>The <em>art</em> of communicating with a generative large-language model by crafting precise, concise, task-specific instructions.<br>
+</li>
+<li>A practice (rather than a formal engineering science) that relies on guidelines to shape wording, context, and structure so the model “understands” what you want.<br>
+</li>
+<li>The better the prompt, the more likely the LLM will produce the desired, accurate response. :contentReference<span data-index="0">oaicite:0</span></li>
 </ul>
 </section>
-<section id="some-definitions" class="level2">
-<h2 class="anchored" data-anchor-id="some-definitions">Some Definitions</h2>
+<section id="key-components-of-effective-prompts" class="level2">
+<h2 class="anchored" data-anchor-id="key-components-of-effective-prompts">Key Components of Effective Prompts</h2>
+<ol type="1">
+<li><strong>Instruction</strong> – clearly describe the task the model must perform.<br>
+</li>
+<li><strong>Context</strong> – supply background knowledge that will help the model.<br>
+</li>
+<li><strong>Input Data</strong> – the question or text the model should process.<br>
+</li>
+<li><strong>Output &amp; Style Format</strong> – tell the model <em>how</em> to answer (e.g., JSON, bullet list, length).<br>
+</li>
+<li><strong>Role specification</strong> – assign a persona (system, user, assistant) to steer behaviour. :contentReference<span data-index="1">oaicite:1</span></li>
+</ol>
+</section>
+<section id="prompt-principles-guidelines" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-principles-guidelines">Prompt Principles &amp; Guidelines</h2>
+<p>Prompt-quality improves when you follow five overarching categories of principles:<br>
+| Category | Typical guideline |<br>
+| — | — |<br>
+| <strong>Structure &amp; Clarity</strong> | Integrate the intended audience and keep wording unambiguous. |<br>
+| <strong>Specificity &amp; Information</strong> | Use example-driven (few-shot) prompts to anchor the task. |<br>
+| <strong>User Interaction &amp; Engagement</strong> | Invite the model to ask follow-up questions until it has enough information. |<br>
+| <strong>Content &amp; Language Style</strong> | Explicitly instruct tone or register (e.g., formal, friendly). |<br>
+| <strong>Complex Tasks &amp; Coding</strong> | Decompose large problems into an ordered sequence of smaller prompts. |<br>
+:contentReference<span data-index="2">oaicite:2</span></p>
+<section id="practical-tips-distilled-from-the-openai-guide" class="level3">
+<h3 class="anchored" data-anchor-id="practical-tips-distilled-from-the-openai-guide">Practical tips distilled from the OpenAI guide</h3>
 <ul>
-<li><strong>Recurrent Neural Networks (RNNs)</strong>: A type of neural network designed for sequential data, where the output from previous steps is fed as input to the current step.</li>
-<li><strong>LSTM (Long Short-Term Memory)</strong>: A type of RNN that can learn long-term dependencies, making it suitable for tasks like language modeling and translation.</li>
-<li>Prior to transformers, RNN architectures were the state of the art. They contained a <strong>feedback</strong>* loop in the network connections that allows information to propagate, making it ideal for sequential data like text.</li>
-<li>A crutial feature of these networks is that the <strong>input</strong> and <strong>output</strong> do not have to be the same length.</li>
+<li><strong>Write clear instructions.</strong><br>
+</li>
+<li><strong>Provide reference text</strong> instead of expecting the model to know everything.<br>
+</li>
+<li><strong>Split complex tasks</strong> into simpler subtasks.<br>
+</li>
+<li><strong>Give the model time to “think”.</strong><br>
+These concrete heuristics operationalise the broader principles above. :contentReference<span data-index="3">oaicite:3</span></li>
 </ul>
 </section>
-<section id="basic-rnns" class="level2">
-<h2 class="anchored" data-anchor-id="basic-rnns">Basic RNNs</h2>
-<ul>
-<li>Consider a sequence of observations of arbitrary length and a prediction of the next observation in the sequence. (E.g. bond quotes in TRACE)</li>
-<li>A basic RNN would take the previous observations as input, process it through a hidden layer, and output a prediction for the next return.</li>
-<li>A RNN Cell is a simple unit that takes an input and the previous hidden state, processes them, and outputs a new hidden state and an output.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/rnn1.png" class="img-fluid figure-img"></p>
-<figcaption>Basic RNN Cell</figcaption>
-</figure>
-</div>
 </section>
-<section id="unfolding-the-rnn" class="level2">
-<h2 class="anchored" data-anchor-id="unfolding-the-rnn">Unfolding the RNN</h2>
-<ul>
-<li>The RNN can be unfolded over time, where each time step corresponds to a new observation in the sequence.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/rnn2.png" class="img-fluid figure-img"></p>
-<figcaption>Basic RNN Cell</figcaption>
-</figure>
-</div>
+<section id="prompt-types-strategies" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-types-strategies">Prompt Types &amp; Strategies</h2>
+<table class="caption-top table">
+<caption>contentReference<span data-index="4">oaicite:4</span></caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Core idea</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Zero-shot</strong></td>
+<td>Rely solely on a direct instruction.</td>
+<td>Simple, well-specified tasks.</td>
+</tr>
+<tr class="even">
+<td><strong>Few-shot</strong></td>
+<td>Prepend 1-N examples of input → output.</td>
+<td>When demonstrations clarify format or style.</td>
+</tr>
+<tr class="odd">
+<td><strong>Chain-of-Thought</strong></td>
+<td>Explicitly ask for step-by-step reasoning.</td>
+<td>Complex reasoning or calculation.</td>
+</tr>
+<tr class="even">
+<td><strong>Self-Consistency</strong></td>
+<td>Generate multiple reasoning paths and compare.</td>
+<td>To boost reliability or creativity.</td>
+</tr>
+<tr class="odd">
+<td><strong>System / Role prompts</strong></td>
+<td>Fix the model’s persona and long-term behaviour.</td>
+<td>Chat agents, interactive apps.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="more-on-rnns" class="level2">
-<h2 class="anchored" data-anchor-id="more-on-rnns">More on RNNs</h2>
-<ul>
-<li><p>Recurrent Neural Networks (RNNs) extend traditional neural networks by allowing them to process <strong>sequences of variable length</strong>, unlike vanilla or convolutional networks which operate on fixed-size inputs and outputs.</p></li>
-<li><p>RNNs can handle diverse tasks such as <strong>sequence-to-sequence</strong> (e.g., machine translation), <strong>sequence-to-one</strong> (e.g., sentiment analysis), <strong>one-to-sequence</strong> (e.g., image captioning), and <strong>synced input/output sequences</strong> (e.g., video frame labeling).</p></li>
-<li><p>The <strong>core mechanism</strong> of RNNs is the state vector, which evolves through a <strong>fixed, learned transformation</strong> that combines past information (state) with new input at each time step.</p></li>
-<li><p>RNNs are more <strong>computationally expressive</strong> than feedforward networks: they can be seen as running a learned program, and are theoretically <strong>Turing-complete</strong>.</p></li>
-<li><p>Even when inputs and outputs are fixed-size vectors, RNNs can still be used to process them <strong>sequentially</strong> — for example, by learning to attend over parts of an image or generating images step by step.</p></li>
-</ul>
+<section id="the-co-star-framework" class="level2">
+<h2 class="anchored" data-anchor-id="the-co-star-framework">The CO-STAR Framework</h2>
+<p>A pragmatic recipe that bundles the preceding ideas into six digestible placeholders:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Letter</th>
+<th>Meaning</th>
+<th>Question to answer in your prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>C</strong></td>
+<td><strong>Context</strong></td>
+<td>“What background does the model need?”</td>
+</tr>
+<tr class="even">
+<td><strong>O</strong></td>
+<td><strong>Objective</strong></td>
+<td>“What exactly should it do?”</td>
+</tr>
+<tr class="odd">
+<td><strong>S</strong></td>
+<td><strong>Style</strong></td>
+<td>“In what writing style?”</td>
+</tr>
+<tr class="even">
+<td><strong>T</strong></td>
+<td><strong>Tone</strong></td>
+<td>“With what attitude or mood?”</td>
+</tr>
+<tr class="odd">
+<td><strong>A</strong></td>
+<td><strong>Audience</strong></td>
+<td>“Who will read the answer?”</td>
+</tr>
+<tr class="even">
+<td><strong>R</strong></td>
+<td><strong>Response</strong></td>
+<td>“What output format or length?”</td>
+</tr>
+</tbody>
+</table>
+<p>Using CO-STAR ensures prompts remain precise, simple, and audience-aware while covering every element an LLM needs for success. :contentReference<span data-index="5">oaicite:5</span></p>
 </section>
-<section id="different-types-of-rnns" class="level2">
-<h2 class="anchored" data-anchor-id="different-types-of-rnns">Different types of RNNs</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://karpathy.github.io/assets/rnn/diags.jpeg" class="img-fluid figure-img"></p>
-<figcaption>Different RNNs</figcaption>
-</figure>
-</div>
-<p>If you are interested in all that RNNs can do, I recommend reading <a href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/">Andrej Karpathy’s blog post</a> on the effectiveness of RNNs.</p>
+<section id="mapping-prompt-styles-to-common-llm-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="mapping-prompt-styles-to-common-llm-tasks">Mapping Prompt Styles to Common LLM Tasks</h2>
+<table class="caption-top table">
+<caption>contentReference<span data-index="6">oaicite:6</span></caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task domain</th>
+<th>Typical effective prompt style</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Text summarisation</strong></td>
+<td>Few-shot or role-based (“You are an expert editor…”)</td>
+</tr>
+<tr class="even">
+<td><strong>Information extraction</strong></td>
+<td>Instruction + format constraints (e.g., JSON schema)</td>
+</tr>
+<tr class="odd">
+<td><strong>Question answering</strong></td>
+<td>Zero-shot with context or chain-of-thought for complex queries</td>
+</tr>
+<tr class="even">
+<td><strong>Classification (text / image)</strong></td>
+<td>Zero- or few-shot with label set in the prompt</td>
+</tr>
+<tr class="odd">
+<td><strong>Reasoning &amp; math</strong></td>
+<td>Chain-of-thought plus “give your final answer on the last line”</td>
+</tr>
+<tr class="even">
+<td><strong>Code generation</strong></td>
+<td>Step-wise decomposition and explicit output format</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="the-encoder-decoder-framework" class="level2">
-<h2 class="anchored" data-anchor-id="the-encoder-decoder-framework">The Encoder-Decoder Framework</h2>
-<ul>
-<li>For most applications we will focus on mapping a sequence of inputs to a sequence of outputs. In a RNN the <em>encoder</em> encodes the information from the input sequence into a numerical representation, usually <strong>encoded</strong> in the last hidden state.</li>
-<li>In the *<strong>The capital of France is</strong> example, the encoded representation is the last hidden sstate.</li>
-<li>The <em>decoder</em> then takes this representation and generates the output sequence, one token at a time.</li>
-</ul>
+<section id="summary-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="summary-next-steps">Summary &amp; Next Steps</h2>
+<p>Prompt engineering is a <em>communication craft</em>: clarity, context, and structure convert natural language into reproducible LLM behaviour. Principles from academic surveys, OpenAI’s documentation, and the CO-STAR framework converge on the same message—be explicit, be specific, and design for the task. Master these fundamentals, iterate, and you will consistently elicit higher-quality LLM responses. :contentReference<span data-index="7">oaicite:7</span></p>
 </section>
-<section id="encoder-decoder-blocks-for-machine-translation-e.g.-english-to-catalan" class="level2">
-<h2 class="anchored" data-anchor-id="encoder-decoder-blocks-for-machine-translation-e.g.-english-to-catalan">Encoder-Decoder blocks for machine translation, e.g.&nbsp;english to catalan</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/rnn3.png" class="img-fluid figure-img"></p>
-<figcaption>RNN for machine translation</figcaption>
-</figure>
-</div>
-</section>
-<section id="limitations-of-the-traditional-encoder-decoder-framework" class="level2">
-<h2 class="anchored" data-anchor-id="limitations-of-the-traditional-encoder-decoder-framework">Limitations of the traditional Encoder-Decoder framework</h2>
-<ul>
-<li>Although elegant in its simplicity, one weakness is that the final hidden state of the encoder creates an <strong>information bottleneck</strong>. A single state needs to be able to represent the meaning of the whole input sequence.</li>
-<li>This is particularly challenging for long sequences.</li>
-<li>What if we give access to the decoder to all the hidden states of the encoder?</li>
-<li>This is the idea behind the <strong>attention mechanism</strong>, let RNN cells in the decoder <strong>pay attention</strong> to all the hidden states of the encoder, not just the last one.</li>
-</ul>
-</section>
-<section id="attention-mechanisms" class="level2">
-<h2 class="anchored" data-anchor-id="attention-mechanisms">Attention Mechanisms</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../images/encoder-decoder-attention.png" class="img-fluid figure-img"></p>
-<figcaption>Attention Mechanism</figcaption>
-</figure>
-</div>
-<ul>
-<li>The idea behind attention is to give the decoder access to the hidden states of the encoder.</li>
-<li>However, using all the states at the same time would create a huge computational burden, so we need to <strong>weight</strong> the hidden states of the encoder.</li>
-<li>These weights are learned during training and allow the decoder to focus on the most relevant parts of the input sequence.</li>
-<li>This general attention mechanism is also referred as <strong>cross-attention</strong>.</li>
-<li>A big limitation is that the attention mechanism is still sequential, meaning that the decoder needs to process the input sequence one word at a time.</li>
-</ul>
 </section>
 
 </main>

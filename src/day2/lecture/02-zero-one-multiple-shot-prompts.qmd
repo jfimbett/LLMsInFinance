@@ -12,9 +12,6 @@
 - Key to unlocking LLM capabilities in finance
 :::
 
-::: {.column width="40%"}
-![Prompt Types](../../images/transformers2.png)
-:::
 
 ::::
 
@@ -62,9 +59,6 @@ announcement on bond yields.
   - Quick portfolio insights
 :::
 
-::: {.column width="40%"}
-![Zero-Shot Results](../../images/transformers1.png)
-:::
 
 ::::
 

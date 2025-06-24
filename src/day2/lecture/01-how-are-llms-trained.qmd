@@ -1,201 +1,75 @@
 # How Are LLMs Trained?
 
-## Pre-training: The Foundation
+## General Idea
 
-:::: {.columns}
+- When you start your transformer architecture, every single weight/bias inside of the neural networks is initialized to a random value.
+- The training process consists of providing the model with "examples" of input and output pairs. 
+- An insample measure of how well the model is doing is called the **loss**, and this loss is then minimized using some sort of **optimizer**. 
+- However, there is a deep difference between letting the model predict the next token in a sentence, and actually having a LLM able to answer questions, write essays, or even code.
 
-::: {.column width="60%"}
-- Self-supervised learning on massive text corpora
-- Objective: predict next token or masked tokens
-- Training infrastructure: thousands of GPUs/TPUs
-- Computational costs: millions of dollars
-- Examples: Common Crawl, Books, Wikipedia, Code repositories
-- Financial data: SEC filings, financial reports, news, research
-:::
+## First step: Pretraining
 
-::: {.column width="40%"}
-![LLM Training Process](../../images/transformer_baby.png)
-:::
+- Your LLM needs to first learn to **speak** the language, understand complex relationships between words, and posses a **general knowledge**. 
 
-::::
 
-## Fine-tuning: Specialization
+## Common Data Sources
 
-- Supervised fine-tuning (SFT) on specific tasks
-- Reinforcement Learning from Human Feedback (RLHF)
-- Constitutional AI approaches
-- Domain adaptation for finance (SEC filings, financial news)
-- Distillation techniques for smaller, efficient models
+| #  | Corpus (family)                         | Typical size†          | What it is                                                                        | Prominent models that rely on it                                     |                                              |
+| -- | --------------------------------------- | ---------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------- |
+| 1  | **Common Crawl**                        | 250 B+ pages ‡         | Raw monthly web crawl released since 2007; the raw source many teams curate from. | GPT-3/4, Claude, Gemini, Llama-3/4, Falcon, BLOOM, PaLM-2, Mistral   | ([commoncrawl.org][1])                       |
+| 2  | **C4 (Colossal Clean Crawled)**         | \~750 GB               | Google’s filtered English slice of one CC snapshot (Apr-2019).                    | T5 / FLAN-T5, PaLM-2, Gemma                                          | ([paperswithcode.com][2])                    |
+| 3  | **CC-100 / CC-Net family**              | 2 TB+ (100 langs)      | Per-language cleaned Common Crawl—crucial for multilingual LLMs.                  | Llama-1/2/3, XLM-R, BLOOM-z                                          | ([paperswithcode.com][3])                    |
+| 4  | **Wikipedia**                           | 6 GB (en)              | Snapshot of all encyclopedia articles; high-quality factual prose.                | Nearly every model (GPT-3 mix: 3 % of tokens)                        | ([reddit.com][4])                            |
+| 5  | **BookCorpus / Books 1 & 2**            | 16 GB + 45 GB          | Public-domain & self-published novels; offers long-form narrative.                | GPT-2/3, PaLM, many Instruct models                                  | ([reddit.com][4])                            |
+| 6  | **Books 3 / LibGen**                    | 196 k books (\~100 GB) | Shadow-library scrape—controversial but common in recent LLMs.                    | Llama-1/2/3, StableLM, Mistral (per lawsuits)                        | ([news.bloomberglaw.com][5])                 |
+| 7  | **WebText & OpenWebText**               | 40 GB                  | Reddit-filtered outbound links; original GPT-2 corpus and its open clone.         | GPT-2, GPT-3 (WebText 2 = 22 % of tokens), many hobby GPT-2 replicas | ([en.wikipedia.org][6], [huggingface.co][7]) |
+| 8  | **The Pile**                            | 825 GB                 | 22-source mega-mix (arXiv, PubMed, GitHub, StackExchange, etc.).                  | GPT-Neo/J/NeoX, BLOOM, MPT-7B, Llama-3-open derivative               | ([huggingface.co][8])                        |
+| 9  | **RedPajama → SlimPajama**              | 1.2 T → 627 B tokens   | Together AI’s recreation of the GPT-3 mixture; Slim version is deduped.           | Cerebras-GPT, Snowflake Arctic, Mistral-medium                       | ([cerebras.ai][9])                           |
+| 10 | **RefinedWeb**                          | 5 T tokens             | Heavily filtered web-only dataset built for Falcon models.                        | Falcon-40B/180B                                                      | ([kili-technology.com][10])                  |
+| 11 | **Dolma**                               | 3 T tokens             | Allen AI’s fully open 200-TB → 11-TB cleaned corpus (web, code, papers, books).   | OLMo-7B/65B; used as a research benchmark                            | ([github.com][11])                           |
+| 12 | **MassiveText**                         | 10 TB                  | Proprietary quality-filtered mix (web, books, news, code).                        | Reportedly part of GPT-3, Claude-v1                                  | ([paperswithcode.com][12])                   |
+| 13 | **The Stack / Stack v2**                | 3-4 T tokens code      | Permissively-licensed GitHub code, notebooks, issues.                             | StarCoder-(1&2), Code Llama, Qwen-Coder                              | ([oumi.ai][13])                              |
+| 14 | **StackOverflow / StackExchange dumps** | 35 GB                  | QA pairs useful for dialogue and code reasoning.                                  | PaLM-Code, WizardCoder, many RLHF bases                              | ([github.com][14])                           |
 
-## Transfer Learning in LLMs
+[1]: https://commoncrawl.org/?utm_source=chatgpt.com "Common Crawl - Open Repository of Web Crawl Data"
+[2]: https://paperswithcode.com/dataset/c4?utm_source=chatgpt.com "C4 Dataset | Papers With Code"
+[3]: https://paperswithcode.com/dataset/cc100?utm_source=chatgpt.com "CC100 Dataset - Papers With Code"
+[4]: https://www.reddit.com/r/webscraping/comments/1bapx0j/how_did_openai_scrap_the_entire_internet_for/?utm_source=chatgpt.com "How did OpenAI scrap the entire Internet for training Chat GPT?"
+[5]: https://news.bloomberglaw.com/ip-law/meta-hit-with-another-ai-model-copyright-lawsuit-from-author?utm_source=chatgpt.com "Meta Hit With Another AI Model Copyright Lawsuit from Author"
+[6]: https://en.wikipedia.org/wiki/GPT-2?utm_source=chatgpt.com "GPT-2"
+[7]: https://huggingface.co/datasets/Skylion007/openwebtext?utm_source=chatgpt.com "Skylion007/openwebtext · Datasets at Hugging Face"
+[8]: https://huggingface.co/EleutherAI/gpt-neox-20b?utm_source=chatgpt.com "EleutherAI/gpt-neox-20b - Hugging Face"
+[9]: https://www.cerebras.ai/blog/slimpajama-a-627b-token-cleaned-and-deduplicated-version-of-redpajama?utm_source=chatgpt.com "SlimPajama: A 627B token, cleaned and deduplicated version of ..."
+[10]: https://kili-technology.com/large-language-models-llms/9-open-sourced-datasets-for-training-large-language-models?utm_source=chatgpt.com "Open-Sourced Training Datasets for Large Language Models (LLMs)"
+[11]: https://github.com/allenai/dolma?utm_source=chatgpt.com "allenai/dolma: Data and tools for generating and inspecting ... - GitHub"
+[12]: https://paperswithcode.com/dataset/massivetext?utm_source=chatgpt.com "MassiveText Dataset - Papers With Code"
+[13]: https://oumi.ai/docs/en/latest/api/oumi.datasets.pretraining.html?utm_source=chatgpt.com "oumi.datasets.pretraining"
+[14]: https://github.com/Zjh-819/LLMDataHub?utm_source=chatgpt.com "LLMDataHub: Awesome Datasets for LLM Training - GitHub"
 
-:::: {.columns}
+## Training process depends on the architecture
 
-::: {.column width="60%"}
-- **Definition**: Leveraging knowledge from one task to improve performance on another
-- **Pre-trained foundation**: General language understanding and generation
-- **Adaptation methods**:
-  - Parameter-efficient fine-tuning (PEFT)
-  - LoRA (Low-Rank Adaptation)
-  - Prompt tuning
-- **Financial applications**: Adapting general LLMs to financial jargon, regulations, and reporting formats
-:::
+| Architecture                                                        | Pre-training view of a sample sentence *“The quick brown fox jumps …”*                                                                                      | Typical objective & loss                                                                                       | Why that matches the architecture                                                                                                                 | Core strengths after pre-training                                                                                                               |                                                                           |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **Decoder-only (causal)**<br/>e.g. GPT-3/4, Llama, Claude           | Treat the prefix **The quick brown fox** as **visible** and the next token **jumps** as the one to predict. At each position *t* you see tokens ≤ *t* only. | Causal / autoregressive LM:<br/>  maximize P(tokenₜ                                                            | tokens < t) via cross-entropy.                                                                                                                    | A single Transformer block with **masked self-attention** causal mask (triangular) already enforces “look-left-only,” so training = generation. | Free-form generation, long-context reasoning, code completion, RLHF chat. |
+| **Encoder-only (bidirectional)**<br/>e.g. BERT, DeBERTa             | Randomly replace ≈15 % of tokens with **\[MASK]** → “The quick **\[MASK]** fox jumps …”; model sees *all* tokens simultaneously (no causal mask).           | Masked LM (MLM):<br/>  maximize P(original\_token                                                              | all *other* tokens).                                                                                                                              | Bidirectional attention lets every position attend to both left & right context, so masking is required to stop trivial copying.                | Sentence/paragraph understanding, retrieval, classification, embeddings.  |
+| **Encoder-decoder (seq-to-seq / denoising)**<br/>e.g. T5, BART, UL2 | Encoder sees a *corrupted* (“noised”) input: spans dropped, shuffled, or masked.<br/>Decoder must reconstruct the *clean* version token-by-token.           | Span-corruption / text-infilling:<br/>  cross-entropy over target sequence generated by the decoder.           | Split architecture: encoder encodes *source*; decoder autoregressively produces *target*. Any corruption that yields “source→target” pairs works. | Translation, summarisation, Q\&A, instruction-following; easier to fine-tune on supervised seq-to-seq tasks.                                    |                                                                           |
+| **Mixture-of-experts (MoE)**<br/>e.g. Google Switch, DeepMind GLaM  | Same objectives as above (usually causal), but each token is routed to a small subset of expert FFNs.                                                       | Still cross-entropy; additional load-balancing loss.                                                           | Sparse routing lets you scale parameters without proportional FLOPs.                                                                              | Generation at lower inference cost per parameter.                                                                                               |                                                                           |
+| **Retrieval-augmented decoders**<br/>e.g. RETRO, Atlas              | At each step the model queries an external index and conditions on retrieved passages.                                                                      | Joint loss: cross-entropy on next token + contrastive/KL term aligning internal and retrieved representations. | Decoder cross-attends to retrieved text; retrieval bridge provides fresh knowledge without storing it in weights.                                 | Up-to-date factual QA, long-tail knowledge, smaller base model.                                                                                 |                                                                           |
 
-::: {.column width="40%"}
-![Transfer Learning](../../images/transformers1.png)
-:::
+## What next?
 
-::::
+- Once the gargantuan self-supervised pass is finished, the model can speak fluent “Internet,” but it is not yet an aligned assistant, nor is it specialised for any industry task. Current pipelines add three big, partly overlapping phases:
 
-## Knowledge Distillation
+- 1. Instruction-tuning (a.k.a. supervised fine-tuning, SFT)
+- 2. Preference alignment
+3. Post-alignment specialisation
 
-:::: {.columns}
+## Instruction-tuning in practice
 
-::: {.column width="60%"}
-- **Teacher-student paradigm**: Large model trains smaller model
-- **Methods**:
-  - Response-based: Student mimics teacher's final outputs
-  - Feature-based: Student mimics intermediate representations
-  - Relation-based: Student preserves relationships between examples
-- **Benefits**: Reduced size, faster inference, lower deployment costs
-- **Financial applications**: Deployment in regulatory-compliant environments, mobile financial applications
-:::
+- Open models: FLAN-T5, Llama-2-Chat, Mistral-Instruct all do a 1–3 epoch SFT pass on 5 M–25 M instruction–response pairs. *! Show examples !*
 
-::: {.column width="40%"}
-![Knowledge Distillation](../../images/attention_abstract.png)
-:::
+- Commercial models: OpenAI and Anthropic report hundreds of specialised SFT sets covering tools, code, safety scenarios, etc.
 
-::::
+## Preference alignment in practice
 
-## Reasoning Models vs. Standard LLMs
 
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Standard LLMs**: 
-  - Pattern recognition and completion
-  - Optimized for fluency and factual recall
-  - Strong at retrieval tasks
-- **Reasoning-enhanced LLMs**:
-  - Chain-of-thought and step-by-step problem solving
-  - RLHF with emphasis on logical consistency
-  - Training with mathematical and logical datasets
-  - Fine-tuned for financial analysis and complex decision-making
-:::
-
-::: {.column width="40%"}
-- **Key differences**:
-  - Training objectives
-  - Evaluation metrics
-  - Prompting techniques
-  - Explicit reasoning steps
-  - Architectural enhancements
-:::
-
-::::
-
-## Key Training Innovations
-
-- Mixed precision training
-- Distributed training across thousands of GPUs
-- Gradient accumulation for larger effective batch sizes
-- Curriculum learning (from simple to complex tasks)
-- Instruction tuning for better alignment with human preferences
-- Finance-specific innovations: regulatory compliance training, risk assessment optimization
-- Efficient attention mechanisms
-- Parallelization strategies (data, model, pipeline)
-- Optimizers designed for large models (AdamW, Lion)
-- Checkpoint and training resumption techniques
-
-## Training Challenges in Financial Domain
-
-- Data quality and curation for financial texts
-- Regulatory compliance during training
-- Addressing biases in financial data
-- Maintaining privacy of sensitive information
-- Environmental and computational sustainability concerns
-
-## Latest Advances in Training Methods
-
-- Direct Preference Optimization (DPO)
-- Mixture-of-Experts (MoE) architectures
-- Continuous pre-training on recent data
-- Multimodal training incorporating market data
-- Parameter-efficient fine-tuning methods (LoRA, P-tuning)
-
-## Reasoning Capabilities: Beyond Pattern Recognition
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Chain-of-Thought (CoT)**: Step-by-step reasoning through prompting
-- **Tree of Thoughts (ToT)**: Exploring multiple reasoning paths
-- **ReAct**: Reasoning and acting framework combining thinking and action
-- **Self-consistency**: Generating multiple reasoning paths and taking majority vote
-- **Verification**: Training models to verify their own reasoning steps
-- **Mathematical capabilities**: Training on specialized datasets with explicit steps
-:::
-
-::: {.column width="40%"}
-![Reasoning Process](../../images/transformers2.png)
-:::
-
-::::
-
-## Training Models for Financial Reasoning
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Financial datasets**:
-  - Earnings reports with analysis steps
-  - Investment decision case studies
-  - Regulatory compliance reasoning
-  - Risk assessment scenarios
-- **Training techniques**:
-  - Supervised examples with annotated reasoning steps
-  - Synthetic data generation for rare financial scenarios
-  - Expert demonstrations of financial analysis workflows
-  - Curriculum learning from simple to complex financial problems
-:::
-
-::: {.column width="40%"}
-- **Key applications**:
-  - Credit risk assessment
-  - Fraud detection explanation
-  - Portfolio optimization reasoning
-  - Merger & acquisition analysis
-  - Regulatory compliance validation
-  - Financial forecasting with uncertainty quantification
-:::
-
-::::
-
-## Evaluation of Reasoning Capabilities
-
-- **Benchmark datasets**:
-  - GSM8K and MATH for mathematical reasoning
-  - FinQA for financial question answering
-  - Financial analysis tasks with ground truth reasoning paths
-- **Metrics beyond accuracy**:
-  - Logical consistency
-  - Step validity
-  - Uncertainty calibration
-  - Alignment with expert reasoning processes
-- **Human evaluation protocols**: Financial expert validation of reasoning paths
-- **Stress testing**: Adversarial examples to identify reasoning failures
-
-## Practical Implementation Considerations
-
-- **Prompt engineering** for financial reasoning:
-  - Zero-shot CoT: "Let's think step by step..."
-  - Few-shot demonstrations of financial analysis
-  - Structured reasoning templates for specific tasks
-- **Computing requirements** for inference:
-  - Longer context windows for complex reasoning
-  - Higher token generation for multi-step explanations
-  - Memory constraints for tracking reasoning state
-- **Hybrid approaches**:
-  - Combining LLM reasoning with classical financial models
-  - Integrating external tools (calculators, databases, APIs)
-  - Human-in-the-loop validation for critical decisions

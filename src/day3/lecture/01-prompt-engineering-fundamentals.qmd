@@ -1,23 +1,67 @@
 # Prompt Engineering Fundamentals
 
-## What is Prompt Engineering?
+## What is Prompt Engineering?  
+- The *art* of communicating with a generative large-language model by crafting precise, concise, task-specific instructions.  
+- A practice (rather than a formal engineering science) that relies on guidelines to shape wording, context, and structure so the model “understands” what you want.  
+- The better the prompt, the more likely the LLM will produce the desired, accurate response. :contentReference[oaicite:0]{index=0}  
 
-- The practice of designing and optimizing inputs to LLMs
-- Systematically crafting prompts to achieve desired outputs
-- A core skill for effective LLM application development
+## Key Components of Effective Prompts  
+1. **Instruction** – clearly describe the task the model must perform.  
+2. **Context** – supply background knowledge that will help the model.  
+3. **Input Data** – the question or text the model should process.  
+4. **Output & Style Format** – tell the model *how* to answer (e.g., JSON, bullet list, length).  
+5. **Role specification** – assign a persona (system, user, assistant) to steer behaviour. :contentReference[oaicite:1]{index=1}  
 
-## Key Components of Effective Prompts
+## Prompt Principles & Guidelines  
+Prompt-quality improves when you follow five overarching categories of principles:  
+| Category | Typical guideline |  
+| --- | --- |  
+| **Structure & Clarity** | Integrate the intended audience and keep wording unambiguous. |  
+| **Specificity & Information** | Use example-driven (few-shot) prompts to anchor the task. |  
+| **User Interaction & Engagement** | Invite the model to ask follow-up questions until it has enough information. |  
+| **Content & Language Style** | Explicitly instruct tone or register (e.g., formal, friendly). |  
+| **Complex Tasks & Coding** | Decompose large problems into an ordered sequence of smaller prompts. |  
+:contentReference[oaicite:2]{index=2}  
 
-- **Clarity**: Explicit instructions and well-defined tasks
-- **Context**: Relevant background information
-- **Format**: Structured input with clear expectations
-- **Examples**: Demonstrations of desired outputs (few-shot learning)
-- **Constraints**: Boundaries and limitations for the model
+### Practical tips distilled from the OpenAI guide  
+- **Write clear instructions.**  
+- **Provide reference text** instead of expecting the model to know everything.  
+- **Split complex tasks** into simpler subtasks.  
+- **Give the model time to “think”.**  
+These concrete heuristics operationalise the broader principles above. :contentReference[oaicite:3]{index=3}  
 
-## Prompt Types and Strategies
+## Prompt Types & Strategies  
+| Type | Core idea | When to use |  
+| --- | --- | --- |  
+| **Zero-shot** | Rely solely on a direct instruction. | Simple, well-specified tasks. |  
+| **Few-shot** | Prepend 1-N examples of input → output. | When demonstrations clarify format or style. |  
+| **Chain-of-Thought** | Explicitly ask for step-by-step reasoning. | Complex reasoning or calculation. |  
+| **Self-Consistency** | Generate multiple reasoning paths and compare. | To boost reliability or creativity. |  
+| **System / Role prompts** | Fix the model’s persona and long-term behaviour. | Chat agents, interactive apps. |  
+:contentReference[oaicite:4]{index=4}  
 
-- **Zero-shot**: Direct instructions without examples
-- **Few-shot**: Including examples of desired inputs and outputs
-- **Chain-of-thought**: Guiding the model through reasoning steps
-- **Self-consistency**: Multiple paths to validate outputs
-- **System prompts**: Setting the model's persona and behavior
+## The CO-STAR Framework  
+A pragmatic recipe that bundles the preceding ideas into six digestible placeholders:  
+
+| Letter | Meaning | Question to answer in your prompt |  
+| --- | --- | --- |  
+| **C** | **Context** | “What background does the model need?” |  
+| **O** | **Objective** | “What exactly should it do?” |  
+| **S** | **Style** | “In what writing style?” |  
+| **T** | **Tone** | “With what attitude or mood?” |  
+| **A** | **Audience** | “Who will read the answer?” |  
+| **R** | **Response** | “What output format or length?” |  
+Using CO-STAR ensures prompts remain precise, simple, and audience-aware while covering every element an LLM needs for success. :contentReference[oaicite:5]{index=5}  
+
+## Mapping Prompt Styles to Common LLM Tasks  
+| Task domain | Typical effective prompt style |  
+| --- | --- |  
+| **Text summarisation** | Few-shot or role-based (“You are an expert editor…”) |  
+| **Information extraction** | Instruction + format constraints (e.g., JSON schema) |  
+| **Question answering** | Zero-shot with context or chain-of-thought for complex queries |  
+| **Classification (text / image)** | Zero- or few-shot with label set in the prompt |  
+| **Reasoning & math** | Chain-of-thought plus “give your final answer on the last line” |  
+| **Code generation** | Step-wise decomposition and explicit output format |  
+:contentReference[oaicite:6]{index=6}  
+
+

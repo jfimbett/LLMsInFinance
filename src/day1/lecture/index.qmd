@@ -1,6 +1,6 @@
 ---
 title: "Day 1: Introduction to Large Language Models"
-author: "Your Name"
+author: "Juan F. Imbet"
 date: "2025-05-07"
 format:
   revealjs:
@@ -20,6 +20,7 @@ jupyter: python3
 - Word Embeddings
 - Tokenizers
 - The Transformers Architecture
+- Softmax Probabilities and Token Generation
 - Classification and Scalability of LLMs
 
 {{< include 01-nlp-finance-evolution.qmd >}}
@@ -29,6 +30,8 @@ jupyter: python3
 {{< include 03-limitations.qmd >}}
 
 {{< include 04-transformers.qmd >}}
+
+{{< include 07-softmax-token-generation.qmd >}}
 
 {{< include 05-tokenizers.qmd >}}
 

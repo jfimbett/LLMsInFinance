@@ -15,21 +15,24 @@ format:
 
 ## Overview of Today's Lecture
 
+- Mathematical foundations of LLM training (entropy, gradients, optimization)
 - Reasoning models and multi-step inference
 - How LLMs are trained and optimized
 - Effective prompt engineering strategies
 - Understanding and tracing thought processes
 - Emergent behaviors and interpretability challenges
 
-{{< include 00-reasoning-models.qmd >}}
+{{< include 00-mathematical-foundations.qmd >}}
 
-{{< include 01-how-are-llms-trained.qmd >}}
+{{< include 01-reasoning-models.qmd >}}
 
-{{< include 02-zero-one-multiple-shot-prompts.qmd >}}
+{{< include 02-how-are-llms-trained.qmd >}}
 
-{{< include 03-tracing-thoughts.qmd >}}
+{{< include 03-zero-one-multiple-shot-prompts.qmd >}}
 
-{{< include 04-ghost-in-the-machine.qmd >}}
+{{< include 04-tracing-thoughts.qmd >}}
+
+{{< include 05-ghost-in-the-machine.qmd >}}
 
 ## What's Next?
 

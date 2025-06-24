@@ -1,0 +1,540 @@
+# Zero, One, and Multiple-Shot Prompts
+
+## Understanding Prompt Engineering
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Prompts: instructions that guide LLM outputs
+- Art and science of communicating with LLMs
+- Critical skill for effective LLM utilization
+- Influences the quality, relevance, and accuracy of responses
+- Key to unlocking LLM capabilities across domains
+:::
+
+
+::::
+
+## Zero-Shot Prompting: Basics
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Model responds without examples
+- Example: "Explain the concept of gravity"
+- Benefits: Simplicity and directness
+- Limitations: Less control over output format and style
+- Applications: Quick insights, basic definitions, general queries
+:::
+
+::: {.column width="40%"}
+```
+Explain the concept of 
+photosynthesis and its 
+importance for life on Earth.
+```
+
+```
+Analyze the potential impact 
+of climate change on ocean 
+temperatures and currents.
+```
+:::
+
+::::
+
+## Zero-Shot Prompting: Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Technical foundation**: Model uses pre-training distribution to generate responses
+- **Success factors**: Clarity, specificity, and proper framing
+- **General use cases**:
+  - Concept explanations
+  - Quick factual queries
+  - Basic analysis requests
+  - Initial research questions
+  - Educational content
+:::
+
+
+::::
+
+## One-Shot Prompting: Basics
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Providing a single example before the query
+- Guides the model on expected output format and style
+- Example: 
+  - "Q: What is gravity? A: Gravity is a fundamental force that attracts objects..."
+  - "Now, what is electromagnetic force?"
+- Applications: Consistent reports, standardized analyses, format control
+:::
+
+::: {.column width="40%"}
+```
+Q: What is photosynthesis?
+A: Photosynthesis is the process 
+by which plants convert sunlight, 
+carbon dioxide, and water into 
+glucose and oxygen. It's essential 
+for life on Earth as it produces 
+the oxygen we breathe.
+
+Q: What is cellular respiration?
+A:
+```
+:::
+
+::::
+
+## One-Shot Prompting: Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Cognitive foundations**: Creates local context that guides prediction
+- **Why one-shot works better than zero-shot**:
+  - **Pattern recognition**: LLMs excel at identifying and following patterns from examples
+  - **Format specification**: Examples clarify desired output structure
+  - **Disambiguation**: Reduces ambiguity about what type of response is expected
+  - **Context priming**: Examples activate relevant neural pathways in the model
+- **When to use**: 
+  - When format consistency is critical
+  - For standardized analyses across different topics
+  - To control response length and structure
+  - For regular reporting or documentation
+:::
+
+::: {.column width="40%"}
+```
+BOOK REVIEW: 1984
+Pages: 328
+Genre: Dystopian Fiction
+Rating: 4.5/5
+Summary: Powerful exploration 
+of totalitarianism and surveillance
+
+BOOK REVIEW: Dune
+```
+:::
+
+::::
+
+## One-Shot Case Studies: Part 1
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Product reviews**: Standardized format across different products
+- **Research summaries**: Consistent structure for different academic papers
+- **Technical documentation**: Uniform format for different software tools
+:::
+
+::: {.column width="40%"}
+- **Empirical observations**:
+  - 42% improvement in format consistency
+  - 37% reduction in hallucinated information
+  - 63% higher user satisfaction ratings
+:::
+
+::::
+
+## One-Shot Case Studies: Part 2
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Meeting minutes**: Maintaining consistent structure across different meetings
+- **Scientific analyses**: Standard template applied to different experiments
+- **Content summaries**: Consistent presentation across different media types
+:::
+
+::: {.column width="40%"}
+- **Efficiency metrics**:
+  - 29% faster production of standardized reports
+  - Significant improvement in accuracy
+  - 34% higher quality approval rate
+:::
+
+::::
+
+## Few-Shot Prompting: Concepts
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Multiple examples before the target query
+- Establishes patterns for the model to follow
+- Creates stronger "mental models" within LLM context
+- Especially useful for specialized or complex tasks
+- Applications: Complex analysis templates, specialized formats, domain-specific tasks
+:::
+
+::: {.column width="40%"}
+```
+Analyze these movies:
+
+Inception: Complex narrative, 
+excellent cinematography, 
+thought-provoking themes. 
+Rating: 9/10
+
+Interstellar: Stunning visuals, 
+emotional depth, scientific 
+accuracy. Rating: 8.5/10
+
+The Matrix: Groundbreaking 
+effects, philosophical depth, 
+cultural impact. Rating: 9/10
+
+Blade Runner 2049:
+```
+:::
+
+::::
+
+## Few-Shot Prompting: Implementation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Technical mechanism**: Reinforces pattern recognition within the attention layers
+- **Why multiple-shot works better than one-shot**:
+  - **Stronger pattern establishment**: More examples create more robust patterns
+  - **Variance reduction**: Multiple examples reduce the chance of following an outlier pattern
+  - **Complex pattern recognition**: Some patterns require multiple instances to be clear
+  - **Edge case coverage**: More examples can demonstrate how to handle variations
+- **Optimal examples**: 3-5 diverse but consistent demonstrations
+- **Key advantage**: Balance between flexibility and standardization
+- **Best practices**:
+  - Provide relevant and diverse examples
+  - Maintain consistent format across examples
+  - Order examples from simple to complex
+  - Include diverse but related scenarios
+:::
+
+::: {.column width="40%"}
+```
+Mathematical equation solving:
+
+Quadratic: ax² + bx + c = 0
+Solution: x = (-b ± √(b²-4ac)) / 2a
+Example: x² - 5x + 6 = 0
+Result: x = 2 or x = 3
+
+Linear: ax + b = 0
+Solution: x = -b/a
+Example: 3x - 9 = 0
+Result: x = 3
+
+Exponential: aˣ = b
+Solution: x = log_a(b)
+Example: 2ˣ = 8
+Result: x = 3
+
+Logarithmic: log_a(x) = b
+```
+:::
+
+::::
+
+## Complex Few-Shot Scenarios: Part 1
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Scientific hypothesis testing**: Demonstrating experimental design across different fields
+- **Literary analysis**: Multiple example analyses before target text
+- **Problem-solving frameworks**: Pattern of systematic approaches across scenarios
+:::
+
+::: {.column width="40%"}
+```
+Research Proposal Analysis:
+
+Topic: Climate Change Impact
+Methodology: Longitudinal study
+Sample Size: 1000 participants
+Expected Duration: 3 years
+Recommendation: APPROVE
+Rationale: Strong methodology, 
+adequate sample, feasible timeline
+
+Topic: AI Ethics Framework
+Methodology: Mixed methods
+Sample Size: 500 interviews
+Expected Duration: 18 months
+Recommendation: REVISE
+Rationale: Needs clearer metrics, 
+broader stakeholder inclusion
+
+Topic: Urban Planning Optimization
+```
+:::
+
+::::
+
+## Complex Few-Shot Scenarios: Part 2
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Algorithm optimization**: Examples of different optimization approaches
+- **Quality assessment**: Systematic evaluation procedure demonstrations
+- **Pattern recognition**: Examples of identifying anomalies or trends
+:::
+
+::: {.column width="40%"}
+- **Implementation considerations**:
+  - Example diversity for robust generalization
+  - Domain-specific terminology and conventions
+  - Recent examples to capture current best practices
+  - Progressive complexity in demonstrations
+  - Clear delineation between examples and query
+:::
+
+::::
+## Chain-of-Thought Prompting: Concepts
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Encourages step-by-step reasoning
+- Prompt: "Think through this problem step by step"
+- Dramatically improves performance on complex tasks
+- Reduces logical errors and hallucinations
+- **Research foundation**: Wei et al. (2022) demonstrated 20-40% improvement on mathematical problems
+:::
+
+::: {.column width="40%"}
+```
+To solve this physics problem:
+
+1) First, identify the given 
+   variables and what we need to find
+2) Choose the appropriate 
+   physics equation or principle
+3) Substitute the known values
+4) Solve for the unknown variable
+5) Check units and reasonableness
+6) State the final answer with 
+   proper significant figures
+```
+:::
+
+::::
+
+## Chain-of-Thought Prompting: Financial Applications
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Problem-solving impact**: 
+  - 52% reduction in calculation errors
+  - 63% improvement in logical consistency
+  - 47% better alignment with established principles
+- **Key use cases**:
+  - Complex analytical problems
+  - Multi-step calculations
+  - Logical reasoning tasks
+  - Decision-making processes
+  - Research methodology frameworks
+:::
+
+::: {.column width="40%"}
+```
+Analyze whether we should 
+implement this new software system:
+
+Let me think step by step:
+1. Assess current system limitations
+2. Evaluate proposed benefits
+3. Calculate implementation costs
+4. Consider training requirements
+5. Analyze potential risks
+6. Determine timeline feasibility
+7. Weigh alternatives
+```
+:::
+
+::::
+
+## CoT Implementation Techniques
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Explicit CoT**: "Walk through the solution to this differential equation step by step"
+- **Few-shot CoT**: Providing examples of reasoning steps before the task
+- **Self-consistency CoT**: Generate multiple reasoning paths and select the most consistent result
+- **Structured CoT**: Predefined framework for analysis (e.g., problem identification, hypothesis, testing, conclusion)
+- **Recursive CoT**: Breaking complex problems into subproblems
+:::
+
+::: {.column width="40%"}
+- **General applications**:
+  - Mathematical problem solving
+  - Scientific method applications
+  - Engineering design processes
+  - Quality assurance procedures
+  - Research methodology
+  - Decision analysis frameworks
+  - Strategic planning
+:::
+
+::::
+
+## Why Do These Techniques Work?
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **In-context learning**: LLMs can adapt behavior based on examples in the prompt
+- **Statistical pattern recognition**: Examples create local patterns that guide prediction
+- **Attention mechanism**: Examples direct model attention to relevant features
+- **Task disambiguation**: Examples clarify the exact task required
+- **Emergent reasoning**: Complex prompting unlocks latent reasoning capabilities
+- **Cognitive alignment**: Prompts create structures similar to human reasoning
+- **Distribution steering**: Examples shift the output distribution toward desired regions
+- **Activation pattern guidance**: Examples activate specific neural pathways
+:::
+
+::: {.column width="40%"}
+- **The science behind it**:
+  - [Wei et al. 2022](https://arxiv.org/abs/2201.11903): Chain-of-thought prompting
+  - [Brown et al. 2020](https://arxiv.org/abs/2005.14165): Few-shot learning in GPT-3
+  - [Kojima et al. 2022](https://arxiv.org/abs/2205.11916): Zero-shot reasoning
+  - [Wang et al. 2022](https://arxiv.org/abs/2210.09261): Self-consistency improvements
+  - [Yao et al. 2023](https://arxiv.org/abs/2305.10601): Tree of Thoughts reasoning
+  - [Anil et al. 2023](https://arxiv.org/abs/2302.04023): Gemini capabilities and reasoning
+:::
+
+::::
+
+## Neuroscience Perspective on Prompt Engineering
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Working memory augmentation**: Prompts provide external memory buffer
+- **Cognitive priming**: Examples prime the model for specific response patterns
+- **Neural pathway activation**: Specific prompt structures activate relevant neural circuits
+- **Attentional focus**: Examples direct computational resources to relevant features
+- **Conceptual scaffolding**: Prompts provide structured frameworks for complex reasoning
+:::
+
+::: {.column width="40%"}
+- **General parallels**:
+  - Researchers use systematic methodologies
+  - Engineers follow structured design processes
+  - Quality control requires systematic approaches
+  - Problem-solving follows established patterns
+  - Analysis builds on standard frameworks
+:::
+
+::::
+
+## Advanced Prompting Techniques
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Role-based prompting**: "As a research scientist, evaluate..."
+- **System-user framework**: Setting persistent system context for specialized applications
+- **Self-critique prompting**: Having the model critique its own analysis
+- **ReAct prompting**: Reasoning → Action → Observation loop for problem-solving
+- **Tree of Thoughts**: Exploring multiple reasoning branches for complex decisions
+- **Constrained generation**: Enforcing specific output formats for consistency
+:::
+
+::: {.column width="40%"}
+```
+You are a peer reviewer for a 
+scientific journal. Ensure all 
+responses follow academic 
+standards including proper 
+citation format and objective 
+evaluation criteria.
+
+[SYSTEM CONTEXT]
+
+User: Please review this research 
+proposal on renewable energy 
+storage solutions.
+```
+:::
+
+::::
+
+## Prompting for Accuracy in General Contexts
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Factual anchoring**: Providing verifiable data in prompts
+- **Anti-hallucination techniques**: "Only use information explicitly provided"
+- **Uncertainty expression**: Encouraging models to express confidence levels
+- **Citation prompting**: Requesting sources for claims
+- **Verification requests**: Including accuracy checks in analysis
+- **Temporal awareness**: Clarifying time-sensitive information
+:::
+
+::: {.column width="40%"}
+```
+Today's date is 2024-12-15.
+
+Using only the following data 
+about renewable energy adoption 
+(do not use any other information):
+- Solar capacity: 150 GW
+- Wind capacity: 120 GW
+- Growth rate: 15% annually
+- Cost reduction: 8% per year
+
+Provide an analysis of trends.
+If you are uncertain about any 
+aspect, explicitly state your 
+uncertainty.
+```
+:::
+
+::::
+
+## Measuring Prompt Effectiveness
+
+- **Performance metrics**: Accuracy, consistency, relevance, clarity
+- **A/B testing**: Comparing different prompting strategies on identical tasks
+- **Benchmarking**: Domain-specific reasoning benchmarks and evaluation datasets
+- **Expert evaluation**: Domain professional assessment of outputs
+- **Quality standards**: Compliance with established guidelines and best practices
+- **Impact assessment**: Real-world outcomes and effectiveness of model outputs
+
+## Prompt Engineering Best Practices
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Establish clear context (domain, time period, constraints)
+- Define explicit requirements and expectations
+- Include relevant data and authoritative sources
+- Specify required output format for consistency
+- Use domain-appropriate terminology and conventions
+- Implement verification steps for accuracy
+- Clarify quality and standard expectations
+- Consider ethical implications and responsible use
+:::
+
+::: {.column width="40%"}
+- **General prompt template library**:
+  - Research analysis framework
+  - Quality assessment protocol
+  - Problem-solving methodology
+  - Report structure templates
+  - Decision-making approaches
+  - Data analysis workflows
+  - Evaluation criteria checklists
+:::

@@ -1,0 +1,393 @@
+# Mathematical Foundations of LLM Training
+
+## Loss Functions and Cross-Entropy
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Fundamental training objective**: Learn probability distribution over tokens
+  $$P(x_{t+1} | x_1, x_2, ..., x_t; \theta)$$
+  
+- **Cross-entropy loss**: Measures difference between predicted and true distributions
+  $$L_{CE} = -\sum_{i=1}^{|V|} y_i \log(\hat{y}_i)$$
+  
+  Where:
+  - $y_i$ = true probability (one-hot encoded)
+  - $\hat{y}_i$ = predicted probability from softmax
+  - $|V|$ = vocabulary size
+:::
+
+::: {.column width="40%"}
+- **Why cross-entropy?**
+  
+  **Information theory foundation**:
+  - Measures "surprise" of predictions
+  - Minimizes KL divergence: $D_{KL}(P_{true} || P_{model})$
+  - Connects to maximum likelihood estimation
+  
+  **Mathematical properties**:
+  - Convex function (locally)
+  - Differentiable everywhere
+  - Penalizes confident wrong predictions heavily
+:::
+
+::::
+
+## Entropy in Information Theory
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Shannon entropy**: Measures information content
+  $$H(X) = -\sum_{i} P(x_i) \log P(x_i)$$
+  
+- **In language modeling context**:
+  $$H(language) = -\frac{1}{N} \sum_{t=1}^{N} \log P(x_t | x_{1:t-1})$$
+  
+- **Perplexity**: Exponential of entropy
+  $$\text{Perplexity} = 2^{H(language)} = 2^{-\frac{1}{N} \sum_{t=1}^{N} \log_2 P(x_t | x_{1:t-1})}$$
+:::
+
+::: {.column width="40%"}
+- **Intuitive understanding**:
+  
+  **Low entropy (predictable)**:
+  - Model is confident about next token
+  - Language follows clear patterns
+  - Lower perplexity = better model
+  
+  **High entropy (uncertain)**:
+  - Model uncertain about next token
+  - Language is more random/creative
+  - Higher perplexity = worse model
+  
+- **Training goal**: Minimize cross-entropy = Minimize perplexity
+:::
+
+::::
+
+## From Logits to Probabilities: The Softmax Function
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Raw model outputs**: Logits $z_i$ for each vocabulary token
+  $$z = W_o h + b_o$$
+  
+  Where $h$ is final hidden state, $W_o$ is output projection
+  
+- **Softmax transformation**: Convert to probabilities
+  $$P(x_i) = \frac{e^{z_i}}{\sum_{j=1}^{|V|} e^{z_j}}$$
+  
+- **Cross-entropy with softmax**:
+  $$L = -\log P(x_{target}) = -z_{target} + \log \sum_{j=1}^{|V|} e^{z_j}$$
+:::
+
+::: {.column width="40%"}
+- **Why softmax properties matter**:
+  
+  **Probability constraints**:
+  - $\sum_i P(x_i) = 1$ (proper distribution)
+  - $P(x_i) > 0$ for all $i$ (non-zero probabilities)
+  
+  **Gradient properties**:
+  - $\frac{\partial L}{\partial z_i} = P(x_i) - y_i$
+  - Simple, interpretable gradients
+  - Difference between prediction and truth
+  
+  **Numerical stability**:
+  - LogSumExp trick prevents overflow
+  - Subtracting max before exponential
+:::
+
+::::
+
+## Gradient Descent and Backpropagation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Gradient descent update rule**:
+  $$\theta_{t+1} = \theta_t - \eta \nabla_\theta L(\theta_t)$$
+  
+  Where:
+  - $\eta$ = learning rate
+  - $\nabla_\theta L$ = gradient of loss w.r.t. parameters
+  
+- **Chain rule in transformers**:
+  $$\frac{\partial L}{\partial W^{(l)}} = \frac{\partial L}{\partial h^{(L)}} \frac{\partial h^{(L)}}{\partial h^{(l)}} \frac{\partial h^{(l)}}{\partial W^{(l)}}$$
+  
+  Backpropagates through $L$ layers of self-attention and feedforward blocks
+:::
+
+::: {.column width="40%"}
+- **Challenges in deep networks**:
+  
+  **Vanishing gradients**:
+  - $\frac{\partial h^{(L)}}{\partial h^{(l)}} \to 0$ as $L - l$ increases
+  - Information doesn't flow to early layers
+  - Solved by residual connections
+  
+  **Exploding gradients**:
+  - Gradients grow exponentially
+  - Training becomes unstable
+  - Solved by gradient clipping
+  
+  **Memory requirements**:
+  - Store all intermediate activations
+  - $O(L \times \text{sequence\_length} \times \text{hidden\_size})$
+:::
+
+::::
+
+## Optimization Algorithms Beyond SGD
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Stochastic Gradient Descent (SGD)**:
+  $$\theta_{t+1} = \theta_t - \eta \nabla_\theta L(\theta_t)$$
+  
+- **SGD with Momentum**:
+  $$v_{t+1} = \beta v_t + \eta \nabla_\theta L(\theta_t)$$
+  $$\theta_{t+1} = \theta_t - v_{t+1}$$
+  
+- **Adam Optimizer** (most common for LLMs):
+  $$m_t = \beta_1 m_{t-1} + (1-\beta_1) \nabla_\theta L$$
+  $$v_t = \beta_2 v_{t-1} + (1-\beta_2) (\nabla_\theta L)^2$$
+  $$\theta_{t+1} = \theta_t - \frac{\eta \hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}$$
+:::
+
+::: {.column width="40%"}
+- **Why Adam for LLM training?**
+  
+  **Adaptive learning rates**:
+  - Different learning rate per parameter
+  - Automatically adjusts based on gradient history
+  - Works well for sparse gradients
+  
+  **Bias correction**:
+  - $\hat{m}_t = \frac{m_t}{1-\beta_1^t}$, $\hat{v}_t = \frac{v_t}{1-\beta_2^t}$
+  - Corrects initialization bias
+  - Stable early training
+  
+  **Typical hyperparameters**:
+  - $\beta_1 = 0.9$ (momentum)
+  - $\beta_2 = 0.999$ (variance)
+  - $\epsilon = 10^{-8}$ (numerical stability)
+:::
+
+::::
+
+## Learning Rate Scheduling
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Constant learning rate**: $\eta_t = \eta_0$
+  - Simple but often suboptimal
+  - May not converge to best solution
+  
+- **Linear decay**: $\eta_t = \eta_0 (1 - \frac{t}{T})$
+  - Decreases linearly to zero
+  - Common for fine-tuning
+  
+- **Cosine annealing**: 
+  $$\eta_t = \eta_{min} + \frac{1}{2}(\eta_{max} - \eta_{min})(1 + \cos(\frac{t\pi}{T}))$$
+  
+- **Warmup + decay**: Increase then decrease
+  $$\eta_t = \begin{cases}
+  \eta_{max} \frac{t}{t_{warmup}} & \text{if } t < t_{warmup} \\
+  \eta_{max} \left(\frac{t_{total} - t}{t_{total} - t_{warmup}}\right)^p & \text{otherwise}
+  \end{cases}$$
+:::
+
+::: {.column width="40%"}
+- **Why learning rate matters**:
+  
+  **Too high**:
+  - Training unstable, loss oscillates
+  - May not converge at all
+  - Overshoots optimal parameters
+  
+  **Too low**:
+  - Training very slow
+  - May get stuck in local minima
+  - Inefficient use of compute
+  
+  **Warmup benefits**:
+  - Gradual increase prevents early instability
+  - Allows model to "settle" into good region
+  - Particularly important for large models
+  
+  **Decay benefits**:
+  - Fine-tunes solution in later stages
+  - Helps convergence to better minima
+:::
+
+::::
+
+## Gradient Clipping and Numerical Stability
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Gradient clipping**: Prevent exploding gradients
+  
+  **Global norm clipping**:
+  $$\text{global\_norm} = \sqrt{\sum_i ||\nabla W_i||^2}$$
+  $$\text{clip\_factor} = \min\left(1, \frac{\text{max\_norm}}{\text{global\_norm}}\right)$$
+  $$\nabla W_i \leftarrow \nabla W_i \times \text{clip\_factor}$$
+  
+- **Alternative: Value clipping**:
+  $$\nabla W_i = \text{clip}(\nabla W_i, -\text{threshold}, +\text{threshold})$$
+:::
+
+::: {.column width="40%"}
+- **Numerical stability techniques**:
+  
+  **Mixed precision training**:
+  - FP16 for forward pass (faster, less memory)
+  - FP32 for gradients (numerical stability)
+  - Loss scaling to prevent underflow
+  
+  **Layer normalization**:
+  - Stabilizes activations across layers
+  - Reduces internal covariate shift
+  - Enables higher learning rates
+  
+  **Gradient accumulation**:
+  - Simulate larger batch sizes
+  - Average gradients over multiple mini-batches
+  - Reduces memory requirements
+:::
+
+::::
+
+## Loss Landscapes and Optimization Challenges
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Loss landscape visualization**:
+  - High-dimensional, non-convex surface
+  - Multiple local minima and saddle points
+  - Path-dependent optimization
+  
+- **Challenges in LLM training**:
+  
+  **Saddle points**: $\nabla L = 0$ but not minimum
+  - More common in high dimensions
+  - Adam helps escape through momentum
+  
+  **Plateaus**: Flat regions with small gradients
+  - Slow convergence
+  - Learning rate scheduling helps
+  
+  **Sharp vs. flat minima**:
+  - Flat minima generalize better
+  - SGD noise helps find flat minima
+:::
+
+::: {.column width="40%"}
+- **Optimization strategies**:
+  
+  **Batch size effects**:
+  - Large batches: More accurate gradients, sharp minima
+  - Small batches: Noisy gradients, flat minima
+  - Sweet spot: 32-512 for most LLMs
+  
+  **Initialization importance**:
+  - Xavier/He initialization for weights
+  - Zero initialization for biases
+  - Proper scaling prevents gradient explosion
+  
+  **Second-order methods**:
+  - Newton's method: $\theta_{t+1} = \theta_t - H^{-1} \nabla L$
+  - Too expensive for LLMs (Hessian $O(n^2)$)
+  - Approximations like L-BFGS occasionally used
+:::
+
+::::
+
+## The Connection: Entropy → Gradients → Updates
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Complete training pipeline**:
+  
+  1. **Forward pass**: Compute logits $z = f(x; \theta)$
+  2. **Softmax**: Convert to probabilities $p = \text{softmax}(z)$
+  3. **Cross-entropy**: Compute loss $L = -\log p_{target}$
+  4. **Backward pass**: Compute $\nabla_\theta L$ via backpropagation
+  5. **Optimization step**: Update $\theta$ using optimizer
+  6. **Repeat**: Next batch/epoch
+  
+- **Information flow**:
+  $$\text{Data} \xrightarrow{\text{model}} \text{Logits} \xrightarrow{\text{softmax}} \text{Probabilities} \xrightarrow{\text{entropy}} \text{Loss}$$
+  $$\text{Loss} \xrightarrow{\text{backprop}} \text{Gradients} \xrightarrow{\text{optimizer}} \text{Parameter Updates}$$
+:::
+
+::: {.column width="40%"}
+- **Key mathematical insights**:
+  
+  **Entropy drives learning**:
+  - Model learns to reduce uncertainty
+  - Cross-entropy measures this directly
+  - Optimization minimizes prediction entropy
+  
+  **Gradients provide direction**:
+  - Point toward steepest descent
+  - Magnitude indicates update size
+  - Chain rule connects output to all parameters
+  
+  **Optimizers determine path**:
+  - How to use gradient information
+  - Balance exploration vs. exploitation
+  - Adapt to landscape properties
+  
+- **This connects to reasoning models**: Higher entropy allows exploration of reasoning paths
+:::
+
+::::
+
+## Mathematical Foundations Summary
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Core mathematical concepts**:
+  - **Entropy**: Measures uncertainty/information content
+  - **Cross-entropy**: Training objective connecting predictions to truth
+  - **Softmax**: Converts raw outputs to probability distributions
+  - **Gradients**: Direction of steepest change in loss landscape
+  - **Optimizers**: Algorithms for following gradients efficiently
+  
+- **Why understanding matters**:
+  - Debugging training issues (vanishing/exploding gradients)
+  - Choosing appropriate hyperparameters
+  - Understanding model behavior and limitations
+  - Designing better training procedures
+:::
+
+::: {.column width="40%"}
+- **Practical implications**:
+  
+  **For model training**:
+  - Learning rate needs careful tuning
+  - Gradient clipping prevents instability
+  - Adam usually works well for LLMs
+  
+  **For inference**:
+  - Temperature controls entropy/creativity
+  - Softmax probabilities enable reasoning
+  - Understanding helps with prompt engineering
+  
+  **For research**:
+  - Foundation for advanced techniques
+  - Understanding enables innovation
+  - Mathematical rigor guides experimentation
+:::
+
+::::

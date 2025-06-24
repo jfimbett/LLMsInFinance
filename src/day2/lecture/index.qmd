@@ -15,10 +15,13 @@ format:
 
 ## Overview of Today's Lecture
 
+- Reasoning models and multi-step inference
 - How LLMs are trained and optimized
 - Effective prompt engineering strategies
 - Understanding and tracing thought processes
 - Emergent behaviors and interpretability challenges
+
+{{< include 00-reasoning-models.qmd >}}
 
 {{< include 01-how-are-llms-trained.qmd >}}
 

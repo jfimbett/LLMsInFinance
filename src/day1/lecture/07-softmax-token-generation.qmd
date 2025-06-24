@@ -19,8 +19,6 @@
   - Softmax converts logits to probabilities
 :::
 
-::: {.column width="40%"}
-![Transformer Architecture](../../images/transformers_model.png)
 
 - **Mathematical flow**:
   - Hidden states: $h_i \in \mathbb{R}^{d_{model}}$

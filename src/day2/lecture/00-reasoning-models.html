@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>reasoning-models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="00-reasoning-models_files/libs/clipboard/clipboard.min.js"></script>
+<script src="00-reasoning-models_files/libs/quarto-html/quarto.js"></script>
+<script src="00-reasoning-models_files/libs/quarto-html/popper.min.js"></script>
+<script src="00-reasoning-models_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="00-reasoning-models_files/libs/quarto-html/anchor.min.js"></script>
+<link href="00-reasoning-models_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="00-reasoning-models_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="00-reasoning-models_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="00-reasoning-models_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="00-reasoning-models_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="reasoning-models-beyond-next-token-prediction" class="level1">
+<h1>Reasoning Models: Beyond Next Token Prediction</h1>
+<section id="from-token-generation-to-reasoning-chains" class="level2">
+<h2 class="anchored" data-anchor-id="from-token-generation-to-reasoning-chains">From Token Generation to Reasoning Chains</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Traditional LLM prediction</strong>:
+<ul>
+<li>Single forward pass: <span class="math inline">\(P(x_{t+1} | x_1, x_2, ..., x_t)\)</span></li>
+<li>Direct mapping from context to next token</li>
+<li>Temperature controls randomness in sampling</li>
+<li>No explicit intermediate reasoning steps</li>
+</ul></li>
+<li><strong>Reasoning models approach</strong>:
+<ul>
+<li>Multi-step generation: <span class="math inline">\(P(goal | reasoning\_chain)\)</span></li>
+<li>Explicit intermediate thought tokens</li>
+<li>Chain-of-thought: <span class="math inline">\(P(answer | context, thought_1, thought_2, ..., thought_n)\)</span></li>
+<li>Goal-oriented sequence generation</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Mathematical distinction</strong>:</p>
+<p><strong>Standard generation</strong>: <span class="math display">\[P(x_{t+1}) = \text{softmax}(W_o h_t)\]</span></p>
+<p><strong>Reasoning generation</strong>: <span class="math display">\[P(answer) = \prod_{i=1}^{n} P(thought_i | context, thought_{1:i-1}) \times P(answer | context, thought_{1:n})\]</span></p></li>
+<li><p><strong>Key difference</strong>: Intermediate reasoning states influence final outcome</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="mathematical-framework-of-reasoning-models" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-framework-of-reasoning-models">Mathematical Framework of Reasoning Models</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Standard next-token prediction</strong>: <span class="math display">\[P(x_{t+1} | x_{1:t}) = \frac{e^{z_{t+1}}}{\sum_{v \in V} e^{z_v}}\]</span></p>
+<p>Where <span class="math inline">\(z_{t+1} = W_o h_t + b_o\)</span></p></li>
+<li><p><strong>Reasoning chain generation</strong>: <span class="math display">\[P(reasoning\_chain) = \prod_{i=1}^{n} P(r_i | context, r_{1:i-1})\]</span></p>
+<p><span class="math display">\[P(final\_answer | reasoning\_chain) = P(answer | context, r_{1:n})\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Temperature in reasoning context</strong>:</p>
+<p><strong>Standard softmax with temperature</strong>: <span class="math display">\[P(x_i) = \frac{e^{z_i/T}}{\sum_{j} e^{z_j/T}}\]</span></p>
+<p><strong>Reasoning requires <span class="math inline">\(T &gt; 0\)</span> because</strong>:</p>
+<ul>
+<li>Need exploration of reasoning paths</li>
+<li>Multiple valid intermediate steps</li>
+<li>Diversity in thought processes</li>
+<li>Avoiding reasoning dead-ends</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="why-temperature-cannot-be-zero-in-reasoning" class="level2">
+<h2 class="anchored" data-anchor-id="why-temperature-cannot-be-zero-in-reasoning">Why Temperature Cannot Be Zero in Reasoning</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Mathematical constraint</strong>: <span class="math inline">\(T \to 0\)</span> leads to deterministic selection <span class="math display">\[\lim_{T \to 0} P(x_i) = \begin{cases}
+1 &amp; \text{if } i = \arg\max_j z_j \\
+0 &amp; \text{otherwise}
+\end{cases}\]</span></p></li>
+<li><p><strong>Problem with deterministic reasoning</strong>:</p>
+<ul>
+<li>Only one reasoning path explored</li>
+<li>No recovery from sub-optimal intermediate steps</li>
+<li>Reasoning becomes brittle and inflexible</li>
+<li>Cannot explore alternative valid approaches</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Reasoning examples</strong>:</p>
+<p><strong>Problem</strong>: Solve a complex multi-step problem</p>
+<p><strong>With <span class="math inline">\(T = 0\)</span> (deterministic)</strong>:</p>
+<ul>
+<li>Always chooses same first reasoning step</li>
+<li>Cannot explore alternative approaches</li>
+<li>Gets stuck if initial assumption is suboptimal</li>
+</ul>
+<p><strong>With <span class="math inline">\(T &gt; 0\)</span> (stochastic)</strong>:</p>
+<ul>
+<li>Can explore multiple solution methods</li>
+<li>Considers different assumptions</li>
+<li>Allows for uncertainty quantification</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="reasoning-chain-decomposition" class="level2">
+<h2 class="anchored" data-anchor-id="reasoning-chain-decomposition">Reasoning Chain Decomposition</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Multi-step probability factorization</strong>: <span class="math display">\[P(answer | question) = \sum_{reasoning\_paths} P(answer | reasoning\_path) \times P(reasoning\_path | question)\]</span></p></li>
+<li><p><strong>Each reasoning step</strong>: <span class="math display">\[P(r_i | context, r_{1:i-1}) = \text{softmax}\left(\frac{f_\theta(context, r_{1:i-1})}{T}\right)\]</span></p></li>
+<li><p><strong>Final answer conditioning</strong>: <span class="math display">\[P(answer | reasoning\_chain) = \text{softmax}\left(\frac{g_\theta(reasoning\_chain)}{T_{final}}\right)\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Temperature effects across reasoning</strong>:</p>
+<p><strong>High temperature (<span class="math inline">\(T &gt; 1\)</span>)</strong>:</p>
+<ul>
+<li>More diverse reasoning paths</li>
+<li>Higher creativity in problem-solving</li>
+<li>Risk of incoherent reasoning</li>
+</ul>
+<p><strong>Moderate temperature (<span class="math inline">\(0.3 &lt; T &lt; 1\)</span>)</strong>:</p>
+<ul>
+<li>Balanced exploration vs.&nbsp;exploitation</li>
+<li>Coherent but diverse reasoning</li>
+<li>Optimal for most complex problems</li>
+</ul>
+<p><strong>Low temperature (<span class="math inline">\(T \to 0\)</span>)</strong>:</p>
+<ul>
+<li>Deterministic, rigid reasoning</li>
+<li>Cannot recover from mistakes</li>
+<li>Limited problem-solving capability</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="information-theory-of-reasoning" class="level2">
+<h2 class="anchored" data-anchor-id="information-theory-of-reasoning">Information Theory of Reasoning</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Entropy in reasoning steps</strong>: <span class="math display">\[H(R_i) = -\sum_{r_i} P(r_i | context, r_{1:i-1}) \log P(r_i | context, r_{1:i-1})\]</span></p></li>
+<li><p><strong>Total reasoning entropy</strong>: <span class="math display">\[H(Reasoning) = \sum_{i=1}^{n} H(R_i | R_{1:i-1})\]</span></p></li>
+<li><p><strong>Conditional mutual information</strong>: <span class="math display">\[I(Answer; Reasoning\_Path | Question) = H(Answer | Question) - H(Answer | Question, Reasoning\_Path)\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Why entropy matters in reasoning</strong>:</p>
+<p><strong>Zero entropy (<span class="math inline">\(T = 0\)</span>)</strong>:</p>
+<ul>
+<li><span class="math inline">\(H(R_i) = 0\)</span> for all reasoning steps</li>
+<li>Deterministic, no exploration</li>
+<li>Cannot adapt to new information</li>
+</ul>
+<p><strong>Positive entropy (<span class="math inline">\(T &gt; 0\)</span>)</strong>:</p>
+<ul>
+<li><span class="math inline">\(H(R_i) &gt; 0\)</span> allows exploration</li>
+<li>Can discover optimal reasoning paths</li>
+<li>Adapts to intermediate findings</li>
+</ul></li>
+<li><p><strong>General implications</strong>:</p>
+<ul>
+<li>Complex analysis requires uncertainty handling</li>
+<li>Multiple valid analytical approaches</li>
+<li>Need to explore scenario variations</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="reasoning-vs.-direct-prediction-mathematical-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="reasoning-vs.-direct-prediction-mathematical-comparison">Reasoning vs.&nbsp;Direct Prediction: Mathematical Comparison</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Direct prediction complexity</strong>: <span class="math display">\[P(answer | question) = \text{softmax}(W_o h_{final})\]</span></p>
+<p>Single forward pass, <span class="math inline">\(O(|V|)\)</span> complexity for final softmax</p></li>
+<li><p><strong>Reasoning model complexity</strong>: <span class="math display">\[P(answer | question) = \sum_{paths} \prod_{i=1}^{n} P(r_i | context, r_{1:i-1}) \times P(answer | reasoning)\]</span></p>
+<p>Multiple forward passes, <span class="math inline">\(O(n \times |V|)\)</span> complexity</p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Computational trade-offs</strong>:</p>
+<p><strong>Direct prediction</strong>:</p>
+<ul>
+<li>Fast inference: <span class="math inline">\(O(1)\)</span> forward pass</li>
+<li>Limited reasoning capability</li>
+<li>Suitable for simple tasks</li>
+</ul>
+<p><strong>Reasoning models</strong>:</p>
+<ul>
+<li>Slower inference: <span class="math inline">\(O(n)\)</span> forward passes</li>
+<li>Enhanced problem-solving</li>
+<li>Required for complex analytical tasks</li>
+</ul></li>
+<li><p><strong>Quality vs.&nbsp;efficiency trade-off</strong>:</p>
+<ul>
+<li>Reasoning models: higher accuracy, slower</li>
+<li>Direct models: faster, limited capability</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="temperature-scheduling-in-reasoning" class="level2">
+<h2 class="anchored" data-anchor-id="temperature-scheduling-in-reasoning">Temperature Scheduling in Reasoning</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Adaptive temperature across reasoning steps</strong>: <span class="math display">\[T_i = T_0 \times \text{schedule}(i, context, partial\_reasoning)\]</span></p></li>
+<li><p><strong>Common scheduling strategies</strong>:</p>
+<p><strong>Linear decay</strong>: <span class="math inline">\(T_i = T_0 \times (1 - \frac{i}{n})\)</span></p>
+<p><strong>Exponential decay</strong>: <span class="math inline">\(T_i = T_0 \times e^{-\lambda i}\)</span></p>
+<p><strong>Content-aware</strong>: <span class="math inline">\(T_i = f(confidence, complexity, stakes)\)</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Temperature strategies for different task types</strong>:</p>
+<p><strong>High-precision tasks</strong> (mathematical computation):</p>
+<ul>
+<li>Start with <span class="math inline">\(T_0 = 0.3\)</span> (conservative)</li>
+<li>Decay to <span class="math inline">\(T_{final} = 0.1\)</span> (precise)</li>
+</ul>
+<p><strong>Exploratory analysis</strong> (research, brainstorming):</p>
+<ul>
+<li>Start with <span class="math inline">\(T_0 = 0.8\)</span> (creative)</li>
+<li>Maintain <span class="math inline">\(T &gt; 0.5\)</span> throughout</li>
+</ul>
+<p><strong>Mixed reasoning tasks</strong>:</p>
+<ul>
+<li>Variable temperature based on step type</li>
+<li>Lower <span class="math inline">\(T\)</span> for computational steps</li>
+<li>Higher <span class="math inline">\(T\)</span> for interpretation steps</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="reasoning-path-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="reasoning-path-optimization">Reasoning Path Optimization</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Beam search in reasoning space</strong>: Keep top-<span class="math inline">\(k\)</span> reasoning paths at each step</p>
+<p><span class="math display">\[\text{Score}(path) = \frac{1}{|path|} \sum_{i=1}^{|path|} \log P(r_i | context, r_{1:i-1})\]</span></p></li>
+<li><p><strong>Path pruning criteria</strong>:</p>
+<ul>
+<li>Coherence score below threshold</li>
+<li>Logical inconsistency detection</li>
+<li>Factual accuracy verification</li>
+<li>Domain-specific validity checks</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Multi-path reasoning benefits</strong>:</p>
+<p><strong>Robustness</strong>:</p>
+<ul>
+<li>Multiple valid approaches to same problem</li>
+<li>Cross-validation of reasoning steps</li>
+<li>Error detection through inconsistency</li>
+</ul>
+<p><strong>Uncertainty quantification</strong>:</p>
+<ul>
+<li>Confidence from path agreement</li>
+<li>Range estimation from path diversity</li>
+<li>Risk assessment from reasoning variance</li>
+</ul></li>
+<li><p><strong>Example</strong>: Multi-step problem solving</p>
+<ul>
+<li>Path 1: Conservative assumptions</li>
+<li>Path 2: Optimistic conditions</li>
+<li>Path 3: Stress-test scenarios</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="self-consistency-and-verification" class="level2">
+<h2 class="anchored" data-anchor-id="self-consistency-and-verification">Self-Consistency and Verification</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Self-consistency scoring</strong>: Generate <span class="math inline">\(m\)</span> reasoning paths, measure agreement</p>
+<p><span class="math display">\[\text{Consistency} = \frac{1}{m(m-1)} \sum_{i \neq j} \text{similarity}(answer_i, answer_j)\]</span></p></li>
+<li><p><strong>Reasoning verification</strong>: <span class="math display">\[P(correct | reasoning) = \sigma(W_v[\text{reasoning\_embedding}])\]</span></p>
+<p>Where verification network <span class="math inline">\(W_v\)</span> learns to assess reasoning quality</p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Why temperature enables verification</strong>:</p>
+<p><strong>With <span class="math inline">\(T &gt; 0\)</span></strong>:</p>
+<ul>
+<li>Generate diverse reasoning samples</li>
+<li>Check consistency across approaches</li>
+<li>Identify robust vs.&nbsp;fragile conclusions</li>
+</ul>
+<p><strong>With <span class="math inline">\(T = 0\)</span></strong>:</p>
+<ul>
+<li>Only one reasoning path</li>
+<li>No verification possible</li>
+<li>Cannot assess answer reliability</li>
+</ul></li>
+<li><p><strong>Verification example</strong>:</p>
+<ul>
+<li>Multiple solution approaches</li>
+<li>Cross-check with alternative methods</li>
+<li>Sensitivity analysis across scenarios</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="reasoning-model-architectures" class="level2">
+<h2 class="anchored" data-anchor-id="reasoning-model-architectures">Reasoning Model Architectures</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Chain-of-Thought (CoT)</strong>: <span class="math display">\[P(answer | question) = P(answer | question, thoughts) \times P(thoughts | question)\]</span></p></li>
+<li><p><strong>Tree-of-Thoughts (ToT)</strong>: <span class="math display">\[P(answer | question) = \max_{tree} P(answer | question, tree) \times P(tree | question)\]</span></p></li>
+<li><p><strong>Graph-of-Thoughts (GoT)</strong>: <span class="math display">\[P(answer | question) = \sum_{graph} P(answer | question, graph) \times P(graph | question)\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Architecture complexity trade-offs</strong>:</p>
+<p><strong>Chain-of-Thought</strong>:</p>
+<ul>
+<li>Linear reasoning progression</li>
+<li>Simple to implement and understand</li>
+<li>Good for sequential analytical tasks</li>
+</ul>
+<p><strong>Tree-of-Thoughts</strong>:</p>
+<ul>
+<li>Branching reasoning exploration</li>
+<li>Better for scenario analysis</li>
+<li>Higher computational cost</li>
+</ul>
+<p><strong>Graph-of-Thoughts</strong>:</p>
+<ul>
+<li>Complex relationship modeling</li>
+<li>Best for interconnected systems</li>
+<li>Highest computational complexity</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="generic-applications-of-reasoning-models" class="level2">
+<h2 class="anchored" data-anchor-id="generic-applications-of-reasoning-models">Generic Applications of Reasoning Models</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Mathematical problem solving</strong>:
+<ol type="1">
+<li>Problem decomposition and analysis</li>
+<li>Method selection and justification</li>
+<li>Step-by-step solution development</li>
+<li>Result verification and validation</li>
+<li>Alternative approach exploration</li>
+</ol></li>
+<li><strong>Complex decision making</strong>:
+<ol type="1">
+<li>Information gathering and analysis</li>
+<li>Criteria identification and weighting</li>
+<li>Option evaluation and comparison</li>
+<li>Trade-off analysis and reasoning</li>
+<li>Final decision justification</li>
+</ol></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Mathematical requirements</strong>:</p>
+<p><strong>Each reasoning step needs <span class="math inline">\(T &gt; 0\)</span></strong>:</p>
+<ul>
+<li>Explore alternative analytical approaches</li>
+<li>Consider multiple scenario outcomes</li>
+<li>Adapt to intermediate findings</li>
+<li>Maintain reasoning flexibility</li>
+</ul>
+<p><strong>Example temperature settings</strong>:</p>
+<ul>
+<li>Mathematical computation: <span class="math inline">\(T = 0.4\)</span></li>
+<li>Creative problem solving: <span class="math inline">\(T = 0.7\)</span></li>
+<li>Logical analysis: <span class="math inline">\(T = 0.3\)</span></li>
+<li>Hypothesis generation: <span class="math inline">\(T = 0.6\)</span></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="limitations-and-future-directions" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-and-future-directions">Limitations and Future Directions</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Current limitations</strong>:
+<ul>
+<li>Reasoning length constraints</li>
+<li>Computational cost scaling</li>
+<li>Quality assessment challenges</li>
+<li>Integration with external knowledge</li>
+</ul></li>
+<li><strong>Mathematical challenges</strong>:
+<ul>
+<li>Optimizing temperature schedules</li>
+<li>Balancing exploration vs.&nbsp;exploitation</li>
+<li>Measuring reasoning quality objectively</li>
+<li>Handling reasoning contradictions</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Future research directions</strong>:</p>
+<p><strong>Adaptive reasoning</strong>:</p>
+<ul>
+<li>Dynamic reasoning length</li>
+<li>Context-aware temperature setting</li>
+<li>Real-time quality assessment</li>
+</ul>
+<p><strong>Hybrid approaches</strong>:</p>
+<ul>
+<li>Reasoning + retrieval integration</li>
+<li>Multi-modal reasoning incorporation</li>
+<li>External tool usage in reasoning</li>
+</ul>
+<p><strong>Domain-specific developments</strong>:</p>
+<ul>
+<li>Domain-constrained reasoning</li>
+<li>Quality assurance verification</li>
+<li>Context-aware reasoning temperature</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="practical-implementation-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="practical-implementation-considerations">Practical Implementation Considerations</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Temperature selection guidelines</strong>:</p>
+<p><strong>High-precision tasks</strong>: <span class="math inline">\(T \in [0.1, 0.4]\)</span></p>
+<ul>
+<li>Mathematical computation</li>
+<li>Logical verification</li>
+<li>Rule-based reasoning</li>
+</ul>
+<p><strong>Analytical tasks</strong>: <span class="math inline">\(T \in [0.4, 0.7]\)</span></p>
+<ul>
+<li>Problem decomposition</li>
+<li>Method selection</li>
+<li>Strategy development</li>
+</ul>
+<p><strong>Creative tasks</strong>: <span class="math inline">\(T \in [0.7, 1.0]\)</span></p>
+<ul>
+<li>Hypothesis generation</li>
+<li>Alternative exploration</li>
+<li>Innovation brainstorming</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Quality control mechanisms</strong>:</p>
+<p><strong>Reasoning validation</strong>:</p>
+<ul>
+<li>Logical consistency checking</li>
+<li>Factual accuracy verification</li>
+<li>Domain knowledge compliance</li>
+<li>Mathematical correctness validation</li>
+</ul>
+<p><strong>Temperature optimization</strong>:</p>
+<ul>
+<li>A/B testing different temperature ranges</li>
+<li>Performance monitoring across tasks</li>
+<li>Expert evaluation of reasoning quality</li>
+<li>Automated reasoning assessment metrics</li>
+</ul></li>
+<li><p><strong>Production considerations</strong>:</p>
+<ul>
+<li>Latency vs.&nbsp;quality trade-offs</li>
+<li>Caching common reasoning patterns</li>
+<li>Fallback to simpler models when needed</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

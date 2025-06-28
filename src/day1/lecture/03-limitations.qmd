@@ -2,7 +2,7 @@
 
 
 - Do you recall how the word ***bank*** can refer to a financial institution or the side of a river? Traditional word embeddings struggle with such polysemy, as they assign a single vector representation to each word, regardless of context.
-- The only way to address this is to use context-sensitive embeddings, which means that words need to talk to each other. 
+- The only way to address this is to use context-sensitive embeddings, which means that words need to talk to each other. The word embedding for a word depends on the words around it.
 - Letting words **talk to each other** was first explored in the context of machine translation using RNN (Recurrent Neural Networks). 
 - However. it was not until the introduction of the **Transformer architecture** that we could effectively let words talk to each other in a scalable way. We will explore this in the next section.
 
@@ -48,7 +48,7 @@ If you are interested in all that RNNs can do, I recommend reading [Andrej Karpa
 ## The Encoder-Decoder Framework
 
 - For most applications we will focus on mapping a sequence of inputs to a sequence of outputs. In a RNN the *encoder* encodes the information from the input sequence into a numerical representation, usually **encoded** in the last hidden state. 
-- In the ***The capital of France is** example, the encoded representation is the last hidden sstate. 
+- In the ***The capital of France is** example, the encoded representation is the last hidden state. 
 - The *decoder* then takes this representation and generates the output sequence, one token at a time.
 
 ## Encoder-Decoder blocks for machine translation, e.g. english to catalan

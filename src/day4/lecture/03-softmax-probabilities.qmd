@@ -73,7 +73,19 @@ For logits [2.0, 1.0, 0.1], the resulting probabilities are approximately [0.66,
 :::
 
 ::: {.column width="40%"}
-![Softmax in Neural Networks](../../images/softmax_nn.png)
+- **Credit risk applications**:
+  
+  **Softmax in credit classification**:
+  - Default probability estimation
+  - Credit rating assignment (AAA, AA, A, BBB...)
+  - Risk category classification (Low, Medium, High)
+  - Loan approval likelihood scoring
+  
+  **Why softmax works for credit**:
+  - Ensures probabilities sum to 1
+  - Natural ranking of credit outcomes
+  - Smooth gradient flow for training
+  - Interpretable probability outputs
 :::
 
 ::::
@@ -413,4 +425,81 @@ Each outcome has its own mean and standard deviation. The overall probability of
 - **Domain-specific calibration**: Financial risk-aligned probability modeling
 - **Causal probability models**: Intervention-aware probability estimates
 - **Temporal probability modeling**: Time-varying confidence estimation
-```
+
+## Softmax in Credit Risk: Why Probabilities Matter
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Credit rating assignments using softmax**:
+  - Input: Company financial data + text analysis
+  - Output: Probability distribution over rating classes [AAA, AA, A, BBB, BB, B, CCC]
+  - Example: [0.05, 0.15, 0.35, 0.30, 0.10, 0.04, 0.01]
+  - Most likely rating: A (35% probability)
+  - But significant uncertainty exists (BBB at 30%)
+  
+- **Why this beats traditional approaches**:
+  - Traditional: Hard classification "This is an A-rated company"
+  - LLM softmax: "35% chance of A, 30% chance of BBB, with reasoning"
+  - Enables better risk management and portfolio construction
+  - Quantifies uncertainty explicitly
+:::
+
+::: {.column width="40%"}
+- **Practical credit risk applications**:
+  
+  **Default probability estimation**:
+  - Softmax over [No Default, Default] classes
+  - Temperature adjustment for time horizon
+  - Calibration against historical default rates
+  
+  **Loan approval decisions**:
+  - Softmax over [Approve, Reject, Review] classes
+  - Incorporates uncertainty into decision making
+  - Enables risk-adjusted pricing
+  
+  **Portfolio risk assessment**:
+  - Aggregate softmax distributions across loans
+  - Monte Carlo simulation using probabilities
+  - Value-at-Risk calculations with uncertainty
+:::
+
+::::
+
+## Temperature Scaling for Credit Models
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Why temperature matters in credit risk**:
+  - **T < 1 (overconfident)**: "99% sure this company won't default"
+  - **T = 1 (standard)**: "85% sure this company won't default"  
+  - **T > 1 (conservative)**: "70% sure this company won't default"
+  
+- **Finding optimal temperature**:
+  - Calibrate against historical default rates
+  - Conservative approach often preferred in credit
+  - Regulatory requirements may favor underconfidence
+  - Better to be cautious than overconfident with credit risk
+:::
+
+::: {.column width="40%"}
+- **Example: Corporate default prediction**:
+  
+  **Before temperature scaling (T=1)**:
+  - Model outputs 2% default probability
+  - Historical data shows 8% actual defaults for similar companies
+  - Model is severely overconfident
+  
+  **After temperature scaling (T=2.5)**:
+  - Same inputs now output 7% default probability
+  - Much better aligned with historical experience
+  - More appropriate for risk management decisions
+  
+  **Impact on business**:
+  - Better loan pricing reflects true risk
+  - Appropriate reserves and capital allocation
+  - Reduced unexpected losses
+:::
+
+::::

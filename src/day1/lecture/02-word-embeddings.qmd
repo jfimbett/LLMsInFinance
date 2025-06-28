@@ -9,7 +9,7 @@
 - The relative positions and distances between word vectors encode meaningful relationships
 
 ### Intuition
-- Think of embeddings as "translating" words into a language that computers understand (numbers)
+- Think of embeddings as "translating" words into a language that computers understand (vectors)
 - Each dimension represents a latent feature of the word's meaning
 - Instead of treating words as isolated symbols, embeddings capture their context and relationships
 - Example: In a 2D simplification, "profit" and "earnings" would be close together, while "loss" would be farther away
@@ -21,45 +21,70 @@
 - Allow algorithms to understand semantic relationships between financial concepts
 - Support tasks like sentiment analysis, document classification, and information retrieval
 - Bridge the gap between natural language and mathematical models
+- You can do this with words, as well as with entire sentences, paragraphs, or documents.
 
-## Traditional Word Embedding Methods
+## Traditional Methods
 
-### Count-Based Methods
+### One-Hot Encoding
+- Represents each word as a unique vector with a single 1 and all other elements 0.
+- High-dimensional and sparse representation
+- Example: "dog" = [0, 0, ..., 1, 0, ..., 0] (1 at index for "dog")
+- Pros: Simple and Fast to compute
+- Cons: Inefficient, high-dimensional, and does not capture relationships between words
+
+### TF-IDF (Term Frequency-Inverse Document Frequency)
+- Weighs words based on their frequency in a document relative to their frequency across a corpus. 
+- Helps identify important terms in documents
+Formula
+```math
+TF-IDF(w, d) = TF(w, d) * IDF(w)
+TF(w, d) = \frac{f(w, d)}{|d|}
+IDF(w) = \log\left(\frac{N}{n(w)}\right
+```
+Where:
+- \( f(w, d) \): Frequency of word \( w \) in document \( d \)
+- \( |d| \): Total number of words in document \( d \)
+- \( N \): Total number of documents in the corpus
+- \( n(w) \): Number of documents containing word \( w \)
+- Example:
+```
+Doc 1: "The quick brown fox jumps over the lazy dog."
+Doc 2: "The lazy dog sleeps all day."
+```
+
+- TF-IDF for "lazy"
+```math
+TF("lazy", Doc 1) = 1/9
+IDF("lazy") = log(2/2) = 0
+TF-IDF("lazy", Doc 1) = (1/9) * 0
+TF-IDF("lazy", Doc 2) = (1/7) * log(2/2) = 0  
+```
+
+- TF-IDF for "quick"
+```math
+TF("quick", Doc 1) = 1/9
+IDF("quick") = log(2/1) = log(2)
+TF-IDF("quick", Doc 1) = (1/9) * log(2) 
+TF-IDF("quick", Doc 2) = 0
+```
+
+### Word2Vec
+- Meaning of a word based from its surrounding words. 
+- Trained with large corpora to learn word relationships
+- Words which appear in similar contexts are mapped to vectors which are nearby as measured by cosine similarity. 
+
+### GloVe (Global Vectors)
+- It was developed by Stanford in 2014.
+- It is trained on aggregated global word-word co-occurrence statistics from a corpus. (e.g. how often words appear together)
 
 #### Bag of Words (BoW)
 - Represents text as occurrence counts of words
 - Simple but loses word order and context
-- Financial application: Basic frequency analysis of terms in earnings reports
-
-#### TF-IDF (Term Frequency-Inverse Document Frequency)
-- Weights word importance by frequency in document and rarity across corpus
-- Helps identify distinctive terms in financial documents
-- Financial application: Identifying unusual language in disclosures
-
-#### Co-occurrence Matrices
-- Counts how often words appear together in context windows
-- Can capture some semantic relationships
-- Financial application: Analyzing relationships between economic terms
-
-### Prediction-Based Methods
-
-#### Word2Vec
-- **CBOW (Continuous Bag of Words)**: Predicts target word from surrounding context
-- **Skip-gram**: Predicts surrounding context from target word
-- Captures semantic and syntactic word relationships
-- Financial application: Analyzing relationships between market terms
-
-#### GloVe (Global Vectors)
-- Combines count-based and prediction-based approaches
-- Factorizes global word co-occurrence matrix
-- Preserves linear substructures of word vector space
-- Financial application: Identifying related financial concepts
 
 #### FastText
 - Extension of Word2Vec that uses character n-grams
 - Better handles rare words and morphologically rich languages
 - Can represent out-of-vocabulary words
-- Financial application: Processing specialized financial terminology
 
 ## Properties of Word Vector Spaces
 
@@ -77,7 +102,7 @@
 
 ### Analogical Reasoning
 - Vector relationships encode semantic relationships
-- Enables solving analogies: A:B :: C:D
+- Enables solving analogies: (A is to B as C is to D)
 - Financial example: "Stock:Equity :: Bond:Debt"
 
 ## Finance-Specific Word Embeddings

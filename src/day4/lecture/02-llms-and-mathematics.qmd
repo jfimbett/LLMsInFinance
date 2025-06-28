@@ -25,7 +25,19 @@ format: revealjs
 :::
 
 ::: {.column width="40%"}
-![Math Capabilities](../../images/math_llm.png)
+- **Why this matters for credit risk**:
+  
+  **Financial calculations LLMs can handle**:
+  - Debt-to-equity ratios
+  - Interest coverage calculations
+  - Cash flow projections
+  - Present value computations
+  - Statistical risk metrics
+  
+  **Mathematical reasoning in credit**:
+  - "If EBITDA falls 20%, what happens to coverage ratios?"
+  - "How does working capital seasonality affect liquidity?"
+  - "What interest rate would make this loan unprofitable?"
 :::
 
 ::::
@@ -370,4 +382,77 @@ LLM Response:
 - **Neuro-symbolic approaches**: Hybrid neural-symbolic architectures
 - **Reliable uncertainty quantification**: Confidence levels for calculations
 - **Financial-specific mathematical capabilities**: Domain-tuned calculation precision
-```
+
+## Credit Risk Mathematics: Where LLMs Excel and Struggle
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **LLMs excel at**:
+  - **Debt service coverage calculations**: "If EBITDA is $50M and interest expense is $12M, what's the coverage ratio?"
+  - **Working capital analysis**: "Calculate days sales outstanding from these financial statements"
+  - **Ratio trend analysis**: "How has the debt-to-equity ratio changed over 5 years?"
+  - **Stress testing calculations**: "What happens to liquidity if sales drop 20%?"
+  
+- **Mathematical reasoning they master**:
+  - Connecting financial concepts with calculations
+  - Explaining the economic meaning of ratios
+  - Identifying which metrics matter for different industries
+  - Performing sensitivity analysis on key variables
+:::
+
+::: {.column width="40%"}
+- **Where LLMs struggle (but improving)**:
+  
+  **Complex calculations**:
+  - Monte Carlo simulations with many iterations
+  - Advanced derivatives pricing models
+  - Multi-step optimization problems
+  - High-precision statistical calculations
+  
+  **But for credit risk, this matters less**:
+  - Most credit math is arithmetic and basic ratios
+  - Complex models often use specialized software anyway
+  - LLMs handle the conceptual reasoning well
+  - They excel at explaining calculations to stakeholders
+:::
+
+::::
+
+## Real-World Credit Math Examples
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Example 1: Loan Loss Provisioning**:
+  ```
+  Prompt: "A bank has a $100M loan portfolio with 
+  the following risk distribution: 60% low risk 
+  (1% PD), 30% medium risk (3% PD), 10% high risk 
+  (8% PD). LGD is 45% across all categories. 
+  Calculate expected losses and explain the 
+  regulatory capital implications."
+  
+  LLM Response: Correctly calculates $2.25M 
+  expected loss AND explains how this affects 
+  Tier 1 capital requirements under Basel III.
+  ```
+:::
+
+::: {.column width="40%"}
+- **Example 2: Covenant Analysis**:
+  ```
+  Prompt: "Company X has the following covenant: 
+  'Maintain debt-to-EBITDA ratio below 3.5x at 
+  all times.' Current debt is $150M, EBITDA is 
+  $45M. They want to borrow additional $30M. 
+  What EBITDA is needed to stay in compliance?"
+  
+  LLM Response: Shows calculation that minimum 
+  EBITDA needs to be $51.4M, then discusses 
+  practical implications and potential covenant 
+  modifications.
+  ```
+:::
+
+::::

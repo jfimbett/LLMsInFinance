@@ -1,0 +1,6 @@
+- links in day1 of academic papers, some might not work. 
+- internal system so that they use my API key (if they want)
+- no version numbers in installing libraries in the jupyter noteboos
+- resolve import python_dotenv as dotenv  first jupyter notebook
+- 3. Git Configuration (only working locally) explain how to use the tools in collab for the others. 
+- hugginface step by step

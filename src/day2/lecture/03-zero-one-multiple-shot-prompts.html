@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>zero-one-multiple-shot-prompts</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="03-zero-one-multiple-shot-prompts_files/libs/clipboard/clipboard.min.js"></script>
+<script src="03-zero-one-multiple-shot-prompts_files/libs/quarto-html/quarto.js"></script>
+<script src="03-zero-one-multiple-shot-prompts_files/libs/quarto-html/popper.min.js"></script>
+<script src="03-zero-one-multiple-shot-prompts_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="03-zero-one-multiple-shot-prompts_files/libs/quarto-html/anchor.min.js"></script>
+<link href="03-zero-one-multiple-shot-prompts_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="03-zero-one-multiple-shot-prompts_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="03-zero-one-multiple-shot-prompts_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="03-zero-one-multiple-shot-prompts_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="03-zero-one-multiple-shot-prompts_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="zero-one-and-multiple-shot-prompts" class="level1">
+<h1>Zero, One, and Multiple-Shot Prompts</h1>
+<section id="understanding-prompt-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-prompt-engineering">Understanding Prompt Engineering</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Prompts: instructions that guide LLM outputs</li>
+<li>Art and science of communicating with LLMs</li>
+<li>Critical skill for effective LLM utilization</li>
+<li>Influences the quality, relevance, and accuracy of responses</li>
+<li>Key to unlocking LLM capabilities across domains</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="zero-shot-prompting-basics" class="level2">
+<h2 class="anchored" data-anchor-id="zero-shot-prompting-basics">Zero-Shot Prompting: Basics</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Model responds without examples</li>
+<li>Example: “Explain the concept of gravity”</li>
+<li>Benefits: Simplicity and directness</li>
+<li>Limitations: Less control over output format and style</li>
+<li>Applications: Quick insights, basic definitions, general queries</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Explain the concept of 
+photosynthesis and its 
+importance for life on Earth.</code></pre>
+<pre><code>Analyze the potential impact 
+of climate change on ocean 
+temperatures and currents.</code></pre>
+</div>
+</div>
+</section>
+<section id="zero-shot-prompting-applications" class="level2">
+<h2 class="anchored" data-anchor-id="zero-shot-prompting-applications">Zero-Shot Prompting: Applications</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Technical foundation</strong>: Model uses pre-training distribution to generate responses</li>
+<li><strong>Success factors</strong>: Clarity, specificity, and proper framing</li>
+<li><strong>General use cases</strong>:
+<ul>
+<li>Concept explanations</li>
+<li>Quick factual queries</li>
+<li>Basic analysis requests</li>
+<li>Initial research questions</li>
+<li>Educational content</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="one-shot-prompting-basics" class="level2">
+<h2 class="anchored" data-anchor-id="one-shot-prompting-basics">One-Shot Prompting: Basics</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Providing a single example before the query</li>
+<li>Guides the model on expected output format and style</li>
+<li>Example:
+<ul>
+<li>“Q: What is gravity? A: Gravity is a fundamental force that attracts objects…”</li>
+<li>“Now, what is electromagnetic force?”</li>
+</ul></li>
+<li>Applications: Consistent reports, standardized analyses, format control</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Q: What is photosynthesis?
+A: Photosynthesis is the process 
+by which plants convert sunlight, 
+carbon dioxide, and water into 
+glucose and oxygen. It's essential 
+for life on Earth as it produces 
+the oxygen we breathe.
+
+Q: What is cellular respiration?
+A:</code></pre>
+</div>
+</div>
+</section>
+<section id="one-shot-prompting-applications" class="level2">
+<h2 class="anchored" data-anchor-id="one-shot-prompting-applications">One-Shot Prompting: Applications</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Cognitive foundations</strong>: Creates local context that guides prediction</li>
+<li><strong>Why one-shot works better than zero-shot</strong>:
+<ul>
+<li><strong>Pattern recognition</strong>: LLMs excel at identifying and following patterns from examples</li>
+<li><strong>Format specification</strong>: Examples clarify desired output structure</li>
+<li><strong>Disambiguation</strong>: Reduces ambiguity about what type of response is expected</li>
+<li><strong>Context priming</strong>: Examples activate relevant neural pathways in the model</li>
+</ul></li>
+<li><strong>When to use</strong>:
+<ul>
+<li>When format consistency is critical</li>
+<li>For standardized analyses across different topics</li>
+<li>To control response length and structure</li>
+<li>For regular reporting or documentation</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>BOOK REVIEW: 1984
+Pages: 328
+Genre: Dystopian Fiction
+Rating: 4.5/5
+Summary: Powerful exploration 
+of totalitarianism and surveillance
+
+BOOK REVIEW: Dune</code></pre>
+</div>
+</div>
+</section>
+<section id="one-shot-case-studies-part-1" class="level2">
+<h2 class="anchored" data-anchor-id="one-shot-case-studies-part-1">One-Shot Case Studies: Part 1</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Product reviews</strong>: Standardized format across different products</li>
+<li><strong>Research summaries</strong>: Consistent structure for different academic papers</li>
+<li><strong>Technical documentation</strong>: Uniform format for different software tools</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Empirical observations</strong>:
+<ul>
+<li>42% improvement in format consistency</li>
+<li>37% reduction in hallucinated information</li>
+<li>63% higher user satisfaction ratings</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="one-shot-case-studies-part-2" class="level2">
+<h2 class="anchored" data-anchor-id="one-shot-case-studies-part-2">One-Shot Case Studies: Part 2</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Meeting minutes</strong>: Maintaining consistent structure across different meetings</li>
+<li><strong>Scientific analyses</strong>: Standard template applied to different experiments</li>
+<li><strong>Content summaries</strong>: Consistent presentation across different media types</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Efficiency metrics</strong>:
+<ul>
+<li>29% faster production of standardized reports</li>
+<li>Significant improvement in accuracy</li>
+<li>34% higher quality approval rate</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="few-shot-prompting-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="few-shot-prompting-concepts">Few-Shot Prompting: Concepts</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Multiple examples before the target query</li>
+<li>Establishes patterns for the model to follow</li>
+<li>Creates stronger “mental models” within LLM context</li>
+<li>Especially useful for specialized or complex tasks</li>
+<li>Applications: Complex analysis templates, specialized formats, domain-specific tasks</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Analyze these movies:
+
+Inception: Complex narrative, 
+excellent cinematography, 
+thought-provoking themes. 
+Rating: 9/10
+
+Interstellar: Stunning visuals, 
+emotional depth, scientific 
+accuracy. Rating: 8.5/10
+
+The Matrix: Groundbreaking 
+effects, philosophical depth, 
+cultural impact. Rating: 9/10
+
+Blade Runner 2049:</code></pre>
+</div>
+</div>
+</section>
+<section id="few-shot-prompting-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="few-shot-prompting-implementation">Few-Shot Prompting: Implementation</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Technical mechanism</strong>: Reinforces pattern recognition within the attention layers</li>
+<li><strong>Why multiple-shot works better than one-shot</strong>:
+<ul>
+<li><strong>Stronger pattern establishment</strong>: More examples create more robust patterns</li>
+<li><strong>Variance reduction</strong>: Multiple examples reduce the chance of following an outlier pattern</li>
+<li><strong>Complex pattern recognition</strong>: Some patterns require multiple instances to be clear</li>
+<li><strong>Edge case coverage</strong>: More examples can demonstrate how to handle variations</li>
+</ul></li>
+<li><strong>Optimal examples</strong>: 3-5 diverse but consistent demonstrations</li>
+<li><strong>Key advantage</strong>: Balance between flexibility and standardization</li>
+<li><strong>Best practices</strong>:
+<ul>
+<li>Provide relevant and diverse examples</li>
+<li>Maintain consistent format across examples</li>
+<li>Order examples from simple to complex</li>
+<li>Include diverse but related scenarios</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Mathematical equation solving:
+
+Quadratic: ax² + bx + c = 0
+Solution: x = (-b ± √(b²-4ac)) / 2a
+Example: x² - 5x + 6 = 0
+Result: x = 2 or x = 3
+
+Linear: ax + b = 0
+Solution: x = -b/a
+Example: 3x - 9 = 0
+Result: x = 3
+
+Exponential: aˣ = b
+Solution: x = log_a(b)
+Example: 2ˣ = 8
+Result: x = 3
+
+Logarithmic: log_a(x) = b</code></pre>
+</div>
+</div>
+</section>
+<section id="complex-few-shot-scenarios-part-1" class="level2">
+<h2 class="anchored" data-anchor-id="complex-few-shot-scenarios-part-1">Complex Few-Shot Scenarios: Part 1</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Scientific hypothesis testing</strong>: Demonstrating experimental design across different fields</li>
+<li><strong>Literary analysis</strong>: Multiple example analyses before target text</li>
+<li><strong>Problem-solving frameworks</strong>: Pattern of systematic approaches across scenarios</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Research Proposal Analysis:
+
+Topic: Climate Change Impact
+Methodology: Longitudinal study
+Sample Size: 1000 participants
+Expected Duration: 3 years
+Recommendation: APPROVE
+Rationale: Strong methodology, 
+adequate sample, feasible timeline
+
+Topic: AI Ethics Framework
+Methodology: Mixed methods
+Sample Size: 500 interviews
+Expected Duration: 18 months
+Recommendation: REVISE
+Rationale: Needs clearer metrics, 
+broader stakeholder inclusion
+
+Topic: Urban Planning Optimization</code></pre>
+</div>
+</div>
+</section>
+<section id="complex-few-shot-scenarios-part-2" class="level2">
+<h2 class="anchored" data-anchor-id="complex-few-shot-scenarios-part-2">Complex Few-Shot Scenarios: Part 2</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Algorithm optimization</strong>: Examples of different optimization approaches</li>
+<li><strong>Quality assessment</strong>: Systematic evaluation procedure demonstrations</li>
+<li><strong>Pattern recognition</strong>: Examples of identifying anomalies or trends</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Implementation considerations</strong>:
+<ul>
+<li>Example diversity for robust generalization</li>
+<li>Domain-specific terminology and conventions</li>
+<li>Recent examples to capture current best practices</li>
+<li>Progressive complexity in demonstrations</li>
+<li>Clear delineation between examples and query</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="chain-of-thought-prompting-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="chain-of-thought-prompting-concepts">Chain-of-Thought Prompting: Concepts</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Encourages step-by-step reasoning</li>
+<li>Prompt: “Think through this problem step by step”</li>
+<li>Dramatically improves performance on complex tasks</li>
+<li>Reduces logical errors and hallucinations</li>
+<li><strong>Research foundation</strong>: Wei et al.&nbsp;(2022) demonstrated 20-40% improvement on mathematical problems</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>To solve this physics problem:
+
+1) First, identify the given 
+   variables and what we need to find
+2) Choose the appropriate 
+   physics equation or principle
+3) Substitute the known values
+4) Solve for the unknown variable
+5) Check units and reasonableness
+6) State the final answer with 
+   proper significant figures</code></pre>
+</div>
+</div>
+</section>
+<section id="chain-of-thought-prompting-financial-applications" class="level2">
+<h2 class="anchored" data-anchor-id="chain-of-thought-prompting-financial-applications">Chain-of-Thought Prompting: Financial Applications</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Problem-solving impact</strong>:
+<ul>
+<li>52% reduction in calculation errors</li>
+<li>63% improvement in logical consistency</li>
+<li>47% better alignment with established principles</li>
+</ul></li>
+<li><strong>Key use cases</strong>:
+<ul>
+<li>Complex analytical problems</li>
+<li>Multi-step calculations</li>
+<li>Logical reasoning tasks</li>
+<li>Decision-making processes</li>
+<li>Research methodology frameworks</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Analyze whether we should 
+implement this new software system:
+
+Let me think step by step:
+1. Assess current system limitations
+2. Evaluate proposed benefits
+3. Calculate implementation costs
+4. Consider training requirements
+5. Analyze potential risks
+6. Determine timeline feasibility
+7. Weigh alternatives</code></pre>
+</div>
+</div>
+</section>
+<section id="cot-implementation-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="cot-implementation-techniques">CoT Implementation Techniques</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Explicit CoT</strong>: “Walk through the solution to this differential equation step by step”</li>
+<li><strong>Few-shot CoT</strong>: Providing examples of reasoning steps before the task</li>
+<li><strong>Self-consistency CoT</strong>: Generate multiple reasoning paths and select the most consistent result</li>
+<li><strong>Structured CoT</strong>: Predefined framework for analysis (e.g., problem identification, hypothesis, testing, conclusion)</li>
+<li><strong>Recursive CoT</strong>: Breaking complex problems into subproblems</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>General applications</strong>:
+<ul>
+<li>Mathematical problem solving</li>
+<li>Scientific method applications</li>
+<li>Engineering design processes</li>
+<li>Quality assurance procedures</li>
+<li>Research methodology</li>
+<li>Decision analysis frameworks</li>
+<li>Strategic planning</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="why-do-these-techniques-work" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-these-techniques-work">Why Do These Techniques Work?</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>In-context learning</strong>: LLMs can adapt behavior based on examples in the prompt</li>
+<li><strong>Statistical pattern recognition</strong>: Examples create local patterns that guide prediction</li>
+<li><strong>Attention mechanism</strong>: Examples direct model attention to relevant features</li>
+<li><strong>Task disambiguation</strong>: Examples clarify the exact task required</li>
+<li><strong>Emergent reasoning</strong>: Complex prompting unlocks latent reasoning capabilities</li>
+<li><strong>Cognitive alignment</strong>: Prompts create structures similar to human reasoning</li>
+<li><strong>Distribution steering</strong>: Examples shift the output distribution toward desired regions</li>
+<li><strong>Activation pattern guidance</strong>: Examples activate specific neural pathways</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>The science behind it</strong>:
+<ul>
+<li><a href="https://arxiv.org/abs/2201.11903">Wei et al.&nbsp;2022</a>: Chain-of-thought prompting</li>
+<li><a href="https://arxiv.org/abs/2005.14165">Brown et al.&nbsp;2020</a>: Few-shot learning in GPT-3</li>
+<li><a href="https://arxiv.org/abs/2205.11916">Kojima et al.&nbsp;2022</a>: Zero-shot reasoning</li>
+<li><a href="https://arxiv.org/abs/2210.09261">Wang et al.&nbsp;2022</a>: Self-consistency improvements</li>
+<li><a href="https://arxiv.org/abs/2305.10601">Yao et al.&nbsp;2023</a>: Tree of Thoughts reasoning</li>
+<li><a href="https://arxiv.org/abs/2302.04023">Anil et al.&nbsp;2023</a>: Gemini capabilities and reasoning</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="neuroscience-perspective-on-prompt-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="neuroscience-perspective-on-prompt-engineering">Neuroscience Perspective on Prompt Engineering</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Working memory augmentation</strong>: Prompts provide external memory buffer</li>
+<li><strong>Cognitive priming</strong>: Examples prime the model for specific response patterns</li>
+<li><strong>Neural pathway activation</strong>: Specific prompt structures activate relevant neural circuits</li>
+<li><strong>Attentional focus</strong>: Examples direct computational resources to relevant features</li>
+<li><strong>Conceptual scaffolding</strong>: Prompts provide structured frameworks for complex reasoning</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>General parallels</strong>:
+<ul>
+<li>Researchers use systematic methodologies</li>
+<li>Engineers follow structured design processes</li>
+<li>Quality control requires systematic approaches</li>
+<li>Problem-solving follows established patterns</li>
+<li>Analysis builds on standard frameworks</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="advanced-prompting-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="advanced-prompting-techniques">Advanced Prompting Techniques</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Role-based prompting</strong>: “As a research scientist, evaluate…”</li>
+<li><strong>System-user framework</strong>: Setting persistent system context for specialized applications</li>
+<li><strong>Self-critique prompting</strong>: Having the model critique its own analysis</li>
+<li><strong>ReAct prompting</strong>: Reasoning → Action → Observation loop for problem-solving</li>
+<li><strong>Tree of Thoughts</strong>: Exploring multiple reasoning branches for complex decisions</li>
+<li><strong>Constrained generation</strong>: Enforcing specific output formats for consistency</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>You are a peer reviewer for a 
+scientific journal. Ensure all 
+responses follow academic 
+standards including proper 
+citation format and objective 
+evaluation criteria.
+
+[SYSTEM CONTEXT]
+
+User: Please review this research 
+proposal on renewable energy 
+storage solutions.</code></pre>
+</div>
+</div>
+</section>
+<section id="prompting-for-accuracy-in-general-contexts" class="level2">
+<h2 class="anchored" data-anchor-id="prompting-for-accuracy-in-general-contexts">Prompting for Accuracy in General Contexts</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Factual anchoring</strong>: Providing verifiable data in prompts</li>
+<li><strong>Anti-hallucination techniques</strong>: “Only use information explicitly provided”</li>
+<li><strong>Uncertainty expression</strong>: Encouraging models to express confidence levels</li>
+<li><strong>Citation prompting</strong>: Requesting sources for claims</li>
+<li><strong>Verification requests</strong>: Including accuracy checks in analysis</li>
+<li><strong>Temporal awareness</strong>: Clarifying time-sensitive information</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<pre><code>Today's date is 2024-12-15.
+
+Using only the following data 
+about renewable energy adoption 
+(do not use any other information):
+- Solar capacity: 150 GW
+- Wind capacity: 120 GW
+- Growth rate: 15% annually
+- Cost reduction: 8% per year
+
+Provide an analysis of trends.
+If you are uncertain about any 
+aspect, explicitly state your 
+uncertainty.</code></pre>
+</div>
+</div>
+</section>
+<section id="measuring-prompt-effectiveness" class="level2">
+<h2 class="anchored" data-anchor-id="measuring-prompt-effectiveness">Measuring Prompt Effectiveness</h2>
+<ul>
+<li><strong>Performance metrics</strong>: Accuracy, consistency, relevance, clarity</li>
+<li><strong>A/B testing</strong>: Comparing different prompting strategies on identical tasks</li>
+<li><strong>Benchmarking</strong>: Domain-specific reasoning benchmarks and evaluation datasets</li>
+<li><strong>Expert evaluation</strong>: Domain professional assessment of outputs</li>
+<li><strong>Quality standards</strong>: Compliance with established guidelines and best practices</li>
+<li><strong>Impact assessment</strong>: Real-world outcomes and effectiveness of model outputs</li>
+</ul>
+</section>
+<section id="prompt-engineering-best-practices" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-engineering-best-practices">Prompt Engineering Best Practices</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Establish clear context (domain, time period, constraints)</li>
+<li>Define explicit requirements and expectations</li>
+<li>Include relevant data and authoritative sources</li>
+<li>Specify required output format for consistency</li>
+<li>Use domain-appropriate terminology and conventions</li>
+<li>Implement verification steps for accuracy</li>
+<li>Clarify quality and standard expectations</li>
+<li>Consider ethical implications and responsible use</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>General prompt template library</strong>:
+<ul>
+<li>Research analysis framework</li>
+<li>Quality assessment protocol</li>
+<li>Problem-solving methodology</li>
+<li>Report structure templates</li>
+<li>Decision-making approaches</li>
+<li>Data analysis workflows</li>
+<li>Evaluation criteria checklists</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

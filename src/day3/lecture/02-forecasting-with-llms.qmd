@@ -18,7 +18,11 @@
 :::
 
 ::: {.column width="40%"}
-![Forecasting Evolution](../../images/transformers_model.png)
+- **Key advantages**:
+  - Multi-modal data processing
+  - Dynamic context adaptation
+  - Real-time information synthesis
+  - Cross-domain pattern transfer
 :::
 
 ::::

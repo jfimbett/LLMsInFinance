@@ -1,137 +1,158 @@
-# Valuation Methods Recap
 
-## Traditional Valuation Approaches
+# Company Valuation  
+### Two Pillars: **DCF** & **Multiples**
 
-:::: {.columns}
+- Objective: estimate the *intrinsic* (DCF) or *market‐implied* (multiples) value of a firm  
+- Focus on **Enterprise Value (EV)** vs **Equity Value (E)**  
+- We build from double-entry accounting: **Assets ≡ Liabilities + Equity**
 
-::: {.column width="60%"}
-- Fundamental building blocks of financial analysis
-- Two primary approaches:
-  - Intrinsic valuation (DCF)
-  - Relative valuation (multiples)
-- Complementary methodologies
-- Critical for investment decisions, M&A, and capital allocation
-:::
+---
 
-::: {.column width="40%"}
-![Valuation Methods](../../images/transformers2.png)
-:::
+# 1. Valuation Identity
 
-::::
+\[
+\text{Enterprise Value}_{t_0}
+  =\sum_{t=1}^{T}\frac{\text{FCFF}_t}{(1+WACC)^t}
+  +\frac{\text{TV}_T}{(1+WACC)^T}
+\]
 
-## Discounted Cash Flow (DCF)
+- **FCFF** = Free Cash Flow to the Firm  
+- **WACC** = Weighted-Average Cost of Capital  
+- **TV** = Terminal Value capturing cash flows beyond explicit horizon  
 
-:::: {.columns}
+---
 
-::: {.column width="60%"}
-- **Core Principle**: Value = Present value of future cash flows
-- **Key Components**:
-  - Forecast period (typically 5-10 years)
-  - Terminal value
-  - Discount rate (WACC)
-- **Advantages**:
-  - Theoretically sound
-  - Forward-looking
-  - Captures long-term value creation
-- **Challenges**:
-  - Sensitivity to assumptions
-  - Forecast accuracy
-  - Terminal value dominance
-:::
+# 2. From Accounting to **FCFF**
 
-::: {.column width="40%"}
-$$\text{Enterprise Value} = \sum_{t=1}^{n} \frac{FCF_t}{(1+WACC)^t} + \frac{TV}{(1+WACC)^n}$$
+Starting with the income statement:
 
-$$TV = \frac{FCF_{n+1}}{WACC - g}$$
+\[
+\text{FCFF}_t
+  = \underbrace{\bigl[(\text{Revenue}-\text{COGS}-\text{SG\&A})-D\bigr]}_{\text{EBIT}}
+    \,(1-\tau)
+  + D
+  - \text{CapEx}_t
+  - \Delta\text{NWC}_t
+\]
 
-Where:
-- $FCF_t$ = Free Cash Flow in year t
-- $WACC$ = Weighted Average Cost of Capital
-- $TV$ = Terminal Value
-- $g$ = Perpetual growth rate
-:::
+- \(D\): Depreciation & Amortization  
+- \(\tau\): Statutory tax rate  
+- \(\Delta\text{NWC}\): Δ in (Current Assets − Current Liabilities)  
+- Links the **income statement** & **balance sheet** through CapEx and working capital changes  
 
-::::
+---
 
-## Multiples-Based Valuation
+# 3. The **Discount Rate**: \(WACC\)
 
-:::: {.columns}
+\[
+WACC = \frac{E}{D\!+\!E}\,k_e + \frac{D}{D\!+\!E}\,k_d\,(1-\tau)
+\]
 
-::: {.column width="60%"}
-- **Core Principle**: Value based on similar assets/companies
-- **Common Multiples**:
-  - P/E (Price-to-Earnings)
-  - EV/EBITDA (Enterprise Value to EBITDA)
-  - EV/Revenue
-  - P/B (Price-to-Book)
-  - Industry-specific metrics
-- **Advantages**:
-  - Market-based
-  - Simple to apply
-  - Reflects current sentiment
-- **Challenges**:
-  - Peer selection
-  - Market inefficiencies
-  - Differences in accounting practices
-:::
+- \(k_e\): Cost of equity via CAPM \(k_e = r_f + \beta (r_m - r_f)\)  
+- \(k_d\): After-tax cost of debt (yield-to-maturity)  
+- Market weights use **enterprise value**: \(E\) (market cap) & \(D\) (net interest-bearing debt)  
 
-::: {.column width="40%"}
-$$\text{Implied Value} = \text{Multiple}_{\text{peer}} \times \text{Metric}_{\text{target}}$$
+---
 
-Example:
-$$\text{EV}_{\text{target}} = \text{Median EV/EBITDA}_{\text{peers}} \times \text{EBITDA}_{\text{target}}$$
+# 4. **Terminal Value** Techniques
 
-- Requires careful selection of:
-  - Comparable companies
-  - Appropriate multiples
-  - Adjustment factors
-:::
+**Perpetuity growth**  
+\[
+\text{TV}_T^{(g)} = \frac{\text{FCFF}_{T+1}}{WACC - g}
+\]
 
-::::
+**Exit multiple**  
+\[
+\text{TV}_T^{(\text{mult})} = \text{EBITDA}_T \times \bigl(\text{EV/EBITDA}\bigr)_{\text{peer median}}
+\]
 
-## Traditional Challenges in Valuation
+- Choice of \(g\) constrained: \(g < WACC\) & ≈ long-run GDP growth  
+- Exit multiple must match the *same* definition of EV/EBITDA used in comparables  
 
-:::: {.columns}
+---
 
-::: {.column width="60%"}
-- **Forecasting Accuracy**:
-  - Future cash flow projection difficulties
-  - Growth rate assumptions
-  - Margin evolution
-  
-- **Comparable Selection**:
-  - Finding truly similar companies
-  - Adjusting for size/growth differences
-  - Industry classification limitations
-  
-- **Market Conditions**:
-  - Cyclical effects
-  - Macroeconomic factors
-  - Market sentiment distortion
-:::
+# 5. Putting DCF Together
 
-::: {.column width="40%"}
-- **Data Limitations**:
-  - Information asymmetry
-  - Data accessibility
-  - Processing large volumes of financial data
-  
-- **Human Biases**:
-  - Anchoring
-  - Confirmation bias
-  - Overconfidence
-  - Recency bias
-:::
+1. Project operating drivers (sales growth, margins, CapEx, NWC) → **pro forma statements**  
+2. Compute FCFF in each period \(1\dots T\)  
+3. Estimate WACC and Terminal Value  
+4. Discount all cash flows → **EV**  
+5. Derive **Equity Value**  
+   \[
+   E = EV - \bigl(D - \text{Cash}\bigr)
+   \]  
 
-::::
+---
 
-## LLMs in Valuation: Transformative Potential
+# 6. Introduction to **Multiples**
 
-- **Data Integration**: Processing vast amounts of structured and unstructured financial data
-- **Pattern Recognition**: Identifying trends and relationships beyond human capacity
-- **Forecast Enhancement**: Improved cash flow projections based on multiple data sources
-- **Peer Identification**: More sophisticated comparable company selection
-- **Bias Reduction**: Systematic approach to valuation with less human bias
-- **Scenario Generation**: Multiple futures and sensitivity analysis
-- **Narrative Understanding**: Extracting insights from textual financial information
-```
+- Relies on *law of one price*: similar assets trade at similar multiples  
+- **Cross-sectional** rather than inter-temporal  
+- Most common forms  
+  - **EV-based**: EV/EBITDA, EV/EBIT, EV/Sales  
+  - **Equity-based**: P/E, P/B, P/CF  
+
+---
+
+# 7. Deriving a Multiple from First Principles
+
+Starting from DCF identity under a perpetuity with growth:
+
+\[
+EV = \frac{\text{FCFF}_1}{WACC - g}
+\]
+
+Assume steady state where  
+\(\text{FCFF}_1 = \text{EBITDA}_1 (1-\tau) - \text{CapEx}_\mathrm{ss} + D_\mathrm{ss} - \Delta\text{NWC}_\mathrm{ss}\).
+
+Re-arrange:
+
+\[
+\frac{EV}{\text{EBITDA}}
+  = \frac{(1-\tau) - \kappa + \delta - \omega}{WACC - g}
+\]
+
+- \(\kappa = \text{CapEx}/\text{EBITDA}\)  
+- \(\delta = D/\text{EBITDA}\)  
+- \(\omega = \Delta\text{NWC}/\text{EBITDA}\)  
+
+---
+
+# 8. Practical Steps for **Comparable Company Analysis**
+
+1. **Universe selection**: same industry, size, growth, risk  
+2. **Normalize accounting numbers**  
+   - LTM vs forward estimates  
+   - Remove non-recurring items  
+3. Compute multiples for each peer  
+4. **Statistical trimming**: median or inter-quartile range  
+5. Apply selected multiple to subject company’s metric  
+
+---
+
+# 9. Adjustments & Pitfalls
+
+| Issue | DCF Treatment | Multiples Treatment |
+|-------|---------------|---------------------|
+| Non-operating assets | Add to EV after valuation | Subtract when computing EV/metric |
+| Leases (IFRS 16) | Capitalize in FCFF, include in debt | Adjust EBITDA & debt for leases |
+| Minority interests | Discount FCFF of subsidiaries not fully owned or add MI to EV | Add MI to EV numerator |
+
+- Ensure **metric consistency**: EV multiples use *unlevered* denominators; equity multiples use *post-interest* figures.
+
+---
+
+# 10. Triangulating Value
+
+- **Use both** approaches for a valuation range  
+\[
+\text{Fair Value} \in
+  [\text{DCF low}, \; \text{DCF high}]
+  \cap
+  [\text{Multiples P10}, \; \text{Multiples P90}]
+\]
+
+- Differences reveal market sentiment vs fundamentals  
+- Sensitivity analysis: vary \(WACC\), \(g\), peer set ⇒ waterfall of drivers
+
+---

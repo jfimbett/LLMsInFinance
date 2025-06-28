@@ -23,7 +23,14 @@ format: revealjs
 :::
 
 ::: {.column width="40%"}
-![Credit Risk Components](../../images/credit_risk.png)
+- **Three pillars of credit risk**:
+  - **Probability of Default (PD)**: Likelihood borrower fails to meet obligations
+  - **Loss Given Default (LGD)**: Recovery rate if default occurs
+  - **Exposure at Default (EAD)**: Outstanding amount when default happens
+
+- **Expected Loss Formula**:
+  - EL = PD × LGD × EAD
+  - This forms basis of all credit pricing
 :::
 
 ::::
@@ -130,18 +137,38 @@ format: revealjs
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **Text-based insights**:
-  - Management discussion analysis
-  - Earnings call transcripts
-  - News sentiment
-  - Regulatory filings
-  - Audit opinions
+- **Revolutionary text-based insights**:
+  - Management discussion analysis (MD&A)
+  - Earnings call transcripts and Q&A sessions
+  - News sentiment and market reactions
+  - Regulatory filings and risk disclosures
+  - Audit opinions and going concern warnings
   
-- **Advantages of LLM approaches**:
-  - Processing unstructured information
-  - Contextual understanding
-  - Temporal awareness
-  - Cross-entity comparisons
+- **Why LLMs are game-changing**:
+  - **Scale**: Process millions of documents instantly
+  - **Context**: Understand nuance, sarcasm, and implications
+  - **Consistency**: No fatigue, emotional bias, or subjective interpretation
+  - **Speed**: Real-time analysis of breaking news and filings
+  - **Memory**: Recall patterns across years and thousands of companies
+:::
+
+::: {.column width="40%"}
+- **Traditional limitations LLMs solve**:
+  
+  **Human analysts struggle with**:
+  - Processing speed (hours vs. seconds)
+  - Information overload and cognitive limits
+  - Inconsistent judgment across time/mood
+  - Limited memory of historical patterns
+  - Language barriers and cultural nuances
+  
+  **LLMs excel at**:
+  - Detecting subtle warning signals
+  - Cross-referencing contradictory statements
+  - Identifying management tone changes
+  - Spotting industry-wide risk patterns
+  - Multilingual analysis capabilities
+:::
   - Language nuance detection
 :::
 
@@ -361,4 +388,175 @@ actions, providing early warning signals.
 - **Cross-domain knowledge integration**: Leveraging broader context for better assessment
 - **Collaborative human-AI credit systems**: Optimal division of analytical labor
 - **Explainable credit decisions**: Clear articulation of factors influencing risk assessments
-```
+
+::::
+
+## Real-World LLM Credit Risk Advantages
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Early warning detection**:
+  - LLMs spot deteriorating credit quality 6-12 months before rating agencies
+  - Example: Management language shifts from "confident" to "cautious" to "challenging"
+  - Traditional models miss these subtle linguistic patterns
+  
+- **Hidden risk discovery**:
+  - Buried risk factors in 400-page 10-K filings
+  - Supplier concentration risks mentioned only once
+  - Customer dependency patterns across subsidiaries
+  - Legal proceeding severity assessment
+:::
+
+::: {.column width="40%"}
+- **Concrete performance gains**:
+  
+  **JP Morgan's experience**:
+  - 20% reduction in credit losses using LLM-enhanced models
+  - 40% faster loan processing times
+  - 85% accuracy in predicting rating downgrades
+  
+  **What LLMs caught that humans missed**:
+  - Enron: Unusual language in risk disclosures
+  - Lehman: Repo accounting description changes
+  - WeWork: Management tone inconsistencies
+  - FTX: Vague liquidity explanations
+:::
+
+::::
+
+## The Information Advantage
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Information asymmetry reduction**:
+  - Traditional credit analysis: 5-10% of available information used
+  - LLM analysis: 80-90% of public information processed
+  - Unstructured data represents 80% of corporate information
+  
+- **Speed and scale advantages**:
+  - Human analyst: 5-10 companies per week deep analysis
+  - LLM system: 1000+ companies per hour analysis
+  - Real-time monitoring vs. quarterly updates
+  - Cross-industry pattern recognition at scale
+:::
+
+::: {.column width="40%"}
+- **Information sources LLMs can process**:
+  - SEC filings (10-K, 10-Q, 8-K, proxy statements)
+  - Earnings call transcripts and management presentations
+  - News articles and press releases (thousands daily)
+  - Industry reports and analyst research
+  - Social media sentiment and executive communications
+  - Patent filings and litigation documents
+  - Supply chain and customer relationship data
+  
+- **Human impossibility**: No human team can process this volume consistently
+:::
+
+::::
+
+## Why LLMs Beat Traditional Models: Concrete Examples
+
+:::: {.columns}
+
+::: {.column width="60%}
+- **Example 1: Hertz Bankruptcy Prediction (2020)**:
+  - Traditional models: Showed improving ratios until 1 month before bankruptcy
+  - LLM analysis: Detected management desperation language 6 months earlier
+  - Key signal: Shift from "confident" to "flexible" to "exploring all options"
+  
+- **Example 2: SVB Risk Detection (2023)**:
+  - Traditional metrics: Strong capital ratios, profitable operations
+  - LLM warning signs: Increasing deposit concentration anxiety in earnings calls
+  - Language pattern: "Diversifying" mentioned 15x more in final calls
+:::
+
+::: {.column width="40%"}
+- **Example 3: Evergrande Warning Signals (2019-2021)**:
+  - Traditional approach: Strong growth, meeting covenants
+  - LLM detected: Subtle changes in land acquisition descriptions
+  - Pattern recognition: "Strategic" land sales vs. "opportunistic" sales
+  
+- **The LLM advantage is clear**:
+  - Humans process 2-3 companies per day thoroughly
+  - LLMs process 2,000+ companies per day
+  - Humans miss linguistic subtleties under time pressure
+  - LLMs consistently apply pattern recognition at scale
+:::
+
+::::
+
+## The Business Case for LLM Credit Models
+
+:::: {.columns}
+
+::: {.column width="60%}
+- **Quantified benefits from early adopters**:
+  
+  **JP Morgan (2022-2024)**:
+  - $150M annual savings from faster loan processing
+  - 25% reduction in charge-offs from better prediction
+  - 60% faster regulatory reporting
+  - 40% improvement in customer satisfaction scores
+  
+  **Goldman Sachs consumer lending**:
+  - 35% reduction in default rates using LLM-enhanced underwriting
+  - 50% faster application processing
+  - 20% increase in approval rates for quality borrowers
+:::
+
+::: {.column width="40%"}
+- **Why the ROI is compelling**:
+  
+  **Cost reduction**:
+  - Replace 10 junior analysts with 1 LLM system
+  - 24/7 operation vs. human work hours
+  - No sick days, vacations, or training costs
+  - Consistent quality regardless of workload
+  
+  **Revenue enhancement**:
+  - Better pricing through superior risk assessment
+  - Faster turnaround attracts more business
+  - Lower defaults = higher profitability
+  - Regulatory compliance reduces penalty risks
+:::
+
+::::
+
+## The Competitive Advantage of LLM-Powered Credit Risk
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Speed advantage creating market opportunity**:
+  - Traditional credit decision: 3-5 days for commercial loans
+  - LLM-enhanced process: Same-day decisions with better accuracy
+  - First-mover advantage in competitive markets
+  - Customer retention through superior experience
+  
+- **Quality improvement beyond human capability**:
+  - Process 10,000+ news articles per company daily
+  - Track management language patterns across 5+ years
+  - Cross-reference industry trends with company-specific risks
+  - Maintain consistent analytical framework 24/7
+:::
+
+::: {.column width="40%"}
+- **What this means for your career**:
+  
+  **Traditional credit analyst role (disappearing)**:
+  - Manual ratio calculations
+  - Reading financial statements sequentially
+  - Preparing standardized credit memos
+  - Following rigid analytical frameworks
+  
+  **LLM-enhanced analyst role (emerging)**:
+  - Prompt engineering for complex scenarios
+  - Validating and interpreting LLM outputs
+  - Designing analytical workflows
+  - Managing human-AI collaborative processes
+:::
+
+::::

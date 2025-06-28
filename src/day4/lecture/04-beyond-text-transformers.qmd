@@ -26,7 +26,19 @@ format: revealjs
 :::
 
 ::: {.column width="40%"}
-![Transformer Architecture](../../images/transformers1.png)
+- **Why transformers revolutionize credit risk**:
+  
+  **Beyond traditional ML models**:
+  - Handle mixed data types (text + numerical)
+  - Capture long-term historical patterns
+  - Process variable-length sequences
+  - Learn complex feature interactions
+  
+  **Credit-specific advantages**:
+  - Analyze earnings calls + financial statements simultaneously
+  - Track credit quality evolution over time
+  - Process news sentiment with financial ratios
+  - Handle missing data gracefully
 :::
 
 ::::
@@ -480,4 +492,104 @@ Output:
 - **Reinforcement learning integration**: Self-improving financial prediction systems
 - **Real-time adaptive models**: Dynamic adjustment to market conditions
 - **Federated financial transformers**: Privacy-preserving collaborative learning
-```
+
+## Transformers in Credit Risk: The Game Changer
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Why transformers revolutionize credit risk**:
+  - **Multimodal processing**: Simultaneously analyze earnings calls (text) + financial statements (numbers) + news sentiment (text)
+  - **Long-term memory**: Track credit quality evolution over 5+ years, not just quarterly snapshots
+  - **Feature interaction discovery**: Automatically find relationships humans miss
+  - **Scale advantage**: Process thousands of borrowers with consistent methodology
+  
+- **Concrete advantages over traditional models**:
+  - Traditional models: 20-50 features, manual feature engineering
+  - Transformers: 1000+ features, automatic feature discovery
+  - Traditional: Quarterly analysis updates
+  - Transformers: Real-time continuous monitoring
+:::
+
+::: {.column width="40%"}
+- **Real-world transformer applications**:
+  
+  **Credit portfolio monitoring**:
+  - Daily analysis of all portfolio companies
+  - Early warning system for deterioration
+  - Automated risk report generation
+  - Continuous covenant monitoring
+  
+  **Loan origination**:
+  - Instant credit decisions for qualified applicants
+  - Dynamic pricing based on comprehensive risk assessment
+  - Fraud detection during application process
+  - Alternative data integration (social media, transaction data)
+:::
+
+::::
+
+## The Multimodal Advantage in Credit Analysis
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Traditional approach limitations**:
+  - Financial statements: Backward-looking, quarterly updates
+  - Credit ratings: Slow to change, human subjective bias
+  - News analysis: Manual, inconsistent, time-consuming
+  - Market data: Noisy, affected by sentiment and liquidity
+  
+- **Transformer-based integrated analysis**:
+  - **Financial data + Text analysis**: "Revenue declined 5% but management tone became significantly more pessimistic"
+  - **Time series + Events**: "Cash flow seasonality changed after the acquisition in Q2"
+  - **Cross-company patterns**: "Similar language patterns preceded defaults in 3 other portfolio companies"
+:::
+
+::: {.column width="40%"}
+- **Example: Integrated risk assessment**:
+  
+  **Company ABC Analysis**:
+  - Financial metrics: Stable ratios, meeting covenants
+  - Management tone: Increasingly defensive in earnings calls
+  - News sentiment: Declining from neutral to negative
+  - Market signals: CDS spreads widening slowly
+  
+  **Transformer insight**: All signals point to deteriorating fundamentals despite stable financial metrics
+  
+  **Action**: Initiate enhanced monitoring, consider covenant modifications, potentially reduce exposure
+  
+  **Human analyst would have missed**: The subtle correlations across data types
+:::
+
+::::
+
+## Success Stories: Transformers in Practice
+
+:::: {.columns}
+
+::: {.column width="60%}
+- **Case 1: Consumer lending transformation**:
+  - **Bank**: Major US regional bank
+  - **Implementation**: Transformer-based underwriting system
+  - **Data sources**: Application data + social media + transaction history + credit bureau + public records
+  - **Results**: 
+    - 40% reduction in default rates
+    - 25% increase in approval rates for good borrowers
+    - 70% faster processing time
+    - $50M annual savings from automation
+:::
+
+::: {.column width="40%"}
+- **Case 2: Corporate credit monitoring**:
+  - **Institution**: European investment bank
+  - **Use case**: Real-time portfolio credit monitoring
+  - **Data integration**: SEC filings + earnings calls + news + market data + industry reports
+  - **Achievements**:
+    - 6-month early warning before rating downgrades
+    - 90% accuracy in predicting covenant breaches
+    - 60% reduction in credit analyst workload
+    - Enhanced regulatory compliance
+:::
+
+::::

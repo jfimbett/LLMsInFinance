@@ -36,11 +36,15 @@
 - Weighs words based on their frequency in a document relative to their frequency across a corpus. 
 - Helps identify important terms in documents
 Formula
-```math
-TF-IDF(w, d) = TF(w, d) * IDF(w)
-TF(w, d) = \frac{f(w, d)}{|d|}
-IDF(w) = \log\left(\frac{N}{n(w)}\right
-```
+
+$$
+\begin{align*}
+TF-IDF(w, d) = TF(w, d) * IDF(w) \\
+TF(w, d) = \frac{f(w, d)}{|d|} \\
+IDF(w) = \log\frac{N}{n(w)}
+\end{align*}
+$$
+
 Where:
 - \( f(w, d) \): Frequency of word \( w \) in document \( d \)
 - \( |d| \): Total number of words in document \( d \)

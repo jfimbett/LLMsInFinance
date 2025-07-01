@@ -2,9 +2,6 @@
 
 ## From Token Generation to Reasoning Chains
 
-:::: {.columns}
-
-::: {.column width="60%"}
 - **Traditional LLM prediction**:
   - Single forward pass: $P(x_{t+1} | x_1, x_2, ..., x_t)$
   - Direct mapping from context to next token
@@ -14,39 +11,44 @@
 - **Reasoning models approach**:
   - Multi-step generation: $P(goal | reasoning\_chain)$
   - Explicit intermediate thought tokens
-  - Chain-of-thought: $P(answer | context, thought_1, thought_2, ..., thought_n)$
+  - Chain-of-thought: $P(answer | context, thoughts)$
   - Goal-oriented sequence generation
-:::
 
-::: {.column width="40%"}
 - **Mathematical distinction**:
   
   **Standard generation**:
   $$P(x_{t+1}) = \text{softmax}(W_o h_t)$$
   
   **Reasoning generation**:
-  $$P(answer) = \prod_{i=1}^{n} P(thought_i | context, thought_{1:i-1}) \times P(answer | context, thought_{1:n})$$
+  $$P(answer) = \prod_{i=1}^{n} P(t_i | c, t_{1:i-1}) \times P(a | c, t_{1:n})$$
+  
+  Where:
+  - $t_i$ = thought/reasoning step $i$
+  - $c$ = context
+  - $a$ = final answer
+  - $n$ = number of reasoning steps
   
 - **Key difference**: Intermediate reasoning states influence final outcome
-:::
-
-::::
 
 ## Mathematical Framework of Reasoning Models
 
-:::: {.columns}
-
-::: {.column width="60%"}
 - **Standard next-token prediction**:
   $$P(x_{t+1} | x_{1:t}) = \frac{e^{z_{t+1}}}{\sum_{v \in V} e^{z_v}}$$
   
-  Where $z_{t+1} = W_o h_t + b_o$
+  Where:
+  - $z_{t+1} = W_o h_t + b_o$ = logits for next token
+  - $V$ = vocabulary
+  - $h_t$ = hidden state at position $t$
   
 - **Reasoning chain generation**:
-  $$P(reasoning\_chain) = \prod_{i=1}^{n} P(r_i | context, r_{1:i-1})$$
+  $$P(R) = \prod_{i=1}^{n} P(r_i | c, r_{1:i-1})$$
   
-  $$P(final\_answer | reasoning\_chain) = P(answer | context, r_{1:n})$$
-:::
+  $$P(A | R) = P(a | c, r_{1:n})$$
+  
+  Where:
+  - $R$ = reasoning chain
+  - $r_i$ = reasoning step $i$
+  - $A$ = final answer
 
 ::: {.column width="40%"}
 - **Temperature in reasoning context**:
@@ -105,13 +107,25 @@
 
 ::: {.column width="60%"}
 - **Multi-step probability factorization**:
-  $$P(answer | question) = \sum_{reasoning\_paths} P(answer | reasoning\_path) \times P(reasoning\_path | question)$$
+  $$P(A | Q) = \sum_{R} P(A | R) \times P(R | Q)$$
+  
+  Where:
+  - $A$ = answer
+  - $Q$ = question  
+  - $R$ = reasoning path
   
 - **Each reasoning step**:
-  $$P(r_i | context, r_{1:i-1}) = \text{softmax}\left(\frac{f_\theta(context, r_{1:i-1})}{T}\right)$$
+  $$P(r_i | c, r_{1:i-1}) = \text{softmax}\left(\frac{f_\theta(c, r_{1:i-1})}{T}\right)$$
+  
+  Where:
+  - $r_i$ = reasoning step $i$
+  - $c$ = context
+  - $T$ = temperature
   
 - **Final answer conditioning**:
-  $$P(answer | reasoning\_chain) = \text{softmax}\left(\frac{g_\theta(reasoning\_chain)}{T_{final}}\right)$$
+  $$P(A | R) = \text{softmax}\left(\frac{g_\theta(R)}{T_f}\right)$$
+  
+  Where $T_f$ = final temperature
 :::
 
 ::: {.column width="40%"}
@@ -292,9 +306,12 @@
   $$\text{Consistency} = \frac{1}{m(m-1)} \sum_{i \neq j} \text{similarity}(answer_i, answer_j)$$
   
 - **Reasoning verification**:
-  $$P(correct | reasoning) = \sigma(W_v[\text{reasoning\_embedding}])$$
+  $$P(correct | reasoning) = \sigma(W_v \cdot h_r)$$
   
-  Where verification network $W_v$ learns to assess reasoning quality
+  Where:
+  - $W_v$ = verification network weights
+  - $h_r$ = reasoning embedding
+  - $\sigma$ = sigmoid function
 :::
 
 ::: {.column width="40%"}

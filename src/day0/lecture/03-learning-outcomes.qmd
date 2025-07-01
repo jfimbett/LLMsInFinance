@@ -20,8 +20,3 @@ By the end of this course, you will be able to:
   - Market trend analysis and prediction
 - **Navigate regulatory considerations** (GDPR, SEC guidelines, etc.)
 
-### Project Experience
-- **Complete hands-on projects** throughout the course
-- **Build a portfolio** of LLM applications in finance
-- **Collaborate on real-world scenarios** and case studies
-- **Develop critical thinking skills** about AI limitations and potential biases

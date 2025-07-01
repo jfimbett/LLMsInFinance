@@ -1,3 +1,4 @@
+- proper guide of setup for windows and mac
 - links in day1 of academic papers, some might not work. 
 - internal system so that they use my API key (if they want)
 - no version numbers in installing libraries in the jupyter noteboos

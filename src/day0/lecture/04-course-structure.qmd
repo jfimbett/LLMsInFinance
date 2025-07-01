@@ -11,18 +11,5 @@
 | **Day 5** | Advanced Techniques & Future Directions | RAG, Fine-tuning, Multi-modal Models, Agentic Systems, Deployment |
 
 ### Daily Schedule
-- **Morning Session** (9:00-12:00): Theory, Concepts, and Case Studies
-- **Lunch Break** (12:00-13:00): Networking Opportunity
-- **Afternoon Session** (13:00-16:00): Hands-on Implementation and Coding
-- **Q&A and Wrap-up** (16:00-16:30): Discussion and Next Day Preview
-
-### Assessment Structure
-- **Daily Exercises** (40%): Practical coding tasks completed during afternoon sessions
-- **Final Project** (50%): End-to-end LLM finance application (groups of 2-3)
-- **Participation** (10%): Engagement in discussions and collaborative activities
-
-### Prerequisites
-- **Programming**: Intermediate Python knowledge (functions, classes, libraries)
-- **Finance**: Basic understanding of financial markets and instruments
-- **Math**: Familiarity with linear algebra, statistics, and probability
-- **Tools**: Experience with Jupyter notebooks and git version control
+- **Lectures** (11:30-13:30)
+- **Practical Sessions** (16:15-17:45)

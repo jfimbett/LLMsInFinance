@@ -1,30 +1,13 @@
 ## Logistics and Expectations
 
 ### Materials and Resources
-- **Course Repository**: All code, slides, and resources available on GitHub
-- **Required Software**: 
-  - Python 3.9+ with conda/venv environment management
-  - VS Code or JupyterLab for development
-  - Git for version control and collaboration
-- **API Access**: Temporary keys provided for OpenAI, Anthropic, and HuggingFace
-- **Cloud Resources**: Google Colab Pro accounts for GPU-accelerated notebooks
-- **Hardware**: Laptop with 16GB+ RAM recommended (8GB minimum)
+- **Course Repository**: All code, slides, and resources available on GitHub, Google Drive, and my website.
 
-### Course Materials
-- **Lecture Slides**: Available in PDF format before each session
-- **Code Notebooks**: Fully documented Jupyter notebooks for all examples
-- **Reading List**: Curated papers and articles (both academic and industry)
-- **Reference Implementation**: GitHub repository with working examples
+## Why should we care about LLMs?
 
-### Communication Channels
-- **Slack Workspace**: Primary channel for announcements and discussions
-- **Office Hours**: Daily from 16:30-17:30 and by appointment
-- **Email**: juan.imbet@bse.eu (48hr response time)
-- **Discussion Forum**: Course-specific Q&A board for technical questions
-
-### Course Policies
-- **Attendance**: Active participation expected in all sessions
-- **Late Work**: 10% penalty per day, maximum 3 days late
-- **Collaboration**: Encouraged for learning, but submit your own work
-- **Academic Integrity**: Use of AI tools allowed but must be documented
-- **Recording**: Sessions will be recorded for enrolled students only
+- **How is AI shaping labor markets?**
+  - Economists do not only use AI as a tool in their projects, they also study how AI is changing the economy.
+  - Consider a broader definition of a job, which includes different tasks that aggregate in the job description. 
+      - E.g. a job as a data scientist can include tasks such as data cleaning, data analysis, model building, and model deployment.
+      - Private Equity analysts need to search for deals, analyze documents, pitch to clients, and negotiate terms.
+  - AI will automate some of these tasks, but not all of them. Your value will come from being more efficient at the tasks that AI cannot do.

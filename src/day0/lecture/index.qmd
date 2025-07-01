@@ -22,6 +22,5 @@ format:
 
 {{< include 05-logistics.qmd >}}
 
-{{< include 06-getting-started.qmd >}}
 
 

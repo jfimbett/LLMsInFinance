@@ -10,8 +10,8 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <meta name="author" content="Your Name">
-  <meta name="dcterms.date" content="2025-05-08">
+  <meta name="author" content="Juan F. Imbet">
+  <meta name="dcterms.date" content="2025-07-08">
   <title>Day 2: Advanced LLM Concepts &amp; Techniques</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -333,12 +333,12 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Your Name 
+Juan F. Imbet 
 </div>
 </div>
 </div>
 
-  <p class="date">2025-05-08</p>
+  <p class="date">2025-07-08</p>
 </section>
 <section>
 <section id="advanced-llm-concepts-techniques" class="title-slide slide level1 center">
@@ -348,12 +348,912 @@ Your Name
 <section id="overview-of-todays-lecture" class="slide level2">
 <h2>Overview of Today’s Lecture</h2>
 <ul>
+<li>Mathematical foundations of LLM training (entropy, gradients, optimization)</li>
 <li>Reasoning models and multi-step inference</li>
 <li>How LLMs are trained and optimized</li>
 <li>Effective prompt engineering strategies</li>
 <li>Understanding and tracing thought processes</li>
 <li>Emergent behaviors and interpretability challenges</li>
 </ul>
+</section></section>
+<section>
+<section id="mathematical-foundations-of-llm-training" class="title-slide slide level1 center">
+<h1>Mathematical Foundations of LLM Training</h1>
+
+</section>
+<section id="loss-functions-and-cross-entropy" class="slide level2">
+<h2>Loss Functions and Cross-Entropy</h2>
+<ul>
+<li><p><strong>Fundamental training objective</strong>: Learn probability distribution over tokens <span class="math display">\[P(x_{t+1} | x_1, x_2, ..., x_t; \theta)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(x_{t+1}\)</span> = next token to predict</li>
+<li><span class="math inline">\(x_1, x_2, ..., x_t\)</span> = context tokens</li>
+<li><span class="math inline">\(\theta\)</span> = model parameters</li>
+</ul></li>
+<li><p><strong>Cross-entropy loss</strong>: Measures difference between predicted and true distributions <span class="math display">\[L_{CE} = -\sum_{i=1}^{|V|} y_i \log(\hat{y}_i)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(y_i\)</span> = true probability (one-hot encoded)</li>
+<li><span class="math inline">\(\hat{y}_i\)</span> = predicted probability from softmax</li>
+<li><span class="math inline">\(|V|\)</span> = vocabulary size</li>
+</ul></li>
+<li><p><strong>Why cross-entropy?</strong></p>
+<p><strong>Information theory foundation</strong>:</p>
+<ul>
+<li>Measures “surprise” of predictions</li>
+<li>Minimizes Kullback-Leibler divergence: <span class="math inline">\(D_{KL}(P_{true} || P_{model})\)</span></li>
+<li>Connects to maximum likelihood estimation</li>
+</ul>
+<p><strong>Mathematical properties</strong>:</p>
+<ul>
+<li>Convex function (locally)</li>
+<li>Differentiable everywhere</li>
+<li>Penalizes incorrect predictions heavily</li>
+</ul></li>
+</ul>
+</section>
+<section id="entropy-in-information-theory" class="slide level2">
+<h2>Entropy in Information Theory</h2>
+<ul>
+<li><p><strong>Shannon entropy</strong>: Measures information content <span class="math display">\[H(X) = -\sum_{i} P(x_i) \log P(x_i)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(X\)</span> = random variable (e.g., next token)</li>
+<li><span class="math inline">\(x_i\)</span> = specific outcome/token</li>
+<li><span class="math inline">\(P(x_i)\)</span> = probability of outcome <span class="math inline">\(x_i\)</span></li>
+</ul></li>
+<li><p><strong>In language modeling context</strong>: <span class="math display">\[H = -\frac{1}{N} \sum_{t=1}^{N} \log P(x_t | x_{1:t-1})\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(N\)</span> = total number of tokens in the sequence</li>
+<li><span class="math inline">\(t\)</span> = time step/position in sequence</li>
+<li><span class="math inline">\(x_t\)</span> = token at position <span class="math inline">\(t\)</span></li>
+<li><span class="math inline">\(x_{1:t-1}\)</span> = all previous tokens (context)</li>
+<li><span class="math inline">\(P(x_t | x_{1:t-1})\)</span> = conditional probability of token <span class="math inline">\(x_t\)</span> given context</li>
+</ul></li>
+<li><p><strong>Perplexity</strong>: Exponential of entropy <span class="math display">\[\text{Perplexity} = 2^{H}\]</span></p></li>
+<li><p><strong>Intuitive understanding</strong>:</p>
+<p><strong>Low entropy/perplexity (predictable)</strong>:</p>
+<ul>
+<li>Model is confident about next token</li>
+<li>Language follows clear patterns</li>
+<li>Better model performance</li>
+</ul>
+<p><strong>High entropy/perplexity (uncertain)</strong>:</p>
+<ul>
+<li>Model uncertain about next token</li>
+<li>Language is more random/creative</li>
+<li>Worse model performance</li>
+</ul></li>
+<li><p><strong>Training goal</strong>: Minimize cross-entropy = Minimize perplexity</p></li>
+<li><p><strong>Why “cross-entropy”?</strong></p>
+<ul>
+<li><strong>Self-entropy</strong>: <span class="math inline">\(H(P) = -\sum_i P(x_i) \log P(x_i)\)</span> (entropy of true distribution)</li>
+<li><strong>Cross-entropy</strong>: <span class="math inline">\(H(P, Q) = -\sum_i P(x_i) \log Q(x_i)\)</span> (entropy between distributions)</li>
+</ul>
+<p>Where:</p>
+<ul>
+<li><p><span class="math inline">\(P\)</span> = true/target distribution (one-hot encoded in training)</p></li>
+<li><p><span class="math inline">\(Q\)</span> = predicted distribution (from model’s softmax output)</p></li>
+<li><p><span class="math inline">\(P(x_i)\)</span> = true probability of token <span class="math inline">\(x_i\)</span> (1 for correct token, 0 for others)</p></li>
+<li><p><span class="math inline">\(Q(x_i)\)</span> = predicted probability of token <span class="math inline">\(x_i\)</span> (from model)</p></li>
+<li><p>We measure entropy “across” true distribution <span class="math inline">\(P\)</span> and model distribution <span class="math inline">\(Q\)</span></p></li>
+<li><p><span class="math inline">\(H(P, Q) = H(P) + D_{KL}(P || Q)\)</span> where <span class="math inline">\(D_{KL}\)</span> is KL divergence</p></li>
+<li><p>Minimizing cross-entropy = minimizing KL divergence (since <span class="math inline">\(H(P)\)</span> is constant)</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="from-logits-to-probabilities-the-softmax-function" class="slide level2">
+<h2>From Logits to Probabilities: The Softmax Function</h2>
+<ul>
+<li><p><strong>Raw model outputs</strong>: Logits <span class="math inline">\(z_i\)</span> for each vocabulary token <span class="math display">\[z = W_o h + b_o\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(z\)</span> = logits vector</li>
+<li><span class="math inline">\(h\)</span> = final hidden state</li>
+<li><span class="math inline">\(W_o\)</span> = output projection matrix</li>
+<li><span class="math inline">\(b_o\)</span> = output bias</li>
+</ul></li>
+<li><p><strong>Softmax transformation</strong>: Convert to probabilities <span class="math display">\[P(x_i) = \frac{e^{z_i}}{\sum_{j=1}^{|V|} e^{z_j}}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(P(x_i)\)</span> = probability of token <span class="math inline">\(x_i\)</span></li>
+<li><span class="math inline">\(z_i\)</span> = logit for token <span class="math inline">\(x_i\)</span></li>
+<li><span class="math inline">\(|V|\)</span> = vocabulary size</li>
+</ul></li>
+<li><p><strong>Cross-entropy with softmax</strong>: <span class="math display">\[L = -\log P(x_{target}) = -z_{target} + \log \sum_{j=1}^{|V|} e^{z_j}\]</span></p></li>
+<li><p><strong>Why softmax properties matter</strong>:</p>
+<p><strong>Probability constraints</strong>:</p>
+<ul>
+<li><span class="math inline">\(\sum_i P(x_i) = 1\)</span> (proper distribution)</li>
+<li><span class="math inline">\(P(x_i) &gt; 0\)</span> for all <span class="math inline">\(i\)</span> (non-zero probabilities)</li>
+</ul>
+<p><strong>Gradient properties</strong>:</p>
+<ul>
+<li><span class="math inline">\(\frac{\partial L}{\partial z_i} = P(x_i) - y_i\)</span></li>
+<li>Simple, interpretable gradients</li>
+<li>Difference between prediction and truth</li>
+</ul></li>
+</ul>
+</section>
+<section id="gradient-descent-and-backpropagation" class="slide level2">
+<h2>Gradient Descent and Backpropagation</h2>
+<ul>
+<li><p><strong>Gradient descent update rule</strong>: <span class="math display">\[\theta_{t+1} = \theta_t - \eta \nabla_\theta L(\theta_t)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\theta_t\)</span> = parameters at time step <span class="math inline">\(t\)</span></li>
+<li><span class="math inline">\(\eta\)</span> = learning rate</li>
+<li><span class="math inline">\(\nabla_\theta L\)</span> = gradient of loss with respect to parameters</li>
+</ul></li>
+<li><p><strong>Chain rule in transformers</strong>: <span class="math display">\[\frac{\partial L}{\partial W^{(l)}} = \frac{\partial L}{\partial h^{(L)}} \frac{\partial h^{(L)}}{\partial h^{(l)}} \frac{\partial h^{(l)}}{\partial W^{(l)}}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(W^{(l)}\)</span> = weights at layer <span class="math inline">\(l\)</span></li>
+<li><span class="math inline">\(h^{(l)}\)</span> = hidden state at layer <span class="math inline">\(l\)</span></li>
+<li><span class="math inline">\(L\)</span> = total number of layers</li>
+</ul>
+<p>Backpropagates through <span class="math inline">\(L\)</span> layers of self-attention and feedforward blocks</p></li>
+<li><p><strong>Challenges in deep networks</strong>:</p>
+<p><strong>Vanishing gradients</strong>:</p>
+<ul>
+<li><span class="math inline">\(\frac{\partial h^{(L)}}{\partial h^{(l)}} \to 0\)</span> as <span class="math inline">\(L - l\)</span> increases</li>
+<li>Information doesn’t flow to early layers</li>
+<li>Solved by residual connections</li>
+</ul>
+<p><strong>Exploding gradients</strong>:</p>
+<ul>
+<li>Gradients grow exponentially</li>
+<li>Training becomes unstable</li>
+<li>Solved by gradient clipping</li>
+</ul>
+<p><strong>Memory requirements</strong>:</p>
+<ul>
+<li>Store all intermediate activations</li>
+<li><span class="math inline">\(O(L \times N \times d)\)</span> where <span class="math inline">\(N\)</span> = sequence length, <span class="math inline">\(d\)</span> = hidden size</li>
+</ul></li>
+</ul>
+</section>
+<section id="optimization-algorithms-beyond-sgd" class="slide level2">
+<h2>Optimization Algorithms Beyond SGD</h2>
+<ul>
+<li><p><strong>Stochastic Gradient Descent (SGD)</strong>: <span class="math display">\[\theta_{t+1} = \theta_t - \eta \nabla_\theta L(\theta_t)\]</span></p></li>
+<li><p><strong>SGD with Momentum</strong>: <span class="math display">\[v_{t+1} = \beta v_t + \eta \nabla_\theta L(\theta_t)\]</span> <span class="math display">\[\theta_{t+1} = \theta_t - v_{t+1}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(v_t\)</span> = momentum term (velocity)</li>
+<li><span class="math inline">\(\beta\)</span> = momentum coefficient (typically 0.9)</li>
+</ul></li>
+<li><p><strong>Adam Optimizer</strong> (most common for LLMs): <span class="math display">\[m_t = \beta_1 m_{t-1} + (1-\beta_1) \nabla_\theta L\]</span> <span class="math display">\[v_t = \beta_2 v_{t-1} + (1-\beta_2) (\nabla_\theta L)^2\]</span> <span class="math display">\[\theta_{t+1} = \theta_t - \frac{\eta \hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(m_t\)</span> = first moment estimate (momentum)</li>
+<li><span class="math inline">\(v_t\)</span> = second moment estimate (variance)</li>
+<li><span class="math inline">\(\hat{m}_t = \frac{m_t}{1-\beta_1^t}\)</span>, <span class="math inline">\(\hat{v}_t = \frac{v_t}{1-\beta_2^t}\)</span> = bias correction</li>
+<li><span class="math inline">\(\beta_1 = 0.9\)</span> (momentum), <span class="math inline">\(\beta_2 = 0.999\)</span> (variance), <span class="math inline">\(\epsilon = 10^{-8}\)</span></li>
+</ul></li>
+<li><p><strong>Why Adam for LLM training?</strong></p>
+<p><strong>Adaptive learning rates</strong>:</p>
+<ul>
+<li>Different learning rate per parameter</li>
+<li>Automatically adjusts based on gradient history</li>
+<li>Works well for sparse gradients</li>
+</ul>
+<p><strong>Bias correction</strong>:</p>
+<ul>
+<li>Corrects initialization bias</li>
+<li>Stable early training</li>
+</ul>
+<p><strong>Robust performance</strong>:</p>
+<ul>
+<li>Less sensitive to hyperparameter choices</li>
+<li>Good default for most LLM training</li>
+</ul></li>
+</ul>
+</section>
+<section id="learning-rate-scheduling" class="slide level2">
+<h2>Learning Rate Scheduling</h2>
+<ul>
+<li><p><strong>Constant learning rate</strong>: <span class="math inline">\(\eta_t = \eta_0\)</span></p>
+<ul>
+<li>Simple but often suboptimal</li>
+<li>May not converge to best solution</li>
+</ul></li>
+<li><p><strong>Linear decay</strong>: <span class="math inline">\(\eta_t = \eta_0 (1 - \frac{t}{T})\)</span></p>
+<ul>
+<li>Decreases linearly to zero</li>
+<li>Common for fine-tuning</li>
+</ul>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\eta_0\)</span> = initial learning rate</li>
+<li><span class="math inline">\(t\)</span> = current step</li>
+<li><span class="math inline">\(T\)</span> = total training steps</li>
+</ul></li>
+<li><p><strong>Cosine annealing</strong>: <span class="math display">\[\eta_t = \eta_{min} + \frac{1}{2}(\eta_{max} - \eta_{min})(1 + \cos(\frac{t\pi}{T}))\]</span></p></li>
+<li><p><strong>Warmup + decay</strong>: Increase then decrease <span class="math display">\[\eta_t = \begin{cases}
+\eta_{max} \frac{t}{t_w} &amp; \text{if } t &lt; t_w \\
+\eta_{max} \left(\frac{T - t}{T - t_w}\right)^p &amp; \text{otherwise}
+\end{cases}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(t_w\)</span> = warmup steps</li>
+<li><span class="math inline">\(p\)</span> = decay power (typically 1)</li>
+</ul></li>
+<li><p><strong>Why learning rate matters</strong>:</p>
+<p><strong>Too high</strong>:</p>
+<ul>
+<li>Training unstable, loss oscillates</li>
+<li>May not converge at all</li>
+<li>Overshoots optimal parameters</li>
+</ul>
+<p><strong>Too low</strong>:</p>
+<ul>
+<li>Training very slow</li>
+<li>May get stuck in local minima</li>
+<li>Inefficient use of compute</li>
+</ul>
+<p><strong>Warmup benefits</strong>:</p>
+<ul>
+<li>Gradual increase prevents early instability</li>
+<li>Allows model to “settle” into good region</li>
+<li>Particularly important for large models</li>
+</ul>
+<p><strong>Decay benefits</strong>:</p>
+<ul>
+<li>Fine-tunes solution in later stages</li>
+<li>Helps convergence to better minima</li>
+</ul></li>
+</ul>
+</section>
+<section id="gradient-clipping-and-numerical-stability" class="slide level2">
+<h2>Gradient Clipping and Numerical Stability</h2>
+<ul>
+<li><p><strong>Gradient clipping</strong>: Prevent exploding gradients</p>
+<p><strong>Global norm clipping</strong>: <span class="math display">\[g = \sqrt{\sum_i ||\nabla W_i||^2}\]</span> <span class="math display">\[c = \min\left(1, \frac{\tau}{g}\right)\]</span> <span class="math display">\[\nabla W_i \leftarrow c \cdot \nabla W_i\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(g\)</span> = global gradient norm</li>
+<li><span class="math inline">\(\tau\)</span> = maximum allowed norm (threshold)</li>
+<li><span class="math inline">\(c\)</span> = clipping factor</li>
+</ul></li>
+<li><p><strong>Alternative: Value clipping</strong>: <span class="math display">\[\nabla W_i = \text{clip}(\nabla W_i, -\tau, +\tau)\]</span></p>
+<p>Where <span class="math inline">\(\tau\)</span> is the clipping threshold</p></li>
+<li><p><strong>Numerical stability techniques</strong>:</p>
+<p><strong>Mixed precision training</strong>:</p>
+<ul>
+<li>FP16 for forward pass (faster, less memory)</li>
+<li>FP32 for gradients (numerical stability)</li>
+<li>Loss scaling to prevent underflow</li>
+</ul>
+<p><strong>Layer normalization</strong>:</p>
+<ul>
+<li>Stabilizes activations across layers</li>
+<li>Reduces internal covariate shift</li>
+<li>Enables higher learning rates</li>
+</ul>
+<p><strong>Gradient accumulation</strong>:</p>
+<ul>
+<li>Simulate larger batch sizes</li>
+<li>Average gradients over multiple mini-batches</li>
+<li>Reduces memory requirements</li>
+</ul></li>
+</ul>
+</section>
+<section id="loss-landscapes-and-optimization-challenges" class="slide level2">
+<h2>Loss Landscapes and Optimization Challenges</h2>
+<ul>
+<li><p><strong>Loss landscape visualization</strong>:</p>
+<ul>
+<li>High-dimensional, non-convex surface</li>
+<li>Multiple local minima and saddle points</li>
+<li>Path-dependent optimization</li>
+</ul></li>
+<li><p><strong>Challenges in LLM training</strong>:</p>
+<p><strong>Saddle points</strong>: <span class="math inline">\(\nabla L = 0\)</span> but not minimum</p>
+<ul>
+<li>More common in high dimensions</li>
+<li>Adam helps escape through momentum</li>
+</ul>
+<p><strong>Plateaus</strong>: Flat regions with small gradients</p>
+<ul>
+<li>Slow convergence</li>
+<li>Learning rate scheduling helps</li>
+</ul>
+<p><strong>Sharp vs.&nbsp;flat minima</strong>:</p>
+<ul>
+<li>Flat minima generalize better</li>
+<li>SGD noise helps find flat minima</li>
+</ul></li>
+<li><p><strong>Optimization strategies</strong>:</p>
+<p><strong>Batch size effects</strong>:</p>
+<ul>
+<li>Large batches: More accurate gradients, sharp minima</li>
+<li>Small batches: Noisy gradients, flat minima</li>
+<li>Sweet spot: 32-512 for most LLMs</li>
+</ul>
+<p><strong>Initialization importance</strong>:</p>
+<ul>
+<li>Xavier/He initialization for weights</li>
+<li>Zero initialization for biases</li>
+<li>Proper scaling prevents gradient explosion</li>
+</ul>
+<p><strong>Second-order methods</strong>:</p>
+<ul>
+<li>Newton’s method: <span class="math inline">\(\theta_{t+1} = \theta_t - H^{-1} \nabla L\)</span></li>
+<li>Too expensive for LLMs (Hessian <span class="math inline">\(O(n^2)\)</span>)</li>
+<li>Approximations like L-BFGS occasionally used</li>
+</ul>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(H\)</span> = Hessian matrix (second derivatives)</li>
+<li><span class="math inline">\(n\)</span> = number of parameters</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-connection-entropy-gradients-updates" class="slide level2">
+<h2>The Connection: Entropy → Gradients → Updates</h2>
+<ul>
+<li><p><strong>Complete training pipeline</strong>:</p>
+<ol type="1">
+<li><strong>Forward pass</strong>: Compute logits <span class="math inline">\(z = f(x; \theta)\)</span></li>
+<li><strong>Softmax</strong>: Convert to probabilities <span class="math inline">\(p = \text{softmax}(z)\)</span></li>
+<li><strong>Cross-entropy</strong>: Compute loss <span class="math inline">\(L = -\log p_{target}\)</span></li>
+<li><strong>Backward pass</strong>: Compute <span class="math inline">\(\nabla_\theta L\)</span> via backpropagation</li>
+<li><strong>Optimization step</strong>: Update <span class="math inline">\(\theta\)</span> using optimizer</li>
+<li><strong>Repeat</strong>: Next batch/epoch</li>
+</ol>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(f(x; \theta)\)</span> = model function with parameters <span class="math inline">\(\theta\)</span></li>
+<li><span class="math inline">\(p_{target}\)</span> = probability of the correct token</li>
+</ul></li>
+<li><p><strong>Information flow</strong>: <span class="math display">\[\text{Data} \xrightarrow{\text{model}} \text{Logits} \xrightarrow{\text{softmax}} \text{Probabilities} \xrightarrow{\text{entropy}} \text{Loss}\]</span> <span class="math display">\[\text{Loss} \xrightarrow{\text{backprop}} \text{Gradients} \xrightarrow{\text{optimizer}} \text{Parameter Updates}\]</span></p></li>
+<li><p><strong>Key mathematical insights</strong>:</p>
+<p><strong>Entropy drives learning</strong>:</p>
+<ul>
+<li>Model learns to reduce uncertainty</li>
+<li>Cross-entropy measures this directly</li>
+<li>Optimization minimizes prediction entropy</li>
+</ul>
+<p><strong>Gradients provide direction</strong>:</p>
+<ul>
+<li>Point toward steepest descent</li>
+<li>Magnitude indicates update size</li>
+<li>Chain rule connects output to all parameters</li>
+</ul>
+<p><strong>Optimizers determine path</strong>:</p>
+<ul>
+<li>How to use gradient information</li>
+<li>Balance exploration vs.&nbsp;exploitation</li>
+<li>Adapt to landscape properties</li>
+</ul></li>
+<li><p><strong>This connects to reasoning models</strong>: Higher entropy allows exploration of reasoning paths</p></li>
+</ul>
+</section>
+<section id="mathematical-foundations-summary" class="slide level2">
+<h2>Mathematical Foundations Summary</h2>
+<ul>
+<li><p><strong>Core mathematical concepts</strong>:</p>
+<ul>
+<li><strong>Entropy</strong>: Measures uncertainty/information content</li>
+<li><strong>Cross-entropy</strong>: Training objective connecting predictions to truth</li>
+<li><strong>Softmax</strong>: Converts raw outputs to probability distributions</li>
+<li><strong>Gradients</strong>: Direction of steepest change in loss landscape</li>
+<li><strong>Optimizers</strong>: Algorithms for following gradients efficiently</li>
+</ul></li>
+<li><p><strong>Why understanding matters</strong>:</p>
+<ul>
+<li>Debugging training issues (vanishing/exploding gradients)</li>
+<li>Choosing appropriate hyperparameters</li>
+<li>Understanding model behavior and limitations</li>
+<li>Designing better training procedures</li>
+</ul></li>
+<li><p><strong>Practical implications</strong>:</p>
+<p><strong>For model training</strong>:</p>
+<ul>
+<li>Learning rate needs careful tuning</li>
+<li>Gradient clipping prevents instability</li>
+<li>Adam usually works well for LLMs</li>
+</ul>
+<p><strong>For inference</strong>:</p>
+<ul>
+<li>Temperature controls entropy/creativity</li>
+<li>Softmax probabilities enable reasoning</li>
+<li>Understanding helps with prompt engineering</li>
+</ul>
+<p><strong>For research</strong>:</p>
+<ul>
+<li>Foundation for advanced techniques</li>
+<li>Understanding enables innovation</li>
+<li>Mathematical rigor guides experimentation</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="reasoning-models-beyond-next-token-prediction" class="title-slide slide level1 center">
+<h1>Reasoning Models: Beyond Next Token Prediction</h1>
+
+</section>
+<section id="from-token-generation-to-reasoning-chains" class="slide level2">
+<h2>From Token Generation to Reasoning Chains</h2>
+<ul>
+<li><p><strong>Traditional LLM prediction</strong>:</p>
+<ul>
+<li>Single forward pass: <span class="math inline">\(P(x_{t+1} | x_1, x_2, ..., x_t)\)</span></li>
+<li>Direct mapping from context to next token</li>
+<li>Temperature controls randomness in sampling</li>
+<li>No explicit intermediate reasoning steps</li>
+</ul></li>
+<li><p><strong>Reasoning models approach</strong>:</p>
+<ul>
+<li>Multi-step generation: <span class="math inline">\(P(goal | reasoning\_chain)\)</span></li>
+<li>Explicit intermediate thought tokens</li>
+<li>Chain-of-thought: <span class="math inline">\(P(answer | context, thoughts)\)</span></li>
+<li>Goal-oriented sequence generation</li>
+</ul></li>
+<li><p><strong>Mathematical distinction</strong>:</p>
+<p><strong>Standard generation</strong>: <span class="math display">\[P(x_{t+1}) = \text{softmax}(W_o h_t)\]</span></p>
+<p><strong>Reasoning generation</strong>: <span class="math display">\[P(answer) = \prod_{i=1}^{n} P(t_i | c, t_{1:i-1}) \times P(a | c, t_{1:n})\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(t_i\)</span> = thought/reasoning step <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(c\)</span> = context</li>
+<li><span class="math inline">\(a\)</span> = final answer</li>
+<li><span class="math inline">\(n\)</span> = number of reasoning steps</li>
+</ul></li>
+<li><p><strong>Key difference</strong>: Intermediate reasoning states influence final outcome</p></li>
+</ul>
+</section>
+<section id="mathematical-framework-of-reasoning-models" class="slide level2">
+<h2>Mathematical Framework of Reasoning Models</h2>
+<ul>
+<li><p><strong>Standard next-token prediction</strong>: <span class="math display">\[P(x_{t+1} | x_{1:t}) = \frac{e^{z_{t+1}}}{\sum_{v \in V} e^{z_v}}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(z_{t+1} = W_o h_t + b_o\)</span> = logits for next token</li>
+<li><span class="math inline">\(V\)</span> = vocabulary</li>
+<li><span class="math inline">\(h_t\)</span> = hidden state at position <span class="math inline">\(t\)</span></li>
+</ul></li>
+<li><p><strong>Reasoning chain generation</strong>: <span class="math display">\[P(R) = \prod_{i=1}^{n} P(r_i | c, r_{1:i-1})\]</span></p>
+<p><span class="math display">\[P(A | R) = P(a | c, r_{1:n})\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(R\)</span> = reasoning chain</li>
+<li><span class="math inline">\(r_i\)</span> = reasoning step <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(A\)</span> = final answer</li>
+</ul></li>
+</ul>
+<div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Temperature in reasoning context</strong>:</p>
+<p><strong>Standard softmax with temperature</strong>: <span class="math display">\[P(x_i) = \frac{e^{z_i/T}}{\sum_{j} e^{z_j/T}}\]</span></p>
+<p><strong>Reasoning requires <span class="math inline">\(T &gt; 0\)</span> because</strong>:</p>
+<ul>
+<li>Need exploration of reasoning paths</li>
+<li>Multiple valid intermediate steps</li>
+<li>Diversity in thought processes</li>
+<li>Avoiding reasoning dead-ends</li>
+</ul></li>
+</ul>
+</div><p>::::</p>
+</section>
+<section id="why-temperature-cannot-be-zero-in-reasoning" class="slide level2">
+<h2>Why Temperature Cannot Be Zero in Reasoning</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Mathematical constraint</strong>: <span class="math inline">\(T \to 0\)</span> leads to deterministic selection <span class="math display">\[\lim_{T \to 0} P(x_i) = \begin{cases}
+1 &amp; \text{if } i = \arg\max_j z_j \\
+0 &amp; \text{otherwise}
+\end{cases}\]</span></p></li>
+<li><p><strong>Problem with deterministic reasoning</strong>:</p>
+<ul>
+<li>Only one reasoning path explored</li>
+<li>No recovery from sub-optimal intermediate steps</li>
+<li>Reasoning becomes brittle and inflexible</li>
+<li>Cannot explore alternative valid approaches</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Reasoning examples</strong>:</p>
+<p><strong>Problem</strong>: Solve a complex multi-step problem</p>
+<p><strong>With <span class="math inline">\(T = 0\)</span> (deterministic)</strong>:</p>
+<ul>
+<li>Always chooses same first reasoning step</li>
+<li>Cannot explore alternative approaches</li>
+<li>Gets stuck if initial assumption is suboptimal</li>
+</ul>
+<p><strong>With <span class="math inline">\(T &gt; 0\)</span> (stochastic)</strong>:</p>
+<ul>
+<li>Can explore multiple solution methods</li>
+<li>Considers different assumptions</li>
+<li>Allows for uncertainty quantification</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="reasoning-chain-decomposition" class="slide level2">
+<h2>Reasoning Chain Decomposition</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Multi-step probability factorization</strong>: <span class="math display">\[P(answer | question) = \sum_{reasoning\_paths} P(answer | reasoning\_path) \times P(reasoning\_path | question)\]</span></p></li>
+<li><p><strong>Each reasoning step</strong>: <span class="math display">\[P(r_i | context, r_{1:i-1}) = \text{softmax}\left(\frac{f_\theta(context, r_{1:i-1})}{T}\right)\]</span></p></li>
+<li><p><strong>Final answer conditioning</strong>: <span class="math display">\[P(answer | reasoning\_chain) = \text{softmax}\left(\frac{g_\theta(reasoning\_chain)}{T_{final}}\right)\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Temperature effects across reasoning</strong>:</p>
+<p><strong>High temperature (<span class="math inline">\(T &gt; 1\)</span>)</strong>:</p>
+<ul>
+<li>More diverse reasoning paths</li>
+<li>Higher creativity in problem-solving</li>
+<li>Risk of incoherent reasoning</li>
+</ul>
+<p><strong>Moderate temperature (<span class="math inline">\(0.3 &lt; T &lt; 1\)</span>)</strong>:</p>
+<ul>
+<li>Balanced exploration vs.&nbsp;exploitation</li>
+<li>Coherent but diverse reasoning</li>
+<li>Optimal for most complex problems</li>
+</ul>
+<p><strong>Low temperature (<span class="math inline">\(T \to 0\)</span>)</strong>:</p>
+<ul>
+<li>Deterministic, rigid reasoning</li>
+<li>Cannot recover from mistakes</li>
+<li>Limited problem-solving capability</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="information-theory-of-reasoning" class="slide level2">
+<h2>Information Theory of Reasoning</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Entropy in reasoning steps</strong>: <span class="math display">\[H(R_i) = -\sum_{r_i} P(r_i | context, r_{1:i-1}) \log P(r_i | context, r_{1:i-1})\]</span></p></li>
+<li><p><strong>Total reasoning entropy</strong>: <span class="math display">\[H(Reasoning) = \sum_{i=1}^{n} H(R_i | R_{1:i-1})\]</span></p></li>
+<li><p><strong>Conditional mutual information</strong>: <span class="math display">\[I(Answer; Reasoning\_Path | Question) = H(Answer | Question) - H(Answer | Question, Reasoning\_Path)\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Why entropy matters in reasoning</strong>:</p>
+<p><strong>Zero entropy (<span class="math inline">\(T = 0\)</span>)</strong>:</p>
+<ul>
+<li><span class="math inline">\(H(R_i) = 0\)</span> for all reasoning steps</li>
+<li>Deterministic, no exploration</li>
+<li>Cannot adapt to new information</li>
+</ul>
+<p><strong>Positive entropy (<span class="math inline">\(T &gt; 0\)</span>)</strong>:</p>
+<ul>
+<li><span class="math inline">\(H(R_i) &gt; 0\)</span> allows exploration</li>
+<li>Can discover optimal reasoning paths</li>
+<li>Adapts to intermediate findings</li>
+</ul></li>
+<li><p><strong>General implications</strong>:</p>
+<ul>
+<li>Complex analysis requires uncertainty handling</li>
+<li>Multiple valid analytical approaches</li>
+<li>Need to explore scenario variations</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="reasoning-vs.-direct-prediction-mathematical-comparison" class="slide level2">
+<h2>Reasoning vs.&nbsp;Direct Prediction: Mathematical Comparison</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Direct prediction complexity</strong>: <span class="math display">\[P(answer | question) = \text{softmax}(W_o h_{final})\]</span></p>
+<p>Single forward pass, <span class="math inline">\(O(|V|)\)</span> complexity for final softmax</p></li>
+<li><p><strong>Reasoning model complexity</strong>: <span class="math display">\[P(answer | question) = \sum_{paths} \prod_{i=1}^{n} P(r_i | context, r_{1:i-1}) \times P(answer | reasoning)\]</span></p>
+<p>Multiple forward passes, <span class="math inline">\(O(n \times |V|)\)</span> complexity</p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Computational trade-offs</strong>:</p>
+<p><strong>Direct prediction</strong>:</p>
+<ul>
+<li>Fast inference: <span class="math inline">\(O(1)\)</span> forward pass</li>
+<li>Limited reasoning capability</li>
+<li>Suitable for simple tasks</li>
+</ul>
+<p><strong>Reasoning models</strong>:</p>
+<ul>
+<li>Slower inference: <span class="math inline">\(O(n)\)</span> forward passes</li>
+<li>Enhanced problem-solving</li>
+<li>Required for complex analytical tasks</li>
+</ul></li>
+<li><p><strong>Quality vs.&nbsp;efficiency trade-off</strong>:</p>
+<ul>
+<li>Reasoning models: higher accuracy, slower</li>
+<li>Direct models: faster, limited capability</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="temperature-scheduling-in-reasoning" class="slide level2">
+<h2>Temperature Scheduling in Reasoning</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Adaptive temperature across reasoning steps</strong>: <span class="math display">\[T_i = T_0 \times \text{schedule}(i, context, partial\_reasoning)\]</span></p></li>
+<li><p><strong>Common scheduling strategies</strong>:</p>
+<p><strong>Linear decay</strong>: <span class="math inline">\(T_i = T_0 \times (1 - \frac{i}{n})\)</span></p>
+<p><strong>Exponential decay</strong>: <span class="math inline">\(T_i = T_0 \times e^{-\lambda i}\)</span></p>
+<p><strong>Content-aware</strong>: <span class="math inline">\(T_i = f(confidence, complexity, stakes)\)</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Temperature strategies for different task types</strong>:</p>
+<p><strong>High-precision tasks</strong> (mathematical computation):</p>
+<ul>
+<li>Start with <span class="math inline">\(T_0 = 0.3\)</span> (conservative)</li>
+<li>Decay to <span class="math inline">\(T_{final} = 0.1\)</span> (precise)</li>
+</ul>
+<p><strong>Exploratory analysis</strong> (research, brainstorming):</p>
+<ul>
+<li>Start with <span class="math inline">\(T_0 = 0.8\)</span> (creative)</li>
+<li>Maintain <span class="math inline">\(T &gt; 0.5\)</span> throughout</li>
+</ul>
+<p><strong>Mixed reasoning tasks</strong>:</p>
+<ul>
+<li>Variable temperature based on step type</li>
+<li>Lower <span class="math inline">\(T\)</span> for computational steps</li>
+<li>Higher <span class="math inline">\(T\)</span> for interpretation steps</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="reasoning-path-optimization" class="slide level2">
+<h2>Reasoning Path Optimization</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Beam search in reasoning space</strong>: Keep top-<span class="math inline">\(k\)</span> reasoning paths at each step</p>
+<p><span class="math display">\[\text{Score}(path) = \frac{1}{|path|} \sum_{i=1}^{|path|} \log P(r_i | context, r_{1:i-1})\]</span></p></li>
+<li><p><strong>Path pruning criteria</strong>:</p>
+<ul>
+<li>Coherence score below threshold</li>
+<li>Logical inconsistency detection</li>
+<li>Factual accuracy verification</li>
+<li>Domain-specific validity checks</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Multi-path reasoning benefits</strong>:</p>
+<p><strong>Robustness</strong>:</p>
+<ul>
+<li>Multiple valid approaches to same problem</li>
+<li>Cross-validation of reasoning steps</li>
+<li>Error detection through inconsistency</li>
+</ul>
+<p><strong>Uncertainty quantification</strong>:</p>
+<ul>
+<li>Confidence from path agreement</li>
+<li>Range estimation from path diversity</li>
+<li>Risk assessment from reasoning variance</li>
+</ul></li>
+<li><p><strong>Example</strong>: Multi-step problem solving</p>
+<ul>
+<li>Path 1: Conservative assumptions</li>
+<li>Path 2: Optimistic conditions</li>
+<li>Path 3: Stress-test scenarios</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="self-consistency-and-verification" class="slide level2">
+<h2>Self-Consistency and Verification</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Self-consistency scoring</strong>: Generate <span class="math inline">\(m\)</span> reasoning paths, measure agreement</p>
+<p><span class="math display">\[\text{Consistency} = \frac{1}{m(m-1)} \sum_{i \neq j} \text{similarity}(answer_i, answer_j)\]</span></p></li>
+<li><p><strong>Reasoning verification</strong>: <span class="math display">\[P(correct | reasoning) = \sigma(W_v \cdot h_r)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(W_v\)</span> = verification network weights</li>
+<li><span class="math inline">\(h_r\)</span> = reasoning embedding</li>
+<li><span class="math inline">\(\sigma\)</span> = sigmoid function</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Why temperature enables verification</strong>:</p>
+<p><strong>With <span class="math inline">\(T &gt; 0\)</span></strong>:</p>
+<ul>
+<li>Generate diverse reasoning samples</li>
+<li>Check consistency across approaches</li>
+<li>Identify robust vs.&nbsp;fragile conclusions</li>
+</ul>
+<p><strong>With <span class="math inline">\(T = 0\)</span></strong>:</p>
+<ul>
+<li>Only one reasoning path</li>
+<li>No verification possible</li>
+<li>Cannot assess answer reliability</li>
+</ul></li>
+<li><p><strong>Verification example</strong>:</p>
+<ul>
+<li>Multiple solution approaches</li>
+<li>Cross-check with alternative methods</li>
+<li>Sensitivity analysis across scenarios</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="reasoning-model-architectures" class="slide level2">
+<h2>Reasoning Model Architectures</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Chain-of-Thought (CoT)</strong>: <span class="math display">\[P(answer | question) = P(answer | question, thoughts) \times P(thoughts | question)\]</span></p></li>
+<li><p><strong>Tree-of-Thoughts (ToT)</strong>: <span class="math display">\[P(answer | question) = \max_{tree} P(answer | question, tree) \times P(tree | question)\]</span></p></li>
+<li><p><strong>Graph-of-Thoughts (GoT)</strong>: <span class="math display">\[P(answer | question) = \sum_{graph} P(answer | question, graph) \times P(graph | question)\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Architecture complexity trade-offs</strong>:</p>
+<p><strong>Chain-of-Thought</strong>:</p>
+<ul>
+<li>Linear reasoning progression</li>
+<li>Simple to implement and understand</li>
+<li>Good for sequential analytical tasks</li>
+</ul>
+<p><strong>Tree-of-Thoughts</strong>:</p>
+<ul>
+<li>Branching reasoning exploration</li>
+<li>Better for scenario analysis</li>
+<li>Higher computational cost</li>
+</ul>
+<p><strong>Graph-of-Thoughts</strong>:</p>
+<ul>
+<li>Complex relationship modeling</li>
+<li>Best for interconnected systems</li>
+<li>Highest computational complexity</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="generic-applications-of-reasoning-models" class="slide level2">
+<h2>Generic Applications of Reasoning Models</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Mathematical problem solving</strong>:
+<ol type="1">
+<li>Problem decomposition and analysis</li>
+<li>Method selection and justification</li>
+<li>Step-by-step solution development</li>
+<li>Result verification and validation</li>
+<li>Alternative approach exploration</li>
+</ol></li>
+<li><strong>Complex decision making</strong>:
+<ol type="1">
+<li>Information gathering and analysis</li>
+<li>Criteria identification and weighting</li>
+<li>Option evaluation and comparison</li>
+<li>Trade-off analysis and reasoning</li>
+<li>Final decision justification</li>
+</ol></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Mathematical requirements</strong>:</p>
+<p><strong>Each reasoning step needs <span class="math inline">\(T &gt; 0\)</span></strong>:</p>
+<ul>
+<li>Explore alternative analytical approaches</li>
+<li>Consider multiple scenario outcomes</li>
+<li>Adapt to intermediate findings</li>
+<li>Maintain reasoning flexibility</li>
+</ul>
+<p><strong>Example temperature settings</strong>:</p>
+<ul>
+<li>Mathematical computation: <span class="math inline">\(T = 0.4\)</span></li>
+<li>Creative problem solving: <span class="math inline">\(T = 0.7\)</span></li>
+<li>Logical analysis: <span class="math inline">\(T = 0.3\)</span></li>
+<li>Hypothesis generation: <span class="math inline">\(T = 0.6\)</span></li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="limitations-and-future-directions" class="slide level2">
+<h2>Limitations and Future Directions</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><strong>Current limitations</strong>:
+<ul>
+<li>Reasoning length constraints</li>
+<li>Computational cost scaling</li>
+<li>Quality assessment challenges</li>
+<li>Integration with external knowledge</li>
+</ul></li>
+<li><strong>Mathematical challenges</strong>:
+<ul>
+<li>Optimizing temperature schedules</li>
+<li>Balancing exploration vs.&nbsp;exploitation</li>
+<li>Measuring reasoning quality objectively</li>
+<li>Handling reasoning contradictions</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Future research directions</strong>:</p>
+<p><strong>Adaptive reasoning</strong>:</p>
+<ul>
+<li>Dynamic reasoning length</li>
+<li>Context-aware temperature setting</li>
+<li>Real-time quality assessment</li>
+</ul>
+<p><strong>Hybrid approaches</strong>:</p>
+<ul>
+<li>Reasoning + retrieval integration</li>
+<li>Multi-modal reasoning incorporation</li>
+<li>External tool usage in reasoning</li>
+</ul>
+<p><strong>Domain-specific developments</strong>:</p>
+<ul>
+<li>Domain-constrained reasoning</li>
+<li>Quality assurance verification</li>
+<li>Context-aware reasoning temperature</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="practical-implementation-considerations" class="slide level2">
+<h2>Practical Implementation Considerations</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Temperature selection guidelines</strong>:</p>
+<p><strong>High-precision tasks</strong>: <span class="math inline">\(T \in [0.1, 0.4]\)</span></p>
+<ul>
+<li>Mathematical computation</li>
+<li>Logical verification</li>
+<li>Rule-based reasoning</li>
+</ul>
+<p><strong>Analytical tasks</strong>: <span class="math inline">\(T \in [0.4, 0.7]\)</span></p>
+<ul>
+<li>Problem decomposition</li>
+<li>Method selection</li>
+<li>Strategy development</li>
+</ul>
+<p><strong>Creative tasks</strong>: <span class="math inline">\(T \in [0.7, 1.0]\)</span></p>
+<ul>
+<li>Hypothesis generation</li>
+<li>Alternative exploration</li>
+<li>Innovation brainstorming</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p><strong>Quality control mechanisms</strong>:</p>
+<p><strong>Reasoning validation</strong>:</p>
+<ul>
+<li>Logical consistency checking</li>
+<li>Factual accuracy verification</li>
+<li>Domain knowledge compliance</li>
+<li>Mathematical correctness validation</li>
+</ul>
+<p><strong>Temperature optimization</strong>:</p>
+<ul>
+<li>A/B testing different temperature ranges</li>
+<li>Performance monitoring across tasks</li>
+<li>Expert evaluation of reasoning quality</li>
+<li>Automated reasoning assessment metrics</li>
+</ul></li>
+<li><p><strong>Production considerations</strong>:</p>
+<ul>
+<li>Latency vs.&nbsp;quality trade-offs</li>
+<li>Caching common reasoning patterns</li>
+<li>Fallback to simpler models when needed</li>
+</ul></li>
+</ul>
+</div></div>
 </section></section>
 <section>
 <section id="how-are-llms-trained" class="title-slide slide level1 center">
@@ -608,7 +1508,7 @@ Your Name
 <li>Art and science of communicating with LLMs</li>
 <li>Critical skill for effective LLM utilization</li>
 <li>Influences the quality, relevance, and accuracy of responses</li>
-<li>Key to unlocking LLM capabilities in finance</li>
+<li>Key to unlocking LLM capabilities across domains</li>
 </ul>
 </div></div>
 </section>
@@ -618,19 +1518,18 @@ Your Name
 <div class="column" style="width:60%;">
 <ul>
 <li>Model responds without examples</li>
-<li>Example: “Explain the Efficient Market Hypothesis”</li>
+<li>Example: “Explain the concept of gravity”</li>
 <li>Benefits: Simplicity and directness</li>
 <li>Limitations: Less control over output format and style</li>
-<li>Financial applications: Quick market insights, basic definitions</li>
+<li>Applications: Quick insights, basic definitions, general queries</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <pre><code>Explain the concept of 
-option delta and its 
-implications for hedging 
-strategies.</code></pre>
+photosynthesis and its 
+importance for life on Earth.</code></pre>
 <pre><code>Analyze the potential impact 
-of yesterday's Federal Reserve 
-announcement on bond yields.</code></pre>
+of climate change on ocean 
+temperatures and currents.</code></pre>
 </div></div>
 </section>
 <section id="zero-shot-prompting-applications" class="slide level2">
@@ -640,13 +1539,13 @@ announcement on bond yields.</code></pre>
 <ul>
 <li><strong>Technical foundation</strong>: Model uses pre-training distribution to generate responses</li>
 <li><strong>Success factors</strong>: Clarity, specificity, and proper framing</li>
-<li><strong>Financial use cases</strong>:
+<li><strong>General use cases</strong>:
 <ul>
-<li>Market sentiment analysis</li>
-<li>Financial term definitions</li>
-<li>Basic regulatory guidance</li>
-<li>Initial risk assessment</li>
-<li>Quick portfolio insights</li>
+<li>Concept explanations</li>
+<li>Quick factual queries</li>
+<li>Basic analysis requests</li>
+<li>Initial research questions</li>
+<li>Educational content</li>
 </ul></li>
 </ul>
 </div></div>
@@ -660,21 +1559,21 @@ announcement on bond yields.</code></pre>
 <li>Guides the model on expected output format and style</li>
 <li>Example:
 <ul>
-<li>“Q: What is CAPM? A: The Capital Asset Pricing Model…”</li>
-<li>“Now, what is the Fama-French Three-Factor Model?”</li>
+<li>“Q: What is gravity? A: Gravity is a fundamental force that attracts objects…”</li>
+<li>“Now, what is electromagnetic force?”</li>
 </ul></li>
-<li>Financial applications: Consistent financial reports, standardized analyses</li>
+<li>Applications: Consistent reports, standardized analyses, format control</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>Q: What is beta in finance?
-A: Beta measures a stock's 
-volatility relative to the 
-overall market. A beta of 1 
-means the stock moves with 
-the market. Higher beta 
-indicates higher volatility.
+<pre><code>Q: What is photosynthesis?
+A: Photosynthesis is the process 
+by which plants convert sunlight, 
+carbon dioxide, and water into 
+glucose and oxygen. It's essential 
+for life on Earth as it produces 
+the oxygen we breathe.
 
-Q: What is alpha in finance?
+Q: What is cellular respiration?
 A:</code></pre>
 </div></div>
 </section>
@@ -684,60 +1583,68 @@ A:</code></pre>
 <div class="column" style="width:60%;">
 <ul>
 <li><strong>Cognitive foundations</strong>: Creates local context that guides prediction</li>
+<li><strong>Why one-shot works better than zero-shot</strong>:
+<ul>
+<li><strong>Pattern recognition</strong>: LLMs excel at identifying and following patterns from examples</li>
+<li><strong>Format specification</strong>: Examples clarify desired output structure</li>
+<li><strong>Disambiguation</strong>: Reduces ambiguity about what type of response is expected</li>
+<li><strong>Context priming</strong>: Examples activate relevant neural pathways in the model</li>
+</ul></li>
 <li><strong>When to use</strong>:
 <ul>
 <li>When format consistency is critical</li>
-<li>For standardized financial analyses</li>
+<li>For standardized analyses across different topics</li>
 <li>To control response length and structure</li>
-<li>For regular financial reporting</li>
+<li>For regular reporting or documentation</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>FINANCIAL ANALYSIS: MSFT
-Market Cap: $2.81T
-P/E Ratio: 35.2
-Revenue Growth: 7%
-Recommendation: BUY
+<pre><code>BOOK REVIEW: 1984
+Pages: 328
+Genre: Dystopian Fiction
+Rating: 4.5/5
+Summary: Powerful exploration 
+of totalitarianism and surveillance
 
-FINANCIAL ANALYSIS: NVDA</code></pre>
+BOOK REVIEW: Dune</code></pre>
 </div></div>
 </section>
-<section id="financial-one-shot-case-studies-part-1" class="slide level2">
-<h2>Financial One-Shot Case Studies: Part 1</h2>
+<section id="one-shot-case-studies-part-1" class="slide level2">
+<h2>One-Shot Case Studies: Part 1</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><strong>Investment reports</strong>: Standardized format across different securities</li>
-<li><strong>Financial summaries</strong>: Consistent executive briefings on different companies</li>
-<li><strong>Risk assessments</strong>: Uniform structure for different asset classes</li>
+<li><strong>Product reviews</strong>: Standardized format across different products</li>
+<li><strong>Research summaries</strong>: Consistent structure for different academic papers</li>
+<li><strong>Technical documentation</strong>: Uniform format for different software tools</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <ul>
 <li><strong>Empirical observations</strong>:
 <ul>
 <li>42% improvement in format consistency</li>
-<li>37% reduction in hallucinated financial metrics</li>
-<li>63% higher analyst satisfaction ratings</li>
+<li>37% reduction in hallucinated information</li>
+<li>63% higher user satisfaction ratings</li>
 </ul></li>
 </ul>
 </div></div>
 </section>
-<section id="financial-one-shot-case-studies-part-2" class="slide level2">
-<h2>Financial One-Shot Case Studies: Part 2</h2>
+<section id="one-shot-case-studies-part-2" class="slide level2">
+<h2>One-Shot Case Studies: Part 2</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><strong>Regulatory filings</strong>: Maintaining required formats for different entities</li>
-<li><strong>Earnings call analyses</strong>: Standard template applied to multiple companies</li>
-<li><strong>Portfolio summaries</strong>: Consistent presentation across asset classes</li>
+<li><strong>Meeting minutes</strong>: Maintaining consistent structure across different meetings</li>
+<li><strong>Scientific analyses</strong>: Standard template applied to different experiments</li>
+<li><strong>Content summaries</strong>: Consistent presentation across different media types</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <ul>
 <li><strong>Efficiency metrics</strong>:
 <ul>
-<li>29% faster production of financial reports</li>
-<li>Significant improvement in numerical accuracy</li>
-<li>34% higher compliance approval rate</li>
+<li>29% faster production of standardized reports</li>
+<li>Significant improvement in accuracy</li>
+<li>34% higher quality approval rate</li>
 </ul></li>
 </ul>
 </div></div>
@@ -750,23 +1657,26 @@ FINANCIAL ANALYSIS: NVDA</code></pre>
 <li>Multiple examples before the target query</li>
 <li>Establishes patterns for the model to follow</li>
 <li>Creates stronger “mental models” within LLM context</li>
-<li>Especially useful for specialized financial tasks</li>
-<li>Financial applications: Complex financial analysis templates, regulatory reporting formats</li>
+<li>Especially useful for specialized or complex tasks</li>
+<li>Applications: Complex analysis templates, specialized formats, domain-specific tasks</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>Analyze these stocks:
+<pre><code>Analyze these movies:
 
-AAPL: Strong fundamentals, 
-P/E 28.5, growing services.
-BUY.
+Inception: Complex narrative, 
+excellent cinematography, 
+thought-provoking themes. 
+Rating: 9/10
 
-MSFT: Cloud leader, P/E 35.2,
-consistent growth. BUY.
+Interstellar: Stunning visuals, 
+emotional depth, scientific 
+accuracy. Rating: 8.5/10
 
-TSLA: P/E 75.3, high growth,
-high volatility. HOLD.
+The Matrix: Groundbreaking 
+effects, philosophical depth, 
+cultural impact. Rating: 9/10
 
-AMZN:</code></pre>
+Blade Runner 2049:</code></pre>
 </div></div>
 </section>
 <section id="few-shot-prompting-implementation" class="slide level2">
@@ -775,79 +1685,91 @@ AMZN:</code></pre>
 <div class="column" style="width:60%;">
 <ul>
 <li><strong>Technical mechanism</strong>: Reinforces pattern recognition within the attention layers</li>
+<li><strong>Why multiple-shot works better than one-shot</strong>:
+<ul>
+<li><strong>Stronger pattern establishment</strong>: More examples create more robust patterns</li>
+<li><strong>Variance reduction</strong>: Multiple examples reduce the chance of following an outlier pattern</li>
+<li><strong>Complex pattern recognition</strong>: Some patterns require multiple instances to be clear</li>
+<li><strong>Edge case coverage</strong>: More examples can demonstrate how to handle variations</li>
+</ul></li>
 <li><strong>Optimal examples</strong>: 3-5 diverse but consistent demonstrations</li>
 <li><strong>Key advantage</strong>: Balance between flexibility and standardization</li>
 <li><strong>Best practices</strong>:
 <ul>
-<li>Provide relevant financial examples</li>
+<li>Provide relevant and diverse examples</li>
 <li>Maintain consistent format across examples</li>
 <li>Order examples from simple to complex</li>
 <li>Include diverse but related scenarios</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>Financial ratio calculation:
+<pre><code>Mathematical equation solving:
 
-Debt-to-Equity = Total Debt / 
-Total Equity
-= $500M / $1B = 0.5
+Quadratic: ax² + bx + c = 0
+Solution: x = (-b ± √(b²-4ac)) / 2a
+Example: x² - 5x + 6 = 0
+Result: x = 2 or x = 3
 
-Current Ratio = Current Assets / 
-Current Liabilities
-= $300M / $150M = 2.0
+Linear: ax + b = 0
+Solution: x = -b/a
+Example: 3x - 9 = 0
+Result: x = 3
 
-Return on Assets = Net Income / 
-Total Assets
-= $75M / $1.5B = 0.05 (5%)
+Exponential: aˣ = b
+Solution: x = log_a(b)
+Example: 2ˣ = 8
+Result: x = 3
 
-Price-to-Book =</code></pre>
+Logarithmic: log_a(x) = b</code></pre>
 </div></div>
 </section>
-<section id="complex-financial-few-shot-scenarios-part-1" class="slide level2">
-<h2>Complex Financial Few-Shot Scenarios: Part 1</h2>
+<section id="complex-few-shot-scenarios-part-1" class="slide level2">
+<h2>Complex Few-Shot Scenarios: Part 1</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><strong>Financial modelling</strong>: Demonstrating complex DCF calculations</li>
-<li><strong>Merger analysis</strong>: Multiple example assessments before target case</li>
-<li><strong>Regulatory compliance</strong>: Pattern of compliance checks across scenarios</li>
+<li><strong>Scientific hypothesis testing</strong>: Demonstrating experimental design across different fields</li>
+<li><strong>Literary analysis</strong>: Multiple example analyses before target text</li>
+<li><strong>Problem-solving frameworks</strong>: Pattern of systematic approaches across scenarios</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>M&amp;A Analysis Examples:
+<pre><code>Research Proposal Analysis:
 
-Target: CompanyA
-Valuation: $500M
-Synergy Est: $50M
-Recommendation: PROCEED
-Rationale: 10% accretive, 
-strategic market fit
+Topic: Climate Change Impact
+Methodology: Longitudinal study
+Sample Size: 1000 participants
+Expected Duration: 3 years
+Recommendation: APPROVE
+Rationale: Strong methodology, 
+adequate sample, feasible timeline
 
-Target: CompanyB
-Valuation: $350M
-Synergy Est: $15M
-Recommendation: HOLD
-Rationale: 2% dilutive, 
-integration challenges
+Topic: AI Ethics Framework
+Methodology: Mixed methods
+Sample Size: 500 interviews
+Expected Duration: 18 months
+Recommendation: REVISE
+Rationale: Needs clearer metrics, 
+broader stakeholder inclusion
 
-Target: CompanyC</code></pre>
+Topic: Urban Planning Optimization</code></pre>
 </div></div>
 </section>
-<section id="complex-financial-few-shot-scenarios-part-2" class="slide level2">
-<h2>Complex Financial Few-Shot Scenarios: Part 2</h2>
+<section id="complex-few-shot-scenarios-part-2" class="slide level2">
+<h2>Complex Few-Shot Scenarios: Part 2</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><strong>Portfolio optimization</strong>: Examples of different optimization approaches</li>
-<li><strong>Financial auditing</strong>: Systematic audit procedure demonstrations</li>
-<li><strong>Market anomaly detection</strong>: Examples of identifying market irregularities</li>
+<li><strong>Algorithm optimization</strong>: Examples of different optimization approaches</li>
+<li><strong>Quality assessment</strong>: Systematic evaluation procedure demonstrations</li>
+<li><strong>Pattern recognition</strong>: Examples of identifying anomalies or trends</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <ul>
 <li><strong>Implementation considerations</strong>:
 <ul>
 <li>Example diversity for robust generalization</li>
-<li>Domain-specific financial terminology</li>
-<li>Recent examples to capture current market conditions</li>
+<li>Domain-specific terminology and conventions</li>
+<li>Recent examples to capture current best practices</li>
 <li>Progressive complexity in demonstrations</li>
 <li>Clear delineation between examples and query</li>
 </ul></li>
@@ -866,18 +1788,17 @@ Target: CompanyC</code></pre>
 <li><strong>Research foundation</strong>: Wei et al.&nbsp;(2022) demonstrated 20-40% improvement on mathematical problems</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>To calculate the DCF valuation:
+<pre><code>To solve this physics problem:
 
-1) First, project cash flows 
-   for 5 years
-2) Determine terminal value 
-   using growth rate g
-3) Calculate WACC
-4) Discount all cash flows 
-   to present value
-5) Sum the results to get 
-   enterprise value
-6) Adjust for debt and cash</code></pre>
+1) First, identify the given 
+   variables and what we need to find
+2) Choose the appropriate 
+   physics equation or principle
+3) Substitute the known values
+4) Solve for the unknown variable
+5) Check units and reasonableness
+6) State the final answer with 
+   proper significant figures</code></pre>
 </div></div>
 </section>
 <section id="chain-of-thought-prompting-financial-applications" class="slide level2">
@@ -885,57 +1806,57 @@ Target: CompanyC</code></pre>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><strong>Financial reasoning impact</strong>:
+<li><strong>Problem-solving impact</strong>:
 <ul>
 <li>52% reduction in calculation errors</li>
 <li>63% improvement in logical consistency</li>
-<li>47% better alignment with financial theory</li>
+<li>47% better alignment with established principles</li>
 </ul></li>
 <li><strong>Key use cases</strong>:
 <ul>
-<li>Complex valuation problems</li>
-<li>Risk assessments</li>
-<li>Regulatory compliance checks</li>
-<li>Investment decision processes</li>
-<li>Credit analysis frameworks</li>
+<li>Complex analytical problems</li>
+<li>Multi-step calculations</li>
+<li>Logical reasoning tasks</li>
+<li>Decision-making processes</li>
+<li>Research methodology frameworks</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>Analyze whether Company X
-should proceed with the merger:
+<pre><code>Analyze whether we should 
+implement this new software system:
 
 Let me think step by step:
-1. Assess strategic fit
-2. Calculate accretion/dilution
-3. Evaluate synergy potential
-4. Consider regulatory risks
-5. Analyze financing structure
-6. Determine fair value
+1. Assess current system limitations
+2. Evaluate proposed benefits
+3. Calculate implementation costs
+4. Consider training requirements
+5. Analyze potential risks
+6. Determine timeline feasibility
 7. Weigh alternatives</code></pre>
 </div></div>
 </section>
-<section id="financial-cot-implementation-techniques" class="slide level2">
-<h2>Financial CoT Implementation Techniques</h2>
+<section id="cot-implementation-techniques" class="slide level2">
+<h2>CoT Implementation Techniques</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><strong>Explicit CoT</strong>: “Walk through the calculation of WACC for Company X”</li>
+<li><strong>Explicit CoT</strong>: “Walk through the solution to this differential equation step by step”</li>
 <li><strong>Few-shot CoT</strong>: Providing examples of reasoning steps before the task</li>
 <li><strong>Self-consistency CoT</strong>: Generate multiple reasoning paths and select the most consistent result</li>
-<li><strong>Structured CoT</strong>: Predefined framework for financial analysis (e.g., SWOT, Porter’s Five Forces)</li>
-<li><strong>Recursive CoT</strong>: Breaking complex financial problems into subproblems</li>
+<li><strong>Structured CoT</strong>: Predefined framework for analysis (e.g., problem identification, hypothesis, testing, conclusion)</li>
+<li><strong>Recursive CoT</strong>: Breaking complex problems into subproblems</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <ul>
-<li><strong>Financial applications</strong>:
+<li><strong>General applications</strong>:
 <ul>
-<li>Option pricing model calculations</li>
-<li>M&amp;A valuation analysis</li>
-<li>Capital budgeting decisions</li>
-<li>Stress testing financial models</li>
-<li>ESG impact assessment</li>
-<li>Regulatory compliance verification</li>
-<li>Tax optimization strategy</li>
+<li>Mathematical problem solving</li>
+<li>Scientific method applications</li>
+<li>Engineering design processes</li>
+<li>Quality assurance procedures</li>
+<li>Research methodology</li>
+<li>Decision analysis frameworks</li>
+<li>Strategic planning</li>
 </ul></li>
 </ul>
 </div></div>
@@ -981,108 +1902,109 @@ Let me think step by step:
 </ul>
 </div><div class="column" style="width:40%;">
 <ul>
-<li><strong>Financial parallels</strong>:
+<li><strong>General parallels</strong>:
 <ul>
-<li>Financial analysts use templates and frameworks</li>
-<li>Investment decisions follow structured processes</li>
-<li>Risk assessment requires systematic approaches</li>
-<li>Regulatory compliance follows established patterns</li>
-<li>Financial models build on standard formulations</li>
+<li>Researchers use systematic methodologies</li>
+<li>Engineers follow structured design processes</li>
+<li>Quality control requires systematic approaches</li>
+<li>Problem-solving follows established patterns</li>
+<li>Analysis builds on standard frameworks</li>
 </ul></li>
 </ul>
 </div></div>
 </section>
-<section id="advanced-financial-prompting-techniques" class="slide level2">
-<h2>Advanced Financial Prompting Techniques</h2>
+<section id="advanced-prompting-techniques" class="slide level2">
+<h2>Advanced Prompting Techniques</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><strong>Role-based prompting</strong>: “As a financial risk analyst, evaluate…”</li>
-<li><strong>System-human framework</strong>: Setting persistent system context for financial applications</li>
-<li><strong>Self-critique prompting</strong>: Having the model critique its own financial analysis</li>
-<li><strong>ReAct prompting</strong>: Reasoning → Action → Observation loop for financial problem-solving</li>
-<li><strong>Tree of Thoughts</strong>: Exploring multiple reasoning branches for complex financial decisions</li>
-<li><strong>Constrained generation</strong>: Enforcing specific output formats for regulatory compliance</li>
+<li><strong>Role-based prompting</strong>: “As a research scientist, evaluate…”</li>
+<li><strong>System-user framework</strong>: Setting persistent system context for specialized applications</li>
+<li><strong>Self-critique prompting</strong>: Having the model critique its own analysis</li>
+<li><strong>ReAct prompting</strong>: Reasoning → Action → Observation loop for problem-solving</li>
+<li><strong>Tree of Thoughts</strong>: Exploring multiple reasoning branches for complex decisions</li>
+<li><strong>Constrained generation</strong>: Enforcing specific output formats for consistency</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>You are a FINRA-compliant 
-financial advisor. Ensure all 
-responses adhere to regulatory 
-guidelines including risk 
-disclosures and avoidance of 
-guarantees.
+<pre><code>You are a peer reviewer for a 
+scientific journal. Ensure all 
+responses follow academic 
+standards including proper 
+citation format and objective 
+evaluation criteria.
 
 [SYSTEM CONTEXT]
 
-User: What investment strategy 
-would you recommend for a 
-risk-averse retiree?</code></pre>
+User: Please review this research 
+proposal on renewable energy 
+storage solutions.</code></pre>
 </div></div>
 </section>
-<section id="prompting-for-accuracy-in-financial-contexts" class="slide level2">
-<h2>Prompting for Accuracy in Financial Contexts</h2>
+<section id="prompting-for-accuracy-in-general-contexts" class="slide level2">
+<h2>Prompting for Accuracy in General Contexts</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><strong>Factual anchoring</strong>: Providing verifiable financial data in prompts</li>
+<li><strong>Factual anchoring</strong>: Providing verifiable data in prompts</li>
 <li><strong>Anti-hallucination techniques</strong>: “Only use information explicitly provided”</li>
 <li><strong>Uncertainty expression</strong>: Encouraging models to express confidence levels</li>
-<li><strong>Citation prompting</strong>: Requesting sources for financial claims</li>
-<li><strong>Mathematical verification</strong>: Including calculation checks in financial analysis</li>
-<li><strong>Temporal awareness</strong>: Clarifying time-sensitive financial information</li>
+<li><strong>Citation prompting</strong>: Requesting sources for claims</li>
+<li><strong>Verification requests</strong>: Including accuracy checks in analysis</li>
+<li><strong>Temporal awareness</strong>: Clarifying time-sensitive information</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<pre><code>Today's date is 2023-12-15.
+<pre><code>Today's date is 2024-12-15.
 
-Using only the following financial 
-data for AAPL (do not use any other 
-information):
-- P/E Ratio: 28.5
-- Revenue Growth: 7.8%
-- Debt/Equity: 1.2
-- Current Price: $194.27
+Using only the following data 
+about renewable energy adoption 
+(do not use any other information):
+- Solar capacity: 150 GW
+- Wind capacity: 120 GW
+- Growth rate: 15% annually
+- Cost reduction: 8% per year
 
-Provide an investment recommendation.
-If you are uncertain about any aspect, 
-explicitly state your uncertainty.</code></pre>
+Provide an analysis of trends.
+If you are uncertain about any 
+aspect, explicitly state your 
+uncertainty.</code></pre>
 </div></div>
 </section>
-<section id="measuring-prompt-effectiveness-in-finance" class="slide level2">
-<h2>Measuring Prompt Effectiveness in Finance</h2>
+<section id="measuring-prompt-effectiveness" class="slide level2">
+<h2>Measuring Prompt Effectiveness</h2>
 <ul>
-<li><strong>Performance metrics</strong>: Accuracy, consistency, compliance, precision</li>
-<li><strong>A/B testing</strong>: Comparing different prompting strategies on identical financial tasks</li>
-<li><strong>Benchmarking</strong>: Financial reasoning benchmarks (FinQA, FINBERT tasks)</li>
-<li><strong>Expert evaluation</strong>: Financial professional assessment of outputs</li>
-<li><strong>Regulatory alignment</strong>: Compliance with financial regulations and guidelines</li>
-<li><strong>Financial impact assessment</strong>: Real-world financial outcomes from model outputs</li>
+<li><strong>Performance metrics</strong>: Accuracy, consistency, relevance, clarity</li>
+<li><strong>A/B testing</strong>: Comparing different prompting strategies on identical tasks</li>
+<li><strong>Benchmarking</strong>: Domain-specific reasoning benchmarks and evaluation datasets</li>
+<li><strong>Expert evaluation</strong>: Domain professional assessment of outputs</li>
+<li><strong>Quality standards</strong>: Compliance with established guidelines and best practices</li>
+<li><strong>Impact assessment</strong>: Real-world outcomes and effectiveness of model outputs</li>
 </ul>
 </section>
-<section id="financial-prompt-engineering-best-practices" class="slide level2">
-<h2>Financial Prompt Engineering Best Practices</h2>
+<section id="prompt-engineering-best-practices" class="slide level2">
+<h2>Prompt Engineering Best Practices</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li>Establish clear financial context (market conditions, time period)</li>
-<li>Define explicit financial constraints and requirements</li>
-<li>Include relevant financial data and sources</li>
-<li>Specify required output format for financial reports</li>
-<li>Use industry-standard financial terminology</li>
-<li>Implement verification steps for numerical calculations</li>
-<li>Clarify regulatory and compliance expectations</li>
-<li>Consider ethical implications of financial advice</li>
+<li>Establish clear context (domain, time period, constraints)</li>
+<li>Define explicit requirements and expectations</li>
+<li>Include relevant data and authoritative sources</li>
+<li>Specify required output format for consistency</li>
+<li>Use domain-appropriate terminology and conventions</li>
+<li>Implement verification steps for accuracy</li>
+<li>Clarify quality and standard expectations</li>
+<li>Consider ethical implications and responsible use</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <ul>
-<li><strong>Financial prompt template library</strong>:
+<li><strong>General prompt template library</strong>:
 <ul>
-<li>Investment analysis framework</li>
-<li>Risk assessment protocol</li>
-<li>Regulatory compliance checklist</li>
-<li>Financial report structure</li>
-<li>Portfolio optimization approach</li>
-<li>Market sentiment analysis</li>
-<li>Economic scenario modeling</li>
+<li>Research analysis framework</li>
+<li>Quality assessment protocol</li>
+<li>Problem-solving methodology</li>
+<li>Report structure templates</li>
+<li>Decision-making approaches</li>
+<li>Data analysis workflows</li>
+<li>Evaluation criteria checklists</li>
 </ul></li>
 </ul>
 </div><section id="tracing-thoughts-in-llms" class="title-slide slide level1 center">
@@ -2187,14 +3109,6 @@ fairly priced:
 </ul></li>
 </ul>
 </div></div>
-</section>
-<section id="whats-next" class="slide level2">
-<h2>What’s Next?</h2>
-<ul>
-<li>Practical session: Training your own LLM and exploring model internals</li>
-<li>Hands-on experience with advanced memory architectures and function calling</li>
-<li>Building more sophisticated financial applications</li>
-</ul>
 <div class="quarto-auto-generated-content">
 <p><img src="../../images/logo_header.svg" class="slide-logo"></p>
 <div class="footer footer-default">

@@ -9,7 +9,6 @@ format:
     preview-links: auto
     css: ../../styles.css
     logo: ../../images/logo_header.svg
-jupyter: python3
 ---
 
 # Introduction to Large Language Models in Finance
@@ -37,7 +36,3 @@ jupyter: python3
 
 {{< include 06-llm-classification.qmd >}}
 
-## What's Next?
-
-- Practical session: Setting up your environment and exploring HuggingFace
-- Hands-on experience with LLM APIs

@@ -2,12 +2,14 @@
 
 ## Loss Functions and Cross-Entropy
 
-:::: {.columns}
-
-::: {.column width="60%"}
 - **Fundamental training objective**: Learn probability distribution over tokens
   $$P(x_{t+1} | x_1, x_2, ..., x_t; \theta)$$
   
+  Where:
+  - $x_{t+1}$ = next token to predict
+  - $x_1, x_2, ..., x_t$ = context tokens
+  - $\theta$ = model parameters
+
 - **Cross-entropy loss**: Measures difference between predicted and true distributions
   $$L_{CE} = -\sum_{i=1}^{|V|} y_i \log(\hat{y}_i)$$
   
@@ -15,23 +17,18 @@
   - $y_i$ = true probability (one-hot encoded)
   - $\hat{y}_i$ = predicted probability from softmax
   - $|V|$ = vocabulary size
-:::
 
-::: {.column width="40%"}
 - **Why cross-entropy?**
   
   **Information theory foundation**:
   - Measures "surprise" of predictions
-  - Minimizes KL divergence: $D_{KL}(P_{true} || P_{model})$
+  - Minimizes Kullback-Leibler divergence: $D_{KL}(P_{true} || P_{model})$
   - Connects to maximum likelihood estimation
   
   **Mathematical properties**:
   - Convex function (locally)
   - Differentiable everywhere
-  - Penalizes confident wrong predictions heavily
-:::
-
-::::
+  - Penalizes incorrect predictions heavily
 
 ## Entropy in Information Theory
 
@@ -41,27 +38,61 @@
 - **Shannon entropy**: Measures information content
   $$H(X) = -\sum_{i} P(x_i) \log P(x_i)$$
   
+  Where:
+  - $X$ = random variable (e.g., next token)
+  - $x_i$ = specific outcome/token
+  - $P(x_i)$ = probability of outcome $x_i$
+
 - **In language modeling context**:
-  $$H(language) = -\frac{1}{N} \sum_{t=1}^{N} \log P(x_t | x_{1:t-1})$$
+  $$H = -\frac{1}{N} \sum_{t=1}^{N} \log P(x_t | x_{1:t-1})$$
+  
+  Where:
+  - $N$ = total number of tokens in the sequence
+  - $t$ = time step/position in sequence
+  - $x_t$ = token at position $t$
+  - $x_{1:t-1}$ = all previous tokens (context)
   
 - **Perplexity**: Exponential of entropy
-  $$\text{Perplexity} = 2^{H(language)} = 2^{-\frac{1}{N} \sum_{t=1}^{N} \log_2 P(x_t | x_{1:t-1})}$$
+  $$\text{Perplexity} = 2^{H}$$
 :::
 
 ::: {.column width="40%"}
 - **Intuitive understanding**:
   
-  **Low entropy (predictable)**:
+  **Low entropy/perplexity (predictable)**:
   - Model is confident about next token
   - Language follows clear patterns
-  - Lower perplexity = better model
+  - Better model performance
   
-  **High entropy (uncertain)**:
+  **High entropy/perplexity (uncertain)**:
   - Model uncertain about next token
   - Language is more random/creative
-  - Higher perplexity = worse model
+  - Worse model performance
   
 - **Training goal**: Minimize cross-entropy = Minimize perplexity
+:::
+
+::::
+
+## Why "Cross-Entropy"?
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- **Self-entropy**: $H(P) = -\sum_i P(x_i) \log P(x_i)$ (entropy of true distribution)
+- **Cross-entropy**: $H(P, Q) = -\sum_i P(x_i) \log Q(x_i)$ (entropy between distributions)
+  
+  Where:
+  - $P$ = true/target distribution (one-hot encoded in training)
+  - $Q$ = predicted distribution (from model's softmax output)
+  - $P(x_i)$ = true probability of token $x_i$ (1 for correct token, 0 for others)
+  - $Q(x_i)$ = predicted probability of token $x_i$ (from model)
+:::
+
+::: {.column width="40%"}
+- **Key insight**: We measure entropy "across" true distribution $P$ and model distribution $Q$
+- **Mathematical relationship**: $H(P, Q) = H(P) + D_{KL}(P || Q)$ where $D_{KL}$ is KL divergence
+- **Training objective**: Minimizing cross-entropy = minimizing KL divergence (since $H(P)$ is constant)
 :::
 
 ::::
@@ -74,10 +105,19 @@
 - **Raw model outputs**: Logits $z_i$ for each vocabulary token
   $$z = W_o h + b_o$$
   
-  Where $h$ is final hidden state, $W_o$ is output projection
+  Where:
+  - $z$ = logits vector
+  - $h$ = final hidden state
+  - $W_o$ = output projection matrix
+  - $b_o$ = output bias
   
 - **Softmax transformation**: Convert to probabilities
   $$P(x_i) = \frac{e^{z_i}}{\sum_{j=1}^{|V|} e^{z_j}}$$
+  
+  Where:
+  - $P(x_i)$ = probability of token $x_i$
+  - $z_i$ = logit for token $x_i$
+  - $|V|$ = vocabulary size
   
 - **Cross-entropy with softmax**:
   $$L = -\log P(x_{target}) = -z_{target} + \log \sum_{j=1}^{|V|} e^{z_j}$$
@@ -111,11 +151,17 @@
   $$\theta_{t+1} = \theta_t - \eta \nabla_\theta L(\theta_t)$$
   
   Where:
+  - $\theta_t$ = parameters at time step $t$
   - $\eta$ = learning rate
-  - $\nabla_\theta L$ = gradient of loss w.r.t. parameters
+  - $\nabla_\theta L$ = gradient of loss with respect to parameters
   
 - **Chain rule in transformers**:
   $$\frac{\partial L}{\partial W^{(l)}} = \frac{\partial L}{\partial h^{(L)}} \frac{\partial h^{(L)}}{\partial h^{(l)}} \frac{\partial h^{(l)}}{\partial W^{(l)}}$$
+  
+  Where:
+  - $W^{(l)}$ = weights at layer $l$
+  - $h^{(l)}$ = hidden state at layer $l$
+  - $L$ = total number of layers
   
   Backpropagates through $L$ layers of self-attention and feedforward blocks
 :::
@@ -135,7 +181,7 @@
   
   **Memory requirements**:
   - Store all intermediate activations
-  - $O(L \times \text{sequence\_length} \times \text{hidden\_size})$
+  - $O(L \times N \times d)$ where $N$ = sequence length, $d$ = hidden size
 :::
 
 ::::
@@ -152,10 +198,19 @@
   $$v_{t+1} = \beta v_t + \eta \nabla_\theta L(\theta_t)$$
   $$\theta_{t+1} = \theta_t - v_{t+1}$$
   
+  Where:
+  - $v_t$ = momentum term (velocity)
+  - $\beta$ = momentum coefficient (typically 0.9)
+  
 - **Adam Optimizer** (most common for LLMs):
   $$m_t = \beta_1 m_{t-1} + (1-\beta_1) \nabla_\theta L$$
   $$v_t = \beta_2 v_{t-1} + (1-\beta_2) (\nabla_\theta L)^2$$
   $$\theta_{t+1} = \theta_t - \frac{\eta \hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}$$
+  
+  Where:
+  - $m_t$ = first moment estimate (momentum)
+  - $v_t$ = second moment estimate (variance)
+  - $\hat{m}_t = \frac{m_t}{1-\beta_1^t}$, $\hat{v}_t = \frac{v_t}{1-\beta_2^t}$ = bias correction
 :::
 
 ::: {.column width="40%"}
@@ -167,9 +222,12 @@
   - Works well for sparse gradients
   
   **Bias correction**:
-  - $\hat{m}_t = \frac{m_t}{1-\beta_1^t}$, $\hat{v}_t = \frac{v_t}{1-\beta_2^t}$
   - Corrects initialization bias
   - Stable early training
+  
+  **Robust performance**:
+  - Less sensitive to hyperparameter choices
+  - Good default for most LLM training
   
   **Typical hyperparameters**:
   - $\beta_1 = 0.9$ (momentum)
@@ -192,14 +250,23 @@
   - Decreases linearly to zero
   - Common for fine-tuning
   
+  Where:
+  - $\eta_0$ = initial learning rate
+  - $t$ = current step
+  - $T$ = total training steps
+  
 - **Cosine annealing**: 
   $$\eta_t = \eta_{min} + \frac{1}{2}(\eta_{max} - \eta_{min})(1 + \cos(\frac{t\pi}{T}))$$
   
 - **Warmup + decay**: Increase then decrease
   $$\eta_t = \begin{cases}
-  \eta_{max} \frac{t}{t_{warmup}} & \text{if } t < t_{warmup} \\
-  \eta_{max} \left(\frac{t_{total} - t}{t_{total} - t_{warmup}}\right)^p & \text{otherwise}
+  \eta_{max} \frac{t}{t_w} & \text{if } t < t_w \\
+  \eta_{max} \left(\frac{T - t}{T - t_w}\right)^p & \text{otherwise}
   \end{cases}$$
+  
+  Where:
+  - $t_w$ = warmup steps
+  - $p$ = decay power (typically 1)
 :::
 
 ::: {.column width="40%"}
@@ -235,12 +302,19 @@
 - **Gradient clipping**: Prevent exploding gradients
   
   **Global norm clipping**:
-  $$\text{global\_norm} = \sqrt{\sum_i ||\nabla W_i||^2}$$
-  $$\text{clip\_factor} = \min\left(1, \frac{\text{max\_norm}}{\text{global\_norm}}\right)$$
-  $$\nabla W_i \leftarrow \nabla W_i \times \text{clip\_factor}$$
+  $$g = \sqrt{\sum_i ||\nabla W_i||^2}$$
+  $$c = \min\left(1, \frac{\tau}{g}\right)$$
+  $$\nabla W_i \leftarrow c \cdot \nabla W_i$$
   
+  Where:
+  - $g$ = global gradient norm
+  - $\tau$ = maximum allowed norm (threshold)
+  - $c$ = clipping factor
+
 - **Alternative: Value clipping**:
-  $$\nabla W_i = \text{clip}(\nabla W_i, -\text{threshold}, +\text{threshold})$$
+  $$\nabla W_i = \text{clip}(\nabla W_i, -\tau, +\tau)$$
+  
+  Where $\tau$ is the clipping threshold
 :::
 
 ::: {.column width="40%"}
@@ -306,6 +380,10 @@
   - Newton's method: $\theta_{t+1} = \theta_t - H^{-1} \nabla L$
   - Too expensive for LLMs (Hessian $O(n^2)$)
   - Approximations like L-BFGS occasionally used
+  
+  Where:
+  - $H$ = Hessian matrix (second derivatives)
+  - $n$ = number of parameters
 :::
 
 ::::
@@ -323,6 +401,10 @@
   4. **Backward pass**: Compute $\nabla_\theta L$ via backpropagation
   5. **Optimization step**: Update $\theta$ using optimizer
   6. **Repeat**: Next batch/epoch
+  
+  Where:
+  - $f(x; \theta)$ = model function with parameters $\theta$
+  - $p_{target}$ = probability of the correct token
   
 - **Information flow**:
   $$\text{Data} \xrightarrow{\text{model}} \text{Logits} \xrightarrow{\text{softmax}} \text{Probabilities} \xrightarrow{\text{entropy}} \text{Loss}$$

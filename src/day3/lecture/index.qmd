@@ -28,7 +28,7 @@ format:
 
 ## Traditional Valuation Approaches
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - Fundamental building blocks of financial analysis
@@ -40,16 +40,16 @@ format:
 :::
 
 ::: {.column width="40%"}
-![Valuation Methods](../../images/transformers2.png)
+<!-- Placeholder for content -->
 :::
 
-:::
+::::
 
 ## Discounted Cash Flow (DCF)
 
-::: columns
+:::: {.columns}
 
-:::: column width="60%"
+::: {.column width="60%"}
 - **Core Principle**: Value = Present value of future cash flows
 - **Key Components**:
   - Forecast period (typically 5-10 years)
@@ -63,18 +63,18 @@ format:
   - Sensitivity to assumptions
   - Forecast accuracy
   - Terminal value dominance
-::::
+:::
 
-:::: column width="40%"
+::: {.column width="40%"}
 $\text{Enterprise Value} = \sum_{t=1}^{n} \frac{FCF_t}{(1+WACC)^t} + \frac{TV}{(1+WACC)^n}$
 
 $TV = \frac{FCF_{n+1}}{WACC - g}$
 
 Where:
 - $FCF_t$ = Free Cash Flow in year t
-::::
-
 :::
+
+::::
 
 ---
 
@@ -82,9 +82,9 @@ Where:
 
 ## Beyond Traditional Forecasting
 
-::: columns
+:::: {.columns}
 
-:::: column width="60%"
+::: {.column width="60%"}
 - Conventional forecasting relies on:
   - Historical data extrapolation
   - Analyst judgment
@@ -95,17 +95,17 @@ Where:
   - Contextual understanding
   - Pattern recognition across domains
   - Synthesizing diverse information sources
-::::
-
-:::: column width="40%"
-![Forecasting Evolution](../../images/transformers_model.png)
-::::
-
 :::
+
+::: {.column width="40%"}
+<!-- Placeholder for content -->
+:::
+
+::::
 
 ## LLM Forecasting: Data Sources
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - **Financial Statements**:
@@ -129,9 +129,7 @@ Where:
   - Strategic initiatives
 :::
 
-:::
-
-:::
+::::
 
 ---
 
@@ -139,9 +137,9 @@ Where:
 
 ## Beyond Base Case Forecasting
 
-::: columns
+:::: {.columns}
 
-:::: column width="60%"
+::: {.column width="60%"}
 - Single forecasts fail to capture uncertainty
 - Scenario analysis explores multiple potential futures
 - Traditional approach:
@@ -152,17 +150,17 @@ Where:
   - Systematic variation of inputs
   - Creative yet plausible alternative futures
   - Internally consistent scenario narratives
-::::
-
-:::: column width="40%"
-![Scenario Analysis](../../images/transformer_baby.png)
-::::
-
 :::
+
+::: {.column width="40%"}
+<!-- Placeholder for content -->
+:::
+
+::::
 
 ## LLM-Powered Scenario Framework: Part 1
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - **1. Scenario Identification**:
@@ -176,14 +174,14 @@ Where:
 :::
 
 ::: {.column width="40%"}
-![Scenario Framework](../../images/transformer_baby.png)
+<!-- Placeholder for content -->
 :::
 
-:::
+::::
 
 ## LLM-Powered Scenario Framework: Part 2
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - **3. Financial Modeling**:
@@ -212,9 +210,7 @@ Outcome:
 ```
 :::
 
-:::
-
-:::
+::::
 
 ---
 
@@ -222,9 +218,9 @@ Outcome:
 
 ## The Comparable Company Challenge
 
-::: columns
+:::: {.columns}
 
-:::: column width="60%"
+::: {.column width="60%"}
 - Cornerstone of relative valuation
 - Traditional methods rely on:
   - Industry classification systems (GICS, SIC)
@@ -236,17 +232,17 @@ Outcome:
   - Missed cross-industry similarities
   - Superficial matching criteria
   - Time-consuming manual selection
-::::
-
-:::: column width="40%"
-![Comparable Selection](../../images/encoder-decoder-attention.png)
-::::
-
 :::
+
+::: {.column width="40%"}
+<!-- Placeholder for content -->
+:::
+
+::::
 
 ## Beyond Industry Classifications: Part 1
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - **Traditional industry grouping systems**:
@@ -257,14 +253,14 @@ Outcome:
 :::
 
 ::: {.column width="40%"}
-![Industry Classification](../../images/encoder-decoder-attention.png)
+<!-- Placeholder for content -->
 :::
 
-:::
+::::
 
 ## Beyond Industry Classifications: Part 2
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - **Limitations of traditional systems**:
@@ -284,9 +280,7 @@ Outcome:
   - Contextual peer identification
 :::
 
-:::
-
-:::
+::::
 
 ---
 
@@ -294,9 +288,9 @@ Outcome:
 
 ## The Financial Document Challenge
 
-::: columns
+:::: {.columns}
 
-:::: column width="60%"
+::: {.column width="60%"}
 - Financial analysis requires processing extensive text
 - Key document types:
   - Annual reports (10-K, Annual Report)
@@ -311,17 +305,17 @@ Outcome:
   - Technical language
   - Structured and unstructured elements
   - Critical information dispersal
-::::
-
-:::: column width="40%"
-![Document Analysis](../../images/attention_paper.png)
-::::
-
 :::
+
+::: {.column width="40%"}
+<!-- Placeholder for content -->
+:::
+
+::::
 
 ## Named Entity Recognition (NER)
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - **Definition**: Identifying and classifying named entities in text
@@ -342,9 +336,7 @@ Outcome:
   - Market terms (bull market, bear market)
 :::
 
-:::
-
-:::
+::::
 
 ---
 
@@ -352,9 +344,9 @@ Outcome:
 
 ## Beyond Single-Task LLMs: The CrewAI Paradigm
 
-::: columns
+:::: {.columns}
 
-:::: column width="60%"
+::: {.column width="60%"}
 - Moving from standalone LLMs to **agent crews** for financial analysis
 - **Defining characteristics**:
   - Specialized agent roles with specific expertise
@@ -364,17 +356,17 @@ Outcome:
   - Goal-directed collaborative behavior
   - Tool and API orchestration
   - Multi-step reasoning with handoffs
-::::
-
-:::: column width="40%"
-![AI Agents](../../images/rnn1.png)
-::::
-
 :::
+
+::: {.column width="40%"}
+<!-- Placeholder for content -->
+:::
+
+::::
 
 ## Financial Agent Architecture: Part 1
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - **CrewAI Structure**:
@@ -385,14 +377,14 @@ Outcome:
 :::
 
 ::: {.column width="40%"}
-![AI Agents](../../images/rnn1.png)
+<!-- Placeholder for content -->
 :::
 
-:::
+::::
 
 ## Financial Agent Architecture: Part 2
 
-::: {.columns}
+:::: {.columns}
 
 ::: {.column width="60%"}
 - **Key Elements**:
@@ -409,9 +401,7 @@ Outcome:
   - **Feedback Loops**: Self-improvement mechanisms
 :::
 
-:::
-
-:::
+::::
 
 ---
 

@@ -328,7 +328,7 @@ To solve this physics problem:
 
 ::::
 
-## Chain-of-Thought Prompting: Financial Applications
+## Chain-of-Thought Prompting: Real-World Applications
 
 :::: {.columns}
 
@@ -515,9 +515,6 @@ uncertainty.
 
 ## Prompt Engineering Best Practices
 
-:::: {.columns}
-
-::: {.column width="60%"}
 - Establish clear context (domain, time period, constraints)
 - Define explicit requirements and expectations
 - Include relevant data and authoritative sources
@@ -526,15 +523,21 @@ uncertainty.
 - Implement verification steps for accuracy
 - Clarify quality and standard expectations
 - Consider ethical implications and responsible use
-:::
 
-::: {.column width="40%"}
-- **General prompt template library**:
-  - Research analysis framework
-  - Quality assessment protocol
-  - Problem-solving methodology
-  - Report structure templates
-  - Decision-making approaches
-  - Data analysis workflows
-  - Evaluation criteria checklists
-:::
+## General Prompt Template Library
+
+- Research analysis framework
+- Quality assessment protocol
+- Problem-solving methodology
+- Report structure templates
+- Decision-making approaches
+- Data analysis workflows
+- Evaluation criteria checklists
+
+## Key Takeaways on Prompt Engineering
+
+- Prompt engineering is both an art and a science
+- Different prompting techniques serve different purposes
+- Chain-of-thought prompting dramatically improves reasoning
+- Complex domains benefit from structured, systematic prompting
+- Best practices evolve as LLM capabilities advance

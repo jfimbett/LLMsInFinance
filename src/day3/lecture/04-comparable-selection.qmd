@@ -19,7 +19,7 @@
 :::
 
 ::: {.column width="40%"}
-![Comparable Selection](../../images/encoder-decoder-attention.png)
+<!-- Placeholder for content -->
 :::
 
 ::::

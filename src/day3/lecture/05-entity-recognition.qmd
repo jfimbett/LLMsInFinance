@@ -22,7 +22,7 @@
 :::
 
 ::: {.column width="40%"}
-![Document Analysis](../../images/attention_paper.png)
+<!-- Placeholder for content -->
 :::
 
 ::::

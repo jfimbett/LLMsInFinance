@@ -395,6 +395,8 @@ Juan F. Imbet
 </section>
 <section id="entropy-in-information-theory" class="slide level2">
 <h2>Entropy in Information Theory</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Shannon entropy</strong>: Measures information content <span class="math display">\[H(X) = -\sum_{i} P(x_i) \log P(x_i)\]</span></p>
 <p>Where:</p>
@@ -410,9 +412,11 @@ Juan F. Imbet
 <li><span class="math inline">\(t\)</span> = time step/position in sequence</li>
 <li><span class="math inline">\(x_t\)</span> = token at position <span class="math inline">\(t\)</span></li>
 <li><span class="math inline">\(x_{1:t-1}\)</span> = all previous tokens (context)</li>
-<li><span class="math inline">\(P(x_t | x_{1:t-1})\)</span> = conditional probability of token <span class="math inline">\(x_t\)</span> given context</li>
 </ul></li>
 <li><p><strong>Perplexity</strong>: Exponential of entropy <span class="math display">\[\text{Perplexity} = 2^{H}\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Intuitive understanding</strong>:</p>
 <p><strong>Low entropy/perplexity (predictable)</strong>:</p>
 <ul>
@@ -427,25 +431,36 @@ Juan F. Imbet
 <li>Worse model performance</li>
 </ul></li>
 <li><p><strong>Training goal</strong>: Minimize cross-entropy = Minimize perplexity</p></li>
-<li><p><strong>Why “cross-entropy”?</strong></p>
-<ul>
-<li><strong>Self-entropy</strong>: <span class="math inline">\(H(P) = -\sum_i P(x_i) \log P(x_i)\)</span> (entropy of true distribution)</li>
-<li><strong>Cross-entropy</strong>: <span class="math inline">\(H(P, Q) = -\sum_i P(x_i) \log Q(x_i)\)</span> (entropy between distributions)</li>
 </ul>
+</div></div>
+</section>
+<section id="why-cross-entropy" class="slide level2">
+<h2>Why “Cross-Entropy”?</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Self-entropy</strong>: <span class="math inline">\(H(P) = -\sum_i P(x_i) \log P(x_i)\)</span> (entropy of true distribution)</p></li>
+<li><p><strong>Cross-entropy</strong>: <span class="math inline">\(H(P, Q) = -\sum_i P(x_i) \log Q(x_i)\)</span> (entropy between distributions)</p>
 <p>Where:</p>
 <ul>
-<li><p><span class="math inline">\(P\)</span> = true/target distribution (one-hot encoded in training)</p></li>
-<li><p><span class="math inline">\(Q\)</span> = predicted distribution (from model’s softmax output)</p></li>
-<li><p><span class="math inline">\(P(x_i)\)</span> = true probability of token <span class="math inline">\(x_i\)</span> (1 for correct token, 0 for others)</p></li>
-<li><p><span class="math inline">\(Q(x_i)\)</span> = predicted probability of token <span class="math inline">\(x_i\)</span> (from model)</p></li>
-<li><p>We measure entropy “across” true distribution <span class="math inline">\(P\)</span> and model distribution <span class="math inline">\(Q\)</span></p></li>
-<li><p><span class="math inline">\(H(P, Q) = H(P) + D_{KL}(P || Q)\)</span> where <span class="math inline">\(D_{KL}\)</span> is KL divergence</p></li>
-<li><p>Minimizing cross-entropy = minimizing KL divergence (since <span class="math inline">\(H(P)\)</span> is constant)</p></li>
+<li><span class="math inline">\(P\)</span> = true/target distribution (one-hot encoded in training)</li>
+<li><span class="math inline">\(Q\)</span> = predicted distribution (from model’s softmax output)</li>
+<li><span class="math inline">\(P(x_i)\)</span> = true probability of token <span class="math inline">\(x_i\)</span> (1 for correct token, 0 for others)</li>
+<li><span class="math inline">\(Q(x_i)\)</span> = predicted probability of token <span class="math inline">\(x_i\)</span> (from model)</li>
 </ul></li>
 </ul>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Key insight</strong>: We measure entropy “across” true distribution <span class="math inline">\(P\)</span> and model distribution <span class="math inline">\(Q\)</span></li>
+<li><strong>Mathematical relationship</strong>: <span class="math inline">\(H(P, Q) = H(P) + D_{KL}(P || Q)\)</span> where <span class="math inline">\(D_{KL}\)</span> is KL divergence</li>
+<li><strong>Training objective</strong>: Minimizing cross-entropy = minimizing KL divergence (since <span class="math inline">\(H(P)\)</span> is constant)</li>
+</ul>
+</div></div>
 </section>
 <section id="from-logits-to-probabilities-the-softmax-function" class="slide level2">
 <h2>From Logits to Probabilities: The Softmax Function</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Raw model outputs</strong>: Logits <span class="math inline">\(z_i\)</span> for each vocabulary token <span class="math display">\[z = W_o h + b_o\]</span></p>
 <p>Where:</p>
@@ -463,6 +478,9 @@ Juan F. Imbet
 <li><span class="math inline">\(|V|\)</span> = vocabulary size</li>
 </ul></li>
 <li><p><strong>Cross-entropy with softmax</strong>: <span class="math display">\[L = -\log P(x_{target}) = -z_{target} + \log \sum_{j=1}^{|V|} e^{z_j}\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Why softmax properties matter</strong>:</p>
 <p><strong>Probability constraints</strong>:</p>
 <ul>
@@ -474,11 +492,19 @@ Juan F. Imbet
 <li><span class="math inline">\(\frac{\partial L}{\partial z_i} = P(x_i) - y_i\)</span></li>
 <li>Simple, interpretable gradients</li>
 <li>Difference between prediction and truth</li>
+</ul>
+<p><strong>Numerical stability</strong>:</p>
+<ul>
+<li>LogSumExp trick prevents overflow</li>
+<li>Subtracting max before exponential</li>
 </ul></li>
 </ul>
+</div></div>
 </section>
 <section id="gradient-descent-and-backpropagation" class="slide level2">
 <h2>Gradient Descent and Backpropagation</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Gradient descent update rule</strong>: <span class="math display">\[\theta_{t+1} = \theta_t - \eta \nabla_\theta L(\theta_t)\]</span></p>
 <p>Where:</p>
@@ -495,6 +521,9 @@ Juan F. Imbet
 <li><span class="math inline">\(L\)</span> = total number of layers</li>
 </ul>
 <p>Backpropagates through <span class="math inline">\(L\)</span> layers of self-attention and feedforward blocks</p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Challenges in deep networks</strong>:</p>
 <p><strong>Vanishing gradients</strong>:</p>
 <ul>
@@ -514,9 +543,12 @@ Juan F. Imbet
 <li><span class="math inline">\(O(L \times N \times d)\)</span> where <span class="math inline">\(N\)</span> = sequence length, <span class="math inline">\(d\)</span> = hidden size</li>
 </ul></li>
 </ul>
+</div></div>
 </section>
 <section id="optimization-algorithms-beyond-sgd" class="slide level2">
 <h2>Optimization Algorithms Beyond SGD</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Stochastic Gradient Descent (SGD)</strong>: <span class="math display">\[\theta_{t+1} = \theta_t - \eta \nabla_\theta L(\theta_t)\]</span></p></li>
 <li><p><strong>SGD with Momentum</strong>: <span class="math display">\[v_{t+1} = \beta v_t + \eta \nabla_\theta L(\theta_t)\]</span> <span class="math display">\[\theta_{t+1} = \theta_t - v_{t+1}\]</span></p>
@@ -531,8 +563,10 @@ Juan F. Imbet
 <li><span class="math inline">\(m_t\)</span> = first moment estimate (momentum)</li>
 <li><span class="math inline">\(v_t\)</span> = second moment estimate (variance)</li>
 <li><span class="math inline">\(\hat{m}_t = \frac{m_t}{1-\beta_1^t}\)</span>, <span class="math inline">\(\hat{v}_t = \frac{v_t}{1-\beta_2^t}\)</span> = bias correction</li>
-<li><span class="math inline">\(\beta_1 = 0.9\)</span> (momentum), <span class="math inline">\(\beta_2 = 0.999\)</span> (variance), <span class="math inline">\(\epsilon = 10^{-8}\)</span></li>
 </ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Why Adam for LLM training?</strong></p>
 <p><strong>Adaptive learning rates</strong>:</p>
 <ul>
@@ -549,11 +583,20 @@ Juan F. Imbet
 <ul>
 <li>Less sensitive to hyperparameter choices</li>
 <li>Good default for most LLM training</li>
+</ul>
+<p><strong>Typical hyperparameters</strong>:</p>
+<ul>
+<li><span class="math inline">\(\beta_1 = 0.9\)</span> (momentum)</li>
+<li><span class="math inline">\(\beta_2 = 0.999\)</span> (variance)</li>
+<li><span class="math inline">\(\epsilon = 10^{-8}\)</span> (numerical stability)</li>
 </ul></li>
 </ul>
+</div></div>
 </section>
 <section id="learning-rate-scheduling" class="slide level2">
 <h2>Learning Rate Scheduling</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Constant learning rate</strong>: <span class="math inline">\(\eta_t = \eta_0\)</span></p>
 <ul>
@@ -581,6 +624,9 @@ Juan F. Imbet
 <li><span class="math inline">\(t_w\)</span> = warmup steps</li>
 <li><span class="math inline">\(p\)</span> = decay power (typically 1)</li>
 </ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Why learning rate matters</strong>:</p>
 <p><strong>Too high</strong>:</p>
 <ul>
@@ -606,9 +652,12 @@ Juan F. Imbet
 <li>Helps convergence to better minima</li>
 </ul></li>
 </ul>
+</div></div>
 </section>
 <section id="gradient-clipping-and-numerical-stability" class="slide level2">
 <h2>Gradient Clipping and Numerical Stability</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Gradient clipping</strong>: Prevent exploding gradients</p>
 <p><strong>Global norm clipping</strong>: <span class="math display">\[g = \sqrt{\sum_i ||\nabla W_i||^2}\]</span> <span class="math display">\[c = \min\left(1, \frac{\tau}{g}\right)\]</span> <span class="math display">\[\nabla W_i \leftarrow c \cdot \nabla W_i\]</span></p>
@@ -620,6 +669,9 @@ Juan F. Imbet
 </ul></li>
 <li><p><strong>Alternative: Value clipping</strong>: <span class="math display">\[\nabla W_i = \text{clip}(\nabla W_i, -\tau, +\tau)\]</span></p>
 <p>Where <span class="math inline">\(\tau\)</span> is the clipping threshold</p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Numerical stability techniques</strong>:</p>
 <p><strong>Mixed precision training</strong>:</p>
 <ul>
@@ -640,9 +692,12 @@ Juan F. Imbet
 <li>Reduces memory requirements</li>
 </ul></li>
 </ul>
+</div></div>
 </section>
 <section id="loss-landscapes-and-optimization-challenges" class="slide level2">
 <h2>Loss Landscapes and Optimization Challenges</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Loss landscape visualization</strong>:</p>
 <ul>
@@ -666,6 +721,9 @@ Juan F. Imbet
 <li>Flat minima generalize better</li>
 <li>SGD noise helps find flat minima</li>
 </ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Optimization strategies</strong>:</p>
 <p><strong>Batch size effects</strong>:</p>
 <ul>
@@ -691,9 +749,12 @@ Juan F. Imbet
 <li><span class="math inline">\(n\)</span> = number of parameters</li>
 </ul></li>
 </ul>
+</div></div>
 </section>
 <section id="the-connection-entropy-gradients-updates" class="slide level2">
 <h2>The Connection: Entropy → Gradients → Updates</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Complete training pipeline</strong>:</p>
 <ol type="1">
@@ -710,6 +771,9 @@ Juan F. Imbet
 <li><span class="math inline">\(p_{target}\)</span> = probability of the correct token</li>
 </ul></li>
 <li><p><strong>Information flow</strong>: <span class="math display">\[\text{Data} \xrightarrow{\text{model}} \text{Logits} \xrightarrow{\text{softmax}} \text{Probabilities} \xrightarrow{\text{entropy}} \text{Loss}\]</span> <span class="math display">\[\text{Loss} \xrightarrow{\text{backprop}} \text{Gradients} \xrightarrow{\text{optimizer}} \text{Parameter Updates}\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Key mathematical insights</strong>:</p>
 <p><strong>Entropy drives learning</strong>:</p>
 <ul>
@@ -731,11 +795,14 @@ Juan F. Imbet
 </ul></li>
 <li><p><strong>This connects to reasoning models</strong>: Higher entropy allows exploration of reasoning paths</p></li>
 </ul>
+</div></div>
 </section>
 <section id="mathematical-foundations-summary" class="slide level2">
 <h2>Mathematical Foundations Summary</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
-<li><p><strong>Core mathematical concepts</strong>:</p>
+<li><strong>Core mathematical concepts</strong>:
 <ul>
 <li><strong>Entropy</strong>: Measures uncertainty/information content</li>
 <li><strong>Cross-entropy</strong>: Training objective connecting predictions to truth</li>
@@ -743,13 +810,16 @@ Juan F. Imbet
 <li><strong>Gradients</strong>: Direction of steepest change in loss landscape</li>
 <li><strong>Optimizers</strong>: Algorithms for following gradients efficiently</li>
 </ul></li>
-<li><p><strong>Why understanding matters</strong>:</p>
+<li><strong>Why understanding matters</strong>:
 <ul>
 <li>Debugging training issues (vanishing/exploding gradients)</li>
 <li>Choosing appropriate hyperparameters</li>
 <li>Understanding model behavior and limitations</li>
 <li>Designing better training procedures</li>
 </ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<ul>
 <li><p><strong>Practical implications</strong>:</p>
 <p><strong>For model training</strong>:</p>
 <ul>
@@ -770,6 +840,7 @@ Juan F. Imbet
 <li>Mathematical rigor guides experimentation</li>
 </ul></li>
 </ul>
+</div></div>
 </section></section>
 <section>
 <section id="reasoning-models-beyond-next-token-prediction" class="title-slide slide level1 center">
@@ -880,9 +951,23 @@ Juan F. Imbet
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><p><strong>Multi-step probability factorization</strong>: <span class="math display">\[P(answer | question) = \sum_{reasoning\_paths} P(answer | reasoning\_path) \times P(reasoning\_path | question)\]</span></p></li>
-<li><p><strong>Each reasoning step</strong>: <span class="math display">\[P(r_i | context, r_{1:i-1}) = \text{softmax}\left(\frac{f_\theta(context, r_{1:i-1})}{T}\right)\]</span></p></li>
-<li><p><strong>Final answer conditioning</strong>: <span class="math display">\[P(answer | reasoning\_chain) = \text{softmax}\left(\frac{g_\theta(reasoning\_chain)}{T_{final}}\right)\]</span></p></li>
+<li><p><strong>Multi-step probability factorization</strong>: <span class="math display">\[P(A | Q) = \sum_{R} P(A | R) \times P(R | Q)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(A\)</span> = answer</li>
+<li><span class="math inline">\(Q\)</span> = question<br>
+</li>
+<li><span class="math inline">\(R\)</span> = reasoning path</li>
+</ul></li>
+<li><p><strong>Each reasoning step</strong>: <span class="math display">\[P(r_i | c, r_{1:i-1}) = \text{softmax}\left(\frac{f_\theta(c, r_{1:i-1})}{T}\right)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(r_i\)</span> = reasoning step <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(c\)</span> = context</li>
+<li><span class="math inline">\(T\)</span> = temperature</li>
+</ul></li>
+<li><p><strong>Final answer conditioning</strong>: <span class="math display">\[P(A | R) = \text{softmax}\left(\frac{g_\theta(R)}{T_f}\right)\]</span></p>
+<p>Where <span class="math inline">\(T_f\)</span> = final temperature</p></li>
 </ul>
 </div><div class="column" style="width:40%;">
 <ul>
@@ -910,49 +995,34 @@ Juan F. Imbet
 </section>
 <section id="information-theory-of-reasoning" class="slide level2">
 <h2>Information Theory of Reasoning</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
 <ul>
-<li><p><strong>Entropy in reasoning steps</strong>: <span class="math display">\[H(R_i) = -\sum_{r_i} P(r_i | context, r_{1:i-1}) \log P(r_i | context, r_{1:i-1})\]</span></p></li>
-<li><p><strong>Total reasoning entropy</strong>: <span class="math display">\[H(Reasoning) = \sum_{i=1}^{n} H(R_i | R_{1:i-1})\]</span></p></li>
-<li><p><strong>Conditional mutual information</strong>: <span class="math display">\[I(Answer; Reasoning\_Path | Question) = H(Answer | Question) - H(Answer | Question, Reasoning\_Path)\]</span></p></li>
-</ul>
-</div><div class="column" style="width:40%;">
+<li><p><strong>Entropy in reasoning steps</strong>: <span class="math display">\[H(R_i) = -\sum_{r_i} P(r_i \mid \text{context},\, r_{1:i-1}) \log P(r_i \mid \text{context},\, r_{1:i-1})\]</span></p></li>
+<li><p><strong>Total reasoning entropy</strong>: <span class="math display">\[H(\text{Reasoning}) = \sum_{i=1}^{n} H(R_i \mid R_{1:i-1})\]</span></p></li>
+<li><p><strong>Conditional mutual information</strong>: <span class="math display">\[I(A;\, R \mid Q) = H(A \mid Q) - H(A \mid Q,\, R)\]</span></p>
+<p>Where:</p>
 <ul>
+<li><span class="math inline">\(A\)</span> = Answer</li>
+<li><span class="math inline">\(R\)</span> = Reasoning Path</li>
+<li><span class="math inline">\(Q\)</span> = Question</li>
+<li><span class="math inline">\(I(A;\, R \mid Q)\)</span> = Mutual information between Answer and Reasoning Path given Question</li>
+<li><span class="math inline">\(H(A \mid Q)\)</span> = Entropy of Answer given Question</li>
+<li><span class="math inline">\(H(A \mid Q,\, R)\)</span> = Entropy of Answer given Question and Reasoning Path</li>
+</ul></li>
 <li><p><strong>Why entropy matters in reasoning</strong>:</p>
-<p><strong>Zero entropy (<span class="math inline">\(T = 0\)</span>)</strong>:</p>
 <ul>
-<li><span class="math inline">\(H(R_i) = 0\)</span> for all reasoning steps</li>
-<li>Deterministic, no exploration</li>
-<li>Cannot adapt to new information</li>
-</ul>
-<p><strong>Positive entropy (<span class="math inline">\(T &gt; 0\)</span>)</strong>:</p>
-<ul>
-<li><span class="math inline">\(H(R_i) &gt; 0\)</span> allows exploration</li>
-<li>Can discover optimal reasoning paths</li>
-<li>Adapts to intermediate findings</li>
-</ul></li>
-<li><p><strong>General implications</strong>:</p>
-<ul>
-<li>Complex analysis requires uncertainty handling</li>
-<li>Multiple valid analytical approaches</li>
-<li>Need to explore scenario variations</li>
+<li>Zero entropy (<span class="math inline">\(T = 0\)</span>): <span class="math inline">\(H(R_i) = 0\)</span> for all reasoning steps — deterministic, no exploration, cannot adapt to new information</li>
+<li>Positive entropy (<span class="math inline">\(T &gt; 0\)</span>): <span class="math inline">\(H(R_i) &gt; 0\)</span> allows exploration, can discover optimal reasoning paths, adapts to intermediate findings</li>
+<li>General implications: complex analysis requires uncertainty handling; multiple valid analytical approaches; need to explore scenario variations ::::</li>
 </ul></li>
 </ul>
-</div></div>
 </section>
 <section id="reasoning-vs.-direct-prediction-mathematical-comparison" class="slide level2">
 <h2>Reasoning vs.&nbsp;Direct Prediction: Mathematical Comparison</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
 <ul>
-<li><p><strong>Direct prediction complexity</strong>: <span class="math display">\[P(answer | question) = \text{softmax}(W_o h_{final})\]</span></p>
+<li><p><strong>Direct prediction complexity</strong>: <span class="math display">\[P(answer \mid question) = \text{softmax}(W_o h_{final})\]</span></p>
 <p>Single forward pass, <span class="math inline">\(O(|V|)\)</span> complexity for final softmax</p></li>
-<li><p><strong>Reasoning model complexity</strong>: <span class="math display">\[P(answer | question) = \sum_{paths} \prod_{i=1}^{n} P(r_i | context, r_{1:i-1}) \times P(answer | reasoning)\]</span></p>
+<li><p><strong>Reasoning model complexity</strong>: <span class="math display">\[P(answer \mid question) = \sum_{paths} \prod_{i=1}^{n} P(r_i \mid context, r_{1:i-1}) \times P(answer \mid reasoning)\]</span></p>
 <p>Multiple forward passes, <span class="math inline">\(O(n \times |V|)\)</span> complexity</p></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<ul>
 <li><p><strong>Computational trade-offs</strong>:</p>
 <p><strong>Direct prediction</strong>:</p>
 <ul>
@@ -972,7 +1042,6 @@ Juan F. Imbet
 <li>Direct models: faster, limited capability</li>
 </ul></li>
 </ul>
-</div></div>
 </section>
 <section id="temperature-scheduling-in-reasoning" class="slide level2">
 <h2>Temperature Scheduling in Reasoning</h2>
@@ -1087,36 +1156,20 @@ Juan F. Imbet
 </section>
 <section id="reasoning-model-architectures" class="slide level2">
 <h2>Reasoning Model Architectures</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
 <ul>
-<li><p><strong>Chain-of-Thought (CoT)</strong>: <span class="math display">\[P(answer | question) = P(answer | question, thoughts) \times P(thoughts | question)\]</span></p></li>
-<li><p><strong>Tree-of-Thoughts (ToT)</strong>: <span class="math display">\[P(answer | question) = \max_{tree} P(answer | question, tree) \times P(tree | question)\]</span></p></li>
-<li><p><strong>Graph-of-Thoughts (GoT)</strong>: <span class="math display">\[P(answer | question) = \sum_{graph} P(answer | question, graph) \times P(graph | question)\]</span></p></li>
-</ul>
-</div><div class="column" style="width:40%;">
+<li><strong>Chain-of-Thought (CoT)</strong>: <span class="math display">\[P(answer \mid question) = P(answer \mid question, thoughts) \times P(thoughts \mid question)\]</span>
 <ul>
-<li><p><strong>Architecture complexity trade-offs</strong>:</p>
-<p><strong>Chain-of-Thought</strong>:</p>
+<li>Linear reasoning progression, simple to implement and understand, good for sequential analytical tasks</li>
+</ul></li>
+<li><strong>Tree-of-Thoughts (ToT)</strong>: <span class="math display">\[P(answer \mid question) = \max_{tree} \left( P(answer \mid question, tree) \times P(tree \mid question) \right)\]</span>
 <ul>
-<li>Linear reasoning progression</li>
-<li>Simple to implement and understand</li>
-<li>Good for sequential analytical tasks</li>
-</ul>
-<p><strong>Tree-of-Thoughts</strong>:</p>
+<li>Branching reasoning exploration, better for scenario analysis, higher computational cost</li>
+</ul></li>
+<li><strong>Graph-of-Thoughts (GoT)</strong>: <span class="math display">\[P(answer \mid question) = \sum_{graph} P(answer \mid question, graph) \times P(graph \mid question)\]</span>
 <ul>
-<li>Branching reasoning exploration</li>
-<li>Better for scenario analysis</li>
-<li>Higher computational cost</li>
-</ul>
-<p><strong>Graph-of-Thoughts</strong>:</p>
-<ul>
-<li>Complex relationship modeling</li>
-<li>Best for interconnected systems</li>
-<li>Highest computational complexity</li>
+<li>Complex relationship modeling, best for interconnected systems, highest computational complexity</li>
 </ul></li>
 </ul>
-</div></div>
 </section>
 <section id="generic-applications-of-reasoning-models" class="slide level2">
 <h2>Generic Applications of Reasoning Models</h2>
@@ -1263,7 +1316,7 @@ Juan F. Imbet
 <section id="general-idea" class="slide level2">
 <h2>General Idea</h2>
 <ul>
-<li>When you start your transformer architecture, every single weight/bias inside of the neural networks is initialized to a random value.</li>
+<li>When you start with a transformer architecture, every single weight/bias inside of the neural networks is initialized to a random value.</li>
 <li>The training process consists of providing the model with “examples” of input and output pairs.</li>
 <li>An insample measure of how well the model is doing is called the <strong>loss</strong>, and this loss is then minimized using some sort of <strong>optimizer</strong>.</li>
 <li>However, there is a deep difference between letting the model predict the next token in a sentence, and actually having a LLM able to answer questions, write essays, or even code.</li>
@@ -1408,12 +1461,11 @@ Juan F. Imbet
 <h2>Training process depends on the architecture</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 9%">
-<col style="width: 22%">
-<col style="width: 15%">
 <col style="width: 20%">
 <col style="width: 20%">
-<col style="width: 10%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1422,23 +1474,20 @@ Juan F. Imbet
 <th>Typical objective &amp; loss</th>
 <th>Why that matches the architecture</th>
 <th>Core strengths after pre-training</th>
-<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><strong>Decoder-only (causal)</strong><br>e.g.&nbsp;GPT-3/4, Llama, Claude</td>
 <td>Treat the prefix <strong>The quick brown fox</strong> as <strong>visible</strong> and the next token <strong>jumps</strong> as the one to predict. At each position <em>t</em> you see tokens ≤ <em>t</em> only.</td>
-<td>Causal / autoregressive LM:<br> maximize P(tokenₜ</td>
-<td>tokens &lt; t) via cross-entropy.</td>
+<td>Causal / autoregressive LM:<br> maximize P(tokenₜ | tokens &lt; t) via cross-entropy.</td>
 <td>A single Transformer block with <strong>masked self-attention</strong> causal mask (triangular) already enforces “look-left-only,” so training = generation.</td>
 <td>Free-form generation, long-context reasoning, code completion, RLHF chat.</td>
 </tr>
 <tr class="even">
 <td><strong>Encoder-only (bidirectional)</strong><br>e.g.&nbsp;BERT, DeBERTa</td>
 <td>Randomly replace ≈15 % of tokens with <strong>[MASK]</strong> → “The quick <strong>[MASK]</strong> fox jumps …”; model sees <em>all</em> tokens simultaneously (no causal mask).</td>
-<td>Masked LM (MLM):<br> maximize P(original_token</td>
-<td>all <em>other</em> tokens).</td>
+<td>Masked LM (MLM):<br> maximize P(original_token | all <em>other</em> tokens).</td>
 <td>Bidirectional attention lets every position attend to both left &amp; right context, so masking is required to stop trivial copying.</td>
 <td>Sentence/paragraph understanding, retrieval, classification, embeddings.</td>
 </tr>
@@ -1448,7 +1497,6 @@ Juan F. Imbet
 <td>Span-corruption / text-infilling:<br> cross-entropy over target sequence generated by the decoder.</td>
 <td>Split architecture: encoder encodes <em>source</em>; decoder autoregressively produces <em>target</em>. Any corruption that yields “source→target” pairs works.</td>
 <td>Translation, summarisation, Q&amp;A, instruction-following; easier to fine-tune on supervised seq-to-seq tasks.</td>
-<td></td>
 </tr>
 <tr class="even">
 <td><strong>Mixture-of-experts (MoE)</strong><br>e.g.&nbsp;Google Switch, DeepMind GLaM</td>
@@ -1456,7 +1504,6 @@ Juan F. Imbet
 <td>Still cross-entropy; additional load-balancing loss.</td>
 <td>Sparse routing lets you scale parameters without proportional FLOPs.</td>
 <td>Generation at lower inference cost per parameter.</td>
-<td></td>
 </tr>
 <tr class="odd">
 <td><strong>Retrieval-augmented decoders</strong><br>e.g.&nbsp;RETRO, Atlas</td>
@@ -1464,7 +1511,6 @@ Juan F. Imbet
 <td>Joint loss: cross-entropy on next token + contrastive/KL term aligning internal and retrieved representations.</td>
 <td>Decoder cross-attends to retrieved text; retrieval bridge provides fresh knowledge without storing it in weights.</td>
 <td>Up-to-date factual QA, long-tail knowledge, smaller base model.</td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -1472,27 +1518,42 @@ Juan F. Imbet
 <section id="what-next" class="slide level2">
 <h2>What next?</h2>
 <ul>
-<li><p>Once the gargantuan self-supervised pass is finished, the model can speak fluent “Internet,” but it is not yet an aligned assistant, nor is it specialised for any industry task. Current pipelines add three big, partly overlapping phases:</p></li>
-<li><ol type="1">
-<li>Instruction-tuning (a.k.a. supervised fine-tuning, SFT)</li>
-</ol></li>
-<li><ol start="2" type="1">
-<li>Preference alignment</li>
-</ol></li>
+<li>Once the gargantuan self-supervised pass is finished, the model can speak fluent “Internet,” but it is not yet an aligned assistant, nor is it specialised for any industry task. Current pipelines add three big, partly overlapping phases:</li>
 </ul>
-<ol start="3" type="1">
+<ol type="1">
+<li>Instruction-tuning (a.k.a. supervised fine-tuning, SFT)</li>
+<li>Preference alignment</li>
 <li>Post-alignment specialisation</li>
 </ol>
 </section>
 <section id="instruction-tuning-in-practice" class="slide level2">
 <h2>Instruction-tuning in practice</h2>
 <ul>
-<li><p>Open models: FLAN-T5, Llama-2-Chat, Mistral-Instruct all do a 1–3 epoch SFT pass on 5 M–25 M instruction–response pairs. <em>! Show examples !</em></p></li>
-<li><p>Commercial models: OpenAI and Anthropic report hundreds of specialised SFT sets covering tools, code, safety scenarios, etc.</p></li>
+<li><strong>Open models</strong>: FLAN-T5, Llama-2-Chat, Mistral-Instruct all do a 1–3 epoch SFT pass on 5M–25M instruction–response pairs.</li>
+<li><strong>Commercial models</strong>: OpenAI and Anthropic report hundreds of specialised SFT sets covering tools, code, safety scenarios, etc.</li>
 </ul>
 </section>
 <section id="preference-alignment-in-practice" class="slide level2">
 <h2>Preference alignment in practice</h2>
+<ul>
+<li>Preference alignment typically involves:
+<ul>
+<li>Collecting human preferences on model outputs</li>
+<li>Training a reward model on these preferences</li>
+<li>Optimizing the model using reinforcement learning</li>
+</ul></li>
+<li>Most commercial models use some form of RLHF (Reinforcement Learning from Human Feedback)</li>
+<li>Constitutional AI (CAI) represents an evolution of this approach</li>
+</ul>
+</section>
+<section id="post-alignment-specialisation" class="slide level2">
+<h2>Post-alignment specialisation</h2>
+<ul>
+<li>Domain adaptation: Financial models, healthcare models, legal models</li>
+<li>Tool usage: Models trained to use specific tools (calculators, APIs, etc.)</li>
+<li>Multimodality: Models that can process images, audio, and video alongside text</li>
+<li>Fine-tuning for specific tasks: Summarization, translation, code generation, etc.</li>
+</ul>
 </section></section>
 <section>
 <section id="zero-one-and-multiple-shot-prompts" class="title-slide slide level1 center">
@@ -1982,8 +2043,6 @@ uncertainty.</code></pre>
 </section>
 <section id="prompt-engineering-best-practices" class="slide level2">
 <h2>Prompt Engineering Best Practices</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
 <ul>
 <li>Establish clear context (domain, time period, constraints)</li>
 <li>Define explicit requirements and expectations</li>
@@ -1994,9 +2053,9 @@ uncertainty.</code></pre>
 <li>Clarify quality and standard expectations</li>
 <li>Consider ethical implications and responsible use</li>
 </ul>
-</div><div class="column" style="width:40%;">
-<ul>
-<li><strong>General prompt template library</strong>:
+</section>
+<section id="general-prompt-template-library" class="slide level2">
+<h2>General Prompt Template Library</h2>
 <ul>
 <li>Research analysis framework</li>
 <li>Quality assessment protocol</li>
@@ -2005,9 +2064,20 @@ uncertainty.</code></pre>
 <li>Decision-making approaches</li>
 <li>Data analysis workflows</li>
 <li>Evaluation criteria checklists</li>
-</ul></li>
 </ul>
-</div><section id="tracing-thoughts-in-llms" class="title-slide slide level1 center">
+</section>
+<section id="key-takeaways-on-prompt-engineering" class="slide level2">
+<h2>Key Takeaways on Prompt Engineering</h2>
+<ul>
+<li>Prompt engineering is both an art and a science</li>
+<li>Different prompting techniques serve different purposes</li>
+<li>Chain-of-thought prompting dramatically improves reasoning</li>
+<li>Financial applications benefit from structured, systematic prompting</li>
+<li>Best practices evolve as LLM capabilities advance</li>
+</ul>
+</section></section>
+<section>
+<section id="tracing-thoughts-in-llms" class="title-slide slide level1 center">
 <h1>Tracing Thoughts in LLMs</h1>
 
 </section>
@@ -2497,7 +2567,8 @@ fairly priced:
 </ul></li>
 </ul>
 </div></div>
-</section>
+</section></section>
+<section>
 <section id="ghost-in-the-machine" class="title-slide slide level1 center">
 <h1>Ghost in the Machine</h1>
 
@@ -3114,9 +3185,6 @@ fairly priced:
 <div class="footer footer-default">
 
 </div>
-</div>
-</section>
-
 </div>
 </section></section>
     </div>

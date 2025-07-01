@@ -17,7 +17,7 @@
 :::
 
 ::: {.column width="40%"}
-![AI Agents](../../images/rnn1.png)
+<!-- Placeholder for content -->
 :::
 
 ::::

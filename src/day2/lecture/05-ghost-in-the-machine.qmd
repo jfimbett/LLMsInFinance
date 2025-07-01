@@ -1,4 +1,11 @@
-# Ghost in the Machine
+# Gh:::: {.columns}
+
+::: {.column width="60%"}
+- Emergent capabilities beyond explicit training
+- Scale-dependent phenomena in large models
+- Unexpected reasoning and generalization abilities
+- "Sparks of AGI" debate
+- Implications for critical applicationshe Machine
 
 ## Understanding LLM Emergent Behaviors
 
@@ -9,7 +16,7 @@
 - Scale-dependent phenomena in large models
 - Unexpected reasoning and generalization abilities
 - "Sparks of AGI" debate
-- Implications for financial applications
+- Implications for real-world applications
 - **Scientific foundations**:
   - Phase transitions in complex systems
   - Information theory perspectives
@@ -52,7 +59,7 @@
   - Tool use capability thresholds
   - Theory of mind test performances
   - Mathematical reasoning breakthroughs
-  - Financial analysis capability shifts
+  - Domain analysis capability shifts
 :::
 
 ::::
@@ -66,7 +73,7 @@
 - **Translation**: Zero-shot translation between language pairs never seen together
 - **Mathematical reasoning**: Complex calculations beyond training examples
 - **Meta-learning**: Learning how to learn from few examples
-- **Financial analysis**: Applying general reasoning to specialized financial problems
+- **Domain expertise**: Applying general reasoning to specialized problems
 - **Algorithmic thinking**: Solving novel computational problems
 - **Analogical reasoning**: Transferring insights across domains
 - **Temporal reasoning**: Understanding time-dependent relationships
@@ -74,53 +81,53 @@
 :::
 
 ::: {.column width="40%"}
-- **Examples in finance**:
-  - Discovering arbitrage opportunities
+- **Examples in domain expertise**:
+  - Discovering optimization opportunities
   - Complex risk assessment
-  - Regulatory compliance checking
-  - Financial anomaly detection
-  - Sophisticated market analysis
-  - Synthesizing economic indicators
-  - Identifying market regime shifts
-  - Cross-asset correlation analysis
-  - Macroeconomic impact forecasting
+  - Compliance checking and verification
+  - Pattern anomaly detection
+  - Sophisticated data analysis
+  - Synthesizing diverse indicators
+  - Identifying paradigm shifts
+  - Cross-domain correlation analysis
+  - Impact forecasting and prediction
 :::
 
 ::::
 
-## Financial Reasoning Case Studies
+## Advanced Reasoning Case Studies
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **Option pricing strategies**:
-  - GPT-4 solving Black-Scholes equations without training
-  - Correctly identifying volatility smile implications
-  - Understanding Greeks relationships without definitions
+- **Mathematical problem solving**:
+  - GPT-4 solving complex equations without specific training
+  - Correctly identifying edge cases and boundary conditions
+  - Understanding mathematical relationships without definitions
   
-- **Credit risk assessment**:
-  - Detecting subtle default risk indicators
+- **Risk assessment frameworks**:
+  - Detecting subtle risk indicators
   - Creating novel early warning systems
-  - Connecting macroeconomic factors to credit events
+  - Connecting diverse factors to potential outcomes
   
-- **Portfolio optimization**:
-  - Reinventing modern portfolio theory concepts
-  - Suggesting non-obvious diversification strategies
-  - Discovering factor exposures in complex portfolios
+- **Resource optimization**:
+  - Reinventing optimization theory concepts
+  - Suggesting non-obvious efficiency strategies
+  - Discovering patterns in complex systems
 :::
 
 ::: {.column width="40%"}
-- **Market anomaly detection**:
-  - Identifying statistical arbitrage opportunities
-  - Spotting potential market manipulation patterns
-  - Flagging unusual trading activity
+- **Anomaly detection**:
+  - Identifying statistical irregularities
+  - Spotting potential data manipulation patterns
+  - Flagging unusual system activity
   
-- **Regulatory compliance**:
+- **Compliance verification**:
   - Interpreting complex regulatory frameworks
   - Identifying potential compliance issues
   - Suggesting implementation approaches
   
-- **Financial forecasting**:
+- **Advanced forecasting**:
   - Integrating disparate data sources
   - Identifying leading indicators
   - Recognizing pattern shifts in time series
@@ -137,7 +144,7 @@
 - **Discontinuous improvements**: Sudden jumps in capability with scale
 - **Kaplan et al. scaling laws**: Predictable improvements with model size
 - **Chinchilla scaling**: Optimal data-to-parameter ratios
-- **Implications**: Larger models for finance may unlock new capabilities
+- **Implications**: Larger models may unlock new domain capabilities
 - **Power law scaling**: Performance scaling as a power of compute
 - **Data scaling relationship**: More data needed as models grow
 - **Transfer learning implications**: Better pre-training improves downstream tasks
@@ -154,46 +161,46 @@
 
 ::::
 
-## Financial Capabilities Emergence Thresholds
+## Domain Capabilities Emergence Thresholds
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **Basic financial understanding**: ~1B parameters
-  - Financial terminology comprehension
-  - Simple financial calculations
-  - Basic market concepts
+- **Basic domain understanding**: ~1B parameters
+  - Domain terminology comprehension
+  - Simple calculations and analysis
+  - Basic conceptual understanding
 
-- **Intermediate financial analysis**: ~10B parameters
-  - DCF valuation execution
+- **Intermediate domain analysis**: ~10B parameters
+  - Complex valuation and assessment
   - Multi-factor model application
-  - Financial statement analysis
+  - Comprehensive systems analysis
   - Basic risk assessment
 
-- **Advanced financial reasoning**: ~100B parameters
-  - Multi-step financial strategy development
+- **Advanced domain reasoning**: ~100B parameters
+  - Multi-step strategy development
   - Complex scenario analysis
-  - Integrated market system understanding
+  - Integrated systems understanding
   - Nuanced regulatory interpretation
 :::
 
 ::: {.column width="40%"}
-- **Specialized financial capabilities**:
-  - Options strategy design: ~20B parameters
-  - Merger arbitrage analysis: ~50B parameters
-  - Macroeconomic forecasting: ~75B parameters
-  - Systematic trading strategy design: ~100B parameters
-  - Central bank policy impact assessment: ~175B parameters
+- **Specialized domain capabilities**:
+  - Advanced algorithm design: ~20B parameters
+  - Complex systems analysis: ~50B parameters
+  - Climate modeling: ~75B parameters
+  - Scientific research design: ~100B parameters
+  - Policy impact assessment: ~175B parameters
   
 - **Performance examples**:
-  - FINQA benchmark: 32% → 76% → 92%
-  - Financial NLI: 61% → 83% → 94%
-  - Financial sentiment: 72% → 89% → 97%
+  - Domain-specific QA benchmark: 32% → 76% → 92%
+  - Natural language inference: 61% → 83% → 94%
+  - Sentiment analysis: 72% → 89% → 97%
 :::
 
 ::::
 
-## Computational Implications for Financial Institutions
+## Computational Implications for Organizations
 
 :::: {.columns}
 
@@ -222,14 +229,14 @@
 
 ::::
 
-## Hallucinations and Financial Risk
+## Hallucinations and Associated Risks
 
 :::: {.columns}
 
 ::: {.column width="60%"}
 - Confident generation of false information
-- Potential impacts on financial decision-making
-- Detection strategies in financial contexts:
+- Potential impacts on critical decision-making
+- Detection strategies in professional contexts:
   - Consistency checks
   - External verification
   - Probability thresholds
@@ -244,48 +251,48 @@
 :::
 
 ::: {.column width="40%"}
-- **Financial hallucination examples**:
-  - Fabricated financial metrics
+- **Domain-specific hallucination examples**:
+  - Fabricated metrics and statistics
   - Non-existent regulations
-  - Imaginary market events
-  - False historical performance
-  - Invented company information
-  - Fictional financial instruments
-  - Made-up economic data
-  - Incorrect tax regulations
-  - Fabricated trading strategies
+  - Imaginary events
+  - False historical data
+  - Invented organization information
+  - Fictional technical instruments
+  - Made-up scientific data
+  - Incorrect regulatory guidelines
+  - Fabricated methodologies
 :::
 
 ::::
 
-## Hallucination Mitigation in Financial Applications
+## Hallucination Mitigation in Professional Applications
 
 :::: {.columns}
 
 ::: {.column width="60%"}
 - **RAG (Retrieval Augmented Generation)**:
-  - Grounding in verified financial data sources
-  - Real-time financial database integration
-  - Citation of primary financial sources
+  - Grounding in verified data sources
+  - Real-time database integration
+  - Citation of primary sources
   - Retrieval verification loops
   
 - **Controlled generation techniques**:
   - Constraint-based generation
-  - Template-based financial outputs
+  - Template-based structured outputs
   - Fact checking against known databases
   - Output filtering with expert systems
   - Calibrated uncertainty expressions
 :::
 
 ::: {.column width="40%"}
-- **Financial fact-checking framework**:
-  - Extract financial claims from generated content
-  - Verify claims against trusted financial databases
+- **Comprehensive fact-checking framework**:
+  - Extract claims from generated content
+  - Verify claims against trusted databases
   - Cross-reference with authoritative sources
   - Calculate confidence scores for accuracy assessment
   
 - **Verification components**:
-  - Financial claim identification and extraction
+  - Claim identification and extraction
   - Database lookup and cross-referencing
   - Source credibility assessment
   - Consistency checking across multiple sources
@@ -307,7 +314,7 @@
 
 ::: {.column width="60%"}
 - **Human-in-the-loop design**:
-  - Expert verification of critical financial outputs
+  - Expert verification of critical outputs
   - Confidence thresholds for human review
   - Staged generation with checkpoints
   - Expert feedback incorporation
@@ -321,7 +328,7 @@
 :::
 
 ::: {.column width="40%"}
-- **Financial risk framework**:
+- **Domain risk framework**:
   - Critical vs. advisory information classification
   - Risk-weighted verification allocation
   - Compliance-sensitive content identification
@@ -332,27 +339,27 @@
 
 ::::
 
-## Financial Regulatory Considerations
+## Regulatory Considerations
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **SEC requirements**:
+- **Regulatory requirements**:
   - AI-generated content disclosure
   - Material information verification
   - Audit trail requirements
   - Regulatory reporting considerations
   
-- **FINRA guidance**:
+- **Industry guidance**:
   - AI supervision requirements
-  - Financial advice restrictions
+  - Professional advice restrictions
   - Risk disclosure mandates
   - Record-keeping obligations
   
 - **Global regulatory landscape**:
   - EU AI Act implications
-  - UK FCA guidelines
-  - Singapore MAS framework
+  - UK guidelines
+  - Singapore frameworks
   - International coordination efforts
 :::
 
@@ -376,10 +383,10 @@
 ::: {.column width="60%"}
 - Black box nature of large language models
 - Difficulty tracing specific outputs to training data
-- Regulatory concerns in financial services:
-  - SEC disclosure requirements
-  - EU AI Act transparency provisions
-  - FINRA guidance on AI explainability
+- Regulatory concerns in various industries:
+  - Disclosure requirements
+  - AI Act transparency provisions
+  - Industry guidance on AI explainability
 - Methods for improving transparency
 - The tension between performance and explainability
 - **Fundamental challenges**:
@@ -391,7 +398,7 @@
 
 ::: {.column width="40%"}
 - **Explainability techniques**:
-  - LIME and SHAP for financial NLP
+  - LIME and SHAP for NLP
   - Attention visualization
   - Input perturbation analysis
   - Counterfactual explanations
@@ -404,34 +411,34 @@
 
 ::::
 
-## Financial Explainability Case Studies
+## Explainability Case Studies
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **JPMorgan's XAI Initiative**:
+- **Technology Company XAI Initiative**:
   - Post-hoc explanation generation
-  - Investment recommendation justification
+  - Recommendation justification
   - Regulatory compliance documentation
   
-- **BlackRock's Aladdin Explain**:
-  - Portfolio decision attribution
+- **Enterprise AI Explain Platform**:
+  - Decision attribution
   - Risk factor decomposition
   - Model confidence visualization
   
-- **Citadel's Interpretable ML**:
-  - Trading strategy explanation
+- **Research Lab's Interpretable ML**:
+  - Strategy explanation
   - Anomaly detection justification
   - Model monitoring dashboards
 :::
 
 ::: {.column width="40%"}
-- **Goldman Sachs' Transparency Tools**:
+- **Industry Transparency Tools**:
   - Client-facing explanation generation
   - Regulatory reporting automation
   - Model governance framework
   
-- **Bank of England's Model Transparency**:
+- **Government Model Transparency**:
   - Stress testing visualization
   - Scenario analysis explanation
   - Policy impact assessment
@@ -439,33 +446,33 @@
 
 ::::
 
-## Alignment with Financial Values
+## Alignment with Human Values
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- Ensuring LLMs optimize for beneficial financial outcomes
-- Safety measures for automated financial systems
-- Ethics of financial advice from LLMs
-- Preventing market manipulation
+- Ensuring LLMs optimize for beneficial outcomes
+- Safety measures for automated systems
+- Ethics of professional advice from LLMs
+- Preventing manipulation and misuse
 - Balancing innovation with responsible deployment
 - **Value alignment techniques**:
   - Constitutional AI approaches
   - Reinforcement learning from human feedback
-  - Red-teaming for financial misuse
+  - Red-teaming for potential misuse
   - Value-sensitive design principles
   - Stakeholder-inclusive development
 :::
 
 ::: {.column width="40%"}
-- **Financial domain alignment**:
-  - Fiduciary responsibility principles
-  - Fair market conduct guidelines
+- **Domain-specific alignment**:
+  - Professional responsibility principles
+  - Fair conduct guidelines
   - Consumer protection standards
   - Systemic risk considerations
-  - Financial inclusion objectives
-  - Sustainability and ESG integration
-  - Ethical investment frameworks
+  - Inclusivity objectives
+  - Sustainability integration
+  - Ethical decision frameworks
 :::
 
 ::::
@@ -476,28 +483,28 @@
 
 ::: {.column width="60%"}
 - **Mechanistic interpretability**:
-  - Understanding financial concept encoding
+  - Understanding concept encoding
   - Mapping causal paths in model reasoning
-  - Circuit analysis for financial decisions
+  - Circuit analysis for critical decisions
   
 - **Neurosymbolic approaches**:
   - Combining neural and symbolic methods
   - Explicit reasoning with LLM capabilities
-  - Verifiable financial calculations
+  - Verifiable calculations
   
 - **Alignment techniques**:
-  - Constitutional AI for financial services
-  - Beneficial financial assistants
-  - Long-term financial welfare optimization
+  - Constitutional AI for sensitive domains
+  - Beneficial assistants
+  - Long-term welfare optimization
 :::
 
 ::: {.column width="40%"}
-- **Multi-modal financial AI**:
-  - Market data + text understanding
-  - Financial chart interpretation
+- **Multi-modal AI**:
+  - Structured data + text understanding
+  - Chart and visualization interpretation
   - Document + data integration
   
-- **Financial reasoning enhancement**:
+- **Enhanced reasoning**:
   - External tools and augmentation
   - Causal reasoning improvements
   - Temporal reasoning capabilities
@@ -510,32 +517,32 @@
 
 ::::
 
-## The Future Financial AI Landscape
+## The Future AI Landscape
 
 :::: {.columns}
 
 ::: {.column width="60%"}
 - **Near-term developments** (1-2 years):
-  - Specialized financial fine-tuning
+  - Specialized domain fine-tuning
   - Domain-specific reasoning improvements
   - Integration with existing workflows
   - Enhanced regulatory compliance tools
   
 - **Medium-term outlook** (3-5 years):
-  - Multi-modal financial reasoning
-  - Autonomous financial assistants
+  - Multi-modal reasoning
+  - Autonomous assistants
   - Enhanced causal understanding
   - Reliable uncertainty quantification
 :::
 
 ::: {.column width="40%"}
 - **Long-term possibilities** (5-10 years):
-  - Human-level financial reasoning
-  - General-purpose financial advisors
-  - System-wide financial optimization
-  - Algorithmic financial governance
-  - Novel financial system design
-  - Emergent economic behaviors
+  - Human-level domain reasoning
+  - General-purpose professional advisors
+  - System-wide optimization
+  - Algorithmic governance
+  - Novel system design
+  - Emergent societal behaviors
 :::
 
 ::::

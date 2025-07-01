@@ -148,60 +148,43 @@
 :::
 
 ::::
-
 ## Information Theory of Reasoning
 
-:::: {.columns}
-
-::: {.column width="60%"}
 - **Entropy in reasoning steps**:
-  $$H(R_i) = -\sum_{r_i} P(r_i | context, r_{1:i-1}) \log P(r_i | context, r_{1:i-1})$$
+  $$H(R_i) = -\sum_{r_i} P(r_i \mid \text{context},\, r_{1:i-1}) \log P(r_i \mid \text{context},\, r_{1:i-1})$$
   
 - **Total reasoning entropy**:
-  $$H(Reasoning) = \sum_{i=1}^{n} H(R_i | R_{1:i-1})$$
+  $$H(\text{Reasoning}) = \sum_{i=1}^{n} H(R_i \mid R_{1:i-1})$$
   
 - **Conditional mutual information**:
-  $$I(Answer; Reasoning\_Path | Question) = H(Answer | Question) - H(Answer | Question, Reasoning\_Path)$$
-:::
-
-::: {.column width="40%"}
+  $$I(A;\, R \mid Q) = H(A \mid Q) - H(A \mid Q,\, R)$$
+  
+  Where:
+  - $A$ = Answer
+  - $R$ = Reasoning Path
+  - $Q$ = Question
+  - $I(A;\, R \mid Q)$ = Mutual information between Answer and Reasoning Path given Question
+  - $H(A \mid Q)$ = Entropy of Answer given Question
+  - $H(A \mid Q,\, R)$ = Entropy of Answer given Question and Reasoning Path
+  
 - **Why entropy matters in reasoning**:
-  
-  **Zero entropy ($T = 0$)**:
-  - $H(R_i) = 0$ for all reasoning steps
-  - Deterministic, no exploration
-  - Cannot adapt to new information
-  
-  **Positive entropy ($T > 0$)**:
-  - $H(R_i) > 0$ allows exploration
-  - Can discover optimal reasoning paths
-  - Adapts to intermediate findings
-  
-- **General implications**:
-  - Complex analysis requires uncertainty handling
-  - Multiple valid analytical approaches
-  - Need to explore scenario variations
-:::
-
+  - Zero entropy ($T = 0$): $H(R_i) = 0$ for all reasoning steps — deterministic, no exploration, cannot adapt to new information
+  - Positive entropy ($T > 0$): $H(R_i) > 0$ allows exploration, can discover optimal reasoning paths, adapts to intermediate findings
+  - General implications: complex analysis requires uncertainty handling; multiple valid analytical approaches; need to explore scenario variations
 ::::
 
 ## Reasoning vs. Direct Prediction: Mathematical Comparison
 
-:::: {.columns}
-
-::: {.column width="60%"}
 - **Direct prediction complexity**:
-  $$P(answer | question) = \text{softmax}(W_o h_{final})$$
+  $$P(answer \mid question) = \text{softmax}(W_o h_{final})$$
   
   Single forward pass, $O(|V|)$ complexity for final softmax
   
 - **Reasoning model complexity**:
-  $$P(answer | question) = \sum_{paths} \prod_{i=1}^{n} P(r_i | context, r_{1:i-1}) \times P(answer | reasoning)$$
+  $$P(answer \mid question) = \sum_{paths} \prod_{i=1}^{n} P(r_i \mid context, r_{1:i-1}) \times P(answer \mid reasoning)$$
   
   Multiple forward passes, $O(n \times |V|)$ complexity
-:::
-
-::: {.column width="40%"}
+  
 - **Computational trade-offs**:
   
   **Direct prediction**:
@@ -217,9 +200,6 @@
 - **Quality vs. efficiency trade-off**:
   - Reasoning models: higher accuracy, slower
   - Direct models: faster, limited capability
-:::
-
-::::
 
 ## Temperature Scheduling in Reasoning
 
@@ -337,39 +317,17 @@
 
 ## Reasoning Model Architectures
 
-:::: {.columns}
-
-::: {.column width="60%"}
 - **Chain-of-Thought (CoT)**:
-  $$P(answer | question) = P(answer | question, thoughts) \times P(thoughts | question)$$
-  
+  $$P(answer \mid question) = P(answer \mid question, thoughts) \times P(thoughts \mid question)$$
+  - Linear reasoning progression, simple to implement and understand, good for sequential analytical tasks
+
 - **Tree-of-Thoughts (ToT)**:
-  $$P(answer | question) = \max_{tree} P(answer | question, tree) \times P(tree | question)$$
-  
+  $$P(answer \mid question) = \max_{tree} \left( P(answer \mid question, tree) \times P(tree \mid question) \right)$$
+  - Branching reasoning exploration, better for scenario analysis, higher computational cost
+
 - **Graph-of-Thoughts (GoT)**:
-  $$P(answer | question) = \sum_{graph} P(answer | question, graph) \times P(graph | question)$$
-:::
-
-::: {.column width="40%"}
-- **Architecture complexity trade-offs**:
-  
-  **Chain-of-Thought**:
-  - Linear reasoning progression
-  - Simple to implement and understand
-  - Good for sequential analytical tasks
-  
-  **Tree-of-Thoughts**:
-  - Branching reasoning exploration
-  - Better for scenario analysis
-  - Higher computational cost
-  
-  **Graph-of-Thoughts**:
-  - Complex relationship modeling
-  - Best for interconnected systems
-  - Highest computational complexity
-:::
-
-::::
+  $$P(answer \mid question) = \sum_{graph} P(answer \mid question, graph) \times P(graph \mid question)$$
+  - Complex relationship modeling, best for interconnected systems, highest computational complexity
 
 ## Generic Applications of Reasoning Models
 

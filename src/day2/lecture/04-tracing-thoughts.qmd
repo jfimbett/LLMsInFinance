@@ -9,10 +9,10 @@
 - Attention mechanisms connect distant tokens
 - Hidden reasoning in complex tasks
 - Importance of making reasoning explicit
-- Impact on reliability in financial applications
-- **Neural activation patterns**: How financial concepts activate model neurons
-- **Computational graph interpretation**: Mapping the flow of financial reasoning
-- **Attribution analysis**: Which inputs most influence financial outputs
+- Impact on reliability in critical applications
+- **Neural activation patterns**: How domain concepts activate model neurons
+- **Computational graph interpretation**: Mapping the flow of complex reasoning
+- **Attribution analysis**: Which inputs most influence model outputs
 :::
 
 ::: {.column width="40%"}
@@ -22,7 +22,7 @@
   - Attention visualization
   - Neuron activation mapping
   - Integrated gradients
-  - SHAP values for finance
+  - SHAP values for predictions
   - Counterfactual analysis
 :::
 
@@ -40,7 +40,7 @@
 - **Logit lens**: Examining how token probabilities evolve through model layers
 - **Constitution AI approach**: Using principles to guide model behavior
 - **RLHF interpretability**: Understanding how human feedback shapes model behavior
-- **Interpretability in-the-wild**: Studying deployed models in financial contexts
+- **Interpretability in-the-wild**: Studying deployed models in real-world contexts
 :::
 
 ::: {.column width="40%"}
@@ -48,8 +48,8 @@
   - LLMs develop internal "representations"
   - Attention patterns reveal reasoning steps
   - Different layers handle different abstractions
-  - Financial concepts have distinctive activation patterns
-  - Specific neurons activate for financial terms
+  - Domain concepts have distinctive activation patterns
+  - Specific neurons activate for specialized terms
   - Early layers process syntax, later layers handle semantics
   - Model capabilities emerge from collective neuron behavior
 :::
@@ -63,25 +63,25 @@
 ::: {.column width="60%"}
 - **"Discovering Latent Knowledge"** (Burns et al., 2022)
   - Extracting implicit knowledge from model weights
-  - Implications for discovering market insights
+  - Implications for discovering hidden insights
   
 - **"Language Models Can Teach Themselves to Program"** (Haluptzok et al., 2023)
   - Self-improvement capabilities
-  - Applications to algorithmic trading systems
+  - Applications to automated systems
   
 - **"Finding Neurons in a Haystack"** (Anthropic, 2023)
-  - Identifying specific neurons that recognize financial concepts
+  - Identifying specific neurons that recognize key concepts
   - Potential for targeted model editing
 :::
 
 ::: {.column width="40%"}
-- **Financial applications of research**:
-  - Auditing financial advice for bias
-  - Verifying compliance with regulations
-  - Extracting implicit market knowledge
+- **Practical applications of research**:
+  - Auditing model advice for bias
+  - Verifying compliance with guidelines
+  - Extracting implicit domain knowledge
   - Understanding model decision boundaries
   - Identifying potential failure modes
-  - Detecting concept drift in financial data
+  - Detecting concept drift in data
 :::
 
 ::::
@@ -92,10 +92,10 @@
 
 ::: {.column width="60%"}
 - Explicitly asking models to "think step by step"
-- Dramatic improvement in complex financial calculations
-- Example: "Walk through the calculation of a company's free cash flow"
+- Dramatic improvement in complex calculations
+- Example: "Walk through the calculation of a complex problem"
 - Enables verification of intermediary steps
-- Reduces mathematical errors in financial analyses
+- Reduces mathematical errors in analyses
 - **Internal mechanics**: Forces alignment between model reasoning and output
 - **Technical implementation**: 
   - Zero-shot CoT: "Let's think step by step"
@@ -106,53 +106,55 @@
 
 ::: {.column width="40%"}
 ```
-I'll calculate WACC step by step:
+I'll calculate the optimal solution step by step:
 
-1. Cost of equity = 11.6%
-2. After-tax cost of debt = 3.75%
-3. Equity weight = 70%
-4. Debt weight = 30%
-5. WACC = 11.6%(70%) + 3.75%(30%)
-   = 9.25%
+1. Known variable A = 25
+2. Known variable B = 15
+3. Ratio C = A/B = 1.67
+4. Weight factor D = 70%
+5. Result = A(D) + B(1-D)
+   = 25(0.7) + 15(0.3)
+   = 22
 ```
 
 ```
-Let me determine if this bond is 
-fairly priced:
+Let me determine if this system is 
+balanced:
 
-1. Identify the bond's features:
-   - 5-year maturity
-   - 4% coupon, semi-annual
-   - $1,000 face value
-   - Current price: $980
+1. Identify the system components:
+   - 5 input nodes
+   - 4% error rate
+   - Redundancy factor of 2
+   - Target reliability: 98%
 
-2. Calculate YTM:
+2. Calculate overall reliability:
    ...
+```
 ```
 :::
 
 ::::
 
-## Financial Reasoning Traces
+## Domain-Specific Reasoning Traces
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **Option pricing calculations**: Tracing Black-Scholes reasoning
-- **Credit risk assessment**: Step-by-step evaluation of default probability
-- **Capital budgeting decisions**: Explicit NPV and IRR calculation steps
-- **Portfolio optimization**: Tracing efficient frontier calculations
-- **Valuation model selection**: Reasoning through appropriate methodology
-- **Financial anomaly detection**: Systematic identification of inconsistencies
+- **Algorithm selection**: Tracing reasoning about optimal approaches
+- **Risk assessment**: Step-by-step evaluation of probability
+- **Resource allocation decisions**: Explicit cost-benefit calculation steps
+- **Optimization problems**: Tracing algorithm execution
+- **Methodology selection**: Reasoning through appropriate approaches
+- **Anomaly detection**: Systematic identification of inconsistencies
 :::
 
 ::: {.column width="40%"}
-- **Empirical benefits in finance**:
+- **Empirical benefits in complex domains**:
   - 57% reduction in mathematical errors
   - 43% improvement in logical consistency
-  - 62% better alignment with financial theory
-  - 38% increase in regulatory compliance
-  - 71% higher analyst confidence in results
+  - 62% better alignment with domain theory
+  - 38% increase in compliance with standards
+  - 71% higher expert confidence in results
   - 44% better detection of edge cases
 :::
 
@@ -166,42 +168,42 @@ fairly priced:
 - Exploring multiple reasoning paths simultaneously
 - Evaluating different analytical approaches
 - Critical for risk assessment and scenario analysis
-- Applications: Portfolio optimization, investment strategy evaluation
-- Enhanced decision-making in uncertain market conditions
+- Applications: Algorithm optimization, strategic planning
+- Enhanced decision-making in uncertain conditions
 - **Technical foundation**: Extension of Chain-of-Thought with branching
 - **Implementation approaches**:
-  - Breadth-first exploration of financial scenarios
-  - Depth-first analysis of complex financial problems
+  - Breadth-first exploration of scenarios
+  - Depth-first analysis of complex problems
   - Monte Carlo Tree Search for decision optimization
-  - Pruning ineffective financial reasoning branches
+  - Pruning ineffective reasoning branches
 :::
 
 ::: {.column width="40%"}
 
 - **Key research**:
   - [Yao et al. 2023](https://arxiv.org/abs/2305.10601): Tree of Thoughts framework
-  - [Long 2023](https://arxiv.org/abs/2305.08291): Financial decision trees with LLMs
-  - [Feng et al. 2023](https://arxiv.org/abs/2310.01061): Self-verification in financial analysis
+  - [Long 2023](https://arxiv.org/abs/2305.08291): Decision trees with LLMs
+  - [Feng et al. 2023](https://arxiv.org/abs/2310.01061): Self-verification in analysis
 :::
 
 ::::
 
-## Financial Decision Trees in Practice
+## Decision Trees in Practice
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **M&A decision analysis**:
-  - Branch 1: Full acquisition scenario
-  - Branch 2: Partial stake investment
+- **Strategic decision analysis**:
+  - Branch 1: Full implementation scenario
+  - Branch 2: Partial implementation
   - Branch 3: Strategic partnership
-  - Branch 4: Organic growth alternative
+  - Branch 4: Alternative approach
   
-- **Investment strategy evaluation**:
-  - Branch 1: Value investing approach
+- **Strategy evaluation**:
+  - Branch 1: Conservative approach
   - Branch 2: Growth-oriented strategy
-  - Branch 3: Income-focused portfolio
-  - Branch 4: Market-neutral position
+  - Branch 3: Balanced approach
+  - Branch 4: Innovative position
 :::
 
 ::: {.column width="40%"}
@@ -216,19 +218,19 @@ fairly priced:
 
 ::::
 
-## Implementing Tree of Thoughts for Financial Analysis
+## Implementing Tree of Thoughts for Problem Analysis
 
 - **Tree of Thoughts framework**:
-  - Generate diverse initial perspectives on financial problems
-  - Evaluate reasoning quality using financial criteria
+  - Generate diverse initial perspectives on complex problems
+  - Evaluate reasoning quality using domain criteria
   - Explore multiple analytical paths with configurable breadth and depth
   - Select optimal reasoning pathway based on evaluation scores
   
 - **Implementation components**:
-  - Financial problem formulation
+  - Problem formulation
   - Perspective generation function
   - Path exploration mechanism
-  - Evaluation criteria for financial reasoning
+  - Evaluation criteria for domain reasoning
   - Best path selection algorithm
   
 - **Key parameters**:
@@ -244,15 +246,15 @@ fairly priced:
 ::: {.column width="60%"}
 - Attention maps reveal which inputs influence which outputs
 - Tools like BertViz and OpenAI's Attention tool
-- Financial applications:
-  - See which financial terms most influence predictions
-  - Visualize relationships between financial concepts
+- Domain applications:
+  - See which terms most influence predictions
+  - Visualize relationships between domain concepts
   - Identify when models focus on relevant vs. irrelevant information
 - **Technical approaches**:
   - Head-level attention visualization
   - Layer-wise relevance propagation
   - Integrated gradients for feature attribution
-  - SHAP values for financial outputs
+  - SHAP values for prediction outputs
   - Attention flow analysis across layers
 :::
 
@@ -263,13 +265,13 @@ fairly priced:
   - [BertViz](https://github.com/jessevig/bertviz)
   - [Ecco](https://github.com/jalammar/ecco)
   - [LIT (Language Interpretability Tool)](https://pair-code.github.io/lit/)
-  - [Captum](https://captum.ai/) for financial NLP
+  - [Captum](https://captum.ai/) for model interpretation
   - [InterpretML](https://github.com/interpretml/interpret)
 :::
 
 ::::
 
-## Financial Attention Case Studies
+## Attention Analysis Case Studies
 
 :::: {.columns}
 
@@ -277,19 +279,19 @@ fairly priced:
 - **Earnings call analysis**:
   - Which phrases capture model attention?
   - Forward-looking statements vs. historical results
-  - Management tone and sentiment detection
-  - Hidden signals of financial distress
+  - Tone and sentiment detection
+  - Hidden signals of potential issues
   
-- **Financial news impact assessment**:
-  - Attention to specific market events
-  - Entity relationships in financial networks
+- **News impact assessment**:
+  - Attention to specific events
+  - Entity relationships in complex networks
   - Sentiment propagation across news items
-  - Temporal attention patterns in market reactions
+  - Temporal attention patterns in reactions
 :::
 
 ::: {.column width="40%"}
-- **Regulatory document analysis**:
-  - Critical clauses in financial regulations
+- **Document analysis**:
+  - Critical clauses in regulations
   - Compliance requirement identification
   - Risk disclosure attention patterns
   - Cross-references in regulatory frameworks
@@ -298,27 +300,27 @@ fairly priced:
 
 ::::
 
-## Attention Interpretation in Financial Contexts
+## Attention Interpretation in Complex Contexts
 
-- **Financial attention analysis framework**:
-  - Process financial texts through transformer models
+- **Attention analysis framework**:
+  - Process complex texts through transformer models
   - Extract attention patterns from specified layers and heads
   - Identify token-to-token attention relationships
-  - Calculate attention weights for financial entities
+  - Calculate attention weights for key entities
   
 - **Analysis components**:
   - Text tokenization and model input preparation
   - Attention pattern extraction from transformer layers
-  - Financial entity recognition and mapping
+  - Domain entity recognition and mapping
   - Attention weight calculation for identified entities
-  - Key influence identification for financial reasoning
+  - Key influence identification for reasoning
   
 - **Output interpretation**:
   - Attention matrices showing token relationships
   - Entity-specific attention scores
-  - Most influential tokens for financial analysis
+  - Most influential tokens for analysis
   - Layer and head-specific attention patterns
-  - Financial reasoning pathway visualization
+  - Reasoning pathway visualization
 
 ## Self-Consistency & Verification
 
@@ -326,15 +328,15 @@ fairly priced:
 
 ::: {.column width="60%"}
 - Generating multiple solutions to the same problem
-- Identifying inconsistencies in financial reasoning
+- Identifying inconsistencies in logical reasoning
 - Cross-checking numerical results and conclusions
-- Improved accuracy for high-stakes financial decisions
-- Essential for regulatory compliance and audit trails
+- Improved accuracy for high-stakes decisions
+- Essential for compliance and audit trails
 - **Implementation techniques**:
   - Ensemble of reasoning paths
-  - Majority voting on financial decisions
+  - Majority voting on decisions
   - Confidence-weighted aggregation
-  - Sensitivity analysis of financial conclusions
+  - Sensitivity analysis of conclusions
   - Multi-model cross-verification
 :::
 
@@ -371,12 +373,12 @@ fairly priced:
 - **Alternative path exploration**: What would the model do differently with small changes?
 - **Prompt sensitivity analysis**: How do slight prompt variations affect reasoning?
 - **Layerwise relevance propagation**: Tracking contribution of each input to outputs
-- **Financial applications**: 
-  - Regulatory compliance verification
-  - Auditing financial model decisions
-  - Identifying potential biases in financial analysis
+- **Domain applications**: 
+  - Compliance verification
+  - Auditing model decisions
+  - Identifying potential biases in analysis
   - Early detection of reasoning failures
-  - Confidence calibration for financial advice
+  - Confidence calibration for advice
 :::
 
 ::: {.column width="40%"}
@@ -384,8 +386,8 @@ fairly priced:
   - [Eleuther AI's language model evaluation harness](https://github.com/EleutherAI/lm-evaluation-harness)
   - [MAUVE](https://github.com/krishnap25/mauve) for distribution comparison
   - [Ecco](https://github.com/jalammar/ecco) for token probability analysis
-  - [FinBERT](https://github.com/ProsusAI/finBERT) for financial sentiment
-  - Custom financial reasoning trackers
+  - [BertViz](https://github.com/jessevig/bertviz) for visualization
+  - Custom reasoning trackers
 :::
 
 ::::
@@ -408,9 +410,9 @@ fairly priced:
   - Reasoning quality metrics dashboard
   - Token-level confidence visualization
   - Alternative reasoning path explorer
-  - Financial domain knowledge verification
+  - Domain knowledge verification
   - Model uncertainty quantification
-  - Drift detection for financial concepts
+  - Drift detection for domain concepts
 :::
 
 ::::
@@ -420,22 +422,22 @@ fairly priced:
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **Neural Circuit Analysis**: Identifying specific circuits for financial concepts
+- **Neural Circuit Analysis**: Identifying specific circuits for key concepts
 - **Causal Mediation Analysis**: Understanding how interventions affect outcomes
 - **Activation Steering**: Guiding model reasoning in desired directions
-- **Adversarial Testing**: Probing for weaknesses in financial reasoning
-- **Controlled Generation**: Ensuring outputs follow regulatory constraints
+- **Adversarial Testing**: Probing for weaknesses in reasoning
+- **Controlled Generation**: Ensuring outputs follow constraints
 - **Faithful Explanations**: Creating truly representative explanations
 :::
 
 ::: {.column width="40%"}
 - **Research frontiers**:
-  - Identifying financial concept neurons
+  - Identifying concept-specific neurons
   - Transformer interpretability at scale
-  - Causal inference in financial models
-  - Alignment with financial regulations
-  - Financial concept representation learning
-  - Robust reasoning in market volatility
+  - Causal inference in complex models
+  - Alignment with domain regulations
+  - Concept representation learning
+  - Robust reasoning in volatile environments
 :::
 
 ::::

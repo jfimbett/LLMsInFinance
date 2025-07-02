@@ -1,0 +1,29 @@
+## Comparables Selection: Three Workflows
+
+Selecting the right peer group is critical for multiples-based valuation. LLMs offer several workflows with varying degrees of reliability.
+
+**Workflow 1: Direct Prompting**
+- **Method:** Simply ask the LLM to list comparable companies for a given firm.
+- **Example:** `"List 10 comparable companies for Apple Inc."`
+- **Weakness:** Prone to **hallucination** and often returns generic, obvious, or outdated peers without rigorous justification.
+
+**Workflow 2: Candidate Filtering**
+- **Method:** Provide the LLM with a pre-vetted list of potential comparables and ask it to select the best peers based on specific criteria.
+- **Analogy:** This is a form of **example-based (few-shot) prompting**, where the user constrains the model's output space.
+- **Strength:** More reliable than direct prompting because it grounds the model in a user-supplied context.
+
+## Document Embedding: The Preferred Approach
+
+**Workflow 3: Document Embedding (Most Robust)**
+- **Method:** Uses vector embeddings to find peers with the most similar business descriptions from filings like 10-Ks.
+  1. Embed the business description section of the target company's 10-K into a vector.
+  2. Do the same for all candidate companies.
+  3. Calculate the cosine similarity between the target's vector and all candidate vectors.
+  4. Select peers with the highest similarity scores (smallest distance).
+
+**Document Embedding Formula:**
+To create a single vector for a document, we aggregate the embeddings of its constituent tokens:
+
+$$E_{doc} = \frac{1}{N} \sum_{i=1}^{N} e_{token_i}$$
+
+Where $E_{doc}$ is the final document embedding, $N$ is the number of tokens, and $e_{token_i}$ is the embedding of the i-th token.

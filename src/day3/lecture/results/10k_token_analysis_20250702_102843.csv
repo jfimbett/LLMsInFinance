@@ -1,0 +1,3 @@
+ticker,cik,filing_date,text_characters,text_words,text_estimated_tokens,chunks_GPT‑3,chunks_GPT‑3.5‑turbo,chunks_GPT‑4,chunks_GPT‑4‑32k,chunks_Claude‑1,chunks_Claude‑2,chunks_Claude‑3,chunks_Gemini Pro,chunks_Gemini 1.5 Pro
+AAPL,0000320193,2024-11-01,6526876,391146,2946541,720,720,360,90,328,30,15,90,3
+TSLA,0001318605,2025-01-30,10873228,634964,4945344,1208,1208,604,151,550,50,25,151,5

@@ -1,0 +1,134 @@
+## Valuation Fundamentals: DCF Foundation & Challenges
+
+**The Core DCF Formula:**
+
+$$\text{Enterprise Value} = \sum_{t=1}^{T}\frac{\text{FCFF}_t}{(1+WACC)^t} + \frac{\text{TV}_T}{(1+WACC)^T}$$
+
+**From EBIT to Free Cash Flow:**
+
+$$FCFF_t = EBIT_t(1-\tau) + D\&A_t - CapEx_t - \Delta NWC_t$$
+
+Where:
+- $FCFF_t$ = Free Cash Flow to the Firm in period $t$
+- $WACC$ = Weighted Average Cost of Capital  
+- $TV_T$ = Terminal Value at forecast end
+- $\tau$ = tax rate, $D\&A$ = depreciation & amortization
+
+**DCF Challenges:**
+- Requires detailed forecasts for 5-10 years
+- Terminal value often represents 60-80% of total value  
+- Highly sensitive to growth and discount rate assumptions
+- Time-intensive and subjective
+
+**Why Multiples Matter:**
+- Quick market-based alternative
+- Reflects current investor sentiment  
+- Useful for cross-sectional comparison
+- Can validate DCF assumptions
+
+## The Mathematical Connection: DCF to Multiples (Part 1)
+
+**Step 1: Start with the perpetuity DCF formula**
+
+For a company in steady state with constant growth $g$:
+
+$$EV = \frac{FCFF_1}{WACC - g}$$
+
+**Step 2: Express FCFF in terms of EBITDA**
+
+Starting from our FCFF formula:
+$$FCFF = EBIT(1-\tau) + D\&A - CapEx - \Delta NWC$$
+
+Since $EBIT = EBITDA - D\&A$, we can substitute:
+$$FCFF = (EBITDA - D\&A)(1-\tau) + D\&A - CapEx - \Delta NWC$$
+
+Expanding and simplifying:
+$$FCFF = EBITDA(1-\tau) - D\&A(1-\tau) + D\&A - CapEx - \Delta NWC$$
+$$FCFF = EBITDA(1-\tau) + D\&A \cdot \tau - CapEx - \Delta NWC$$
+
+## The Mathematical Connection: DCF to Multiples (Part 2)
+
+**Step 3: Express each component as a ratio of EBITDA**
+
+Let's define these key ratios:
+- $\kappa = \frac{CapEx}{EBITDA}$ (CapEx intensity)
+- $\delta = \frac{D\&A}{EBITDA}$ (D&A rate) 
+- $\omega = \frac{\Delta NWC}{EBITDA}$ (Working capital intensity)
+
+**Step 4: Substitute back into the perpetuity formula**
+
+$$FCFF = EBITDA[(1-\tau) + \delta \cdot \tau - \kappa - \omega]$$
+
+Therefore:
+$$EV = \frac{EBITDA[(1-\tau) + \delta \cdot \tau - \kappa - \omega]}{WACC - g}$$
+
+**Step 5: Solve for the EV/EBITDA multiple**
+
+$$\frac{EV}{EBITDA} = \frac{(1-\tau) + \delta \cdot \tau - \kappa - \omega}{WACC - g}$$
+
+**Key Insight:** The EV/EBITDA multiple depends on tax rate, CapEx intensity, growth, and risk!
+
+## Practical Example & Sensitivity Analysis
+
+**Given company assumptions:**
+- Tax rate: $\tau = 25\%$
+- CapEx intensity: $\kappa = 15\%$ of EBITDA
+- D&A rate: $\delta = 12\%$ of EBITDA  
+- Working capital: $\omega = 2\%$ of EBITDA
+- Growth rate: $g = 3\%$, WACC: $10\%$
+
+**Step-by-step calculation:**
+
+$$\frac{EV}{EBITDA} = \frac{(1-0.25) + (0.12 \times 0.25) - 0.15 - 0.02}{0.10 - 0.03}$$
+
+$$= \frac{0.75 + 0.03 - 0.15 - 0.02}{0.07} = \frac{0.61}{0.07} = 8.7x$$
+
+**Sensitivity Analysis:**
+- If growth increases to 4%: Multiple = $\frac{0.61}{0.06} = 10.2x$
+- If CapEx drops to 10%: Multiple = $\frac{0.66}{0.07} = 9.4x$
+- If WACC rises to 12%: Multiple = $\frac{0.61}{0.09} = 6.8x$
+
+**Key Takeaway:** Multiples ARE DCF models in disguise!
+
+## Triangulation & LLM Applications
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Why Use Both Methods:**
+
+**DCF provides intrinsic value:**
+- Forward-looking and company-specific
+- Captures unique growth opportunities
+- Independent of market sentiment
+
+**Multiples provide market-implied value:**
+- Reflects current market conditions
+- Quick and comparable across peers
+- Incorporates market expectations
+
+**Best Practice: Establish a valuation range**
+:::
+
+::: {.column width="50%"}
+**LLM Solution for DCF:**
+
+**Traditional Challenge:**
+- 10-K filings: 200+ pages of dense text
+- Key data scattered across sections
+- Manual extraction is time-intensive
+
+**LLM Capabilities:**
+- **Named Entity Recognition (NER)** for data extraction
+- **Chunking** to handle large documents
+- Process overlapping blocks, aggregate results
+
+**Key Extracted Elements:**
+- Historical revenue, EBIT, cash flow data
+- CapEx patterns and guidance
+- Working capital trends
+- Management commentary on growth drivers
+- One-time items for normalized earnings
+:::
+
+::::

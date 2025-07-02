@@ -1,0 +1,8 @@
+## LLM-Based Financial Forecasting
+
+**Strengths & Limitations:**
+
+- **Strength: Categorical & Narrative Forecasting.** LLMs excel at modeling qualitative states. They can generate entire narratives for "optimistic," "base," or "pessimistic" scenarios based on macroeconomic data and company disclosures.
+- **Weakness: Numeric Forecasting.** LLMs are not reliable for direct numeric prediction (e.g., forecasting revenue). They treat numbers as tokens without inherent mathematical value, leading to poor arithmetic and trend-fitting performance.
+
+**Best Practice:** Use LLMs for scenario generation and qualitative analysis, but rely on traditional statistical models or spreadsheet calculations for actual numeric projections.

@@ -1,0 +1,61 @@
+## LLMs & DCF: From Raw Filings to Models
+
+LLMs can accelerate DCF analysis by rapidly processing vast, unstructured documents like SEC filings (10-Ks, 10-Qs) to extract key inputs.
+
+- **Challenge:** Financial documents are long, dense, and complex.
+- **Solution:** LLMs use **Named Entity Recognition (NER)** to identify and extract specific data points (e.g., revenue, debt, non-recurring expenses).
+
+## The Evolution of Context Length in LLMs
+
+- **Challenge:** Early LLMs had small "context windows" (the amount of text they could process at once).
+- **Reason:** The self-attention mechanism, core to Transformers, has a computational complexity that scales quadratically with the input sequence length ($O(n^2)$).
+- **Result:** Doubling the text length quadruples the processing cost, historically limiting context.
+
+## Context Length Comparison Across LLM Models
+
+| Model | Context Length | Release Year | Notes |
+|-------|----------------|--------------|-------|
+| GPT-3 | 4,096 tokens | 2020 | Early commercial LLM |
+| GPT-3.5-turbo | 4,096 tokens | 2022 | ChatGPT base model |
+| GPT-4 | 8,192 tokens | 2023 | Standard version |
+| GPT-4-32k | 32,768 tokens | 2023 | Extended context version |
+| Claude-1 | 9,000 tokens | 2022 | Anthropic's first model |
+| Claude-2 | 100,000 tokens | 2023 | ~75,000 words |
+| Claude-3 | 200,000 tokens | 2024 | ~150,000 words |
+| Gemini Pro | 32,768 tokens | 2023 | Google's flagship model |
+| Gemini 1.5 Pro | 1,000,000 tokens | 2024 | Breakthrough in context length |
+
+**Practical Example:** The average 10-K filing contains around 250,000-300,000 tokens! A Python script (`token_estimator.py`) is provided to download and estimate token counts for any company's 10-K filing.
+
+::: {.callout-note}
+## Using the Token Estimator
+
+Try analyzing different companies with:
+```bash
+python token_estimator.py --tickers AAPL TSLA MSFT --save-csv
+```
+
+This tool demonstrates the practical context length challenges we face when working with real financial documents.
+:::
+
+
+
+## Chunking Strategy for Large Documents
+
+To apply LLMs to entire 10-K reports, we use **chunking**:
+
+1. **Split:** The document is divided into smaller, overlapping text blocks (chunks).
+2. **Process:** The LLM processes each chunk independently to extract relevant information.
+3. **Aggregate:** Results are combined in a final summary step to create comprehensive insights.
+
+**Benefits:**
+
+- Allows analysis of documents far exceeding the model's direct context window
+- Maintains semantic continuity through overlapping chunks
+- Enables parallel processing for faster analysis
+
+**Practical Applications:**
+
+- Extract key financial metrics from lengthy 10-K filings
+- Identify risk factors and management commentary
+- Summarize competitive landscape discussions across multiple document sections

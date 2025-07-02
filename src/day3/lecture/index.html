@@ -10,8 +10,8 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <meta name="author" content="Your Name">
-  <meta name="dcterms.date" content="2025-05-10">
+  <meta name="author" content="Juan F. Imbet">
+  <meta name="dcterms.date" content="2025-07-09">
   <title>Day 3: LLMs for Financial Valuation and Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -333,459 +333,135 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Your Name 
+Juan F. Imbet 
 </div>
 </div>
 </div>
 
-  <p class="date">2025-05-10</p>
+  <p class="date">2025-07-09</p>
 </section>
 <section>
 <section id="llms-for-financial-valuation-and-analysis" class="title-slide slide level1 center">
 <h1>LLMs for Financial Valuation and Analysis</h1>
 
 </section>
-<section id="overview-of-todays-lecture" class="slide level2">
-<h2>Overview of Today’s Lecture</h2>
-<ul>
-<li>Recap of traditional valuation methods (DCF and multiples)</li>
-<li>Forecasting financial data with LLMs</li>
-<li>Scenario analysis and sensitivity testing using LLMs</li>
-<li>Comparable company selection with LLMs</li>
-<li>Entity recognition in financial documents</li>
-<li>AI agents for financial analysis</li>
-</ul>
+<section id="valuation-fundamentals-dcf-foundation-challenges" class="slide level2">
+<h2>Valuation Fundamentals: DCF Foundation &amp; Challenges</h2>
+<p><strong>The Core DCF Formula:</strong></p>
+<p><span class="math display">\[\text{Enterprise Value} = \sum_{t=1}^{T}\frac{\text{FCFF}_t}{(1+WACC)^t} + \frac{\text{TV}_T}{(1+WACC)^T}\]</span></p>
+<p><strong>From EBIT to Free Cash Flow:</strong></p>
+<p><span class="math display">\[FCFF_t = EBIT_t(1-\tau) + D\&amp;A_t - CapEx_t - \Delta NWC_t\]</span></p>
+<p>Where: - <span class="math inline">\(FCFF_t\)</span> = Free Cash Flow to the Firm in period <span class="math inline">\(t\)</span> - <span class="math inline">\(WACC\)</span> = Weighted Average Cost of Capital<br>
+- <span class="math inline">\(TV_T\)</span> = Terminal Value at forecast end - <span class="math inline">\(\tau\)</span> = tax rate, <span class="math inline">\(D\&amp;A\)</span> = depreciation &amp; amortization</p>
+<p><strong>DCF Challenges:</strong> - Requires detailed forecasts for 5-10 years - Terminal value often represents 60-80% of total value<br>
+- Highly sensitive to growth and discount rate assumptions - Time-intensive and subjective</p>
+<p><strong>Why Multiples Matter:</strong> - Quick market-based alternative - Reflects current investor sentiment<br>
+- Useful for cross-sectional comparison - Can validate DCF assumptions</p>
 </section>
-<section class="slide level2">
-
-</section></section>
-<section>
-<section id="valuation-methods-recap" class="title-slide slide level1 center">
-<h1>Valuation Methods Recap</h1>
-
+<section id="the-mathematical-connection-dcf-to-multiples-part-1" class="slide level2">
+<h2>The Mathematical Connection: DCF to Multiples (Part 1)</h2>
+<p><strong>Step 1: Start with the perpetuity DCF formula</strong></p>
+<p>For a company in steady state with constant growth <span class="math inline">\(g\)</span>:</p>
+<p><span class="math display">\[EV = \frac{FCFF_1}{WACC - g}\]</span></p>
+<p><strong>Step 2: Express FCFF in terms of EBITDA</strong></p>
+<p>Starting from our FCFF formula: <span class="math display">\[FCFF = EBIT(1-\tau) + D\&amp;A - CapEx - \Delta NWC\]</span></p>
+<p>Since <span class="math inline">\(EBIT = EBITDA - D\&amp;A\)</span>, we can substitute: <span class="math display">\[FCFF = (EBITDA - D\&amp;A)(1-\tau) + D\&amp;A - CapEx - \Delta NWC\]</span></p>
+<p>Expanding and simplifying: <span class="math display">\[FCFF = EBITDA(1-\tau) - D\&amp;A(1-\tau) + D\&amp;A - CapEx - \Delta NWC\]</span> <span class="math display">\[FCFF = EBITDA(1-\tau) + D\&amp;A \cdot \tau - CapEx - \Delta NWC\]</span></p>
 </section>
-<section id="traditional-valuation-approaches" class="slide level2">
-<h2>Traditional Valuation Approaches</h2>
+<section id="the-mathematical-connection-dcf-to-multiples-part-2" class="slide level2">
+<h2>The Mathematical Connection: DCF to Multiples (Part 2)</h2>
+<p><strong>Step 3: Express each component as a ratio of EBITDA</strong></p>
+<p>Let’s define these key ratios: - <span class="math inline">\(\kappa = \frac{CapEx}{EBITDA}\)</span> (CapEx intensity) - <span class="math inline">\(\delta = \frac{D\&amp;A}{EBITDA}\)</span> (D&amp;A rate) - <span class="math inline">\(\omega = \frac{\Delta NWC}{EBITDA}\)</span> (Working capital intensity)</p>
+<p><strong>Step 4: Substitute back into the perpetuity formula</strong></p>
+<p><span class="math display">\[FCFF = EBITDA[(1-\tau) + \delta \cdot \tau - \kappa - \omega]\]</span></p>
+<p>Therefore: <span class="math display">\[EV = \frac{EBITDA[(1-\tau) + \delta \cdot \tau - \kappa - \omega]}{WACC - g}\]</span></p>
+<p><strong>Step 5: Solve for the EV/EBITDA multiple</strong></p>
+<p><span class="math display">\[\frac{EV}{EBITDA} = \frac{(1-\tau) + \delta \cdot \tau - \kappa - \omega}{WACC - g}\]</span></p>
+<p><strong>Key Insight:</strong> The EV/EBITDA multiple depends on tax rate, CapEx intensity, growth, and risk!</p>
+</section>
+<section id="practical-example-sensitivity-analysis" class="slide level2">
+<h2>Practical Example &amp; Sensitivity Analysis</h2>
+<p><strong>Given company assumptions:</strong> - Tax rate: <span class="math inline">\(\tau = 25\%\)</span> - CapEx intensity: <span class="math inline">\(\kappa = 15\%\)</span> of EBITDA - D&amp;A rate: <span class="math inline">\(\delta = 12\%\)</span> of EBITDA<br>
+- Working capital: <span class="math inline">\(\omega = 2\%\)</span> of EBITDA - Growth rate: <span class="math inline">\(g = 3\%\)</span>, WACC: <span class="math inline">\(10\%\)</span></p>
+<p><strong>Step-by-step calculation:</strong></p>
+<p><span class="math display">\[\frac{EV}{EBITDA} = \frac{(1-0.25) + (0.12 \times 0.25) - 0.15 - 0.02}{0.10 - 0.03}\]</span></p>
+<p><span class="math display">\[= \frac{0.75 + 0.03 - 0.15 - 0.02}{0.07} = \frac{0.61}{0.07} = 8.7x\]</span></p>
+<p><strong>Sensitivity Analysis:</strong> - If growth increases to 4%: Multiple = <span class="math inline">\(\frac{0.61}{0.06} = 10.2x\)</span> - If CapEx drops to 10%: Multiple = <span class="math inline">\(\frac{0.66}{0.07} = 9.4x\)</span> - If WACC rises to 12%: Multiple = <span class="math inline">\(\frac{0.61}{0.09} = 6.8x\)</span></p>
+<p><strong>Key Takeaway:</strong> Multiples ARE DCF models in disguise!</p>
+</section>
+<section id="triangulation-llm-applications" class="slide level2">
+<h2>Triangulation &amp; LLM Applications</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li>Fundamental building blocks of financial analysis</li>
-<li>Two primary approaches:
-<ul>
-<li>Intrinsic valuation (DCF)</li>
-<li>Relative valuation (multiples)</li>
-</ul></li>
-<li>Complementary methodologies</li>
-<li>Critical for investment decisions, M&amp;A, and capital allocation</li>
-</ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
+<div class="column" style="width:50%;">
+<p><strong>Why Use Both Methods:</strong></p>
+<p><strong>DCF provides intrinsic value:</strong> - Forward-looking and company-specific - Captures unique growth opportunities - Independent of market sentiment</p>
+<p><strong>Multiples provide market-implied value:</strong> - Reflects current market conditions - Quick and comparable across peers - Incorporates market expectations</p>
+<p><strong>Best Practice: Establish a valuation range</strong></p>
+</div><div class="column" style="width:50%;">
+<p><strong>LLM Solution for DCF:</strong></p>
+<p><strong>Traditional Challenge:</strong> - 10-K filings: 200+ pages of dense text - Key data scattered across sections - Manual extraction is time-intensive</p>
+<p><strong>LLM Capabilities:</strong> - <strong>Named Entity Recognition (NER)</strong> for data extraction - <strong>Chunking</strong> to handle large documents - Process overlapping blocks, aggregate results</p>
+<p><strong>Key Extracted Elements:</strong> - Historical revenue, EBIT, cash flow data - CapEx patterns and guidance - Working capital trends - Management commentary on growth drivers - One-time items for normalized earnings</p>
 </div></div>
 </section>
-<section id="discounted-cash-flow-dcf" class="slide level2">
-<h2>Discounted Cash Flow (DCF)</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
+<section id="llms-dcf-from-raw-filings-to-models" class="slide level2">
+<h2>LLMs &amp; DCF: From Raw Filings to Models</h2>
+<p>LLMs can accelerate DCF analysis by rapidly processing vast, unstructured documents like SEC filings (10-Ks, 10-Qs) to extract key inputs.</p>
 <ul>
-<li><strong>Core Principle</strong>: Value = Present value of future cash flows</li>
-<li><strong>Key Components</strong>:
-<ul>
-<li>Forecast period (typically 5-10 years)</li>
-<li>Terminal value</li>
-<li>Discount rate (WACC)</li>
-</ul></li>
-<li><strong>Advantages</strong>:
-<ul>
-<li>Theoretically sound</li>
-<li>Forward-looking</li>
-<li>Captures long-term value creation</li>
-</ul></li>
-<li><strong>Challenges</strong>:
-<ul>
-<li>Sensitivity to assumptions</li>
-<li>Forecast accuracy</li>
-<li>Terminal value dominance</li>
-</ul></li>
+<li><strong>Challenge:</strong> Financial documents are long, dense, and complex.</li>
+<li><strong>Solution:</strong> LLMs use <strong>Named Entity Recognition (NER)</strong> to identify and extract specific data points (e.g., revenue, debt, non-recurring expenses).</li>
 </ul>
-</div><div class="column" style="width:40%;">
-<p><span class="math inline">\(\text{Enterprise Value} = \sum_{t=1}^{n} \frac{FCF_t}{(1+WACC)^t} + \frac{TV}{(1+WACC)^n}\)</span></p>
-<p><span class="math inline">\(TV = \frac{FCF_{n+1}}{WACC - g}\)</span></p>
-<p>Where: - <span class="math inline">\(FCF_t\)</span> = Free Cash Flow in year t</p>
-</div></div>
 </section>
-<section class="slide level2">
-
-</section></section>
-<section>
-<section id="forecasting-with-llms" class="title-slide slide level1 center">
-<h1>Forecasting with LLMs</h1>
-
-</section>
-<section id="beyond-traditional-forecasting" class="slide level2">
-<h2>Beyond Traditional Forecasting</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
+<section id="the-evolution-of-context" class="slide level2">
+<h2>The Evolution of Context</h2>
 <ul>
-<li>Conventional forecasting relies on:
-<ul>
-<li>Historical data extrapolation</li>
-<li>Analyst judgment</li>
-<li>Statistical models (ARIMA, regression)</li>
-<li>Expert consensus</li>
-</ul></li>
-<li>LLMs offer complementary capabilities:
-<ul>
-<li>Text + numerical data integration</li>
-<li>Contextual understanding</li>
-<li>Pattern recognition across domains</li>
-<li>Synthesizing diverse information sources</li>
-</ul></li>
+<li><strong>Challenge:</strong> Early LLMs had small “context windows” (the amount of text they could process at once).</li>
+<li><strong>Reason:</strong> The self-attention mechanism, core to Transformers, has a computational complexity that scales quadratically with the input sequence length (<span class="math inline">\(O(n^2)\)</span>).</li>
+<li><strong>Result:</strong> Doubling the text length quadruples the processing cost, historically limiting context.</li>
 </ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
-</div></div>
 </section>
-<section id="llm-forecasting-data-sources" class="slide level2">
-<h2>LLM Forecasting: Data Sources</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
+<section id="chunking-strategy-for-large-documents" class="slide level2">
+<h2>Chunking Strategy for Large Documents</h2>
+<p>To apply LLMs to entire 10-K reports, we use <strong>chunking</strong>:</p>
+<ol type="1">
+<li><strong>Split:</strong> The document is divided into smaller, overlapping text blocks (chunks).</li>
+<li><strong>Process:</strong> The LLM processes each chunk independently to extract relevant information.</li>
+<li><strong>Aggregate:</strong> Results are combined in a final summary step to create comprehensive insights.</li>
+</ol>
+<p><strong>Benefits:</strong></p>
 <ul>
-<li><strong>Financial Statements</strong>:
-<ul>
-<li>Historical performance trends</li>
-<li>Management guidance</li>
-<li>Accounting policy impacts</li>
-</ul></li>
-<li><strong>Earnings Calls Transcripts</strong>:
-<ul>
-<li>Management tone and sentiment</li>
-<li>Forward-looking statements</li>
-<li>Analyst concerns and questions</li>
-</ul></li>
+<li>Allows analysis of documents far exceeding the model’s direct context window</li>
+<li>Maintains semantic continuity through overlapping chunks</li>
+<li>Enables parallel processing for faster analysis</li>
 </ul>
-</div><div class="column" style="width:40%;">
+<p><strong>Practical Applications:</strong></p>
 <ul>
-<li><strong>News and Press Releases</strong>:
-<ul>
-<li>Company developments</li>
-<li>Industry trends</li>
-<li>Competitive landscape</li>
-</ul></li>
-<li><strong>SEC Filings</strong>:
-<ul>
-<li>Risk disclosures</li>
-<li>Legal proceedings</li>
-<li>Strategic initiatives</li>
-</ul></li>
+<li>Extract key financial metrics from lengthy 10-K filings</li>
+<li>Identify risk factors and management commentary</li>
+<li>Summarize competitive landscape discussions across multiple document sections</li>
 </ul>
-</div></div>
 </section>
-<section class="slide level2">
-
-</section></section>
-<section>
-<section id="scenario-analysis-with-llms" class="title-slide slide level1 center">
-<h1>Scenario Analysis with LLMs</h1>
-
-</section>
-<section id="beyond-base-case-forecasting" class="slide level2">
-<h2>Beyond Base Case Forecasting</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
+<section id="llm-based-financial-forecasting" class="slide level2">
+<h2>LLM-Based Financial Forecasting</h2>
+<p><strong>Strengths &amp; Limitations:</strong></p>
 <ul>
-<li>Single forecasts fail to capture uncertainty</li>
-<li>Scenario analysis explores multiple potential futures</li>
-<li>Traditional approach:
-<ul>
-<li>Base, upside, downside cases</li>
-<li>Limited by human imagination and resources</li>
-</ul></li>
-<li>LLMs enable:
-<ul>
-<li>Broader scenario generation</li>
-<li>Systematic variation of inputs</li>
-<li>Creative yet plausible alternative futures</li>
-<li>Internally consistent scenario narratives</li>
-</ul></li>
+<li><strong>Strength: Categorical &amp; Narrative Forecasting.</strong> LLMs excel at modeling qualitative states. They can generate entire narratives for “optimistic,” “base,” or “pessimistic” scenarios based on macroeconomic data and company disclosures.</li>
+<li><strong>Weakness: Numeric Forecasting.</strong> LLMs are not reliable for direct numeric prediction (e.g., forecasting revenue). They treat numbers as tokens without inherent mathematical value, leading to poor arithmetic and trend-fitting performance.</li>
 </ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
-</div></div>
+<p><strong>Best Practice:</strong> Use LLMs for scenario generation and qualitative analysis, but rely on traditional statistical models or spreadsheet calculations for actual numeric projections.</p>
 </section>
-<section id="llm-powered-scenario-framework-part-1" class="slide level2">
-<h2>LLM-Powered Scenario Framework: Part 1</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li><strong>1. Scenario Identification</strong>:
-<ul>
-<li>Systematic exploration of key uncertainties</li>
-<li>Critical variable identification</li>
-<li>Coherent narrative development</li>
-</ul></li>
-<li><strong>2. Parameter Variation</strong>:
-<ul>
-<li>Systematic variation of inputs</li>
-<li>Correlation preservation</li>
-<li>Cross-impact analysis</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
-</div></div>
+<section id="comparables-selection-three-workflows" class="slide level2">
+<h2>Comparables Selection: Three Workflows</h2>
+<p>Selecting the right peer group is critical for multiples-based valuation. LLMs offer several workflows with varying degrees of reliability.</p>
+<p><strong>Workflow 1: Direct Prompting</strong> - <strong>Method:</strong> Simply ask the LLM to list comparable companies for a given firm. - <strong>Example:</strong> <code>"List 10 comparable companies for Apple Inc."</code> - <strong>Weakness:</strong> Prone to <strong>hallucination</strong> and often returns generic, obvious, or outdated peers without rigorous justification.</p>
+<p><strong>Workflow 2: Candidate Filtering</strong> - <strong>Method:</strong> Provide the LLM with a pre-vetted list of potential comparables and ask it to select the best peers based on specific criteria. - <strong>Analogy:</strong> This is a form of <strong>example-based (few-shot) prompting</strong>, where the user constrains the model’s output space. - <strong>Strength:</strong> More reliable than direct prompting because it grounds the model in a user-supplied context.</p>
 </section>
-<section id="llm-powered-scenario-framework-part-2" class="slide level2">
-<h2>LLM-Powered Scenario Framework: Part 2</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li><strong>3. Financial Modeling</strong>:
-<ul>
-<li>Scenario-specific forecasts</li>
-<li>Internally consistent projections</li>
-<li>Financial statement integration</li>
-</ul></li>
-<li><strong>4. Valuation Impact</strong>:
-<ul>
-<li>Probability-weighted outcomes</li>
-<li>Sensitivity analysis</li>
-<li>Risk factor quantification</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<pre><code>Scenario: Global Recession
-Parameters:
-- GDP Growth: -2.5%
-- Interest Rates: +150bps
-- Industry Revenue: -15%
-- Margins: -300bps
-- CapEx: -40%
-
-Outcome:
-- DCF Value: $32-38/share
-- Probability: 25%</code></pre>
-</div></div>
-</section>
-<section class="slide level2">
-
-</section></section>
-<section>
-<section id="comparable-selection-with-llms" class="title-slide slide level1 center">
-<h1>Comparable Selection with LLMs</h1>
-
-</section>
-<section id="the-comparable-company-challenge" class="slide level2">
-<h2>The Comparable Company Challenge</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li>Cornerstone of relative valuation</li>
-<li>Traditional methods rely on:
-<ul>
-<li>Industry classification systems (GICS, SIC)</li>
-<li>Analyst judgment</li>
-<li>Size and growth filtering</li>
-<li>Liquidity thresholds</li>
-</ul></li>
-<li>Key limitations:
-<ul>
-<li>Rigid classification systems</li>
-<li>Missed cross-industry similarities</li>
-<li>Superficial matching criteria</li>
-<li>Time-consuming manual selection</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
-</div></div>
-</section>
-<section id="beyond-industry-classifications-part-1" class="slide level2">
-<h2>Beyond Industry Classifications: Part 1</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li><strong>Traditional industry grouping systems</strong>:
-<ul>
-<li>GICS (Global Industry Classification Standard)</li>
-<li>SIC (Standard Industrial Classification)</li>
-<li>NAICS (North American Industry Classification System)</li>
-<li>ICB (Industry Classification Benchmark)</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
-</div></div>
-</section>
-<section id="beyond-industry-classifications-part-2" class="slide level2">
-<h2>Beyond Industry Classifications: Part 2</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li><strong>Limitations of traditional systems</strong>:
-<ul>
-<li>Rigid boundaries</li>
-<li>Outdated categories</li>
-<li>Missing emerging business models</li>
-<li>Conglomerate classification challenges</li>
-<li>Cross-industry similarities overlooked</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<ul>
-<li><strong>LLM enhancements</strong>:
-<ul>
-<li>Nuanced business model understanding</li>
-<li>Dynamic sector relationships</li>
-<li>Real-time classification updates</li>
-<li>Multi-dimensional similarity analysis</li>
-<li>Contextual peer identification</li>
-</ul></li>
-</ul>
-</div></div>
-</section>
-<section class="slide level2">
-
-</section></section>
-<section>
-<section id="entity-recognition-in-large-texts" class="title-slide slide level1 center">
-<h1>Entity Recognition in Large Texts</h1>
-
-</section>
-<section id="the-financial-document-challenge" class="slide level2">
-<h2>The Financial Document Challenge</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li>Financial analysis requires processing extensive text</li>
-<li>Key document types:
-<ul>
-<li>Annual reports (10-K, Annual Report)</li>
-<li>Quarterly filings (10-Q)</li>
-<li>Earnings call transcripts</li>
-<li>Proxy statements</li>
-<li>Prospectuses and offering memoranda</li>
-<li>Analyst reports</li>
-<li>News and press releases</li>
-</ul></li>
-<li>Traditional challenges:
-<ul>
-<li>Volume (often 100+ pages)</li>
-<li>Technical language</li>
-<li>Structured and unstructured elements</li>
-<li>Critical information dispersal</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
-</div></div>
-</section>
-<section id="named-entity-recognition-ner" class="slide level2">
-<h2>Named Entity Recognition (NER)</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li><strong>Definition</strong>: Identifying and classifying named entities in text</li>
-<li><strong>Traditional NER entities</strong>:
-<ul>
-<li>Person names</li>
-<li>Organizations</li>
-<li>Locations</li>
-<li>Dates</li>
-<li>Monetary values</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<ul>
-<li><strong>Financial-specific entities</strong>:
-<ul>
-<li>Financial metrics (EBITDA, ROE)</li>
-<li>Company products and services</li>
-<li>Business segments</li>
-<li>Regulatory references (SEC rules)</li>
-<li>Market terms (bull market, bear market)</li>
-</ul></li>
-</ul>
-</div></div>
-</section>
-<section class="slide level2">
-
-</section></section>
-<section>
-<section id="bonus-ai-agents-for-financial-analysis" class="title-slide slide level1 center">
-<h1>Bonus: AI Agents for Financial Analysis</h1>
-
-</section>
-<section id="beyond-single-task-llms-the-crewai-paradigm" class="slide level2">
-<h2>Beyond Single-Task LLMs: The CrewAI Paradigm</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li>Moving from standalone LLMs to <strong>agent crews</strong> for financial analysis</li>
-<li><strong>Defining characteristics</strong>:
-<ul>
-<li>Specialized agent roles with specific expertise</li>
-<li>Task-based decomposition of complex problems</li>
-<li>Coordinated workflow between agents</li>
-<li>Memory and context sharing across the crew</li>
-<li>Goal-directed collaborative behavior</li>
-<li>Tool and API orchestration</li>
-<li>Multi-step reasoning with handoffs</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
-</div></div>
-</section>
-<section id="financial-agent-architecture-part-1" class="slide level2">
-<h2>Financial Agent Architecture: Part 1</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li><strong>CrewAI Structure</strong>:
-<ul>
-<li><strong>Crew</strong>: The orchestrating entity managing the workflow</li>
-<li><strong>Agents</strong>: Specialized financial experts with defined roles</li>
-<li><strong>Tasks</strong>: Discrete financial analysis activities</li>
-<li><strong>Tools</strong>: External resources and capabilities</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<!-- Placeholder for content -->
-</div></div>
-</section>
-<section id="financial-agent-architecture-part-2" class="slide level2">
-<h2>Financial Agent Architecture: Part 2</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li><strong>Key Elements</strong>:
-<ul>
-<li><strong>Role Definition</strong>: Clear expertise boundaries</li>
-<li><strong>Task Assignment</strong>: Matching tasks to optimal agents</li>
-<li><strong>Workflow Design</strong>: Sequential and parallel execution paths</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<ul>
-<li><strong>Critical Components</strong>:
-<ul>
-<li><strong>Memory Systems</strong>: Shared knowledge repository</li>
-<li><strong>Tool Integration</strong>: Access to financial resources</li>
-<li><strong>Decision Framework</strong>: How conclusions are reached</li>
-<li><strong>Feedback Loops</strong>: Self-improvement mechanisms</li>
-</ul></li>
-</ul>
-</div></div>
-</section>
-<section id="whats-next" class="slide level2">
-<h2>What’s Next?</h2>
-<ul>
-<li>Practical session: Applying LLMs to financial valuation</li>
-<li>Case study: Valuing a technology company (e.g., TSLA)</li>
-<li>Working with large financial documents</li>
-<li>Forecasting cashflows and selecting comparables</li>
-<li>Preview of Day 4: Advanced LLM Applications in Finance</li>
-</ul>
+<section id="document-embedding-the-preferred-approach" class="slide level2">
+<h2>Document Embedding: The Preferred Approach</h2>
+<p><strong>Workflow 3: Document Embedding (Most Robust)</strong> - <strong>Method:</strong> Uses vector embeddings to find peers with the most similar business descriptions from filings like 10-Ks. 1. Embed the business description section of the target company’s 10-K into a vector. 2. Do the same for all candidate companies. 3. Calculate the cosine similarity between the target’s vector and all candidate vectors. 4. Select peers with the highest similarity scores (smallest distance).</p>
+<p><strong>Document Embedding Formula:</strong> To create a single vector for a document, we aggregate the embeddings of its constituent tokens:</p>
+<p><span class="math display">\[E_{doc} = \frac{1}{N} \sum_{i=1}^{N} e_{token_i}\]</span></p>
+<p>Where <span class="math inline">\(E_{doc}\)</span> is the final document embedding, <span class="math inline">\(N\)</span> is the number of tokens, and <span class="math inline">\(e_{token_i}\)</span> is the embedding of the i-th token.</p>
 <div class="quarto-auto-generated-content">
 <p><img src="../../images/logo_header.svg" class="slide-logo"></p>
 <div class="footer footer-default">

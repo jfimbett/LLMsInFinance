@@ -11,3 +11,10 @@
       - E.g. a job as a data scientist can include tasks such as data cleaning, data analysis, model building, and model deployment.
       - Private Equity analysts need to search for deals, analyze documents, pitch to clients, and negotiate terms.
   - AI will automate some of these tasks, but not all of them. Your value will come from being more efficient at the tasks that AI cannot do.
+
+  ## Minimum Software Requirements
+
+  - **Anaconda**: Python distribution 
+  -- **Git** and **GitHub CLI** 
+  - **VS Code**: Code editor
+  - **Rust**: Programming language used by most tokenizers.

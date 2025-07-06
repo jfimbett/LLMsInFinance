@@ -11,7 +11,7 @@ Virtual environments allow you to create isolated Python environments for your p
 ::: {.column width="60%"}
 ```bash
 # Create a new conda environment
-conda create -n llm-finance python=3.10
+conda create -n llm-finance python=3.8
 
 # Activate the environment
 conda activate llm-finance
@@ -36,18 +36,18 @@ conda install -c conda-forge jupyter pandas numpy matplotlib scikit-learn
 Create a `requirements.txt` file with the following content:
 
 ```txt
-torch>=2.0.0
-transformers>=4.30.0
-datasets>=2.12.0
-accelerate>=0.20.0
-sentencepiece>=0.1.99
-evaluate>=0.4.0
-python-dotenv>=1.0.0
-openai>=1.0.0
-gradio>=3.36.0
-matplotlib>=3.7.1
-pandas>=2.0.0
-scikit-learn>=1.2.2
+torch
+transformers
+datasets
+accelerate
+sentencepiece
+evaluate
+python-dotenv
+openai
+gradio
+matplotlib
+pandas
+scikit-learn
 ```
 
 Then install using:

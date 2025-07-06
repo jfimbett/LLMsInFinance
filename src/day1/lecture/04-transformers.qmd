@@ -27,42 +27,42 @@
 - **Parallelizable**: No sequential dependencies like RNNs
 
 
+## Quick Transformer recipe (plain-English version)
 
-## The recipe: Part 1
+### 1. Get the words ready
+- **Break the sentence into tokens** (small pieces: words or sub-words).  
+- **Turn each token into a list of numbers** (a vector).  
+- **Add its place in the sentence to that list** so the model knows the order.
+
+### 2. Encoder – do this **N** times
+- Each token **looks at all the other tokens** and decides which ones matter most for its meaning.  
+- The token’s vector then **goes through a small neural network** that tweaks it.  
+- A **shortcut adds the old vector to the new one**, and a quick re-scaling step keeps the numbers stable.
+
+*Result: a set of richer vectors that store everything the model has learned about the input—its “memory.”*
+
+## Quick Transformer recipe Part 2
+
+### 3. Decoder – do this **N** times while generating
+1. **Embed** the words already produced, with their positions.  
+2. Each token **can only look back at earlier tokens**, never forward, so it can’t peek at the future.  
+3. It also **looks at the encoder’s memory** to find helpful parts of the source sentence.  
+4. The vector again **passes through the small neural net, the shortcut, and the stabilizing step**.
+
+### 4. Choose the next word
+- The final vector is **turned into scores for every word in the vocabulary**.  
+- Those scores are **converted to probabilities** (they add up to 1).  
+- Pick one word (greedy, top-k, nucleus, beam search, etc.), **append it**, and repeat Step 3 until you hit an end-of-sentence token or a length limit.
 
 
-- **Tokenise** the *source* sentence and add start/end markers  
-- **Embed** each token **+** add positional encodings
 
-- **Encoder (× N layers)**  
-  - Multi-head **self-attention**  
-  - Position-wise **feed-forward network**  
-  - **Residual connection + LayerNorm** after each sub-layer  
+## New words you just met
+- **Token**: a chunk of text (often a piece of a word).  
+- **Vector**: a list of numbers that represents a token.  
+- **Attention**: the act of deciding how much other tokens matter.  
+- **Memory**: the set of vectors coming out of the encoder.  
+- **Shortcut (skip connection)**: adding the old vector to the new one so learning is smoother.
 
-- Cache the resulting **encoder hidden states** (the "memory")
-
-
-
-## The recipe: Part 2
-
-
-- **Decoder (run autoregressively)**  
-  1. Embed the generated prefix tokens **+** positional encodings.  
-  2. **Masked self-attention** (each token sees only ≤ current position).  
-  3. **Cross-attention** over the encoder memory (lets the decoder “look back” at the source).  
-  4. Feed-forward → Residual → LayerNorm.  
-  5. **Linear projection** (tied to embeddings) → **softmax** → probability distribution.  
-  6. **Select** the next token (greedy, top-k, nucleus, beam, …), append it, and repeat until ⟨end of sentence EOS⟩ or a maximum length.
-
-
-## New vocabulary?
-
-- **Self-Attention**: Mechanism allowing each token to attend to all other tokens in the sequence, capturing dependencies regardless of distance.
-- **Multi-Head Attention**: Multiple self-attention mechanisms running in parallel, allowing the model to capture different types of relationships.
-- **Feed-Forward Network (FFN)**: A fully connected neural network applied to each position independently, typically with a ReLU (Rectified Linear Unit) activation.
-- **Positional Encoding**: Adds information about the position of each token in the sequence, since transformers do not have a built-in notion of order.
-- **Residual Connection**: A shortcut connection that adds the input of a layer to its output, helping to prevent vanishing gradients in deep networks.
-- **Layer Normalization**: A technique to stabilize and accelerate training by normalizing the inputs to each layer, applied after residual connections.
 
 
 ## Step 1: Input Embeddings
@@ -83,93 +83,85 @@ $$
 - This is inefficient, especially for large vocabularies, as it results in high-dimensional sparse vectors
 - Instead, we use a **learnable embedding matrix** $\mathbf{E} \in \mathbb{R}^{V \times d_{\text{model}}}$, where $d_{\text{model}}$ is typically much smaller than $V$
 
-## Step 1: Positional Encoding
+## Steps 1–2 · Tokens → Input Vectors  
 
-- If token $t$ is represented by index $j$, its embedding is given by the $j$-th row of 
+**Step 1 — Tokenise & Embed**  
+- Break the sentence into **tokens** (words or sub-words).  
+- Look up each token’s **embedding** (a fixed list of numbers):  
+  $$\mathbf{e}_j = \mathbf{x}_j^\top \mathbf{E}$$  
+  *(turn a token ID into a vector).*
+
+**Step 2 — Add Position Information**  
+Transformers need order, so we add a **positional encoding**:  
 $$
-\mathbf{e}_j = \mathbf{x}_j^T \mathbf{E} = \mathbf{E}_j
+PE_{(pos,2i)}   = \sin\!\Bigl(\tfrac{pos}{10000^{2i/d_{\text{model}}}}\Bigr),\quad
+PE_{(pos,2i+1)} = \cos\!\Bigl(\tfrac{pos}{10000^{2i/d_{\text{model}}}}\Bigr)
+$$  
+**Input vector** $=$ embedding $+$ position.  
+
+---
+
+## Steps 3–4 · Create Attention Weights  
+
+**Step 3 — Queries, Keys, Values**  
+For every input vector $\mathbf{x}_i$:  
 $$
+\mathbf{q}_i = \mathbf{x}_i\mathbf{W}^Q,\quad
+\mathbf{k}_i = \mathbf{x}_i\mathbf{W}^K,\quad
+\mathbf{v}_i = \mathbf{x}_i\mathbf{W}^V
+$$  
+These three vectors let each token compare itself with every other token.
 
-### Positional Encoding
-Since transformers have no inherent notion of position, we add positional information:
+**Step 4 — Attention Calculation**  
+$$
+\text{Attention}(\mathbf{Q},\mathbf{K},\mathbf{V})
+=
+\underset{\text{weights}}{\text{softmax}\!\Bigl(\tfrac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_k}}\Bigr)}
+\;\mathbf{V}
+$$  
 
-$$PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)$$
+*Softmax:* $\displaystyle\text{softmax}(z_i)=\frac{e^{z_i}}{\sum_j e^{z_j}}$.  
+Turns raw scores into probabilities that add up to 1.  
 
-$$PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)$$
+---
 
-**Final input**: $\text{input}_i = \text{embedding}_i + PE_i$
+## Steps 5–6 · Multi-Head & Feed-Forward  
 
+**Step 5 — Multi-Head Attention**  
+Run the attention process $h$ times in parallel:  
+$$
+\text{head}_t=\text{Attention}(\mathbf{Q}\mathbf{W}^Q_t,\,
+\mathbf{K}\mathbf{W}^K_t,\,
+\mathbf{V}\mathbf{W}^V_t)
+$$  
+$$
+\text{MultiHead}=\text{Concat}(\text{head}_1,\dots,\text{head}_h)\,\mathbf{W}^O
+$$  
+Each head can learn a different pattern (nearby words, long-distance links, syntax, …).
 
+**Step 6 — Feed-Forward Layer (per position)**  
+$$
+\text{FFN}(x)=\underbrace{\max(0,\,x\mathbf{W}_1+\mathbf{b}_1)}_{\text{ReLU}}\,
+\mathbf{W}_2+\mathbf{b}_2
+$$  
+*ReLU:* $\text{ReLU}(u)=\max(0,u)$ — keeps positives, zeroes negatives.
 
-## Step 2: Self-Attention Mechanism - The Core
+---
 
-### Queries, Keys, and Values
-For each token embedding $\mathbf{x}_i$, we create three vectors:
+## Steps 7–8 · Residuals, LayerNorm & Probabilities  
 
-$$\mathbf{q}_i = \mathbf{x}_i \mathbf{W}^Q \quad \text{(Query)}$$
-$$\mathbf{k}_i = \mathbf{x}_i \mathbf{W}^K \quad \text{(Key)}$$  
-$$\mathbf{v}_i = \mathbf{x}_i \mathbf{W}^V \quad \text{(Value)}$$
+**Step 7 — Keep Training Stable**  
+- **Residual (skip) connection:** $x+\text{sublayer}(x)$  
+  *(sublayer = Multi-Head or FFN).*  
+- **Layer Normalization** rescales the result:  
+  $$\text{LayerNorm}(u)=\frac{u-\mu}{\sigma}\gamma+\beta$$  
+  so its mean = 0 and variance = 1.
 
-Where $\mathbf{W}^Q, \mathbf{W}^K, \mathbf{W}^V \in \mathbb{R}^{d_{\text{model}} \times d_k}$ are learned parameter matrices.
+**Step 8 — From Vectors to Words**  
+1. A **linear layer** turns the final hidden vector into one score per vocabulary word (logits).  
+2. **Softmax** on those logits → probabilities.  
+3. Pick the next token (greedy, top-$k$, nucleus, beam, …), append it, and repeat the decoder loop until an ⟨EOS⟩ token or length limit is reached.
 
-
-
-## Step 3: Computing Attention - The Intuition
-
-### Attention Formula
-$$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}$$
-
-### Step-by-step breakdown:
-
-1. **Dot product**: $\mathbf{Q}\mathbf{K}^T$ gives similarity scores between all pairs
-2. **Scale**: Divide by $\sqrt{d_k}$ to prevent softmax saturation
-3. **Normalize**: Apply softmax to get attention weights
-4. **Weighted sum**: Multiply by values $\mathbf{V}$
-
-## Step 3: Attention Visualization
-
-![Attention Visualization](../../images/transformers1.png)
-
-- Each token attends to all other tokens
-- Attention weights determine how much information flows
-- Self-attention is the key to capturing dependencies regardless of distance
-- This replaces the need for recurrence in traditional RNNs
-
-## Step 4: Multi-Head Attention
-
-- Single attention mechanism provides limited representational power
-- **Multi-head attention** runs multiple attention computations in parallel
-- Each "head" learns different relationship patterns:
-  - Some heads focus on nearby words
-  - Others capture long-range dependencies
-  - Some track syntactic relationships
-
-$$\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \text{head}_2, ..., \text{head}_h)\mathbf{W}^O$$
-
-Where each head is computed as:
-$$\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)$$
-
-## Step 5: Feed-Forward Networks
-
-- After attention, each position goes through identical feed-forward networks
-- Applied to each position separately and identically
-- Consists of two linear transformations with a ReLU activation in between:
-
-$$\text{FFN}(x) = \max(0, x\mathbf{W}_1 + \mathbf{b}_1)\mathbf{W}_2 + \mathbf{b}_2$$
-
-- This introduces non-linearity and allows the model to transform the representation
-
-## Step 6: Residual Connections & Layer Normalization
-
-- **Residual connections** help with training deep networks:
-  - Add the input of each sub-layer to its output: $x + \text{Sublayer}(x)$
-  - Allows gradients to flow through the network more easily
-
-- **Layer normalization** stabilizes the learning process:
-  - Normalizes the inputs across the features
-  - Applied after each residual connection
-
-$$\text{LayerNorm}(x + \text{Sublayer}(x))$$
 
 ## Transformer Model Applications
 

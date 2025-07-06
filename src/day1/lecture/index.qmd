@@ -30,8 +30,6 @@ format:
 
 {{< include 04-transformers.qmd >}}
 
-{{< include 07-softmax-token-generation.qmd >}}
-
 {{< include 05-tokenizers.qmd >}}
 
 {{< include 06-llm-classification.qmd >}}

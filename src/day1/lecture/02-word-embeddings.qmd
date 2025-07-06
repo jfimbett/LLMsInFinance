@@ -32,7 +32,7 @@
 - Pros: Simple and Fast to compute
 - Cons: Inefficient, high-dimensional, and does not capture relationships between words
 
-### TF-IDF (Term Frequency-Inverse Document Frequency)
+### One dimensional TF-IDF (Term Frequency-Inverse Document Frequency)
 - Weighs words based on their frequency in a document relative to their frequency across a corpus. 
 - Helps identify important terms in documents
 Formula
@@ -45,12 +45,10 @@ IDF(w) = \log\frac{N}{n(w)}
 \end{align*}
 $$
 
-Where:
-- \( f(w, d) \): Frequency of word \( w \) in document \( d \)
-- \( |d| \): Total number of words in document \( d \)
-- \( N \): Total number of documents in the corpus
-- \( n(w) \): Number of documents containing word \( w \)
-- Example:
+Where: $f(w, d)$ Frequency of word $w$ in document $d$. $|d|$: Total number of words in document $d$. $N$: Total number of documents in the corpus, $n(w)$: Number of documents containing word $w$.
+
+
+## Example:
 ```
 Doc 1: "The quick brown fox jumps over the lazy dog."
 Doc 2: "The lazy dog sleeps all day."
@@ -71,6 +69,8 @@ IDF("quick") = log(2/1) = log(2)
 TF-IDF("quick", Doc 1) = (1/9) * log(2) 
 TF-IDF("quick", Doc 2) = 0
 ```
+
+## Supervised Learning Methods
 
 ### Word2Vec
 - Meaning of a word based from its surrounding words. 

@@ -2,9 +2,6 @@
 
 ## LLM Classification Framework
 
-:::: {.columns}
-
-::: {.column width="60%"}
 **By Architecture:**
 - **Autoregressive (Decoder-only)**: GPT family, Claude, Llama
 - **Autoencoding (Encoder-only)**: BERT, RoBERTa, DistilBERT
@@ -15,17 +12,6 @@
 - **Fine-tuning**: Task-specific supervised learning
 - **Instruction-following**: Trained to follow human instructions
 - **Reinforcement Learning from Human Feedback (RLHF)**
-:::
-
-::: {.column width="40%"}
-![LLM Classification](../../images/llm_classification_placeholder.png)
-:::
-
-::::
-
----
-
-## Model Architecture Types
 
 ### Autoregressive Models (Decoder-only)
 - **Examples**: GPT-3/4, Claude, Llama, Mistral
@@ -41,6 +27,8 @@
 - **Advantages**: Bidirectional context, efficient for understanding
 - **Disadvantages**: Cannot generate text naturally
 
+## Encoder-Decoder Models
+
 ### Encoder-Decoder Models
 - **Examples**: T5, BART, FLAN-T5
 - **Training**: Various objectives (span corruption, denoising)
@@ -48,7 +36,6 @@
 - **Advantages**: Flexible for both understanding and generation
 - **Disadvantages**: More complex architecture
 
----
 
 ## Training Paradigms
 
@@ -65,7 +52,7 @@ $$P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})$$
 - Mask contiguous spans of text
 - Predict the masked spans
 
----
+
 
 ## Model Scale Categories
 
@@ -76,7 +63,7 @@ $$P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})$$
 | **Large** | 10B-100B | GPT-3, T5-XXL | Strong performance, higher compute |
 | **Extra Large** | 100B+ | GPT-4, PaLM, Claude | State-of-the-art, very high compute |
 
----
+
 
 ## Specialized LLM Categories
 
@@ -95,11 +82,11 @@ $$P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})$$
 - **Claude 3**: Image understanding
 - **DALL-E 3**: Text-to-image generation
 
----
+
 
 # LLM Providers
 
-## Frontier Labs (Global Leaders)
+## Global Leaders
 
 | Company | Flagship or Latest LLM(s) (2024 – 25) | Brief description |
 |---------|---------------------------------------|-------------------|
@@ -109,7 +96,6 @@ $$P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})$$
 | **Microsoft (Azure AI)** | Phi-3 / Phi-4 SLM family | Compact open-source "small language models"; also resells OpenAI models via Azure |
 | **Meta** | Llama 4 (Scout & Maverick) | Open-weight, natively-multimodal successor to Llama 2/3 |
 
----
 
 ## Big Tech & Hardware Companies
 
@@ -120,7 +106,7 @@ $$P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})$$
 | **xAI** | Grok 3 (Think / Fast) | Elon Musk-backed lab focused on real-time reasoning and openness |
 | **NVIDIA** | Nemotron-4 340B | Open models optimised for synthetic-data generation and self-training |
 
----
+
 
 ## Enterprise & Specialized Players (Part 1)
 
@@ -133,7 +119,6 @@ $$P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})$$
 | **Snowflake** | Arctic | 128 k-context Apache-licensed model for cost-efficient enterprise AI |
 | **IBM** | Granite 4.0 family | Trustworthy, business-oriented models aligned with EU AI Act |
 
----
 
 ## Enterprise & Specialized Players (Part 2)
 
@@ -146,16 +131,15 @@ $$P(\text{sequence}) = \prod_{i=1}^{n} P(x_i | x_1, \ldots, x_{i-1})$$
 | **Aleph Alpha** | Luminous / Pharia | European sovereign stack with explainability APIs |
 | **Together AI** | RedPajama-v2 & training-as-a-service | Open datasets + cloud for fine-tuning and hosting OSS models |
 
----
 
-## China Ecosystem 
+## China's Ecosystem 
 
 What makes China's LLM ecosystem unique is its rapid development, large-scale models, and focus on domestic applications. The Chinese government has also been supportive of AI initiatives, leading to a vibrant ecosystem.
 
 The US has banned the export of advanced chips to China, which has led to a focus on developing indigenous AI capabilities. Chinese companies are also focusing on building large-scale models that can handle the Chinese language and cultural context effectively.
 
 
-
+## China's LLM Providers
 
 | Company | Flagship or Latest LLM(s) (2024 – 25) | Brief description |
 |---------|---------------------------------------|-------------------|
@@ -168,7 +152,6 @@ The US has banned the export of advanced chips to China, which has led to a focu
 | **DeepSeek** | DeepSeek-V3 (671 B MoE) | Open-weight MoE excelling at maths & code |
 | **01.AI** | Yi-1.5 (6 B → 34 B) | Apache-licensed zh-en models for community fine-tuning |
 
----
 
 ## Open-Source & Community
 
@@ -179,4 +162,3 @@ The US has banned the export of advanced chips to China, which has led to a focu
 | **Cerebras Systems** | Cerebras-GPT family | 111 M → 13 B models trained on wafer-scale CS-2 hardware |
 | **Ollama** | Ollama LLMs | Open-source models with a focus on simplicity and ease of use |
 
-- [A Survey of LLM Surveys](https://github.com/NiuTrans/ABigSurveyOfLLMs)

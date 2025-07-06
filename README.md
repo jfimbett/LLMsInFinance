@@ -18,34 +18,18 @@ By the end of this course, you will be able to:
 
 ## 🗓️ Course Structure
 
-The course is organized into 5 days, each with lecture materials and hands-on practical sessions:
+The course is organized into 5 days, with currently available materials for Day 0 and Day 1:
 
 ### 📌 Day 0: Course Introduction
 - **Lecture**: Instructor introduction, course overview, learning outcomes
-- **Practical**: Environment setup, course materials access, first LLM interaction
 
-#### Pre-Course Checklist
-
-Before Day 1, please ensure you have completed:
-
-- [ ] **Environment Setup**: Python 3.10+, virtual environment created
-- [ ] **Course Materials**: Repository cloned and accessible
-- [ ] **API Accounts**: OpenAI and Hugging Face accounts created
-- [ ] **Dependencies**: All required packages installed
-- [ ] **Test Run**: Completed the introductory exercises
-
-#### Hardware Requirements
-- **Laptop** with 8GB+ RAM
-- **Stable internet** connection
-- **Power adapter** for all-day sessions
-
-### 📌 Day 1: Getting Started with LLMs
+### 📌 Day 1: Introduction to Large Language Models
 - **Lecture**: Introduction to LLMs, architectures, capabilities, and limitations
 - **Practical**: 
   - Environment setup and package installation
   - Git and version control
-  - HuggingFace model usage
-  - OpenAI and DeepSeek API integration
+  - HuggingFace setup
+  - LLM APIs
 
 #### Day 1 Practical Notebooks
 
@@ -66,7 +50,7 @@ Before Day 1, please ensure you have completed:
 
 4. **LLM APIs**
    - OpenAI API integration
-   - DeepSeek API integration
+   - Other API integrations
    - Environment variable management
    - Financial news sentiment analyzer project
 
@@ -76,29 +60,102 @@ For Day 1 practical session, you can use:
 - Windows: Run `setup.bat` in the day1/practical-session directory
 - macOS/Linux: Run `bash setup.sh` in the day1/practical-session directory
 
-### 📌 Day 2: LLMs for Financial Analysis
-- **Lecture**: LLMs for financial texts, sentiment analysis, information extraction
-- **Practical**: 
-  - Financial sentiment analysis
-  - Named entity recognition in financial documents
-  - Report summarization and information extraction
+## 🛠️ Technical Requirements
 
-#### Day 2 Practical Notebooks
+### Prerequisites
+- Python 3.10+
+- Git
+- Jupyter notebook environment
+- API keys for LLM services (OpenAI/etc.)
 
-1. **Train Your Own LLM**
-   - Build and train a character-level language model using PyTorch
-   - Understand the fundamentals of neural language models
-   - Experience training optimization for CPU/GPU
-   - Generate text from your trained model
+### Installation
 
-2. **LLMs Under the Hood**
-   - Explore key LLM hyperparameters (temperature, top-k, top-p)
-   - Visualize the effects of different sampling strategies
-   - Understand embeddings and their role in LLMs
-   - Learn how context length affects model performance
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/jfimbett/LLMsInFinance.git
+   cd LLMsInFinance
+   ```
 
-3. **Memory, Buffer, Cache, and Automatic Calls**
-   - Implement different memory systems (simple, summary, vector-based)
+2. Create and activate a virtual environment:
+   ```bash
+   # For Windows
+   python -m venv venv
+   venv\Scripts\activate
+
+   # For macOS/Linux
+   python -m venv venv
+   source venv/bin/activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Configure your API keys:
+   - Create a `.env` file in the root directory
+   - Add your API keys (do not commit this file to version control):
+     ```
+     OPENAI_API_KEY=your_openai_key_here
+     HUGGINGFACE_API_KEY=your_huggingface_key_here
+     ```
+
+   > **Note on API Usage**: Some notebooks use the OpenAI API and other commercial services. Please be aware of potential usage costs when running certain cells. Free tier limits may be sufficient for educational purposes, but monitor your usage.
+
+5. Launch Jupyter for the practical sessions:
+   ```bash
+   jupyter notebook
+   ```
+
+## 📂 Repository Structure
+
+```
+LLMsInFinance/
+├── LICENSE
+├── README.md
+├── requirements.txt
+├── src/
+│   ├── day0/           # Course introduction
+│   ├── day1/           # Introduction to Large Language Models
+│   ├── images/         # Shared images for lectures and notebooks
+```
+
+Each day folder contains:
+- `lecture/`: Presentation materials in HTML format
+- `practical-session/` (where applicable): Jupyter notebooks with hands-on exercises
+
+## 🤝 Contributing
+
+Contributions to improve the course materials are welcome. Please feel free to submit a pull request or open an issue.
+
+## ❓ Troubleshooting
+
+If you encounter issues while setting up or running the course materials:
+
+- **Environment Setup**:
+  - Ensure you have the correct Python version (3.10+)
+  - Try creating a fresh virtual environment
+  - Check that all dependencies are installed correctly
+
+- **API Connectivity**:
+  - Verify your API keys are correctly set in the `.env` file
+  - Check your internet connection
+  - Ensure you have sufficient quota/credits for the API services
+
+- **Jupyter Notebooks**:
+  - If cells are slow to execute, consider reducing model sizes or batch sizes
+  - For memory errors, restart the kernel and run only essential cells
+  - Use `%debug` magic command to troubleshoot errors in code cells
+
+For additional help, please open an issue on the GitHub repository.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📧 Contact
+
+Juan F. Imbet - Course Instructor
    - Create caching mechanisms for efficient LLM usage
    - Develop automatic function calling for financial applications
    - Build a financial assistant with memory and tool use capabilities

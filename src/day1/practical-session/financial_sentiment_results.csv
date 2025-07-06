@@ -1,0 +1,11 @@
+text,id,sentiment,confidence
+"Apple Inc. reported record quarterly revenue of $123.9 billion, exceeding analyst expectations.",1,positive,0.9398807883262634
+Tesla stock plummeted 15% following disappointing delivery numbers for Q3.,2,negative,0.9743738770484924
+"The Federal Reserve maintained interest rates at current levels, signaling a cautious approach.",3,neutral,0.4056265950202942
+Microsoft Azure cloud services showed strong growth with 50% year-over-year increase.,4,positive,0.9580538868904114
+Oil prices surged to $85 per barrel amid supply chain disruptions in the Middle East.,5,positive,0.7353265881538391
+"The unemployment rate fell to 3.5%, indicating a robust labor market recovery.",6,negative,0.8798969984054565
+"Cryptocurrency markets experienced volatility with Bitcoin dropping below $30,000.",7,negative,0.9602308869361877
+Inflation concerns continue to weigh on consumer sentiment and spending patterns.,8,negative,0.9439870715141296
+Goldman Sachs upgraded its outlook for emerging markets in the upcoming quarter.,9,positive,0.93441241979599
+Tech IPOs showed mixed results with some companies struggling to meet initial valuations.,10,negative,0.9725144505500793

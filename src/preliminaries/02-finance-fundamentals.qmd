@@ -259,10 +259,3 @@ As we transition into the main course material, consider these ways LLMs are imp
 ## Conclusion
 
 This guide has covered the fundamental concepts of business valuation that will serve as a foundation for our exploration of LLMs in finance. Remember that valuation is both an art and a science—financial models provide a framework, but judgment and context remain critically important.
-
-## Further Resources
-
-- [Damodaran Online](http://pages.stern.nyu.edu/~adamodar/) - Professor Aswath Damodaran's extensive resources on valuation
-- [Financial Modeling Prep](https://financialmodelingprep.com/) - Financial statements and data
-- [CFA Institute](https://www.cfainstitute.org/) - Educational resources on equity valuation
-- [Investopedia](https://www.investopedia.com/) - Explanations of financial concepts

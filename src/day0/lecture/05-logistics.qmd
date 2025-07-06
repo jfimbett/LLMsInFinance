@@ -12,7 +12,7 @@
       - Private Equity analysts need to search for deals, analyze documents, pitch to clients, and negotiate terms.
   - AI will automate some of these tasks, but not all of them. Your value will come from being more efficient at the tasks that AI cannot do.
 
-  ## Minimum Software Requirements
+  ## Minimum Software Requirements (for the practical sessions) 
 
   - **Anaconda**: Python distribution 
   -- **Git** and **GitHub CLI** 

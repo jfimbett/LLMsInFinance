@@ -1,14 +1,16 @@
 ## Valuation Fundamentals: DCF Foundation & Challenges
 
-**The Core DCF Formula:**
 
-$$\text{Enterprise Value} = \sum_{t=1}^{T}\frac{\text{FCFF}_t}{(1+WACC)^t} + \frac{\text{TV}_T}{(1+WACC)^T}$$
+**The Core DCF Formula: Discount Cash Flows**
 
-**From EBIT to Free Cash Flow:**
+$$\text{Enterprise Value} = \mathbb{E} \Big(\sum_{t=1}^{T}\frac{\text{FCFF}_t}{(1+WACC)^t} + \frac{\text{TV}_T}{(1+WACC)^T}\Big)$$
+
+We will focus mainly on the Free Cash Flow to the Firm (cash that is available to all stakeholders) and the Free Cash Flow to Equity (cash available to equity holders after all expenses, debt payments, and reinvestment).
 
 $$FCFF_t = EBIT_t(1-\tau) + D\&A_t - CapEx_t - \Delta NWC_t$$
 
 Where:
+
 - $FCFF_t$ = Free Cash Flow to the Firm in period $t$
 - $WACC$ = Weighted Average Cost of Capital  
 - $TV_T$ = Terminal Value at forecast end
@@ -90,12 +92,21 @@ $$= \frac{0.75 + 0.03 - 0.15 - 0.02}{0.07} = \frac{0.61}{0.07} = 8.7x$$
 
 **Key Takeaway:** Multiples ARE DCF models in disguise!
 
+## Multiples: Market-Based Valuation
+
+**Common Multiples:**
+- **EV/EBITDA**: Enterprise Value to EBITDA
+- **P/E**: Price to Earnings
+- **P/B**: Price to Book Value
+- **P/S**: Price to Sales
+
+- The idea is to believe that the multiple of a firm behaves ***similarly*** to the multiple of a comparable firm. Since even across similar firms, multiples can vary, we compare the multiple of a firm to the average (or median) multiple of its peers. 
+- The best guess of the multiple of your firm is the average (or median) multiple of its peers.
+- Who are these peers?
+
 ## Triangulation & LLM Applications
 
-:::: {.columns}
-
-::: {.column width="50%"}
-**Why Use Both Methods:**
+**Why Use Both Methods (when available):**
 
 **DCF provides intrinsic value:**
 - Forward-looking and company-specific
@@ -108,27 +119,28 @@ $$= \frac{0.75 + 0.03 - 0.15 - 0.02}{0.07} = \frac{0.61}{0.07} = 8.7x$$
 - Incorporates market expectations
 
 **Best Practice: Establish a valuation range**
-:::
 
-::: {.column width="50%"}
-**LLM Solution for DCF:**
+## How can LLMs help in DCF?
 
-**Traditional Challenge:**
-- 10-K filings: 200+ pages of dense text
-- Key data scattered across sections
-- Manual extraction is time-intensive
+**Identify Challenges:**
+- Data collection: 
+    - Quantitative data outside expensive databases. 
+    - Qualitative data capturing expectations, risks, and opportunities.
+    - LLMs can help extract information from unstructured data sources like earnings calls, news articles, and reports.
+- Forecasting:
+    - LLMs can forecast performance measures (e.g. returns) based on current market conditions, news, and financial reports (Lopez-Lira and Tang, 2023).
+    - LLMs can help forecast the impact of a new product, a new patent, or a new regulation on the company.
+- Automation:
+    - AI agents can automate the computation of free cash flows, terminal value, and discount rates. 
 
-**LLM Capabilities:**
-- **Named Entity Recognition (NER)** for data extraction
-- **Chunking** to handle large documents
-- Process overlapping blocks, aggregate results
+## How can LLMs help in Multiples?
+**Identify Peers:**
+- Straightforward task, ask the LLM to identify peers (with and without) access to external tools. 
+    - Pros: Fast, easy, and can provide a large number of peers.
+    - Cons: Hallucination risk, especially if the LLM is not trained on financial data.
+- Compute an informed cluster of peers based on financial information. 
+- Use document embeddings to project companies reports into high dimensional spaces, and pick the closest companies to the target company. 
+    
 
-**Key Extracted Elements:**
-- Historical revenue, EBIT, cash flow data
-- CapEx patterns and guidance
-- Working capital trends
-- Management commentary on growth drivers
-- One-time items for normalized earnings
-:::
 
-::::
+

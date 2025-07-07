@@ -30,7 +30,4 @@ format:
 
 {{< include 03-zero-one-multiple-shot-prompts.qmd >}}
 
-{{< include 04-tracing-thoughts.qmd >}}
-
-{{< include 05-ghost-in-the-machine.qmd >}}
 

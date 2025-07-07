@@ -1,66 +1,110 @@
 # Reasoning Models: Beyond Next Token Prediction
 
-## From Token Generation to Reasoning Chains
+## How Regular LLMs Work vs. Reasoning Models
 
-- **Traditional LLM prediction**:
-  - Single forward pass: $P(x_{t+1} | x_1, x_2, ..., x_t)$
-  - Direct mapping from context to next token
-  - Temperature controls randomness in sampling
-  - No explicit intermediate reasoning steps
-  
-- **Reasoning models approach**:
-  - Multi-step generation: $P(goal | reasoning\_chain)$
-  - Explicit intermediate thought tokens
-  - Chain-of-thought: $P(answer | context, thoughts)$
-  - Goal-oriented sequence generation
+:::: {.columns}
 
-- **Mathematical distinction**:
+::: {.column width="55%"}
+- **How regular LLMs work**:
+  - Like completing a sentence one word at a time
+  - Just predicts "what comes next" based on what it's seen
+  - No explicit thinking steps in between
+  - Example: "The capital of France is ___" → "Paris"
   
-  **Standard generation**:
-  $$P(x_{t+1}) = \text{softmax}(W_o h_t)$$
-  
-  **Reasoning generation**:
-  $$P(answer) = \prod_{i=1}^{n} P(t_i | c, t_{1:i-1}) \times P(a | c, t_{1:n})$$
-  
-  Where:
-  - $t_i$ = thought/reasoning step $i$
-  - $c$ = context
-  - $a$ = final answer
-  - $n$ = number of reasoning steps
-  
-- **Key difference**: Intermediate reasoning states influence final outcome
+- **What reasoning models do differently**:
+  - Think step-by-step before answering
+  - Show their work like a student solving a math problem
+  - Break complex problems into smaller pieces
+  - Example: "What's 13×27?" → "First I'll multiply 3×7=21, then..."
+:::
 
-## Mathematical Framework of Reasoning Models
+::: {.column width="45%"}
+- **In everyday terms**:
+  
+  **Regular LLM**: 
+  - Like a quick gut reaction
+  - "I just know the answer is X"
+  
+  **Reasoning Model**: 
+  - Like explaining your thought process
+  - "I think X because of A, B, and C"
+  
+- **Why this matters**:
+  - Complex financial problems need step-by-step thinking
+  - We want to see how the model reached its conclusion
+  - Helps catch mistakes in the reasoning process
+  - More transparent and trustworthy outputs
+:::
 
-- **Standard next-token prediction**:
-  $$P(x_{t+1} | x_{1:t}) = \frac{e^{z_{t+1}}}{\sum_{v \in V} e^{z_v}}$$
-  
-  Where:
-  - $z_{t+1} = W_o h_t + b_o$ = logits for next token
-  - $V$ = vocabulary
-  - $h_t$ = hidden state at position $t$
-  
-- **Reasoning chain generation**:
-  $$P(R) = \prod_{i=1}^{n} P(r_i | c, r_{1:i-1})$$
-  
-  $$P(A | R) = P(a | c, r_{1:n})$$
-  
-  Where:
-  - $R$ = reasoning chain
-  - $r_i$ = reasoning step $i$
-  - $A$ = final answer
+::::
 
-::: {.column width="40%"}
-- **Temperature in reasoning context**:
+
+
+## What Are Reasoning Chains?
+
+:::: {.columns}
+
+::: {.column width="55%"}
+- **A reasoning chain is**:
+  - A sequence of logical steps: $R = \{r_1, r_2, ..., r_n\}$
+  - Where each $r_i$ is one clear thinking step
+  - These steps connect a question to an answer
+  - Like showing your work in a math problem
   
-  **Standard softmax with temperature**:
+- **Example: Multi-step reasoning**
+  
+  **Question**: "What will happen if we mix baking soda and vinegar?"
+  
+  **Reasoning chain**:
+  1. $r_1$: "Baking soda is sodium bicarbonate (NaHCO₃)"
+  2. $r_2$: "Vinegar contains acetic acid (CH₃COOH)"
+  3. $r_3$: "When acids and bases mix, they neutralize each other"
+  4. $r_4$: "This reaction produces water, salt, and carbon dioxide gas"
+  
+  **Answer**: "The mixture will fizz and bubble as CO₂ gas is released"
+:::
+
+::: {.column width="45%"}
+- **Benefits of reasoning chains**:
+  
+  **Transparency**:
+  - Shows exactly how a conclusion was reached
+  - Creates audit trail for verification
+  - Helps explain decisions to others
+  
+  **Error detection**:
+  - Easier to spot flawed assumptions
+  - Can identify missing considerations
+  - Enables targeted improvement of analyses
+  
+  - Reasoning chains document expert thinking
+  - Makes complex analysis more teachable
+  - Helps learners understand solution paths
+:::
+
+::::
+
+## The Math Behind Reasoning Chains
+
+:::: {.columns}
+
+::: {.column width="55%"}
+- **Regular LLM** predicts next token:
+  $$P(x_{t+1} | x_1, x_2, ..., x_t)$$
+  
+- **Reasoning Model** builds step-by-step:
+  $$P(A) = \prod_{i=1}^{n} P(r_i | Q, r_{1:i-1}) \times P(A | Q, r_{1:n})$$
+  
+  Where: $r_i$ = reasoning step, $Q$ = question, $A$ = answer
+:::
+
+::: {.column width="45%"}
+- **Temperature** controls exploration:
   $$P(x_i) = \frac{e^{z_i/T}}{\sum_{j} e^{z_j/T}}$$
   
-  **Reasoning requires $T > 0$ because**:
-  - Need exploration of reasoning paths
-  - Multiple valid intermediate steps
-  - Diversity in thought processes
-  - Avoiding reasoning dead-ends
+  - **High T**: Creative, diverse paths
+  - **Low T**: Focused, consistent
+  - **Zero T**: Only most likely path
 :::
 
 ::::
@@ -69,385 +113,106 @@
 
 :::: {.columns}
 
-::: {.column width="60%"}
-- **Mathematical constraint**: $T \to 0$ leads to deterministic selection
+::: {.column width="55%"}
+- **What happens when temperature is zero**:
   $$\lim_{T \to 0} P(x_i) = \begin{cases} 
   1 & \text{if } i = \arg\max_j z_j \\
   0 & \text{otherwise}
   \end{cases}$$
   
-- **Problem with deterministic reasoning**:
-  - Only one reasoning path explored
-  - No recovery from sub-optimal intermediate steps
-  - Reasoning becomes brittle and inflexible
-  - Cannot explore alternative valid approaches
+  In plain English: The model always picks the single most likely option at each step, with no room for exploration
+  
+- **Why this is bad for complex reasoning**:
+  - It's like always taking the first path you see
+  - No ability to backtrack if you hit a dead end
+  - Can't consider alternative approaches
+  - Gets trapped if the first step isn't perfect
 :::
 
-::: {.column width="40%"}
-- **Reasoning examples**:
+::: {.column width="45%"}
+- **Real-world example: Investment analysis**
   
-  **Problem**: Solve a complex multi-step problem
+  **With zero temperature**:
+  - Model might only consider one economic factor
+  - Gets stuck in a single analysis framework
+  - Cannot adjust reasoning if assumptions are flawed
   
-  **With $T = 0$ (deterministic)**:
-  - Always chooses same first reasoning step
-  - Cannot explore alternative approaches
-  - Gets stuck if initial assumption is suboptimal
-  
-  **With $T > 0$ (stochastic)**:
-  - Can explore multiple solution methods
-  - Considers different assumptions
-  - Allows for uncertainty quantification
+  **With some temperature (T > 0)**:
+  - Explores multiple economic scenarios
+  - Considers different valuation methodologies
+  - Can recover from initial incorrect assumptions
+  - Produces more robust financial analysis
 :::
 
 ::::
 
-## Reasoning Chain Decomposition
+## Information Theory Basics
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- **Entropy in reasoning**:
+  $$H(R_i) = -\sum_{r_i} P(r_i | context) \log P(r_i | context)$$
+  
+  - Measures uncertainty in reasoning steps
+  - Enables exploration of multiple solutions
+:::
+
+::: {.column width="50%"}
+- **Practical implications**:
+  - Balance between creativity and consistency
+  - More entropy → diverse solutions
+  - Less entropy → focused problem-solving
+:::
+
+::::
+
+## How Models Choose the Best Way to Think
 
 :::: {.columns}
 
 ::: {.column width="60%"}
-- **Multi-step probability factorization**:
-  $$P(A | Q) = \sum_{R} P(A | R) \times P(R | Q)$$
+- **Exploring multiple thinking paths**:
+  Like a chess player considering several moves ahead
   
-  Where:
-  - $A$ = answer
-  - $Q$ = question  
-  - $R$ = reasoning path
+  - Keep track of the most promising reasoning paths
+  - Score each path based on how logical it sounds
+  - Drop paths that don't make sense
   
-- **Each reasoning step**:
-  $$P(r_i | c, r_{1:i-1}) = \text{softmax}\left(\frac{f_\theta(c, r_{1:i-1})}{T}\right)$$
-  
-  Where:
-  - $r_i$ = reasoning step $i$
-  - $c$ = context
-  - $T$ = temperature
-  
-- **Final answer conditioning**:
-  $$P(A | R) = \text{softmax}\left(\frac{g_\theta(R)}{T_f}\right)$$
-  
-  Where $T_f$ = final temperature
+- **Quality control for reasoning**:
+  - Does this step make logical sense?
+  - Is this factually accurate?
+  - Are there any contradictions?
 :::
 
 ::: {.column width="40%"}
-- **Temperature effects across reasoning**:
+- **Why this approach is powerful**:
   
-  **High temperature ($T > 1$)**:
-  - More diverse reasoning paths
-  - Higher creativity in problem-solving
-  - Risk of incoherent reasoning
+  **Reliability**:
+  - Multiple ways to solve the same problem
+  - If one path goes wrong, others can catch it
+  - Cross-checking between different approaches
   
-  **Moderate temperature ($0.3 < T < 1$)**:
-  - Balanced exploration vs. exploitation
-  - Coherent but diverse reasoning
-  - Optimal for most complex problems
-  
-  **Low temperature ($T \to 0$)**:
-  - Deterministic, rigid reasoning
-  - Cannot recover from mistakes
-  - Limited problem-solving capability
-:::
-
-::::
-## Information Theory of Reasoning
-
-- **Entropy in reasoning steps**:
-  $$H(R_i) = -\sum_{r_i} P(r_i \mid \text{context},\, r_{1:i-1}) \log P(r_i \mid \text{context},\, r_{1:i-1})$$
-  
-- **Total reasoning entropy**:
-  $$H(\text{Reasoning}) = \sum_{i=1}^{n} H(R_i \mid R_{1:i-1})$$
-  
-- **Conditional mutual information**:
-  $$I(A;\, R \mid Q) = H(A \mid Q) - H(A \mid Q,\, R)$$
-  
-  Where:
-  - $A$ = Answer
-  - $R$ = Reasoning Path
-  - $Q$ = Question
-  - $I(A;\, R \mid Q)$ = Mutual information between Answer and Reasoning Path given Question
-  - $H(A \mid Q)$ = Entropy of Answer given Question
-  - $H(A \mid Q,\, R)$ = Entropy of Answer given Question and Reasoning Path
-  
-- **Why entropy matters in reasoning**:
-  - Zero entropy ($T = 0$): $H(R_i) = 0$ for all reasoning steps — deterministic, no exploration, cannot adapt to new information
-  - Positive entropy ($T > 0$): $H(R_i) > 0$ allows exploration, can discover optimal reasoning paths, adapts to intermediate findings
-  - General implications: complex analysis requires uncertainty handling; multiple valid analytical approaches; need to explore scenario variations
-::::
-
-## Reasoning vs. Direct Prediction: Mathematical Comparison
-
-- **Direct prediction complexity**:
-  $$P(answer \mid question) = \text{softmax}(W_o h_{final})$$
-  
-  Single forward pass, $O(|V|)$ complexity for final softmax
-  
-- **Reasoning model complexity**:
-  $$P(answer \mid question) = \sum_{paths} \prod_{i=1}^{n} P(r_i \mid context, r_{1:i-1}) \times P(answer \mid reasoning)$$
-  
-  Multiple forward passes, $O(n \times |V|)$ complexity
-  
-- **Computational trade-offs**:
-  
-  **Direct prediction**:
-  - Fast inference: $O(1)$ forward pass
-  - Limited reasoning capability
-  - Suitable for simple tasks
-  
-  **Reasoning models**:
-  - Slower inference: $O(n)$ forward passes
-  - Enhanced problem-solving
-  - Required for complex analytical tasks
-  
-- **Quality vs. efficiency trade-off**:
-  - Reasoning models: higher accuracy, slower
-  - Direct models: faster, limited capability
-
-## Temperature Scheduling in Reasoning
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Adaptive temperature across reasoning steps**:
-  $$T_i = T_0 \times \text{schedule}(i, context, partial\_reasoning)$$
-  
-- **Common scheduling strategies**:
-  
-  **Linear decay**: $T_i = T_0 \times (1 - \frac{i}{n})$
-  
-  **Exponential decay**: $T_i = T_0 \times e^{-\lambda i}$
-  
-  **Content-aware**: $T_i = f(confidence, complexity, stakes)$
-:::
-
-::: {.column width="40%"}
-- **Temperature strategies for different task types**:
-  
-  **High-precision tasks** (mathematical computation):
-  - Start with $T_0 = 0.3$ (conservative)
-  - Decay to $T_{final} = 0.1$ (precise)
-  
-  **Exploratory analysis** (research, brainstorming):
-  - Start with $T_0 = 0.8$ (creative)
-  - Maintain $T > 0.5$ throughout
-  
-  **Mixed reasoning tasks**:
-  - Variable temperature based on step type
-  - Lower $T$ for computational steps
-  - Higher $T$ for interpretation steps
+  **Confidence measurement**:
+  - When all paths agree → high confidence
+  - When paths disagree → lower confidence
+  - Shows uncertainty ranges in analysis
 :::
 
 ::::
 
-## Reasoning Path Optimization
 
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Beam search in reasoning space**:
-  Keep top-$k$ reasoning paths at each step
-  
-  $$\text{Score}(path) = \frac{1}{|path|} \sum_{i=1}^{|path|} \log P(r_i | context, r_{1:i-1})$$
-  
-- **Path pruning criteria**:
-  - Coherence score below threshold
-  - Logical inconsistency detection
-  - Factual accuracy verification
-  - Domain-specific validity checks
-:::
-
-::: {.column width="40%"}
-- **Multi-path reasoning benefits**:
-  
-  **Robustness**:
-  - Multiple valid approaches to same problem
-  - Cross-validation of reasoning steps
-  - Error detection through inconsistency
-  
-  **Uncertainty quantification**:
-  - Confidence from path agreement
-  - Range estimation from path diversity
-  - Risk assessment from reasoning variance
-  
-- **Example**: Multi-step problem solving
-  - Path 1: Conservative assumptions
-  - Path 2: Optimistic conditions
-  - Path 3: Stress-test scenarios
-:::
-
-::::
-
-## Self-Consistency and Verification
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Self-consistency scoring**:
-  Generate $m$ reasoning paths, measure agreement
-  
-  $$\text{Consistency} = \frac{1}{m(m-1)} \sum_{i \neq j} \text{similarity}(answer_i, answer_j)$$
-  
-- **Reasoning verification**:
-  $$P(correct | reasoning) = \sigma(W_v \cdot h_r)$$
-  
-  Where:
-  - $W_v$ = verification network weights
-  - $h_r$ = reasoning embedding
-  - $\sigma$ = sigmoid function
-:::
-
-::: {.column width="40%"}
-- **Why temperature enables verification**:
-  
-  **With $T > 0$**:
-  - Generate diverse reasoning samples
-  - Check consistency across approaches
-  - Identify robust vs. fragile conclusions
-  
-  **With $T = 0$**:
-  - Only one reasoning path
-  - No verification possible
-  - Cannot assess answer reliability
-  
-- **Verification example**:
-  - Multiple solution approaches
-  - Cross-check with alternative methods
-  - Sensitivity analysis across scenarios
-:::
-
-::::
 
 ## Reasoning Model Architectures
 
-- **Chain-of-Thought (CoT)**:
+- **Chain-of-Thought (CoT)**: Finds the best reasoning path
   $$P(answer \mid question) = P(answer \mid question, thoughts) \times P(thoughts \mid question)$$
   - Linear reasoning progression, simple to implement and understand, good for sequential analytical tasks
 
-- **Tree-of-Thoughts (ToT)**:
+- **Tree-of-Thoughts (ToT)**: At every step, explores multiple reasoning paths
   $$P(answer \mid question) = \max_{tree} \left( P(answer \mid question, tree) \times P(tree \mid question) \right)$$
   - Branching reasoning exploration, better for scenario analysis, higher computational cost
 
-- **Graph-of-Thoughts (GoT)**:
+- **Graph-of-Thoughts (GoT)**: Identifies complex relationships between reasoning steps
   $$P(answer \mid question) = \sum_{graph} P(answer \mid question, graph) \times P(graph \mid question)$$
   - Complex relationship modeling, best for interconnected systems, highest computational complexity
-
-## Generic Applications of Reasoning Models
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Mathematical problem solving**:
-  1. Problem decomposition and analysis
-  2. Method selection and justification
-  3. Step-by-step solution development
-  4. Result verification and validation
-  5. Alternative approach exploration
-  
-- **Complex decision making**:
-  1. Information gathering and analysis
-  2. Criteria identification and weighting
-  3. Option evaluation and comparison
-  4. Trade-off analysis and reasoning
-  5. Final decision justification
-:::
-
-::: {.column width="40%"}
-- **Mathematical requirements**:
-  
-  **Each reasoning step needs $T > 0$**:
-  - Explore alternative analytical approaches
-  - Consider multiple scenario outcomes
-  - Adapt to intermediate findings
-  - Maintain reasoning flexibility
-  
-  **Example temperature settings**:
-  - Mathematical computation: $T = 0.4$
-  - Creative problem solving: $T = 0.7$
-  - Logical analysis: $T = 0.3$
-  - Hypothesis generation: $T = 0.6$
-:::
-
-::::
-
-## Limitations and Future Directions
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Current limitations**:
-  - Reasoning length constraints
-  - Computational cost scaling
-  - Quality assessment challenges
-  - Integration with external knowledge
-  
-- **Mathematical challenges**:
-  - Optimizing temperature schedules
-  - Balancing exploration vs. exploitation
-  - Measuring reasoning quality objectively
-  - Handling reasoning contradictions
-:::
-
-::: {.column width="40%"}
-- **Future research directions**:
-  
-  **Adaptive reasoning**:
-  - Dynamic reasoning length
-  - Context-aware temperature setting
-  - Real-time quality assessment
-  
-  **Hybrid approaches**:
-  - Reasoning + retrieval integration
-  - Multi-modal reasoning incorporation
-  - External tool usage in reasoning
-  
-  **Domain-specific developments**:
-  - Domain-constrained reasoning
-  - Quality assurance verification
-  - Context-aware reasoning temperature
-:::
-
-::::
-
-## Practical Implementation Considerations
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- **Temperature selection guidelines**:
-  
-  **High-precision tasks**: $T \in [0.1, 0.4]$
-  - Mathematical computation
-  - Logical verification
-  - Rule-based reasoning
-  
-  **Analytical tasks**: $T \in [0.4, 0.7]$
-  - Problem decomposition
-  - Method selection
-  - Strategy development
-  
-  **Creative tasks**: $T \in [0.7, 1.0]$
-  - Hypothesis generation
-  - Alternative exploration
-  - Innovation brainstorming
-:::
-
-::: {.column width="40%"}
-- **Quality control mechanisms**:
-  
-  **Reasoning validation**:
-  - Logical consistency checking
-  - Factual accuracy verification
-  - Domain knowledge compliance
-  - Mathematical correctness validation
-  
-  **Temperature optimization**:
-  - A/B testing different temperature ranges
-  - Performance monitoring across tasks
-  - Expert evaluation of reasoning quality
-  - Automated reasoning assessment metrics
-  
-- **Production considerations**:
-  - Latency vs. quality trade-offs
-  - Caching common reasoning patterns
-  - Fallback to simpler models when needed
-:::
-
-::::

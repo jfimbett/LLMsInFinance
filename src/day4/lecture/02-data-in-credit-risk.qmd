@@ -1,0 +1,107 @@
+# Data Used in Credit Risk Modeling
+
+## Structured Financial Data
+
+### Demographic Information
+- Age, gender, marital status
+- Geographic location
+- Employment details and tenure
+- Education level
+
+### Financial Metrics
+- **Income**: Monthly/annual earnings
+- **Assets**: Savings, investments, property
+- **Liabilities**: Existing debts, obligations
+- **Cash flow**: Income vs. expenses
+
+### Credit History
+- Previous loan performance
+- Credit utilization patterns
+- Payment history and defaults
+- Credit inquiries and applications
+
+## Traditional Credit Scoring Variables
+
+### What is FICO?
+- **FICO (Fair Isaac Corporation)**: Most widely used credit scoring model in the US
+- **Score Range**: 300-850, with higher scores indicating lower credit risk
+- **Purpose**: Predicts likelihood of 90+ day delinquency in next 24 months
+- **Usage**: Used by 90% of top lenders for credit decisions
+
+### FICO Score Components
+- **Payment history** (35%)
+- **Credit utilization** (30%)
+- **Length of credit history** (15%)
+- **Credit mix** (10%)
+- **New credit inquiries** (10%)
+
+### Banking Relationship Data
+- Account balances and transactions
+- Direct deposits and income patterns
+- Overdraft frequency
+- Savings behavior
+
+## Unstructured Data Sources
+
+### Textual Information
+- **Loan application essays**: Purpose and plans
+- **Customer service transcripts**: Support interactions
+- **Email communications**: Correspondence history
+- **Social media**: Public posts and connections
+
+### Alternative Data
+- **Utility payments**: Phone, electricity, internet
+- **Rent payments**: Housing payment history
+- **Employment verification**: HR confirmations
+- **Educational records**: Degrees and certifications
+
+## Labels in Credit Risk Models
+
+### Binary Classification
+```
+Default Status:
+- 0: No default (good customer)
+- 1: Default (bad customer)
+```
+
+### Continuous Proxy Variables
+- **Probability of default**: 0.0 to 1.0
+- **Credit score**: 300 to 850 (FICO)
+- **Risk rating**: A, B, C, D, E grades
+
+### Time-to-Event Labels
+- Days until first missed payment
+- Months until default
+- Survival analysis approaches
+
+## Data Quality Challenges
+
+### Missing Data
+- Incomplete application forms
+- Unavailable credit history (thin-file customers)
+- Inconsistent reporting across sources
+
+### Data Bias
+- Historical lending practices
+- Geographic and demographic biases
+- Sampling bias in training data
+
+### Regulatory Considerations
+- Fair lending requirements
+- Privacy regulations (GDPR, CCPA)
+- Explainability requirements
+- Prohibited variables (race, religion, etc.)
+
+## Modern Data Integration
+
+### Multi-Source Fusion
+- Traditional credit bureau data
+- Bank transaction history
+- Alternative data providers
+- Real-time behavioral signals
+
+### Data Preprocessing
+- Normalization and standardization
+- Feature engineering
+- Handling missing values
+- Outlier detection and treatment

@@ -1,0 +1,252 @@
+## What *is* an AI Agent?
+
+> **Definition**  
+> An **AI agent** is an *autonomous* computational entity that **perceives** its environment, **reasons** about what it observes, and **acts** to achieve goals.  
+
+**Core capabilities**
+
+- Performs goal-directed tasks  
+- Chooses actions without constant external control  
+- Uses *tools* or actuators to affect the world  
+- Can **communicate** with other agents/humans  
+- Maintains internal **memory** of past interactions  
+- May **delegate** subtasks to peers when beneficial
+
+---
+
+## Desirable Agent Properties
+
+| Property        | Description                                   |
+|-----------------|-----------------------------------------------|
+| **Autonomy**    | Operates without step-by-step human guidance |
+| **Reactivity**  | Responds to perceptual changes in real time  |
+| **Pro-activity**| Initiates actions to pursue long-term goals  |
+| **Sociality**   | Exchanges information or negotiates with others |
+| **Robustness**  | Handles uncertainty, partial failure, or noise |
+
+These qualities distinguish agents from passive software modules.
+
+
+## Architectural Building Blocks
+
+- **Sensors / Tool Interfaces** – acquire state, data, feedback  
+- **Knowledge Base** – facts, learned embeddings, episodic memory  
+- **Reasoner / Planner** – search, logic, optimization, or LLM prompting  
+- **Actuators / Effectors** – APIs, external services, code execution  
+- **Messaging Layer** – channels for inter-agent communication
+
+---
+
+## Agent Typology
+
+1. **Simple reflex** – rules on current percept only  
+2. **Model-based reflex** – maintains internal world state  
+3. **Goal-based** – reasons over desired end conditions  
+4. **Utility-based** – optimizes quantitative preference function  
+5. **Learning agents** – improve performance via experience  
+
+**Observation:** Types (3)–(5) generally yield more flexible behavior, at higher computational cost.
+
+---
+
+## Environments Matter
+
+| Dimension          | Values (examples)               |
+|--------------------|---------------------------------|
+| **Deterministic** vs **Stochastic** | Chess / Roulette |
+| **Episodic** vs **Sequential**      | Image labeling / Driving |
+| **Static** vs **Dynamic**           | Crossword / Stock market |
+| **Discrete** vs **Continuous**      | Grid world / Robot arm |
+
+Design choices (state representation, planning horizon, learning algorithm) depend heavily on the environment’s position in this taxonomy.
+
+---
+
+## From Solo Agents to **Crews**
+
+> A *crew* is an organized team of agents, each with a specialized **role**, working together under a shared **process** to accomplish a complex objective.
+
+**Coordination mechanisms**
+
+- *Task decomposition* and delegation  
+- Shared context or blackboard memory  
+- Role-based communication protocols  
+- Orchestrator or process manager to resolve conflicts
+
+Crews deliver human-like division of labor while preserving autonomy at the individual level.
+
+---
+
+## Specifying an Agent (Metadata)
+
+- **Role** – concise description of expertise  
+- **Goal** – statement of objective or success criterion  
+- **Backstory / Persona** – contextual flavor; guides responses  
+- **Constraints** – time, token budget, execution safety  
+- **Toolset** – allowed external capabilities  
+- **Resource limits** – max iterations, retries, rate limits  
+- **Delegation policy** – whether and how it may spawn sub-tasks  
+
+Capturing these attributes in configuration promotes reproducibility and easier composition into crews.
+
+---
+
+## Case Study: VP of Risk's AI Agent Crew
+
+### Business Context
+**You are the Vice President of Risk** at a regional bank processing 1,000+ loan applications monthly. Instead of hiring 20+ human analysts, you design an AI agent crew to handle the entire credit risk workflow.
+
+### Traditional Team Structure (What You're Replacing)
+- **Senior Risk Analysts** (3-4 people) - Complex case analysis
+- **Junior Risk Analysts** (8-10 people) - Initial screening and data gathering  
+- **Financial Specialists** (2-3 people) - Ratio analysis and financial modeling
+- **Report Writers** (2-3 people) - Documentation and client communication
+- **Customer Service** (3-4 people) - Applicant interaction and follow-up
+
+---
+
+## Agent 1: Senior Risk Analyst
+
+### **Role**: Lead Credit Risk Assessor
+**Goal**: Make final credit decisions on complex applications
+
+### **Backstory**
+15+ years experience, CRM certified, specializes in commercial lending
+
+### **Key Responsibilities**
+- Review high-value applications (>$500K)
+- Override decisions from junior agents when needed
+- Handle edge cases and exceptions
+- Escalate to human VP only for policy violations
+
+### **Why This Agent Matters**
+- **Decision authority** - Final say on complex cases
+- **Experience simulation** - Mimics senior analyst judgment
+- **Quality control** - Ensures consistent high standards
+
+---
+
+## Agent 2: Data Intelligence Specialist
+
+### **Role**: Credit Data Collector and Validator
+**Goal**: Gather comprehensive, accurate applicant information
+
+### **Backstory**
+Detail-oriented analyst with expertise in financial data sources
+
+### **Key Responsibilities**
+- Pull credit bureau reports and bank statements
+- Verify employment and income documentation
+- Cross-reference multiple data sources
+- Flag inconsistencies or missing information
+
+### **Why This Agent Matters**
+- **Data quality** - Foundation for all subsequent analysis
+- **Efficiency** - Automated data gathering 24/7
+- **Accuracy** - Reduces human error in data collection
+
+---
+
+## Agent 3: Financial Analysis Expert
+
+### **Role**: Quantitative Risk Modeler
+**Goal**: Calculate precise risk metrics and financial ratios
+
+### **Backstory**
+CFA with strong mathematical background and modeling expertise
+
+### **Key Responsibilities**
+- Compute debt-to-income, loan-to-value ratios
+- Run stress tests and scenario analysis
+- Apply credit scoring models
+- Generate probability of default estimates
+
+### **Why This Agent Matters**
+- **Quantitative rigor** - Mathematical precision in risk assessment
+- **Consistency** - Same calculations every time
+- **Speed** - Complex analysis in seconds, not hours
+
+---
+
+## Agent 4: Document Specialist
+
+### **Role**: Professional Report Writer
+**Goal**: Create clear, compliant credit memos and decisions
+
+### **Backstory**
+Technical writer with banking compliance knowledge
+
+### **Key Responsibilities**
+- Draft loan committee presentations
+- Write credit decision letters
+- Ensure regulatory compliance in all documentation
+- Maintain audit trail documentation
+
+### **Why This Agent Matters**
+- **Professional communication** - Clear, consistent messaging
+- **Compliance** - Built-in regulatory adherence
+- **Audit trail** - Complete documentation for reviews
+
+---
+
+## Agent 5: Customer Relations Manager
+
+### **Role**: Applicant Communication Coordinator
+**Goal**: Maintain positive customer experience throughout process
+
+### **Backstory**
+Customer service professional with lending product knowledge
+
+### **Key Responsibilities**
+- Send status updates to applicants
+- Handle requests for additional documentation
+- Explain decisions and next steps
+- Manage follow-up for approved loans
+
+### **Why This Agent Matters**
+- **Customer satisfaction** - Positive experience regardless of decision
+- **Transparency** - Clear communication at every step
+- **Efficiency** - Immediate responses to customer inquiries
+
+---
+
+## Agent 6: Compliance Officer
+
+### **Role**: Regulatory Oversight Specialist
+**Goal**: Ensure all decisions meet fair lending and banking regulations
+
+### **Backstory**
+Former bank examiner with deep regulatory knowledge
+
+### **Key Responsibilities**
+- Review decisions for fair lending compliance
+- Check prohibited factors aren't influencing decisions
+- Maintain required documentation standards
+- Generate regulatory reports
+
+### **Why This Agent Matters**
+- **Risk mitigation** - Prevents regulatory violations
+- **Audit readiness** - Always examination-ready
+- **Fair lending** - Ensures equal treatment for all applicants
+
+---
+
+## **Task Delegation Flow**
+
+### **Phase 1: Initial Assessment**
+- **Senior Risk Analyst** delegates to **Data Intelligence Specialist**
+- Data agent collects application information and validates completeness
+- **Senior Risk Analyst** delegates to **Financial Analysis Expert**
+- Financial agent calculates risk metrics and ratios
+
+### **Phase 2: Decision Making**
+- **Senior Risk Analyst** reviews all inputs and makes credit decision
+- Delegates communication tasks to **Customer Relations Manager**
+- Delegates documentation to **Document Specialist**
+- Delegates compliance review to **Compliance Officer**
+
+### **Delegation Authority Rules**
+- **Only Senior Risk Analyst** can delegate major analytical tasks
+- **Sub-managers** can request additional data but cannot delegate to peers
+- **Support agents** work independently but report back to Senior Risk Analyst
+- **Compliance Officer** has veto power over any decision for regulatory issues

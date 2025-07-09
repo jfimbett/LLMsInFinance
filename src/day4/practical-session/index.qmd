@@ -1,45 +1,63 @@
-```quarto
-// filepath: c:\Users\jimbet\Dropbox\Teaching\LLM\LLMsInFinance\src\day4\practical-session\index.qmd
 ---
-title: "Day 4: Practical Session - Credit Risk and Advanced LLM Applications"
-author: "Your Name"
-date: "2025-05-11"
+title: "Day 4: Practical Session - AI Agents for Credit Risk"
+author: "Juan F. Imbet"
+date: "2025-07-09"
 format:
-  html:
-    theme: cosmo
-    toc: true
-    code-fold: true
-    code-tools: true
+  revealjs:
+    theme: default
+    slide-number: true
+    preview-links: auto
+    css: ../../styles.css
+    logo: ../../images/logo_header.svg
 ---
 
-# LLMs for Credit Risk and Advanced Applications
+# Building AI Agents for Credit Risk Analysis
 
-## Overview
+## Overview of Today's Practical Session
 
-In this practical session, we will explore how Large Language Models can be applied to credit risk assessment and other advanced financial applications. We'll examine how LLMs can enhance traditional credit analysis methods, work with mathematical problems, and use transformer architectures beyond text data. The session focuses on:
-
-1. Fine-tuning models for credit default prediction
-2. Simulating complex household financial decisions
-3. Building practical applications for real-world financial scenarios
+- Generate synthetic credit application data
+- Train LLM-based credit risk models
+- Build multi-agent systems with CrewAI
+- Create automated credit risk reports
+- Evaluate model performance and agent effectiveness
 
 ## Session Structure
 
-The practical session is divided into three main notebooks:
+### Part 1: Data Generation (30 minutes)
+- Create synthetic credit application dataset
+- Include structured and unstructured data
+- Generate realistic default probabilities
 
-1. **Fine-tuning for Default Probability**: Techniques for fine-tuning BERT models to predict loan default probabilities, including data preparation, model training, evaluation, and calibration of probabilities.
+### Part 2: Model Training (30 minutes)
+- Process text data with embeddings
+- Train classification models
+- Evaluate performance metrics
 
-2. **Simulating Household Financial Decisions**: Using LLMs to simulate complex household financial decision-making processes under different economic scenarios, including budget constraints, risk preferences, and future planning.
+### Part 3: AI Agent Development (30 minutes)
+- Design multi-agent credit analysis system
+- Implement agent collaboration workflows
+- Generate automated risk reports
 
-3. **Building a Mortgage Rate Estimator**: Developing a practical application that estimates personalized mortgage rates based on client profiles using Flask and LLM-powered API systems.
+## Key Technologies
+
+- **CrewAI**: Multi-agent orchestration
+- **OpenAI API**: Language model integration
+- **Transformers**: Text processing and embeddings
+- **Scikit-learn**: Machine learning models
+- **Pandas**: Data manipulation and analysis
 
 ## Learning Objectives
 
 By the end of this session, you will be able to:
+- Generate realistic synthetic credit data
+- Implement LLM-based credit risk models
+- Design and deploy AI agent systems
+- Create automated credit analysis workflows
+- Evaluate the effectiveness of agent-based solutions
 
-- Fine-tune transformer models for financial prediction tasks
-- Properly calibrate and interpret model probabilities for risk assessment
-- Create simulations of complex financial decision-making processes
-- Build practical applications that integrate LLMs into financial workflows
-- Implement LLM-based APIs for financial services
-- Understand the strengths and limitations of LLMs in credit risk assessment
-```
+## Prerequisites
+
+- OpenAI API key configured
+- Required Python packages installed
+- Basic understanding of credit risk concepts
+- Familiarity with machine learning workflows

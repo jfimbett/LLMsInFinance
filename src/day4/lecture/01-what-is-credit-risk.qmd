@@ -1,0 +1,63 @@
+# What is Credit Risk?
+
+## Definition of Credit Risk
+
+**Credit Risk** is the probability that a borrower will fail to repay a loan or meet their contractual obligations.
+
+- **Default**: Complete failure to repay
+- **Delinquency**: Late payments or partial payments
+- **Credit loss**: Financial impact to the lender
+
+## Key Components of Credit Risk
+
+Credit risk assessment involves three main components:
+
+$$\text{Expected Loss} = \text{PD} \times \text{LGD} \times \text{EAD}$$
+
+- **PD**: Probability of Default (0-1)
+- **LGD**: Loss Given Default (0-1)
+- **EAD**: Exposure at Default (loan amount)
+
+## Types of Credit Risk
+
+### Personal Credit Risk
+- **Mortgage loans**: Real estate financing
+- **Credit cards**: Revolving credit
+- **Auto loans**: Vehicle financing
+- **Personal loans**: Unsecured lending
+
+### Corporate Credit Risk
+- **Term loans**: Business financing
+- **Lines of credit**: Working capital
+- **Bonds**: Corporate debt securities
+- **Trade credit**: B2B transactions
+
+## Traditional Risk Factors
+
+### Quantitative Factors
+- **Income stability**: Employment history, salary trends
+- **Debt-to-income ratio**: Existing obligations
+- **Credit history**: Past payment behavior
+- **Collateral value**: Security for the loan
+
+### Qualitative Factors
+- **Industry conditions**: Economic sector risks
+- **Management quality**: Leadership assessment
+- **Market position**: Competitive advantages
+- **Regulatory environment**: Compliance requirements
+
+## Credit Risk Assessment Timeline
+
+### Pre-Application
+- Customer acquisition and screening
+- Initial risk assessment
+
+### Application Review
+- Document verification
+- Credit scoring and modeling
+- Underwriting decision
+
+### Post-Approval Monitoring
+- Performance tracking
+- Early warning systems
+- Portfolio management

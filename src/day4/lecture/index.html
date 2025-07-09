@@ -10,9 +10,9 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <meta name="author" content="Your Name">
-  <meta name="dcterms.date" content="2025-05-11">
-  <title>Day 4: Advanced Financial Applications of LLMs</title>
+  <meta name="author" content="Juan F. Imbet">
+  <meta name="dcterms.date" content="2025-07-09">
+  <title>Day 4: LLMs in Credit Risk Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -328,77 +328,699 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Day 4: Advanced Financial Applications of LLMs</h1>
+  <h1 class="title">Day 4: LLMs in Credit Risk Analysis</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Your Name 
+Juan F. Imbet 
 </div>
 </div>
 </div>
 
-  <p class="date">2025-05-11</p>
+  <p class="date">2025-07-09</p>
 </section>
 <section>
-<section id="day-4-advanced-financial-applications-of-llms" class="title-slide slide level1 center">
-<h1>Day 4: Advanced Financial Applications of LLMs</h1>
+<section id="llms-in-credit-risk-analysis" class="title-slide slide level1 center">
+<h1>LLMs in Credit Risk Analysis</h1>
 
 </section>
-<section id="overview" class="slide level2">
-<h2>Overview</h2>
-<p>Today’s lectures focus on advanced applications of LLMs in finance, with special emphasis on credit risk assessment, mathematical capabilities, probability calibration, and using transformer architectures beyond text for financial prediction tasks.</p>
+<section id="overview-of-todays-lecture" class="slide level2">
+<h2>Overview of Today’s Lecture</h2>
+<ul>
+<li>Understanding credit risk fundamentals</li>
+<li>Traditional vs.&nbsp;modern approaches to credit risk modeling</li>
+<li>The role of structured and unstructured data</li>
+<li>AI agents for automated credit risk analysis</li>
+<li>Practical implementation with CrewAI</li>
+</ul>
+</section></section>
+<section>
+<section id="what-is-credit-risk" class="title-slide slide level1 center">
+<h1>What is Credit Risk?</h1>
+
 </section>
-<section id="todays-topics" class="slide level2">
-<h2>Today’s Topics</h2>
-<ol type="1">
-<li><a href="01-understanding-credit-risk.html">Understanding Credit Risk with LLMs</a>
+<section id="definition-of-credit-risk" class="slide level2">
+<h2>Definition of Credit Risk</h2>
+<p><strong>Credit Risk</strong> is the probability that a borrower will fail to repay a loan or meet their contractual obligations.</p>
 <ul>
-<li>Credit risk fundamentals</li>
-<li>Consumer and corporate credit assessment</li>
-<li>LLM applications in credit analysis</li>
-<li>Case studies and implementation considerations</li>
-</ul></li>
-<li><a href="02-llms-and-mathematics.html">Can LLMs Do Math?</a>
-<ul>
-<li>Mathematical capabilities and limitations of LLMs</li>
-<li>Performance benchmarks and evaluation</li>
-<li>Prompt engineering for mathematical tasks</li>
-<li>Financial mathematics applications</li>
-</ul></li>
-<li><a href="03-softmax-probabilities.html">Understanding Softmax Probabilities</a>
-<ul>
-<li>Softmax function fundamentals</li>
-<li>Calibration of model probabilities</li>
-<li>Translating to real-world probabilities</li>
-<li>Financial applications and case studies</li>
-</ul></li>
-<li><a href="04-beyond-text-transformers.html">Beyond Text: Transformers as Prediction Machines</a>
-<ul>
-<li>Transformer applications beyond natural language</li>
-<li>Time series and tabular data modeling</li>
-<li>Multimodal financial applications</li>
-<li>Case studies in financial prediction</li>
-</ul></li>
-</ol>
-</section>
-<section id="learning-objectives" class="slide level2">
-<h2>Learning Objectives</h2>
-<p>By the end of today, you will be able to:</p>
-<ul>
-<li>Understand how LLMs can enhance credit risk assessment</li>
-<li>Evaluate the mathematical capabilities of LLMs and apply them to financial problems</li>
-<li>Interpret and calibrate softmax probabilities for real-world applications</li>
-<li>Leverage transformer architectures for financial prediction tasks beyond text</li>
+<li><strong>Default</strong>: Complete failure to repay</li>
+<li><strong>Delinquency</strong>: Late payments or partial payments</li>
+<li><strong>Credit loss</strong>: Financial impact to the lender</li>
 </ul>
 </section>
-<section id="practical-applications" class="slide level2">
-<h2>Practical Applications</h2>
-<p>Today’s lectures will prepare you for the practical session, where you will:</p>
+<section id="key-components-of-credit-risk" class="slide level2">
+<h2>Key Components of Credit Risk</h2>
+<p>Credit risk assessment involves three main components:</p>
+<p><span class="math display">\[\text{Expected Loss} = \text{PD} \times \text{LGD} \times \text{EAD}\]</span></p>
 <ul>
-<li>Fine-tune a model to assess default probabilities</li>
-<li>Simulate complex household decisions with LLMs</li>
-<li>Develop an application that estimates mortgage rates based on client profiles ```</li>
+<li><strong>PD</strong>: Probability of Default (0-1)</li>
+<li><strong>LGD</strong>: Loss Given Default (0-1)</li>
+<li><strong>EAD</strong>: Exposure at Default (loan amount)</li>
+</ul>
+</section>
+<section id="types-of-credit-risk" class="slide level2">
+<h2>Types of Credit Risk</h2>
+<h3 id="personal-credit-risk">Personal Credit Risk</h3>
+<ul>
+<li><strong>Mortgage loans</strong>: Real estate financing</li>
+<li><strong>Credit cards</strong>: Revolving credit</li>
+<li><strong>Auto loans</strong>: Vehicle financing</li>
+<li><strong>Personal loans</strong>: Unsecured lending</li>
+</ul>
+<h3 id="corporate-credit-risk">Corporate Credit Risk</h3>
+<ul>
+<li><strong>Term loans</strong>: Business financing</li>
+<li><strong>Lines of credit</strong>: Working capital</li>
+<li><strong>Bonds</strong>: Corporate debt securities</li>
+<li><strong>Trade credit</strong>: B2B transactions</li>
+</ul>
+</section>
+<section id="traditional-risk-factors" class="slide level2">
+<h2>Traditional Risk Factors</h2>
+<h3 id="quantitative-factors">Quantitative Factors</h3>
+<ul>
+<li><strong>Income stability</strong>: Employment history, salary trends</li>
+<li><strong>Debt-to-income ratio</strong>: Existing obligations</li>
+<li><strong>Credit history</strong>: Past payment behavior</li>
+<li><strong>Collateral value</strong>: Security for the loan</li>
+</ul>
+<h3 id="qualitative-factors">Qualitative Factors</h3>
+<ul>
+<li><strong>Industry conditions</strong>: Economic sector risks</li>
+<li><strong>Management quality</strong>: Leadership assessment</li>
+<li><strong>Market position</strong>: Competitive advantages</li>
+<li><strong>Regulatory environment</strong>: Compliance requirements</li>
+</ul>
+</section>
+<section id="credit-risk-assessment-timeline" class="slide level2">
+<h2>Credit Risk Assessment Timeline</h2>
+<h3 id="pre-application">Pre-Application</h3>
+<ul>
+<li>Customer acquisition and screening</li>
+<li>Initial risk assessment</li>
+</ul>
+<h3 id="application-review">Application Review</h3>
+<ul>
+<li>Document verification</li>
+<li>Credit scoring and modeling</li>
+<li>Underwriting decision</li>
+</ul>
+<h3 id="post-approval-monitoring">Post-Approval Monitoring</h3>
+<ul>
+<li>Performance tracking</li>
+<li>Early warning systems</li>
+<li>Portfolio management</li>
+</ul>
+</section></section>
+<section>
+<section id="data-used-in-credit-risk-modeling" class="title-slide slide level1 center">
+<h1>Data Used in Credit Risk Modeling</h1>
+
+</section>
+<section id="structured-financial-data" class="slide level2">
+<h2>Structured Financial Data</h2>
+<h3 id="demographic-information">Demographic Information</h3>
+<ul>
+<li>Age, gender, marital status</li>
+<li>Geographic location</li>
+<li>Employment details and tenure</li>
+<li>Education level</li>
+</ul>
+<h3 id="financial-metrics">Financial Metrics</h3>
+<ul>
+<li><strong>Income</strong>: Monthly/annual earnings</li>
+<li><strong>Assets</strong>: Savings, investments, property</li>
+<li><strong>Liabilities</strong>: Existing debts, obligations</li>
+<li><strong>Cash flow</strong>: Income vs.&nbsp;expenses</li>
+</ul>
+<h3 id="credit-history">Credit History</h3>
+<ul>
+<li>Previous loan performance</li>
+<li>Credit utilization patterns</li>
+<li>Payment history and defaults</li>
+<li>Credit inquiries and applications</li>
+</ul>
+</section>
+<section id="traditional-credit-scoring-variables" class="slide level2">
+<h2>Traditional Credit Scoring Variables</h2>
+<h3 id="what-is-fico">What is FICO?</h3>
+<ul>
+<li><strong>FICO (Fair Isaac Corporation)</strong>: Most widely used credit scoring model in the US</li>
+<li><strong>Score Range</strong>: 300-850, with higher scores indicating lower credit risk</li>
+<li><strong>Purpose</strong>: Predicts likelihood of 90+ day delinquency in next 24 months</li>
+<li><strong>Usage</strong>: Used by 90% of top lenders for credit decisions</li>
+</ul>
+<h3 id="fico-score-components">FICO Score Components</h3>
+<ul>
+<li><strong>Payment history</strong> (35%)</li>
+<li><strong>Credit utilization</strong> (30%)</li>
+<li><strong>Length of credit history</strong> (15%)</li>
+<li><strong>Credit mix</strong> (10%)</li>
+<li><strong>New credit inquiries</strong> (10%)</li>
+</ul>
+<h3 id="banking-relationship-data">Banking Relationship Data</h3>
+<ul>
+<li>Account balances and transactions</li>
+<li>Direct deposits and income patterns</li>
+<li>Overdraft frequency</li>
+<li>Savings behavior</li>
+</ul>
+</section>
+<section id="unstructured-data-sources" class="slide level2">
+<h2>Unstructured Data Sources</h2>
+<h3 id="textual-information">Textual Information</h3>
+<ul>
+<li><strong>Loan application essays</strong>: Purpose and plans</li>
+<li><strong>Customer service transcripts</strong>: Support interactions</li>
+<li><strong>Email communications</strong>: Correspondence history</li>
+<li><strong>Social media</strong>: Public posts and connections</li>
+</ul>
+<h3 id="alternative-data">Alternative Data</h3>
+<ul>
+<li><strong>Utility payments</strong>: Phone, electricity, internet</li>
+<li><strong>Rent payments</strong>: Housing payment history</li>
+<li><strong>Employment verification</strong>: HR confirmations</li>
+<li><strong>Educational records</strong>: Degrees and certifications</li>
+</ul>
+</section>
+<section id="labels-in-credit-risk-models" class="slide level2">
+<h2>Labels in Credit Risk Models</h2>
+<h3 id="binary-classification">Binary Classification</h3>
+<pre><code>Default Status:
+- 0: No default (good customer)
+- 1: Default (bad customer)</code></pre>
+<h3 id="continuous-proxy-variables">Continuous Proxy Variables</h3>
+<ul>
+<li><strong>Probability of default</strong>: 0.0 to 1.0</li>
+<li><strong>Credit score</strong>: 300 to 850 (FICO)</li>
+<li><strong>Risk rating</strong>: A, B, C, D, E grades</li>
+</ul>
+<h3 id="time-to-event-labels">Time-to-Event Labels</h3>
+<ul>
+<li>Days until first missed payment</li>
+<li>Months until default</li>
+<li>Survival analysis approaches</li>
+</ul>
+</section>
+<section id="data-quality-challenges" class="slide level2">
+<h2>Data Quality Challenges</h2>
+<h3 id="missing-data">Missing Data</h3>
+<ul>
+<li>Incomplete application forms</li>
+<li>Unavailable credit history (thin-file customers)</li>
+<li>Inconsistent reporting across sources</li>
+</ul>
+<h3 id="data-bias">Data Bias</h3>
+<ul>
+<li>Historical lending practices</li>
+<li>Geographic and demographic biases</li>
+<li>Sampling bias in training data</li>
+</ul>
+<h3 id="regulatory-considerations">Regulatory Considerations</h3>
+<ul>
+<li>Fair lending requirements</li>
+<li>Privacy regulations (GDPR, CCPA)</li>
+<li>Explainability requirements</li>
+<li>Prohibited variables (race, religion, etc.)</li>
+</ul>
+</section>
+<section id="modern-data-integration" class="slide level2">
+<h2>Modern Data Integration</h2>
+<h3 id="multi-source-fusion">Multi-Source Fusion</h3>
+<ul>
+<li>Traditional credit bureau data</li>
+<li>Bank transaction history</li>
+<li>Alternative data providers</li>
+<li>Real-time behavioral signals</li>
+</ul>
+<h3 id="data-preprocessing">Data Preprocessing</h3>
+<ul>
+<li>Normalization and standardization</li>
+<li>Feature engineering</li>
+<li>Handling missing values</li>
+<li>Outlier detection and treatment</li>
+</ul>
+</section></section>
+<section>
+<section id="classical-vs.-llm-based-credit-risk-models" class="title-slide slide level1 center">
+<h1>Classical vs.&nbsp;LLM-based Credit Risk Models</h1>
+
+</section>
+<section id="classical-credit-risk-models" class="slide level2">
+<h2>Classical Credit Risk Models</h2>
+<h3 id="logistic-regression">Logistic Regression</h3>
+<ul>
+<li><strong>Linear relationship</strong>: Log-odds as linear function of features</li>
+<li><strong>Interpretability</strong>: Clear coefficient meanings</li>
+<li><strong>Regulatory compliance</strong>: Easily explainable decisions</li>
+</ul>
+<p><span class="math display">\[\text{logit}(p) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_n x_n\]</span></p>
+<h3 id="tree-based-models">Tree-Based Models</h3>
+<ul>
+<li><strong>Random Forest</strong>: Ensemble of decision trees</li>
+<li><strong>Gradient Boosting</strong>: Sequential error correction</li>
+<li><strong>XGBoost</strong>: Optimized gradient boosting</li>
+</ul>
+<h3 id="statistical-approaches">Statistical Approaches</h3>
+<ul>
+<li><strong>Discriminant Analysis</strong>: Linear/Quadratic separation</li>
+<li><strong>Survival Analysis</strong>: Time-to-default modeling</li>
+<li><strong>Bayesian Methods</strong>: Probabilistic inference</li>
+</ul>
+</section>
+<section id="advantages-of-classical-models" class="slide level2">
+<h2>Advantages of Classical Models</h2>
+<h3 id="interpretability">Interpretability</h3>
+<ul>
+<li>Clear feature importance</li>
+<li>Regulatory compliance</li>
+<li>Auditable decision process</li>
+</ul>
+<h3 id="computational-efficiency">Computational Efficiency</h3>
+<ul>
+<li>Fast training and inference</li>
+<li>Low resource requirements</li>
+<li>Scalable to large datasets</li>
+</ul>
+<h3 id="proven-track-record">Proven Track Record</h3>
+<ul>
+<li>Decades of industry use</li>
+<li>Well-understood limitations</li>
+<li>Established validation methods</li>
+</ul>
+</section>
+<section id="limitations-of-classical-models" class="slide level2">
+<h2>Limitations of Classical Models</h2>
+<h3 id="structured-data-only">Structured Data Only</h3>
+<ul>
+<li>Cannot process text directly</li>
+<li>Requires manual feature engineering</li>
+<li>Limited to tabular data formats</li>
+</ul>
+<h3 id="linear-assumptions">Linear Assumptions</h3>
+<ul>
+<li>May miss complex interactions</li>
+<li>Assumes feature independence</li>
+<li>Limited non-linear modeling</li>
+</ul>
+<h3 id="feature-engineering-bottleneck">Feature Engineering Bottleneck</h3>
+<ul>
+<li>Manual domain expertise required</li>
+<li>Time-consuming process</li>
+<li>May miss important patterns</li>
+</ul>
+</section>
+<section id="llm-based-credit-risk-models" class="slide level2">
+<h2>LLM-based Credit Risk Models</h2>
+<h3 id="transformer-architecture">Transformer Architecture</h3>
+<ul>
+<li><strong>Attention mechanisms</strong>: Focus on relevant information</li>
+<li><strong>Contextual understanding</strong>: Semantic text processing</li>
+<li><strong>Transfer learning</strong>: Pre-trained language models</li>
+</ul>
+<h3 id="text-processing-capabilities">Text Processing Capabilities</h3>
+<ul>
+<li><strong>Loan narratives</strong>: Application essays and descriptions</li>
+<li><strong>Customer communications</strong>: Emails and chat transcripts</li>
+<li><strong>Financial documents</strong>: Statements and reports</li>
+</ul>
+<h3 id="multimodal-integration">Multimodal Integration</h3>
+<ul>
+<li><strong>Structured + Unstructured</strong>: Combined data types</li>
+<li><strong>Cross-modal attention</strong>: Interactions between modalities</li>
+<li><strong>Unified representations</strong>: Single model for all inputs</li>
+</ul>
+</section>
+<section id="hybrid-approaches" class="slide level2">
+<h2>Hybrid Approaches</h2>
+<h3 id="why-hybrid-approaches-matter">Why Hybrid Approaches Matter</h3>
+<ul>
+<li><strong>Best of both worlds</strong>: Combines reliability of traditional methods with power of LLMs</li>
+<li><strong>Risk mitigation</strong>: Reduces dependency on single modeling approach</li>
+<li><strong>Gradual adoption</strong>: Allows institutions to transition slowly from existing systems</li>
+<li><strong>Regulatory compliance</strong>: Maintains explainability while improving performance</li>
+</ul>
+<h3 id="feature-engineering-with-llms">Feature Engineering with LLMs</h3>
+<ul>
+<li><strong>Text-to-numbers conversion</strong>: LLMs extract meaningful numerical features from text</li>
+<li><strong>Enhanced data</strong>: Traditional data (age, income) + text insights (motivation, stability)</li>
+<li><strong>Unified dataset</strong>: All features combined into single model input</li>
+<li><strong>Traditional modeling</strong>: Use proven methods (logistic regression) on enriched data</li>
+</ul>
+<h3 id="common-ensemble-techniques">Common Ensemble Techniques</h3>
+<ul>
+<li><strong>Stacking</strong>: Combine predictions from multiple models using a meta-model</li>
+<li><strong>Voting</strong>: Multiple models vote on final decision</li>
+<li><strong>Boosting</strong>: Sequential models that learn from previous errors</li>
+</ul>
+</section>
+<section id="ensemble-methods-in-credit-risk" class="slide level2">
+<h2>Ensemble Methods in Credit Risk</h2>
+<h3 id="stacking-like-expert-panel">Stacking (Like Expert Panel)</h3>
+<ul>
+<li><strong>Concept</strong>: Multiple experts each give their opinion, then a “super-expert” makes final decision</li>
+<li><strong>In practice</strong>: Traditional model predicts risk, LLM predicts risk, then combiner model weighs both</li>
+<li><strong>Advantage</strong>: Leverages strengths of different approaches</li>
+</ul>
+<h3 id="voting-like-democracy">Voting (Like Democracy)</h3>
+<ul>
+<li><strong>Concept</strong>: Multiple models “vote” on the decision, majority wins</li>
+<li><strong>In practice</strong>: If 3 models say “approve” and 2 say “decline”, final decision is “approve”</li>
+<li><strong>Advantage</strong>: Reduces impact of any single model being wrong</li>
+</ul>
+<h3 id="boosting-like-learning-from-mistakes">Boosting (Like Learning from Mistakes)</h3>
+<ul>
+<li><strong>Concept</strong>: Models trained sequentially, each learning from previous model’s errors</li>
+<li><strong>In practice</strong>: First model makes predictions, second model focuses on cases first got wrong</li>
+<li><strong>Advantage</strong>: Continuously improves accuracy by addressing weaknesses</li>
+<li>The concept of <strong>ensembles</strong> motivates the use of <strong>AI Agents</strong>, which can be seen as giving eyes, ears, and a body, to a large language model (LLM) to act in the world.</li>
+</ul>
+</section>
+<section id="what-is-an-ai-agent" class="slide level2">
+<h2>What <em>is</em> an AI Agent?</h2>
+<blockquote>
+<p><strong>Definition</strong><br>
+An <strong>AI agent</strong> is an <em>autonomous</em> computational entity that <strong>perceives</strong> its environment, <strong>reasons</strong> about what it observes, and <strong>acts</strong> to achieve goals.</p>
+</blockquote>
+<p><strong>Core capabilities</strong></p>
+<ul>
+<li>Performs goal-directed tasks<br>
+</li>
+<li>Chooses actions without constant external control<br>
+</li>
+<li>Uses <em>tools</em> or actuators to affect the world<br>
+</li>
+<li>Can <strong>communicate</strong> with other agents/humans<br>
+</li>
+<li>Maintains internal <strong>memory</strong> of past interactions<br>
+</li>
+<li>May <strong>delegate</strong> subtasks to peers when beneficial</li>
+</ul>
+</section>
+<section id="desirable-agent-properties" class="slide level2">
+<h2>Desirable Agent Properties</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Autonomy</strong></td>
+<td>Operates without step-by-step human guidance</td>
+</tr>
+<tr class="even">
+<td><strong>Reactivity</strong></td>
+<td>Responds to perceptual changes in real time</td>
+</tr>
+<tr class="odd">
+<td><strong>Pro-activity</strong></td>
+<td>Initiates actions to pursue long-term goals</td>
+</tr>
+<tr class="even">
+<td><strong>Sociality</strong></td>
+<td>Exchanges information or negotiates with others</td>
+</tr>
+<tr class="odd">
+<td><strong>Robustness</strong></td>
+<td>Handles uncertainty, partial failure, or noise</td>
+</tr>
+</tbody>
+</table>
+<p>These qualities distinguish agents from passive software modules.</p>
+</section>
+<section id="architectural-building-blocks" class="slide level2">
+<h2>Architectural Building Blocks</h2>
+<ul>
+<li><strong>Sensors / Tool Interfaces</strong> – acquire state, data, feedback<br>
+</li>
+<li><strong>Knowledge Base</strong> – facts, learned embeddings, episodic memory<br>
+</li>
+<li><strong>Reasoner / Planner</strong> – search, logic, optimization, or LLM prompting<br>
+</li>
+<li><strong>Actuators / Effectors</strong> – APIs, external services, code execution<br>
+</li>
+<li><strong>Messaging Layer</strong> – channels for inter-agent communication</li>
+</ul>
+</section>
+<section id="agent-typology" class="slide level2">
+<h2>Agent Typology</h2>
+<ol type="1">
+<li><strong>Simple reflex</strong> – rules on current percept only<br>
+</li>
+<li><strong>Model-based reflex</strong> – maintains internal world state<br>
+</li>
+<li><strong>Goal-based</strong> – reasons over desired end conditions<br>
+</li>
+<li><strong>Utility-based</strong> – optimizes quantitative preference function<br>
+</li>
+<li><strong>Learning agents</strong> – improve performance via experience</li>
+</ol>
+<p><strong>Observation:</strong> Types (3)–(5) generally yield more flexible behavior, at higher computational cost.</p>
+</section>
+<section id="environments-matter" class="slide level2">
+<h2>Environments Matter</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Dimension</th>
+<th>Values (examples)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Deterministic</strong> vs <strong>Stochastic</strong></td>
+<td>Chess / Roulette</td>
+</tr>
+<tr class="even">
+<td><strong>Episodic</strong> vs <strong>Sequential</strong></td>
+<td>Image labeling / Driving</td>
+</tr>
+<tr class="odd">
+<td><strong>Static</strong> vs <strong>Dynamic</strong></td>
+<td>Crossword / Stock market</td>
+</tr>
+<tr class="even">
+<td><strong>Discrete</strong> vs <strong>Continuous</strong></td>
+<td>Grid world / Robot arm</td>
+</tr>
+</tbody>
+</table>
+<p>Design choices (state representation, planning horizon, learning algorithm) depend heavily on the environment’s position in this taxonomy.</p>
+</section>
+<section id="from-solo-agents-to-crews" class="slide level2">
+<h2>From Solo Agents to <strong>Crews</strong></h2>
+<blockquote>
+<p>A <em>crew</em> is an organized team of agents, each with a specialized <strong>role</strong>, working together under a shared <strong>process</strong> to accomplish a complex objective.</p>
+</blockquote>
+<p><strong>Coordination mechanisms</strong></p>
+<ul>
+<li><em>Task decomposition</em> and delegation<br>
+</li>
+<li>Shared context or blackboard memory<br>
+</li>
+<li>Role-based communication protocols<br>
+</li>
+<li>Orchestrator or process manager to resolve conflicts</li>
+</ul>
+<p>Crews deliver human-like division of labor while preserving autonomy at the individual level.</p>
+</section>
+<section id="specifying-an-agent-metadata" class="slide level2">
+<h2>Specifying an Agent (Metadata)</h2>
+<ul>
+<li><strong>Role</strong> – concise description of expertise<br>
+</li>
+<li><strong>Goal</strong> – statement of objective or success criterion<br>
+</li>
+<li><strong>Backstory / Persona</strong> – contextual flavor; guides responses<br>
+</li>
+<li><strong>Constraints</strong> – time, token budget, execution safety<br>
+</li>
+<li><strong>Toolset</strong> – allowed external capabilities<br>
+</li>
+<li><strong>Resource limits</strong> – max iterations, retries, rate limits<br>
+</li>
+<li><strong>Delegation policy</strong> – whether and how it may spawn sub-tasks</li>
+</ul>
+<p>Capturing these attributes in configuration promotes reproducibility and easier composition into crews.</p>
+</section>
+<section id="case-study-vp-of-risks-ai-agent-crew" class="slide level2">
+<h2>Case Study: VP of Risk’s AI Agent Crew</h2>
+<h3 id="business-context">Business Context</h3>
+<p><strong>You are the Vice President of Risk</strong> at a regional bank processing 1,000+ loan applications monthly. Instead of hiring 20+ human analysts, you design an AI agent crew to handle the entire credit risk workflow.</p>
+<h3 id="traditional-team-structure-what-youre-replacing">Traditional Team Structure (What You’re Replacing)</h3>
+<ul>
+<li><strong>Senior Risk Analysts</strong> (3-4 people) - Complex case analysis</li>
+<li><strong>Junior Risk Analysts</strong> (8-10 people) - Initial screening and data gathering<br>
+</li>
+<li><strong>Financial Specialists</strong> (2-3 people) - Ratio analysis and financial modeling</li>
+<li><strong>Report Writers</strong> (2-3 people) - Documentation and client communication</li>
+<li><strong>Customer Service</strong> (3-4 people) - Applicant interaction and follow-up</li>
+</ul>
+</section>
+<section id="agent-1-senior-risk-analyst" class="slide level2">
+<h2>Agent 1: Senior Risk Analyst</h2>
+<h3 id="role-lead-credit-risk-assessor"><strong>Role</strong>: Lead Credit Risk Assessor</h3>
+<p><strong>Goal</strong>: Make final credit decisions on complex applications</p>
+<h3 id="backstory"><strong>Backstory</strong></h3>
+<p>15+ years experience, CRM certified, specializes in commercial lending</p>
+<h3 id="key-responsibilities"><strong>Key Responsibilities</strong></h3>
+<ul>
+<li>Review high-value applications (&gt;$500K)</li>
+<li>Override decisions from junior agents when needed</li>
+<li>Handle edge cases and exceptions</li>
+<li>Escalate to human VP only for policy violations</li>
+</ul>
+<h3 id="why-this-agent-matters"><strong>Why This Agent Matters</strong></h3>
+<ul>
+<li><strong>Decision authority</strong> - Final say on complex cases</li>
+<li><strong>Experience simulation</strong> - Mimics senior analyst judgment</li>
+<li><strong>Quality control</strong> - Ensures consistent high standards</li>
+</ul>
+</section>
+<section id="agent-2-data-intelligence-specialist" class="slide level2">
+<h2>Agent 2: Data Intelligence Specialist</h2>
+<h3 id="role-credit-data-collector-and-validator"><strong>Role</strong>: Credit Data Collector and Validator</h3>
+<p><strong>Goal</strong>: Gather comprehensive, accurate applicant information</p>
+<h3 id="backstory-1"><strong>Backstory</strong></h3>
+<p>Detail-oriented analyst with expertise in financial data sources</p>
+<h3 id="key-responsibilities-1"><strong>Key Responsibilities</strong></h3>
+<ul>
+<li>Pull credit bureau reports and bank statements</li>
+<li>Verify employment and income documentation</li>
+<li>Cross-reference multiple data sources</li>
+<li>Flag inconsistencies or missing information</li>
+</ul>
+<h3 id="why-this-agent-matters-1"><strong>Why This Agent Matters</strong></h3>
+<ul>
+<li><strong>Data quality</strong> - Foundation for all subsequent analysis</li>
+<li><strong>Efficiency</strong> - Automated data gathering 24/7</li>
+<li><strong>Accuracy</strong> - Reduces human error in data collection</li>
+</ul>
+</section>
+<section id="agent-3-financial-analysis-expert" class="slide level2">
+<h2>Agent 3: Financial Analysis Expert</h2>
+<h3 id="role-quantitative-risk-modeler"><strong>Role</strong>: Quantitative Risk Modeler</h3>
+<p><strong>Goal</strong>: Calculate precise risk metrics and financial ratios</p>
+<h3 id="backstory-2"><strong>Backstory</strong></h3>
+<p>CFA with strong mathematical background and modeling expertise</p>
+<h3 id="key-responsibilities-2"><strong>Key Responsibilities</strong></h3>
+<ul>
+<li>Compute debt-to-income, loan-to-value ratios</li>
+<li>Run stress tests and scenario analysis</li>
+<li>Apply credit scoring models</li>
+<li>Generate probability of default estimates</li>
+</ul>
+<h3 id="why-this-agent-matters-2"><strong>Why This Agent Matters</strong></h3>
+<ul>
+<li><strong>Quantitative rigor</strong> - Mathematical precision in risk assessment</li>
+<li><strong>Consistency</strong> - Same calculations every time</li>
+<li><strong>Speed</strong> - Complex analysis in seconds, not hours</li>
+</ul>
+</section>
+<section id="agent-4-document-specialist" class="slide level2">
+<h2>Agent 4: Document Specialist</h2>
+<h3 id="role-professional-report-writer"><strong>Role</strong>: Professional Report Writer</h3>
+<p><strong>Goal</strong>: Create clear, compliant credit memos and decisions</p>
+<h3 id="backstory-3"><strong>Backstory</strong></h3>
+<p>Technical writer with banking compliance knowledge</p>
+<h3 id="key-responsibilities-3"><strong>Key Responsibilities</strong></h3>
+<ul>
+<li>Draft loan committee presentations</li>
+<li>Write credit decision letters</li>
+<li>Ensure regulatory compliance in all documentation</li>
+<li>Maintain audit trail documentation</li>
+</ul>
+<h3 id="why-this-agent-matters-3"><strong>Why This Agent Matters</strong></h3>
+<ul>
+<li><strong>Professional communication</strong> - Clear, consistent messaging</li>
+<li><strong>Compliance</strong> - Built-in regulatory adherence</li>
+<li><strong>Audit trail</strong> - Complete documentation for reviews</li>
+</ul>
+</section>
+<section id="agent-5-customer-relations-manager" class="slide level2">
+<h2>Agent 5: Customer Relations Manager</h2>
+<h3 id="role-applicant-communication-coordinator"><strong>Role</strong>: Applicant Communication Coordinator</h3>
+<p><strong>Goal</strong>: Maintain positive customer experience throughout process</p>
+<h3 id="backstory-4"><strong>Backstory</strong></h3>
+<p>Customer service professional with lending product knowledge</p>
+<h3 id="key-responsibilities-4"><strong>Key Responsibilities</strong></h3>
+<ul>
+<li>Send status updates to applicants</li>
+<li>Handle requests for additional documentation</li>
+<li>Explain decisions and next steps</li>
+<li>Manage follow-up for approved loans</li>
+</ul>
+<h3 id="why-this-agent-matters-4"><strong>Why This Agent Matters</strong></h3>
+<ul>
+<li><strong>Customer satisfaction</strong> - Positive experience regardless of decision</li>
+<li><strong>Transparency</strong> - Clear communication at every step</li>
+<li><strong>Efficiency</strong> - Immediate responses to customer inquiries</li>
+</ul>
+</section>
+<section id="agent-6-compliance-officer" class="slide level2">
+<h2>Agent 6: Compliance Officer</h2>
+<h3 id="role-regulatory-oversight-specialist"><strong>Role</strong>: Regulatory Oversight Specialist</h3>
+<p><strong>Goal</strong>: Ensure all decisions meet fair lending and banking regulations</p>
+<h3 id="backstory-5"><strong>Backstory</strong></h3>
+<p>Former bank examiner with deep regulatory knowledge</p>
+<h3 id="key-responsibilities-5"><strong>Key Responsibilities</strong></h3>
+<ul>
+<li>Review decisions for fair lending compliance</li>
+<li>Check prohibited factors aren’t influencing decisions</li>
+<li>Maintain required documentation standards</li>
+<li>Generate regulatory reports</li>
+</ul>
+<h3 id="why-this-agent-matters-5"><strong>Why This Agent Matters</strong></h3>
+<ul>
+<li><strong>Risk mitigation</strong> - Prevents regulatory violations</li>
+<li><strong>Audit readiness</strong> - Always examination-ready</li>
+<li><strong>Fair lending</strong> - Ensures equal treatment for all applicants</li>
+</ul>
+</section>
+<section id="task-delegation-flow" class="slide level2">
+<h2><strong>Task Delegation Flow</strong></h2>
+<h3 id="phase-1-initial-assessment"><strong>Phase 1: Initial Assessment</strong></h3>
+<ul>
+<li><strong>Senior Risk Analyst</strong> delegates to <strong>Data Intelligence Specialist</strong></li>
+<li>Data agent collects application information and validates completeness</li>
+<li><strong>Senior Risk Analyst</strong> delegates to <strong>Financial Analysis Expert</strong></li>
+<li>Financial agent calculates risk metrics and ratios</li>
+</ul>
+<h3 id="phase-2-decision-making"><strong>Phase 2: Decision Making</strong></h3>
+<ul>
+<li><strong>Senior Risk Analyst</strong> reviews all inputs and makes credit decision</li>
+<li>Delegates communication tasks to <strong>Customer Relations Manager</strong></li>
+<li>Delegates documentation to <strong>Document Specialist</strong></li>
+<li>Delegates compliance review to <strong>Compliance Officer</strong></li>
+</ul>
+<h3 id="delegation-authority-rules"><strong>Delegation Authority Rules</strong></h3>
+<ul>
+<li><strong>Only Senior Risk Analyst</strong> can delegate major analytical tasks</li>
+<li><strong>Sub-managers</strong> can request additional data but cannot delegate to peers</li>
+<li><strong>Support agents</strong> work independently but report back to Senior Risk Analyst</li>
+<li><strong>Compliance Officer</strong> has veto power over any decision for regulatory issues</li>
+</ul>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>Credit risk assessment is evolving from rule-based to AI-driven approaches</li>
+<li>LLMs enable processing of unstructured data at scale</li>
+<li>AI agents can automate multi-step credit analysis workflows</li>
+<li>Combining structured and unstructured data improves risk prediction</li>
+</ul>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<ul>
+<li>Altman, E. I. (1968). Financial ratios, discriminant analysis and the prediction of corporate bankruptcy</li>
+<li>Khandani, A. E., Kim, A. J., &amp; Lo, A. W. (2010). Consumer credit-risk models via machine-learning algorithms</li>
+<li>Sirignano, J., Sadhwani, A., &amp; Giesecke, K. (2016). Deep learning for mortgage risk</li>
+<li>Recent advances in transformer-based credit scoring (2023-2024)</li>
 </ul>
 <div class="quarto-auto-generated-content">
 <p><img src="../../images/logo_header.svg" class="slide-logo"></p>

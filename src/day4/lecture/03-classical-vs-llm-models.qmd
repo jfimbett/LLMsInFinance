@@ -1,0 +1,108 @@
+# Classical vs. LLM-based Credit Risk Models
+
+## Classical Credit Risk Models
+
+### Logistic Regression
+- **Linear relationship**: Log-odds as linear function of features
+- **Interpretability**: Clear coefficient meanings
+- **Regulatory compliance**: Easily explainable decisions
+
+$$\text{logit}(p) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_n x_n$$
+
+### Tree-Based Models
+- **Random Forest**: Ensemble of decision trees
+- **Gradient Boosting**: Sequential error correction
+- **XGBoost**: Optimized gradient boosting
+
+### Statistical Approaches
+- **Discriminant Analysis**: Linear/Quadratic separation
+- **Survival Analysis**: Time-to-default modeling
+- **Bayesian Methods**: Probabilistic inference
+
+## Advantages of Classical Models
+
+### Interpretability
+- Clear feature importance
+- Regulatory compliance
+- Auditable decision process
+
+### Computational Efficiency
+- Fast training and inference
+- Low resource requirements
+- Scalable to large datasets
+
+### Proven Track Record
+- Decades of industry use
+- Well-understood limitations
+- Established validation methods
+
+## Limitations of Classical Models
+
+### Structured Data Only
+- Cannot process text directly
+- Requires manual feature engineering
+- Limited to tabular data formats
+
+### Linear Assumptions
+- May miss complex interactions
+- Assumes feature independence
+- Limited non-linear modeling
+
+### Feature Engineering Bottleneck
+- Manual domain expertise required
+- Time-consuming process
+- May miss important patterns
+
+## LLM-based Credit Risk Models
+
+### Transformer Architecture
+- **Attention mechanisms**: Focus on relevant information
+- **Contextual understanding**: Semantic text processing
+- **Transfer learning**: Pre-trained language models
+
+### Text Processing Capabilities
+- **Loan narratives**: Application essays and descriptions
+- **Customer communications**: Emails and chat transcripts
+- **Financial documents**: Statements and reports
+
+### Multimodal Integration
+- **Structured + Unstructured**: Combined data types
+- **Cross-modal attention**: Interactions between modalities
+- **Unified representations**: Single model for all inputs
+
+## Hybrid Approaches
+
+### Why Hybrid Approaches Matter
+- **Best of both worlds**: Combines reliability of traditional methods with power of LLMs
+- **Risk mitigation**: Reduces dependency on single modeling approach
+- **Gradual adoption**: Allows institutions to transition slowly from existing systems
+- **Regulatory compliance**: Maintains explainability while improving performance
+
+### Feature Engineering with LLMs
+- **Text-to-numbers conversion**: LLMs extract meaningful numerical features from text
+- **Enhanced data**: Traditional data (age, income) + text insights (motivation, stability)
+- **Unified dataset**: All features combined into single model input
+- **Traditional modeling**: Use proven methods (logistic regression) on enriched data
+
+### Common Ensemble Techniques
+- **Stacking**: Combine predictions from multiple models using a meta-model
+- **Voting**: Multiple models vote on final decision
+- **Boosting**: Sequential models that learn from previous errors
+
+## Ensemble Methods in Credit Risk
+
+### Stacking (Like Expert Panel)
+- **Concept**: Multiple experts each give their opinion, then a "super-expert" makes final decision
+- **In practice**: Traditional model predicts risk, LLM predicts risk, then combiner model weighs both
+- **Advantage**: Leverages strengths of different approaches
+
+### Voting (Like Democracy)
+- **Concept**: Multiple models "vote" on the decision, majority wins
+- **In practice**: If 3 models say "approve" and 2 say "decline", final decision is "approve"
+- **Advantage**: Reduces impact of any single model being wrong
+
+### Boosting (Like Learning from Mistakes)
+- **Concept**: Models trained sequentially, each learning from previous model's errors
+- **In practice**: First model makes predictions, second model focuses on cases first got wrong
+- **Advantage**: Continuously improves accuracy by addressing weaknesses
+- The concept of **ensembles** motivates the use of **AI Agents**, which can be seen as giving eyes, ears, and a body, to a large language model (LLM) to act in the world.

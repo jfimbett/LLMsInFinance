@@ -67,4 +67,20 @@ pip install -r requirements.txt
 ```
 
 Then, proceed with the notebooks in the order listed above.
+
+## Notebooks
+
+### Business Valuation with LLMs
+
+Start with the comprehensive business valuation notebook that demonstrates how to use LLMs for financial analysis:
+
+📊 **[Business Valuation Notebook](../lecture/business_valuation.ipynb)**
+
+This notebook covers:
+- DCF valuation fundamentals
+- LLM-powered financial statement analysis
+- Automated extraction of financial metrics from SEC filings
+- Tesla case study with real-world application
+
+*Note: If you have issues opening the notebook in Google Colab, try the cleaned version: [business_valuation_cleaned.ipynb](../lecture/business_valuation_cleaned.ipynb)*
 ```

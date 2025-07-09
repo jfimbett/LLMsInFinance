@@ -20,3 +20,13 @@ format:
 {{< include 03-llm-forecasting.qmd >}}
 
 {{< include 04-comparables-selection.qmd >}}
+
+## Hands-On Practice
+
+### Business Valuation with LLMs
+
+Ready to apply these concepts? Work through our comprehensive Tesla valuation case study:
+
+🚀 **[Business Valuation Notebook](business_valuation.ipynb)**
+
+*Alternative (Colab-optimized): [business_valuation_cleaned.ipynb](business_valuation_cleaned.ipynb)*

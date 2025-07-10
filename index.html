@@ -747,22 +747,55 @@
             <div class="day-card">
                 <div class="day-header">
                     <div class="day-number">Day 4</div>
-                    <div class="day-title">Financial Applications II</div>
-                    <div class="day-description">Credit risk assessment, mathematical modeling, and advanced transformer applications</div>
+                    <div class="day-title">Credit Risk Analysis & AI Agents</div>
+                    <div class="day-description">Credit risk modeling, LLM-based analysis, and multi-agent systems for financial decision-making</div>
                 </div>
                 <div class="day-content">
                     <div class="content-section">
                         <div class="section-title">
                             <i class="fas fa-presentation"></i>
                             Lecture Materials
-                        </div>                        <ul class="content-links">
+                        </div>
+                        <ul class="content-links">
                             <li>
-                                <div style="display: flex; align-items: center; padding: 8px 12px; background: #f5f5f5; border-radius: 6px; opacity: 0.5; color: #999;">
+                                <a href="src/day4/lecture/index.html" target="_blank">
                                     <i class="fas fa-slides"></i>
-                                    <span style="flex-grow: 1; margin-left: 8px;">Day 4 Slides</span>
+                                    Day 4 Complete Slides
                                     <span class="content-type-indicator type-html">SLIDES</span>
-                                    <span style="margin-left: 8px; font-size: 0.7rem;">Not Available Yet</span>
-                                </div>
+                                    <span class="status-badge status-ready">Ready</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="src/day4/lecture/01-what-is-credit-risk.html" target="_blank">
+                                    <i class="fas fa-question-circle"></i>
+                                    What is Credit Risk?
+                                    <span class="content-type-indicator type-html">SLIDES</span>
+                                    <span class="status-badge status-ready">Ready</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="src/day4/lecture/02-data-in-credit-risk.html" target="_blank">
+                                    <i class="fas fa-database"></i>
+                                    Data in Credit Risk
+                                    <span class="content-type-indicator type-html">SLIDES</span>
+                                    <span class="status-badge status-ready">Ready</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="src/day4/lecture/03-classical-vs-llm-models.html" target="_blank">
+                                    <i class="fas fa-balance-scale"></i>
+                                    Classical vs LLM Models
+                                    <span class="content-type-indicator type-html">SLIDES</span>
+                                    <span class="status-badge status-ready">Ready</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="src/day4/lecture/04-ai-agents-credit-analysis.html" target="_blank">
+                                    <i class="fas fa-users-cog"></i>
+                                    AI Agents in Credit Analysis
+                                    <span class="content-type-indicator type-html">SLIDES</span>
+                                    <span class="status-badge status-ready">Ready</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -773,28 +806,70 @@
                         </div>
                         <ul class="content-links">
                             <li>
-                                <div style="display: flex; align-items: center; padding: 8px 12px; background: #f5f5f5; border-radius: 6px; margin-bottom: 8px; opacity: 0.5; color: #999;">
-                                    <i class="fas fa-shield-alt" style="margin-right: 8px; width: 16px; font-size: 0.8rem;"></i>
-                                    <span style="flex-grow: 1; font-size: 0.9rem;">Credit Risk Assessment</span>
+                                <div style="display: flex; align-items: center; padding: 8px 12px; background: var(--light-bg); border-radius: 6px; margin-bottom: 8px;">
+                                    <i class="fas fa-database" style="margin-right: 8px; width: 16px; font-size: 0.8rem;"></i>
+                                    <span style="flex-grow: 1; font-size: 0.9rem;">Generate Sample Data</span>
                                     <span class="content-type-indicator type-notebook">NOTEBOOK</span>
-                                    <span style="margin-left: 8px; font-size: 0.7rem; color: #999;">Not Available Yet</span>
+                                    <div class="notebook-actions">
+                                        <a href="https://colab.research.google.com/github/jfimbett/LLMsInFinance/blob/main/src/day4/practical-session/1_generate_sample_data.ipynb" 
+                                           target="_blank" class="action-btn colab-btn">
+                                            <i class="fab fa-google"></i> Colab
+                                        </a>
+                                        <a href="src/day4/practical-session/1_generate_sample_data.ipynb" 
+                                           download class="action-btn download-btn">
+                                            <i class="fas fa-download"></i> Download
+                                        </a>
+                                    </div>
                                 </div>
                             </li>
                             <li>
-                                <div style="display: flex; align-items: center; padding: 8px 12px; background: #f5f5f5; border-radius: 6px; margin-bottom: 8px; opacity: 0.5; color: #999;">
-                                    <i class="fas fa-superscript" style="margin-right: 8px; width: 16px; font-size: 0.8rem;"></i>
-                                    <span style="flex-grow: 1; font-size: 0.9rem;">LLMs & Mathematics</span>
+                                <div style="display: flex; align-items: center; padding: 8px 12px; background: var(--light-bg); border-radius: 6px; margin-bottom: 8px;">
+                                    <i class="fas fa-brain" style="margin-right: 8px; width: 16px; font-size: 0.8rem;"></i>
+                                    <span style="flex-grow: 1; font-size: 0.9rem;">Train LLM Model</span>
                                     <span class="content-type-indicator type-notebook">NOTEBOOK</span>
-                                    <span style="margin-left: 8px; font-size: 0.7rem; color: #999;">Not Available Yet</span>
+                                    <div class="notebook-actions">
+                                        <a href="https://colab.research.google.com/github/jfimbett/LLMsInFinance/blob/main/src/day4/practical-session/2_train_llm_model.ipynb" 
+                                           target="_blank" class="action-btn colab-btn">
+                                            <i class="fab fa-google"></i> Colab
+                                        </a>
+                                        <a href="src/day4/practical-session/2_train_llm_model.ipynb" 
+                                           download class="action-btn download-btn">
+                                            <i class="fas fa-download"></i> Download
+                                        </a>
+                                    </div>
                                 </div>
                             </li>
                             <li>
-                                <div style="display: flex; align-items: center; padding: 8px 12px; background: #f5f5f5; border-radius: 6px; margin-bottom: 8px; opacity: 0.5; color: #999;">
-                                    <i class="fas fa-cube" style="margin-right: 8px; width: 16px; font-size: 0.8rem;"></i>
-                                    <span style="flex-grow: 1; font-size: 0.9rem;">Beyond Text Transformers</span>
+                                <div style="display: flex; align-items: center; padding: 8px 12px; background: var(--light-bg); border-radius: 6px; margin-bottom: 8px;">
+                                    <i class="fas fa-users-cog" style="margin-right: 8px; width: 16px; font-size: 0.8rem;"></i>
+                                    <span style="flex-grow: 1; font-size: 0.9rem;">AI Agent Credit Report</span>
                                     <span class="content-type-indicator type-notebook">NOTEBOOK</span>
-                                    <span style="margin-left: 8px; font-size: 0.7rem; color: #999;">Not Available Yet</span>
+                                    <div class="notebook-actions">
+                                        <a href="https://colab.research.google.com/github/jfimbett/LLMsInFinance/blob/main/src/day4/practical-session/3_ai_agent_credit_report.ipynb" 
+                                           target="_blank" class="action-btn colab-btn">
+                                            <i class="fab fa-google"></i> Colab
+                                        </a>
+                                        <a href="src/day4/practical-session/3_ai_agent_credit_report.ipynb" 
+                                           download class="action-btn download-btn">
+                                            <i class="fas fa-download"></i> Download
+                                        </a>
+                                    </div>
                                 </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content-section">
+                        <div class="section-title">
+                            <i class="fas fa-tools"></i>
+                            Additional Resources
+                        </div>
+                        <ul class="content-links">
+                            <li>
+                                <a href="src/day4/practical-session/requirements.txt" target="_blank">
+                                    <i class="fas fa-list-ul"></i>
+                                    Requirements File
+                                    <span class="content-type-indicator" style="background: #6c757d; color: white;">TXT</span>
+                                </a>
                             </li>
                         </ul>
                     </div>

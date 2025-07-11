@@ -1,0 +1,78 @@
+# Mathematical Foundations of Structured Generation
+
+## How LLMs Generate Text (Review)
+
+### Token-by-Token Generation Process
+
+At each step $t$, the model computes:
+
+$$P(x_t | x_1, x_2, ..., x_{t-1}) = \text{softmax}(W_o \cdot h_t)$$
+
+Where:
+- $x_t$ is the token at position $t$
+- $h_t$ is the hidden state at position $t$
+- $W_o$ is the output projection matrix
+
+### Constrained Decoding
+
+Instead of sampling from the full vocabulary $V$, we sample from a **constrained vocabulary** $V_c \subset V$ at each step.
+
+$$P(x_t | x_1, ..., x_{t-1}, \text{constraints}) = \begin{cases}
+\frac{P(x_t | x_1, ..., x_{t-1})}{\sum_{v \in V_c} P(v | x_1, ..., x_{t-1})} & \text{if } x_t \in V_c \\
+0 & \text{otherwise}
+\end{cases}$$
+
+### Logit Masking
+
+Given model logits $z = [z_1, z_2, ..., z_{|V|}]$, apply mask $m$:
+
+$$z'_i = \begin{cases}
+z_i & \text{if } m_i = 1 \\
+-\infty & \text{if } m_i = 0
+\end{cases}$$
+
+Then compute probabilities: $P(x_i) = \frac{e^{z'_i}}{\sum_j e^{z'_j}}$
+
+## Dynamic Mask Updates
+
+The mask $m^{(t)}$ at step $t$ depends on:
+1. Current parser state $s^{(t)}$
+2. Generated sequence so far $x_{1:t-1}$
+
+$$m^{(t)} = \text{ValidTokens}(s^{(t)}, G)$$
+
+### Regular Expression Constraints Pattern Matching During Generation
+
+For pattern $P$ (e.g., email format), at each step:
+
+$$V_c^{(t)} = \{v \in V : x_{1:t-1} \cdot v \text{ matches prefix of } P\}$$
+
+### Example: Date Format (YYYY-MM-DD)
+
+**Step 1**: Only digits 1-2 allowed (years 1000-2999)
+**Step 5**: Only digits 0-1 allowed (months 01-12)  
+**Step 8**: Only digits 0-3 allowed (days 01-31)
+
+
+## Challenges and Solutions
+
+### 1. Dead-End States
+
+**Problem**: Parser reaches state with no valid continuations
+
+**Solution**: Backtracking or lookahead validation
+$$\text{ValidState}(s) = \exists \text{ path from } s \text{ to terminal state}$$
+
+### 2. Computational Overhead
+
+**Problem**: Constraint checking at each step is expensive
+
+**Solution**: Precompute valid transitions
+$$T(s, v) = \text{next state when applying token } v \text{ in state } s$$
+
+### 3. Quality vs. Constraints Trade-off
+
+**Problem**: Strict constraints may reduce output quality
+
+**Solution**: Soft constraints with penalty terms
+$$\text{Score} = \log P(\text{sequence}) - \lambda \cdot \text{Constraint\_Violations}$$

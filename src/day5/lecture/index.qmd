@@ -1,7 +1,7 @@
 ---
-title: "Day 5: Advanced LLM Applications in Finance"
-author: "Your Name"
-date: "2025-05-12"
+title: "Day 5: Advanced LLM Techniques - Structured Generation & Multimodal Models"
+author: "Juan F. Imbet"
+date: "2025-07-11"
 format:
   revealjs:
     theme: default
@@ -11,47 +11,26 @@ format:
     logo: ../../images/logo_header.svg
 ---
 
-# Day 5: Advanced LLM Applications in Finance
+# Advanced LLM Techniques
 
-## Overview
+## Overview of Today's Lecture
 
-In our final day, we explore cutting-edge applications of Large Language Models in finance, with a focus on:
+- Structured generation: controlling LLM outputs
+- Mathematical foundations of constrained decoding
+- Text-to-image models: from text to pixels
+- Diffusion models and their applications in finance
+- Practical implications for financial data generation
 
-1. **Forecasting Financial Returns with LLMs**: We examine groundbreaking research by Alejandro López-Lira and others on using language models for stock return prediction and market analysis.
+{{< include 01-structured-generation.qmd >}}
 
-2. **AI in Asset Management**: We investigate the potential and limitations of AI-managed portfolios, exploring the possibility of delegating investment decisions to AI agents.
+{{< include 02-mathematical-foundations.qmd >}}
 
-3. **Reinforcement Learning in LLMs**: We study how reinforcement learning techniques enhance LLMs' decision-making capabilities, with applications to financial strategy optimization.
+{{< include 03-text-to-image-models.qmd >}}
 
-## Learning Objectives
+{{< include 04-diffusion-models.qmd >}}
 
-By the end of today's lectures, you will be able to:
+## What's Next?
 
-- Understand how LLMs can be used to forecast stock returns and identify market patterns
-- Evaluate the potential of AI-managed portfolios and associated challenges
-- Recognize the role of reinforcement learning in improving LLM performance for financial applications
-- Assess the current limitations and future potential of AI in finance
-
-## Schedule
-
-1. **Forecasting Financial Returns with LLMs**
-   - Research overview: López-Lira's work on LLMs and return prediction
-   - Textual analysis of financial news and its predictive power
-   - Recent developments and empirical evidence
-
-2. **AI in Asset Management**
-   - The evolution of quantitative investment strategies
-   - Current capabilities and limitations of AI portfolio managers
-   - Regulatory and ethical considerations
-   - Case studies and performance evaluation
-
-3. **Reinforcement Learning in LLMs**
-   - Fundamentals of reinforcement learning for LLMs
-   - Applications to financial decision-making
-   - RLHF (Reinforcement Learning from Human Feedback) in finance
-   - Implementation challenges and best practices
-
-## Conclusion of the Course
-
-This final day wraps up our exploration of LLMs in finance, looking toward future developments while grounding our understanding in current capabilities and limitations.
-```
+- Summary of key concepts
+- Preview of practical session with Outlines library
+- Applications in structured financial data generation

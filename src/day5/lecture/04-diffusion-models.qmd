@@ -1,0 +1,254 @@
+# Diffusion Models: Deep Dive
+
+## What are Diffusion Models?
+
+### Core Concept
+::: {.incremental}
+- **Inspiration**: Physical diffusion processes (ink in water)
+- **Forward Process**: Gradually add noise until image becomes pure noise
+- **Reverse Process**: Learn to denoise step by step
+- **Result**: High-quality sample generation
+:::
+
+## Why Diffusion Models Won
+
+### Advantages over GANs
+::: {.incremental}
+- **Training Stability**: No adversarial collapse issues
+- **Mode Coverage**: Generate diverse samples, no mode collapse
+- **Quality**: State-of-the-art image quality
+- **Controllability**: Easy to incorporate conditioning
+:::
+
+### Advantages over VAEs
+::: {.incremental}
+- **No Posterior Collapse**: Avoids common VAE training issues
+- **Higher Quality**: Better sample quality than VAE
+- **Flexible Architecture**: Various network designs possible
+:::
+
+## Mathematical Framework
+
+### Forward Diffusion Process
+
+Define a Markov chain that gradually corrupts data:
+
+$$q(x_{1:T} | x_0) = \prod_{t=1}^T q(x_t | x_{t-1})$$
+
+Each step adds Gaussian noise:
+
+$$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t} x_{t-1}, \beta_t I)$$
+
+Where $\beta_t$ is a variance schedule.
+
+### Closed Form at Any Step
+
+Using the reparameterization trick:
+
+$$x_t = \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1-\bar{\alpha}_t} \epsilon$$
+
+Where:
+- $\alpha_t = 1 - \beta_t$
+- $\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$
+- $\epsilon \sim \mathcal{N}(0, I)$
+
+## Reverse Process Learning
+
+### Parameterizing the Reverse Process
+
+$$p_\theta(x_{t-1} | x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))$$
+
+### Key Insight: Predict the Noise
+
+Instead of predicting $\mu_\theta$ directly, predict the noise $\epsilon$:
+
+$$\mu_\theta(x_t, t) = \frac{1}{\sqrt{\alpha_t}}\left(x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon_\theta(x_t, t)\right)$$
+
+## Training Objective
+
+### Variational Lower Bound
+
+The training objective maximizes:
+
+$$\mathbb{E}_{q(x_0)}[\log p_\theta(x_0)] \geq \mathbb{E}_{q(x_{0:T})}[\log \frac{p_\theta(x_{0:T})}{q(x_{1:T}|x_0)}]$$
+
+### Simplified Loss Function
+
+In practice, we optimize:
+
+$$\mathcal{L}_{\text{simple}} = \mathbb{E}_{t, x_0, \epsilon}\left[\|\epsilon - \epsilon_\theta(x_t, t)\|^2\right]$$
+
+This is equivalent to denoising score matching.
+
+## Noise Schedules
+
+### Linear Schedule
+$$\beta_t = \beta_{\text{start}} + \frac{t}{T}(\beta_{\text{end}} - \beta_{\text{start}})$$
+
+### Cosine Schedule  
+$$\bar{\alpha}_t = \frac{f(t)}{f(0)}, \quad f(t) = \cos\left(\frac{t/T + s}{1 + s} \cdot \frac{\pi}{2}\right)^2$$
+
+### Impact on Training
+- **Linear**: More noise added early, can be too aggressive
+- **Cosine**: More gradual, often better results
+- **Custom**: Can be optimized for specific domains
+
+## Network Architectures
+
+### U-Net Architecture
+
+```
+Input x_t (+ time embedding)
+    ↓
+Encoder: Conv + Downsample
+    ↓  
+Bottleneck: Attention + Conv
+    ↓
+Decoder: Conv + Upsample + Skip Connections
+    ↓
+Output: Predicted noise ε_θ
+```
+
+### Time Embedding
+
+Encode timestep $t$ using sinusoidal embeddings:
+
+$$\text{PE}(t, 2i) = \sin(t / 10000^{2i/d})$$
+$$\text{PE}(t, 2i+1) = \cos(t / 10000^{2i/d})$$
+
+## Conditional Generation
+
+### Class-Conditional Generation
+
+Modify the noise prediction to include class information:
+
+$$\epsilon_\theta(x_t, t, y)$$
+
+Where $y$ is the class label.
+
+### Classifier-Free Guidance
+
+Mix conditional and unconditional predictions:
+
+$$\tilde{\epsilon}_\theta(x_t, t, c) = \epsilon_\theta(x_t, t, \emptyset) + s \cdot (\epsilon_\theta(x_t, t, c) - \epsilon_\theta(x_t, t, \emptyset))$$
+
+Where:
+- $c$ is the conditioning (text, class, etc.)
+- $s$ is the guidance scale
+- $\emptyset$ represents null conditioning
+
+## Financial Applications
+
+### Synthetic Financial Data Generation
+
+#### Market Scenario Generation
+
+**Use Case**: Generate diverse market scenarios for stress testing
+
+**Conditioning**: "Bear market with high volatility and declining tech stocks"
+
+**Process**:
+1. Encode market description
+2. Generate price trajectories
+3. Ensure financial constraints (no negative prices)
+4. Output realistic market data
+
+#### Chart Generation for Reports
+
+**Use Case**: Create visual summaries for client reports
+
+**Input**: "Portfolio performance chart showing 15% YTD growth with monthly breakdown"
+
+**Output**: Professional-quality chart image
+
+## Latent Diffusion Models
+
+### Working in Latent Space
+
+Instead of pixel space, work in compressed latent representation:
+
+$$\text{Encoder}: x \rightarrow z$$
+$$\text{Diffusion}: z_T \rightarrow z_0$$  
+$$\text{Decoder}: z \rightarrow x$$
+
+### Advantages for Finance
+
+::: {.incremental}
+- **Efficiency**: Lower computational cost
+- **Semantic Control**: Easier to control high-level features
+- **Data Privacy**: Work with compressed representations
+- **Scalability**: Handle large financial datasets
+:::
+
+## Advanced Techniques
+
+### Inpainting
+- Modify portions of existing financial charts
+- Fill missing data points realistically
+- Update outdated visualizations
+
+### Outpainting  
+- Extend time series beyond current data
+- Forecast visual trends
+- Scenario planning visualizations
+
+### Image-to-Image Translation
+- Convert between chart types (candlestick ↔ line chart)
+- Style transfer for brand consistency
+- Format standardization
+
+## Evaluation Metrics
+
+### Quantitative Metrics
+::: {.incremental}
+- **FID (Fréchet Inception Distance)**: Distribution similarity
+- **IS (Inception Score)**: Quality and diversity
+- **LPIPS**: Perceptual similarity
+- **CLIP Score**: Text-image alignment
+:::
+
+### Financial-Specific Metrics
+::: {.incremental}
+- **Data Accuracy**: Generated values vs. real constraints
+- **Trend Consistency**: Logical financial relationships
+- **Professional Quality**: Readability and clarity
+- **Regulatory Compliance**: Meets disclosure standards
+:::
+
+## Implementation Considerations
+
+### Computational Requirements
+- **Training**: Multiple GPUs, days to weeks
+- **Inference**: Single GPU, seconds per image
+- **Memory**: Large models require significant VRAM
+
+### Financial Data Specifics
+- **Temporal Consistency**: Charts must show logical time progression
+- **Scale Awareness**: Appropriate axis scaling and labeling
+- **Regulatory Text**: Include required disclaimers and sources
+
+## Future Directions
+
+### Recent Innovations
+
+#### Consistency Models
+- Single-step generation (vs. 50-1000 steps)
+- Maintain diffusion quality
+- Much faster inference
+
+#### Rectified Flow
+- Straight-line trajectories in latent space
+- More efficient training and sampling
+- Better controllability
+
+### Financial Applications
+
+#### Real-time Chart Generation
+- Live market data visualization
+- Instant report generation
+- Interactive financial dashboards
+
+#### Multimodal Integration
+- Combine text, time series, and images
+- Comprehensive financial analysis
+- Enhanced client communications

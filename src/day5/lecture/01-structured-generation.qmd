@@ -1,0 +1,95 @@
+# Structured Generation
+
+## What is Structured Generation?
+
+::: {.incremental}
+- **Traditional LLMs**: Generate text token by token with minimal constraints
+- **Structured Generation**: Force LLM outputs to follow specific formats
+- **Key Insight**: Many real-world applications need predictable, parseable outputs
+:::
+
+### Why Do We Need Structured Output?
+
+::: {.incremental}
+- **JSON reports**: Risk assessments, portfolio summaries
+- **SQL queries**: Database interactions for financial data
+- **XML/CSV formats**: Regulatory reporting requirements
+- **Mathematical expressions**: Formula generation for pricing models
+:::
+
+## The Problem with Free-Form Generation
+
+### Example: Asking for Portfolio Data
+
+**Prompt**: "Generate a portfolio summary for client ABC-123"
+
+**Typical LLM Response**:
+```
+The portfolio for client ABC-123 includes various assets. 
+The client has approximately $500,000 in stocks, some bonds 
+worth around $200k, and cash holdings of about $50,000. 
+The total value is roughly $750,000.
+```
+
+**Problems**: 
+- Inconsistent format
+- Approximate values
+- Hard to parse programmatically
+
+## Structured Generation Solution
+
+### Same Request with Structure Constraints
+
+**Desired Output Format**:
+```json
+{
+  "client_id": "ABC-123",
+  "total_value": 750000.00,
+  "assets": [
+    {"type": "stocks", "value": 500000.00},
+    {"type": "bonds", "value": 200000.00},
+    {"type": "cash", "value": 50000.00}
+  ]
+}
+```
+
+**Benefits**:
+- Consistent format
+- Precise values
+- Programmatically parseable
+- Validates against schema
+
+## Types of Structured Generation
+
+### 1. Format-Constrained Generation
+::: {.incremental}
+- **JSON Schema compliance**: Ensure valid JSON with required fields
+- **Regular expressions**: Pattern matching for specific formats
+- **Grammar-based**: Follow formal language grammars
+:::
+
+### 2. Content-Constrained Generation
+::: {.incremental}
+- **Value ranges**: Ensure numbers fall within valid bounds
+- **Enumerated choices**: Select from predefined options
+- **Logical consistency**: Maintain relationships between fields
+:::
+
+## Traditional Approaches vs. Structured Generation
+
+### Traditional Approach
+1. Generate free-form text
+2. Parse with regex/NLP
+3. Handle parsing errors
+4. Validate extracted data
+5. Fix inconsistencies
+
+**Problems**: Error-prone, inconsistent, requires complex post-processing
+
+### Structured Generation Approach
+1. Define output schema
+2. Constrain generation process
+3. Guarantee valid output
+4. Direct consumption by systems
+
+**Benefits**: Reliable, consistent, no post-processing needed

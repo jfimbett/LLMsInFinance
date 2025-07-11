@@ -2,20 +2,16 @@
 
 ## What is Structured Generation?
 
-::: {.incremental}
 - **Traditional LLMs**: Generate text token by token with minimal constraints
 - **Structured Generation**: Force LLM outputs to follow specific formats
 - **Key Insight**: Many real-world applications need predictable, parseable outputs
-:::
 
 ### Why Do We Need Structured Output?
 
-::: {.incremental}
 - **JSON reports**: Risk assessments, portfolio summaries
 - **SQL queries**: Database interactions for financial data
 - **XML/CSV formats**: Regulatory reporting requirements
 - **Mathematical expressions**: Formula generation for pricing models
-:::
 
 ## The Problem with Free-Form Generation
 
@@ -62,18 +58,14 @@ The total value is roughly $750,000.
 ## Types of Structured Generation
 
 ### 1. Format-Constrained Generation
-::: {.incremental}
 - **JSON Schema compliance**: Ensure valid JSON with required fields
 - **Regular expressions**: Pattern matching for specific formats
 - **Grammar-based**: Follow formal language grammars
-:::
 
 ### 2. Content-Constrained Generation
-::: {.incremental}
 - **Value ranges**: Ensure numbers fall within valid bounds
 - **Enumerated choices**: Select from predefined options
 - **Logical consistency**: Maintain relationships between fields
-:::
 
 ## Traditional Approaches vs. Structured Generation
 

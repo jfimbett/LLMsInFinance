@@ -4,20 +4,19 @@
 
 **Simple Answer**: Computer programs that create pictures from text descriptions
 
-::: {.incremental}
 - **Input**: "A red apple on a wooden table"
 - **Output**: An actual image showing exactly that
 - **Magic**: The computer "understands" both words and pictures
 - **Reality**: Complex math and millions of examples
-:::
 
 ## The Big Idea
 
 Think of it like this:
-- You describe something to an artist
-- The artist draws what you described
-- But the artist is a computer program
-- And it learned by looking at millions of images with captions
+
+* You describe something to an artist
+* The artist draws what you described
+* But the artist is a computer program
+* And it learned by looking at millions of images with captions
 
 ## Evolution: From Simple to Sophisticated
 
@@ -43,18 +42,6 @@ Think of it like:
 - Guided by the text description
 - Until a clear image emerges
 
-## How Text Understanding Works
-
-### Step 1: Converting Words to Numbers
-
-**The Problem**: Computers don't understand "red apple"
-
-**The Solution**: Convert text to mathematical vectors
-
-```
-"red apple" → [0.2, -0.1, 0.8, 0.3, ...] (512 numbers)
-```
-
 ### CLIP: The Text-Image Translator
 
 **What CLIP learned**: 
@@ -63,10 +50,8 @@ Think of it like:
 - Creates a shared mathematical space for both
 
 **In simple terms**:
-- Words and images that mean similar things get similar numbers
-- "Dog" and a dog photo have similar mathematical representations
-
-$$\text{similarity} = \text{cosine}(\text{text\_vector}, \text{image\_vector})$$
+- Words and images that mean similar things are mapped together
+- "Dog" and a dog photo 
 
 ## The Diffusion Process: From Noise to Image
 
@@ -74,20 +59,13 @@ $$\text{similarity} = \text{cosine}(\text{text\_vector}, \text{image\_vector})$$
 
 Imagine you have a clear photo and you add TV static to it:
 
-$$x_t = \sqrt{\bar{\alpha}_t} \cdot x_0 + \sqrt{1-\bar{\alpha}_t} \cdot \epsilon$$
+$$x_t = \sqrt{\bar{\alpha}_t} \cdot x_{0} + \sqrt{1-\bar{\alpha}_t} \cdot \epsilon$$
 
 Where:
 - $x_0$: original clear image
 - $x_t$: image after $t$ steps of adding noise
 - $\epsilon$: random noise (like TV static)
 - $\bar{\alpha}_t$: how much of the original image remains
-
-**Step by step**:
-1. Start: Clear photo
-2. Step 1: Add a little noise
-3. Step 2: Add more noise
-4. ...
-5. Step 1000: Pure noise (TV static)
 
 ### The Reverse Process: Creating from Noise
 
@@ -101,27 +79,13 @@ Learn a function that can:
 $$x_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon_\theta(x_t, t, c)\right) + \sigma_t z$$
 
 Where:
-- $\epsilon_\theta$: neural network that predicts noise
-- $c$: text description ("red apple")
-- $t$: current noise level
-- $z$: small amount of randomness
+
+* $\epsilon_\theta$: neural network that predicts noise
+* $c$: text description ("red apple")
+* $t$: current noise level
+* $z$: small amount of randomness
 
 ## The Neural Network Architecture
-
-### U-Net: The Noise Predictor
-
-**Why U-Net?**: It's shaped like the letter "U"
-
-```
-Input Image (noisy) → Encoder (compress) → Bottleneck → Decoder (expand) → Noise Prediction
-                         ↓                                    ↑
-                    Skip connections (remember details)
-```
-
-**What it does**:
-- Takes a noisy image + text description
-- Looks at the noise pattern
-- Predicts: "Remove this specific noise"
 
 ### Text Conditioning: How Words Guide the Process
 
@@ -143,9 +107,10 @@ Where:
 ### DALL-E 2 (OpenAI)
 
 **Architecture**:
-1. CLIP encodes text → image embedding
-2. Prior network refines the embedding  
-3. Diffusion decoder creates the image
+
+* CLIP encodes text → image embedding
+* Prior network refines the embedding  
+* Diffusion decoder creates the image
 
 **Strengths**: High quality, good text understanding
 **Weaknesses**: Expensive to run, not open source

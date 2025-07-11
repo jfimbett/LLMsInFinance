@@ -416,8 +416,6 @@ Juan F. Imbet
 <li>Structured generation: controlling LLM outputs</li>
 <li>Mathematical foundations of constrained decoding</li>
 <li>Text-to-image models: from text to pixels</li>
-<li>Diffusion models and their applications in finance</li>
-<li>Practical implications for financial data generation</li>
 </ul>
 </section></section>
 <section>
@@ -427,22 +425,18 @@ Juan F. Imbet
 </section>
 <section id="what-is-structured-generation" class="slide level2">
 <h2>What is Structured Generation?</h2>
-<div>
 <ul>
-<li class="fragment"><strong>Traditional LLMs</strong>: Generate text token by token with minimal constraints</li>
-<li class="fragment"><strong>Structured Generation</strong>: Force LLM outputs to follow specific formats</li>
-<li class="fragment"><strong>Key Insight</strong>: Many real-world applications need predictable, parseable outputs</li>
+<li><strong>Traditional LLMs</strong>: Generate text token by token with minimal constraints</li>
+<li><strong>Structured Generation</strong>: Force LLM outputs to follow specific formats</li>
+<li><strong>Key Insight</strong>: Many real-world applications need predictable, parseable outputs</li>
 </ul>
-</div>
 <h3 id="why-do-we-need-structured-output">Why Do We Need Structured Output?</h3>
-<div>
 <ul>
-<li class="fragment"><strong>JSON reports</strong>: Risk assessments, portfolio summaries</li>
-<li class="fragment"><strong>SQL queries</strong>: Database interactions for financial data</li>
-<li class="fragment"><strong>XML/CSV formats</strong>: Regulatory reporting requirements</li>
-<li class="fragment"><strong>Mathematical expressions</strong>: Formula generation for pricing models</li>
+<li><strong>JSON reports</strong>: Risk assessments, portfolio summaries</li>
+<li><strong>SQL queries</strong>: Database interactions for financial data</li>
+<li><strong>XML/CSV formats</strong>: Regulatory reporting requirements</li>
+<li><strong>Mathematical expressions</strong>: Formula generation for pricing models</li>
 </ul>
-</div>
 </section>
 <section id="the-problem-with-free-form-generation" class="slide level2">
 <h2>The Problem with Free-Form Generation</h2>
@@ -473,21 +467,17 @@ The total value is roughly $750,000.</code></pre>
 <section id="types-of-structured-generation" class="slide level2">
 <h2>Types of Structured Generation</h2>
 <h3 id="format-constrained-generation">1. Format-Constrained Generation</h3>
-<div>
 <ul>
-<li class="fragment"><strong>JSON Schema compliance</strong>: Ensure valid JSON with required fields</li>
-<li class="fragment"><strong>Regular expressions</strong>: Pattern matching for specific formats</li>
-<li class="fragment"><strong>Grammar-based</strong>: Follow formal language grammars</li>
+<li><strong>JSON Schema compliance</strong>: Ensure valid JSON with required fields</li>
+<li><strong>Regular expressions</strong>: Pattern matching for specific formats</li>
+<li><strong>Grammar-based</strong>: Follow formal language grammars</li>
 </ul>
-</div>
 <h3 id="content-constrained-generation">2. Content-Constrained Generation</h3>
-<div>
 <ul>
-<li class="fragment"><strong>Value ranges</strong>: Ensure numbers fall within valid bounds</li>
-<li class="fragment"><strong>Enumerated choices</strong>: Select from predefined options</li>
-<li class="fragment"><strong>Logical consistency</strong>: Maintain relationships between fields</li>
+<li><strong>Value ranges</strong>: Ensure numbers fall within valid bounds</li>
+<li><strong>Enumerated choices</strong>: Select from predefined options</li>
+<li><strong>Logical consistency</strong>: Maintain relationships between fields</li>
 </ul>
-</div>
 </section>
 <section id="traditional-approaches-vs.-structured-generation" class="slide level2">
 <h2>Traditional Approaches vs.&nbsp;Structured Generation</h2>
@@ -565,18 +555,22 @@ z_i &amp; \text{if } m_i = 1 \\
 <section id="what-are-text-to-image-models" class="slide level2">
 <h2>What are Text-to-Image Models?</h2>
 <p><strong>Simple Answer</strong>: Computer programs that create pictures from text descriptions</p>
-<div>
 <ul>
-<li class="fragment"><strong>Input</strong>: “A red apple on a wooden table”</li>
-<li class="fragment"><strong>Output</strong>: An actual image showing exactly that</li>
-<li class="fragment"><strong>Magic</strong>: The computer “understands” both words and pictures</li>
-<li class="fragment"><strong>Reality</strong>: Complex math and millions of examples</li>
+<li><strong>Input</strong>: “A red apple on a wooden table”</li>
+<li><strong>Output</strong>: An actual image showing exactly that</li>
+<li><strong>Magic</strong>: The computer “understands” both words and pictures</li>
+<li><strong>Reality</strong>: Complex math and millions of examples</li>
 </ul>
-</div>
 </section>
 <section id="the-big-idea" class="slide level2">
 <h2>The Big Idea</h2>
-<p>Think of it like this: - You describe something to an artist - The artist draws what you described - But the artist is a computer program - And it learned by looking at millions of images with captions</p>
+<p>Think of it like this:</p>
+<ul>
+<li>You describe something to an artist</li>
+<li>The artist draws what you described</li>
+<li>But the artist is a computer program</li>
+<li>And it learned by looking at millions of images with captions</li>
+</ul>
 </section>
 <section id="evolution-from-simple-to-sophisticated" class="slide level2">
 <h2>Evolution: From Simple to Sophisticated</h2>
@@ -586,39 +580,30 @@ z_i &amp; \text{if } m_i = 1 \\
 <h3 id="the-breakthrough-diffusion-models-2020">The Breakthrough: Diffusion Models (2020+)</h3>
 <p><strong>Key insight</strong>: Instead of creating images from scratch, start with noise and gradually clean it up</p>
 <p>Think of it like: - Taking a photo covered in TV static - Slowly removing the static pixel by pixel - Guided by the text description - Until a clear image emerges</p>
-</section>
-<section id="how-text-understanding-works" class="slide level2">
-<h2>How Text Understanding Works</h2>
-<h3 id="step-1-converting-words-to-numbers">Step 1: Converting Words to Numbers</h3>
-<p><strong>The Problem</strong>: Computers don’t understand “red apple”</p>
-<p><strong>The Solution</strong>: Convert text to mathematical vectors</p>
-<pre><code>"red apple" → [0.2, -0.1, 0.8, 0.3, ...] (512 numbers)</code></pre>
 <h3 id="clip-the-text-image-translator">CLIP: The Text-Image Translator</h3>
 <p><strong>What CLIP learned</strong>: - Millions of images paired with captions - “This image” goes with “these words” - Creates a shared mathematical space for both</p>
-<p><strong>In simple terms</strong>: - Words and images that mean similar things get similar numbers - “Dog” and a dog photo have similar mathematical representations</p>
-<p><span class="math display">\[\text{similarity} = \text{cosine}(\text{text\_vector}, \text{image\_vector})\]</span></p>
+<p><strong>In simple terms</strong>: - Words and images that mean similar things are mapped together - “Dog” and a dog photo</p>
 </section>
 <section id="the-diffusion-process-from-noise-to-image" class="slide level2">
 <h2>The Diffusion Process: From Noise to Image</h2>
 <h3 id="the-forward-process-destroying-an-image">The Forward Process: Destroying an Image</h3>
 <p>Imagine you have a clear photo and you add TV static to it:</p>
-<p><span class="math display">\[x_t = \sqrt{\bar{\alpha}_t} \cdot x_0 + \sqrt{1-\bar{\alpha}_t} \cdot \epsilon\]</span></p>
+<p><span class="math display">\[x_t = \sqrt{\bar{\alpha}_t} \cdot x_{0} + \sqrt{1-\bar{\alpha}_t} \cdot \epsilon\]</span></p>
 <p>Where: - <span class="math inline">\(x_0\)</span>: original clear image - <span class="math inline">\(x_t\)</span>: image after <span class="math inline">\(t\)</span> steps of adding noise - <span class="math inline">\(\epsilon\)</span>: random noise (like TV static) - <span class="math inline">\(\bar{\alpha}_t\)</span>: how much of the original image remains</p>
-<p><strong>Step by step</strong>: 1. Start: Clear photo 2. Step 1: Add a little noise 3. Step 2: Add more noise 4. … 5. Step 1000: Pure noise (TV static)</p>
 <h3 id="the-reverse-process-creating-from-noise">The Reverse Process: Creating from Noise</h3>
 <p><strong>The training trick</strong>: If we can destroy systematically, we can create systematically</p>
 <p>Learn a function that can: - Look at noisy image + text description - Predict what noise to remove - Do this step by step until image is clean</p>
 <p><span class="math display">\[x_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon_\theta(x_t, t, c)\right) + \sigma_t z\]</span></p>
-<p>Where: - <span class="math inline">\(\epsilon_\theta\)</span>: neural network that predicts noise - <span class="math inline">\(c\)</span>: text description (“red apple”) - <span class="math inline">\(t\)</span>: current noise level - <span class="math inline">\(z\)</span>: small amount of randomness</p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\epsilon_\theta\)</span>: neural network that predicts noise</li>
+<li><span class="math inline">\(c\)</span>: text description (“red apple”)</li>
+<li><span class="math inline">\(t\)</span>: current noise level</li>
+<li><span class="math inline">\(z\)</span>: small amount of randomness</li>
+</ul>
 </section>
 <section id="the-neural-network-architecture" class="slide level2">
 <h2>The Neural Network Architecture</h2>
-<h3 id="u-net-the-noise-predictor">U-Net: The Noise Predictor</h3>
-<p><strong>Why U-Net?</strong>: It’s shaped like the letter “U”</p>
-<pre><code>Input Image (noisy) → Encoder (compress) → Bottleneck → Decoder (expand) → Noise Prediction
-                         ↓                                    ↑
-                    Skip connections (remember details)</code></pre>
-<p><strong>What it does</strong>: - Takes a noisy image + text description - Looks at the noise pattern - Predicts: “Remove this specific noise”</p>
 <h3 id="text-conditioning-how-words-guide-the-process">Text Conditioning: How Words Guide the Process</h3>
 <p><strong>The clever part</strong>: Text influences every step of noise removal</p>
 <p><strong>Cross-attention mechanism</strong>: <span class="math display">\[\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V\]</span></p>
@@ -628,8 +613,13 @@ z_i &amp; \text{if } m_i = 1 \\
 <section id="popular-models-dall-e-vs-stable-diffusion" class="slide level2">
 <h2>Popular Models: DALL-E vs Stable Diffusion</h2>
 <h3 id="dall-e-2-openai">DALL-E 2 (OpenAI)</h3>
-<p><strong>Architecture</strong>: 1. CLIP encodes text → image embedding 2. Prior network refines the embedding<br>
-3. Diffusion decoder creates the image</p>
+<p><strong>Architecture</strong>:</p>
+<ul>
+<li>CLIP encodes text → image embedding</li>
+<li>Prior network refines the embedding<br>
+</li>
+<li>Diffusion decoder creates the image</li>
+</ul>
 <p><strong>Strengths</strong>: High quality, good text understanding <strong>Weaknesses</strong>: Expensive to run, not open source</p>
 <h3 id="stable-diffusion-stability-ai">Stable Diffusion (Stability AI)</h3>
 <p><strong>Key Innovation</strong>: Work in compressed space, not pixel space</p>
@@ -686,236 +676,6 @@ z_i &amp; \text{if } m_i = 1 \\
 <li><strong>ControlNet</strong>: Add structural guidance (sketches, poses)</li>
 <li><strong>Inpainting</strong>: Edit specific parts of images</li>
 <li><strong>Fine-tuning</strong>: Adapt to specific styles or subjects</li>
-</ul>
-</section></section>
-<section>
-<section id="diffusion-models-deep-dive" class="title-slide slide level1 center">
-<h1>Diffusion Models: Deep Dive</h1>
-
-</section>
-<section id="what-are-diffusion-models" class="slide level2">
-<h2>What are Diffusion Models?</h2>
-<h3 id="core-concept">Core Concept</h3>
-<div>
-<ul>
-<li class="fragment"><strong>Inspiration</strong>: Physical diffusion processes (ink in water)</li>
-<li class="fragment"><strong>Forward Process</strong>: Gradually add noise until image becomes pure noise</li>
-<li class="fragment"><strong>Reverse Process</strong>: Learn to denoise step by step</li>
-<li class="fragment"><strong>Result</strong>: High-quality sample generation</li>
-</ul>
-</div>
-</section>
-<section id="why-diffusion-models-won" class="slide level2">
-<h2>Why Diffusion Models Won</h2>
-<h3 id="advantages-over-gans">Advantages over GANs</h3>
-<div>
-<ul>
-<li class="fragment"><strong>Training Stability</strong>: No adversarial collapse issues</li>
-<li class="fragment"><strong>Mode Coverage</strong>: Generate diverse samples, no mode collapse</li>
-<li class="fragment"><strong>Quality</strong>: State-of-the-art image quality</li>
-<li class="fragment"><strong>Controllability</strong>: Easy to incorporate conditioning</li>
-</ul>
-</div>
-<h3 id="advantages-over-vaes">Advantages over VAEs</h3>
-<div>
-<ul>
-<li class="fragment"><strong>No Posterior Collapse</strong>: Avoids common VAE training issues</li>
-<li class="fragment"><strong>Higher Quality</strong>: Better sample quality than VAE</li>
-<li class="fragment"><strong>Flexible Architecture</strong>: Various network designs possible</li>
-</ul>
-</div>
-</section>
-<section id="mathematical-framework" class="slide level2">
-<h2>Mathematical Framework</h2>
-<h3 id="forward-diffusion-process">Forward Diffusion Process</h3>
-<p>Define a Markov chain that gradually corrupts data:</p>
-<p><span class="math display">\[q(x_{1:T} | x_0) = \prod_{t=1}^T q(x_t | x_{t-1})\]</span></p>
-<p>Each step adds Gaussian noise:</p>
-<p><span class="math display">\[q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t} x_{t-1}, \beta_t I)\]</span></p>
-<p>Where <span class="math inline">\(\beta_t\)</span> is a variance schedule.</p>
-<h3 id="closed-form-at-any-step">Closed Form at Any Step</h3>
-<p>Using the reparameterization trick:</p>
-<p><span class="math display">\[x_t = \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1-\bar{\alpha}_t} \epsilon\]</span></p>
-<p>Where: - <span class="math inline">\(\alpha_t = 1 - \beta_t\)</span> - <span class="math inline">\(\bar{\alpha}_t = \prod_{s=1}^t \alpha_s\)</span> - <span class="math inline">\(\epsilon \sim \mathcal{N}(0, I)\)</span></p>
-</section>
-<section id="reverse-process-learning" class="slide level2">
-<h2>Reverse Process Learning</h2>
-<h3 id="parameterizing-the-reverse-process">Parameterizing the Reverse Process</h3>
-<p><span class="math display">\[p_\theta(x_{t-1} | x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))\]</span></p>
-<h3 id="key-insight-predict-the-noise">Key Insight: Predict the Noise</h3>
-<p>Instead of predicting <span class="math inline">\(\mu_\theta\)</span> directly, predict the noise <span class="math inline">\(\epsilon\)</span>:</p>
-<p><span class="math display">\[\mu_\theta(x_t, t) = \frac{1}{\sqrt{\alpha_t}}\left(x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon_\theta(x_t, t)\right)\]</span></p>
-</section>
-<section id="training-objective" class="slide level2">
-<h2>Training Objective</h2>
-<h3 id="variational-lower-bound">Variational Lower Bound</h3>
-<p>The training objective maximizes:</p>
-<p><span class="math display">\[\mathbb{E}_{q(x_0)}[\log p_\theta(x_0)] \geq \mathbb{E}_{q(x_{0:T})}[\log \frac{p_\theta(x_{0:T})}{q(x_{1:T}|x_0)}]\]</span></p>
-<h3 id="simplified-loss-function">Simplified Loss Function</h3>
-<p>In practice, we optimize:</p>
-<p><span class="math display">\[\mathcal{L}_{\text{simple}} = \mathbb{E}_{t, x_0, \epsilon}\left[\|\epsilon - \epsilon_\theta(x_t, t)\|^2\right]\]</span></p>
-<p>This is equivalent to denoising score matching.</p>
-</section>
-<section id="noise-schedules" class="slide level2">
-<h2>Noise Schedules</h2>
-<h3 id="linear-schedule">Linear Schedule</h3>
-<p><span class="math display">\[\beta_t = \beta_{\text{start}} + \frac{t}{T}(\beta_{\text{end}} - \beta_{\text{start}})\]</span></p>
-<h3 id="cosine-schedule">Cosine Schedule</h3>
-<p><span class="math display">\[\bar{\alpha}_t = \frac{f(t)}{f(0)}, \quad f(t) = \cos\left(\frac{t/T + s}{1 + s} \cdot \frac{\pi}{2}\right)^2\]</span></p>
-<h3 id="impact-on-training">Impact on Training</h3>
-<ul>
-<li><strong>Linear</strong>: More noise added early, can be too aggressive</li>
-<li><strong>Cosine</strong>: More gradual, often better results</li>
-<li><strong>Custom</strong>: Can be optimized for specific domains</li>
-</ul>
-</section>
-<section id="network-architectures" class="slide level2">
-<h2>Network Architectures</h2>
-<h3 id="u-net-architecture">U-Net Architecture</h3>
-<pre><code>Input x_t (+ time embedding)
-    ↓
-Encoder: Conv + Downsample
-    ↓  
-Bottleneck: Attention + Conv
-    ↓
-Decoder: Conv + Upsample + Skip Connections
-    ↓
-Output: Predicted noise ε_θ</code></pre>
-<h3 id="time-embedding">Time Embedding</h3>
-<p>Encode timestep <span class="math inline">\(t\)</span> using sinusoidal embeddings:</p>
-<p><span class="math display">\[\text{PE}(t, 2i) = \sin(t / 10000^{2i/d})\]</span> <span class="math display">\[\text{PE}(t, 2i+1) = \cos(t / 10000^{2i/d})\]</span></p>
-</section>
-<section id="conditional-generation" class="slide level2">
-<h2>Conditional Generation</h2>
-<h3 id="class-conditional-generation">Class-Conditional Generation</h3>
-<p>Modify the noise prediction to include class information:</p>
-<p><span class="math display">\[\epsilon_\theta(x_t, t, y)\]</span></p>
-<p>Where <span class="math inline">\(y\)</span> is the class label.</p>
-<h3 id="classifier-free-guidance">Classifier-Free Guidance</h3>
-<p>Mix conditional and unconditional predictions:</p>
-<p><span class="math display">\[\tilde{\epsilon}_\theta(x_t, t, c) = \epsilon_\theta(x_t, t, \emptyset) + s \cdot (\epsilon_\theta(x_t, t, c) - \epsilon_\theta(x_t, t, \emptyset))\]</span></p>
-<p>Where: - <span class="math inline">\(c\)</span> is the conditioning (text, class, etc.) - <span class="math inline">\(s\)</span> is the guidance scale - <span class="math inline">\(\emptyset\)</span> represents null conditioning</p>
-</section>
-<section id="financial-applications" class="slide level2">
-<h2>Financial Applications</h2>
-<h3 id="synthetic-financial-data-generation">Synthetic Financial Data Generation</h3>
-<h4 id="market-scenario-generation">Market Scenario Generation</h4>
-<p><strong>Use Case</strong>: Generate diverse market scenarios for stress testing</p>
-<p><strong>Conditioning</strong>: “Bear market with high volatility and declining tech stocks”</p>
-<p><strong>Process</strong>: 1. Encode market description 2. Generate price trajectories 3. Ensure financial constraints (no negative prices) 4. Output realistic market data</p>
-<h4 id="chart-generation-for-reports">Chart Generation for Reports</h4>
-<p><strong>Use Case</strong>: Create visual summaries for client reports</p>
-<p><strong>Input</strong>: “Portfolio performance chart showing 15% YTD growth with monthly breakdown”</p>
-<p><strong>Output</strong>: Professional-quality chart image</p>
-</section>
-<section id="latent-diffusion-models" class="slide level2">
-<h2>Latent Diffusion Models</h2>
-<h3 id="working-in-latent-space">Working in Latent Space</h3>
-<p>Instead of pixel space, work in compressed latent representation:</p>
-<p><span class="math display">\[\text{Encoder}: x \rightarrow z\]</span> <span class="math display">\[\text{Diffusion}: z_T \rightarrow z_0\]</span><br>
-<span class="math display">\[\text{Decoder}: z \rightarrow x\]</span></p>
-<h3 id="advantages-for-finance">Advantages for Finance</h3>
-<div>
-<ul>
-<li class="fragment"><strong>Efficiency</strong>: Lower computational cost</li>
-<li class="fragment"><strong>Semantic Control</strong>: Easier to control high-level features</li>
-<li class="fragment"><strong>Data Privacy</strong>: Work with compressed representations</li>
-<li class="fragment"><strong>Scalability</strong>: Handle large financial datasets</li>
-</ul>
-</div>
-</section>
-<section id="advanced-techniques" class="slide level2">
-<h2>Advanced Techniques</h2>
-<h3 id="inpainting">Inpainting</h3>
-<ul>
-<li>Modify portions of existing financial charts</li>
-<li>Fill missing data points realistically</li>
-<li>Update outdated visualizations</li>
-</ul>
-<h3 id="outpainting">Outpainting</h3>
-<ul>
-<li>Extend time series beyond current data</li>
-<li>Forecast visual trends</li>
-<li>Scenario planning visualizations</li>
-</ul>
-<h3 id="image-to-image-translation">Image-to-Image Translation</h3>
-<ul>
-<li>Convert between chart types (candlestick ↔︎ line chart)</li>
-<li>Style transfer for brand consistency</li>
-<li>Format standardization</li>
-</ul>
-</section>
-<section id="evaluation-metrics" class="slide level2">
-<h2>Evaluation Metrics</h2>
-<h3 id="quantitative-metrics">Quantitative Metrics</h3>
-<div>
-<ul>
-<li class="fragment"><strong>FID (Fréchet Inception Distance)</strong>: Distribution similarity</li>
-<li class="fragment"><strong>IS (Inception Score)</strong>: Quality and diversity</li>
-<li class="fragment"><strong>LPIPS</strong>: Perceptual similarity</li>
-<li class="fragment"><strong>CLIP Score</strong>: Text-image alignment</li>
-</ul>
-</div>
-<h3 id="financial-specific-metrics">Financial-Specific Metrics</h3>
-<div>
-<ul>
-<li class="fragment"><strong>Data Accuracy</strong>: Generated values vs.&nbsp;real constraints</li>
-<li class="fragment"><strong>Trend Consistency</strong>: Logical financial relationships</li>
-<li class="fragment"><strong>Professional Quality</strong>: Readability and clarity</li>
-<li class="fragment"><strong>Regulatory Compliance</strong>: Meets disclosure standards</li>
-</ul>
-</div>
-</section>
-<section id="implementation-considerations" class="slide level2">
-<h2>Implementation Considerations</h2>
-<h3 id="computational-requirements">Computational Requirements</h3>
-<ul>
-<li><strong>Training</strong>: Multiple GPUs, days to weeks</li>
-<li><strong>Inference</strong>: Single GPU, seconds per image</li>
-<li><strong>Memory</strong>: Large models require significant VRAM</li>
-</ul>
-<h3 id="financial-data-specifics">Financial Data Specifics</h3>
-<ul>
-<li><strong>Temporal Consistency</strong>: Charts must show logical time progression</li>
-<li><strong>Scale Awareness</strong>: Appropriate axis scaling and labeling</li>
-<li><strong>Regulatory Text</strong>: Include required disclaimers and sources</li>
-</ul>
-</section>
-<section id="future-directions" class="slide level2">
-<h2>Future Directions</h2>
-<h3 id="recent-innovations">Recent Innovations</h3>
-<h4 id="consistency-models">Consistency Models</h4>
-<ul>
-<li>Single-step generation (vs.&nbsp;50-1000 steps)</li>
-<li>Maintain diffusion quality</li>
-<li>Much faster inference</li>
-</ul>
-<h4 id="rectified-flow">Rectified Flow</h4>
-<ul>
-<li>Straight-line trajectories in latent space</li>
-<li>More efficient training and sampling</li>
-<li>Better controllability</li>
-</ul>
-<h3 id="financial-applications-1">Financial Applications</h3>
-<h4 id="real-time-chart-generation">Real-time Chart Generation</h4>
-<ul>
-<li>Live market data visualization</li>
-<li>Instant report generation</li>
-<li>Interactive financial dashboards</li>
-</ul>
-<h4 id="multimodal-integration">Multimodal Integration</h4>
-<ul>
-<li>Combine text, time series, and images</li>
-<li>Comprehensive financial analysis</li>
-<li>Enhanced client communications</li>
-</ul>
-</section>
-<section id="whats-next" class="slide level2">
-<h2>What’s Next?</h2>
-<ul>
-<li>Summary of key concepts</li>
-<li>Preview of practical session with Outlines library</li>
-<li>Applications in structured financial data generation</li>
 </ul>
 <div class="quarto-auto-generated-content">
 <p><img src="../../images/logo_header.svg" class="slide-logo"></p>

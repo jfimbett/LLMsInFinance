@@ -18,8 +18,7 @@ format:
 - Structured generation: controlling LLM outputs
 - Mathematical foundations of constrained decoding
 - Text-to-image models: from text to pixels
-- Diffusion models and their applications in finance
-- Practical implications for financial data generation
+
 
 {{< include 01-structured-generation.qmd >}}
 
@@ -27,10 +26,3 @@ format:
 
 {{< include 03-text-to-image-models.qmd >}}
 
-{{< include 04-diffusion-models.qmd >}}
-
-## What's Next?
-
-- Summary of key concepts
-- Preview of practical session with Outlines library
-- Applications in structured financial data generation
